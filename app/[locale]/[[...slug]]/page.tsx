@@ -1,0 +1,56 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { MarketingPage } from "@/components/MarketingPage";
+import { pages } from "@/content/pages";
+import { getAlternates, getLocalizedParams, getPageKey, isLocale, type Locale } from "@/lib/i18n";
+import { pageSchemas } from "@/lib/structured-data";
+
+type RouteParams = {
+  locale: string;
+  slug?: string[];
+};
+
+export function generateStaticParams() {
+  return getLocalizedParams();
+}
+
+export function generateMetadata({ params }: { params: RouteParams }): Metadata {
+  if (!isLocale(params.locale)) return {};
+  const locale = params.locale as Locale;
+  const key = getPageKey(locale, params.slug);
+  if (!key) return {};
+  const content = pages[locale][key];
+
+  return {
+    title: content.seoTitle,
+    description: content.description,
+    alternates: getAlternates(locale, key),
+    openGraph: {
+      title: content.seoTitle,
+      description: content.description,
+      url: getAlternates(locale, key).canonical,
+      locale,
+      alternateLocale: locale === "en" ? "de" : "en",
+      images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: content.title }]
+    }
+  };
+}
+
+export default function LocalizedPage({ params }: { params: RouteParams }) {
+  if (!isLocale(params.locale)) notFound();
+  const locale = params.locale as Locale;
+  const key = getPageKey(locale, params.slug);
+  if (!key) notFound();
+
+  const content = pages[locale][key];
+
+  return (
+    <>
+      <MarketingPage content={content} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchemas(content)) }}
+      />
+    </>
+  );
+}

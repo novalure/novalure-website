@@ -1,0 +1,18 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#151922"/>
+  <rect x="72" y="72" width="1056" height="486" rx="8" fill="#F5F7FA"/>
+  <rect x="112" y="112" width="108" height="108" rx="8" fill="#111317"/>
+  <text x="166" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" font-weight="700" fill="#FFD43B">N</text>
+  <text x="112" y="304" font-family="Arial, sans-serif" font-size="84" font-weight="700" fill="#111317">Novalure</text>
+  <text x="112" y="374" font-family="Arial, sans-serif" font-size="34" font-weight="400" fill="#5C6675">Premium property marketing systems</text>
+  <rect x="112" y="440" width="260" height="64" rx="8" fill="#FFD43B"/>
+  <text x="242" y="482" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#211800">Download Playbook</text>
+  <rect x="816" y="130" width="244" height="316" rx="8" fill="#151922"/>
+  <rect x="846" y="166" width="184" height="46" rx="8" fill="#222936"/>
+  <rect x="846" y="236" width="184" height="46" rx="8" fill="#222936"/>
+  <rect x="846" y="306" width="184" height="46" rx="8" fill="#222936"/>
+  <rect x="846" y="382" width="36" height="34" rx="4" fill="#FFD43B"/>
+  <rect x="894" y="354" width="36" height="62" rx="4" fill="#20765F"/>
+  <rect x="942" y="326" width="36" height="90" rx="4" fill="#FFD43B"/>
+  <rect x="990" y="288" width="36" height="128" rx="4" fill="#20765F"/>
+</svg>
