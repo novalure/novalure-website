@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: ".next-novalure",
   reactStrictMode: true,
   poweredByHeader: false,
   experimental: {
