@@ -89,7 +89,7 @@ def background(c, dark=False):
 
 def footer(c, page, lang, dark=False):
     footer_text = (
-        "Novalure | PropTech Sales System fuer Bautraeger und Immobilienmakler"
+        "Novalure | PropTech Sales System für Bauträger und Immobilienmakler"
         if lang == "de"
         else "Novalure | PropTech Sales System for real estate developers and agents"
     )
@@ -157,7 +157,7 @@ def system_layers(c, x, y, width, height, lang):
 def matrix(c, x, y, width, height, lang):
     c.setFillColor(colors.HexColor("#f7f4eb"))
     c.roundRect(x, y, width, height, 14, stroke=0, fill=1)
-    labels = ["Nurture", "Pruefen", "Disqualifizieren", "Sales-ready"] if lang == "de" else ["Nurture", "Review", "Disqualify", "Sales-ready"]
+    labels = ["Nurture", "Prüfen", "Disqualifizieren", "Sales-ready"] if lang == "de" else ["Nurture", "Review", "Disqualify", "Sales-ready"]
     cells = [
         (x + 42, y + 35, labels[0], False),
         (x + width / 2 + 8, y + 35, labels[1], False),
@@ -213,7 +213,7 @@ def render(book):
     background(c)
     headline = "Ein System, kein weiterer Marketing-Ordner." if book["lang"] == "de" else "A system, not another marketing folder."
     intro = (
-        "Dieses Dokument ist als Arbeitsgrundlage gedacht. Es hilft Ihnen, Ihr aktuelles Setup zu pruefen, Luecken sichtbar zu machen und die naechsten operativen Schritte sauber zu priorisieren."
+        "Dieses Dokument ist als Arbeitsgrundlage gedacht. Es hilft Ihnen, Ihr aktuelles Setup zu prüfen, Lücken sichtbar zu machen und die nächsten operativen Schritte sauber zu priorisieren."
         if book["lang"] == "de"
         else "This document is designed as a working guide. Use it to inspect your current setup, reveal gaps and prioritize the next operating steps with more clarity."
     )
@@ -250,9 +250,9 @@ def render(book):
 
     background(c, dark=True)
     draw_logo(c, M, H - 34 * mm, 50 * mm)
-    final_title = "Lassen Sie Ihr aktuelles Lead-System pruefen." if book["lang"] == "de" else "Have your current lead system reviewed."
+    final_title = "Lassen Sie Ihr aktuelles Lead-System prüfen." if book["lang"] == "de" else "Have your current lead system reviewed."
     final_body = (
-        "Wenn Sie sehen moechten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein privates Growth Audit. Wir pruefen Funnel, Lead-Qualifizierung, CRM-Uebergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen."
+        "Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein privates Growth Audit. Wir prüfen Funnel, Lead-Qualifizierung, CRM-Übergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen."
         if book["lang"] == "de"
         else "If you want to see which layers are missing in your current setup, book a Private Growth Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without fake promises."
     )

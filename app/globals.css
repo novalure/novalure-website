@@ -562,6 +562,37 @@ h3 {
   border-color: var(--gold);
 }
 
+.playbook-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+
+.playbook-summary-card {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: clamp(26px, 4vw, 44px);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow-soft);
+}
+
+.playbook-summary-card .pill {
+  justify-self: start;
+  display: inline-flex;
+  color: #1b1400;
+  background: var(--gold);
+  border-color: var(--gold);
+  font-weight: 850;
+}
+
+.playbook-hub-grid .hubspot-card-wide {
+  grid-column: 1 / -1;
+}
+
 .hubspot-card {
   display: grid;
   gap: 16px;
@@ -579,6 +610,12 @@ h3 {
   font-weight: 780;
 }
 
+.hubspot-meta strong {
+  color: #ffffff;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  line-height: 1.2;
+}
+
 code {
   display: block;
   max-width: 100%;
@@ -593,6 +630,17 @@ code {
 .contact-form {
   display: grid;
   gap: 12px;
+}
+
+.hubspot-card-wide .contact-form {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+}
+
+.hubspot-card-wide .playbook-selector,
+.hubspot-card-wide .button,
+.hubspot-card-wide .form-state {
+  grid-column: 1 / -1;
 }
 
 .contact-form label {
@@ -613,6 +661,49 @@ code {
   border-radius: 14px;
 }
 
+.playbook-selector {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 4px;
+  padding: 0;
+  border: 0;
+}
+
+.playbook-selector legend {
+  grid-column: 1 / -1;
+  margin-bottom: 2px;
+  color: rgba(248, 250, 252, 0.76);
+  font-size: 0.9rem;
+  font-weight: 760;
+}
+
+.playbook-selector label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 12px 14px;
+  color: rgba(248, 250, 252, 0.78);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 18px;
+  cursor: pointer;
+}
+
+.playbook-selector label.is-selected {
+  color: #211800;
+  background: var(--gold);
+  border-color: var(--gold-strong);
+}
+
+.playbook-selector input {
+  width: 16px;
+  min-height: 16px;
+  padding: 0;
+  accent-color: var(--gold);
+}
+
 .form-state {
   margin: 0;
   color: rgba(248, 250, 252, 0.72);
@@ -629,8 +720,35 @@ code {
 
 .form-state-success {
   display: grid;
-  gap: 14px;
-  color: #d6ffe9;
+  gap: 12px;
+  align-content: start;
+  min-height: 220px;
+  padding: 22px;
+  color: #f8fafc;
+  background: linear-gradient(145deg, rgba(255, 212, 59, 0.14), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 212, 59, 0.28);
+  border-radius: 22px;
+}
+
+.form-state-success span {
+  color: var(--gold);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.form-state-success strong {
+  color: #ffffff;
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  line-height: 1.15;
+}
+
+.form-state-success p {
+  max-width: 46rem;
+  margin: 0;
+  color: rgba(248, 250, 252, 0.78);
+  line-height: 1.55;
 }
 
 .before-after {
@@ -1050,6 +1168,7 @@ code {
   .audience-grid,
   .problem-grid,
   .playbook-grid,
+  .playbook-hub-grid,
   .team-grid,
   .section-grid,
   .faq-list,
@@ -1058,6 +1177,8 @@ code {
   }
 
   .playbook-card,
+  .hubspot-card-wide .contact-form,
+  .playbook-selector,
   .before-after {
     grid-template-columns: 1fr;
   }

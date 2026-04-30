@@ -548,6 +548,79 @@ function esc(value) {
     .replaceAll('"', "&quot;");
 }
 
+function restoreGermanUmlauts(value) {
+  const replacements = [
+    ["Bautraeger", "Bauträger"],
+    ["Kaeufer", "Käufer"],
+    ["Verkaeufer", "Verkäufer"],
+    ["Eigentuemer", "Eigentümer"],
+    ["fuer", "für"],
+    ["Fuer", "Für"],
+    ["waehrend", "während"],
+    ["laengeren", "längeren"],
+    ["Umsaetze", "Umsätze"],
+    ["Konformitaet", "Konformität"],
+    ["Luecken", "Lücken"],
+    ["naechsten", "nächsten"],
+    ["Naechster", "Nächster"],
+    ["Naechstes", "Nächstes"],
+    ["naechster", "nächster"],
+    ["Gespraeche", "Gespräche"],
+    ["Gespraech", "Gespräch"],
+    ["Uebergabe", "Übergabe"],
+    ["uebergeben", "übergeben"],
+    ["ueber", "über"],
+    ["zufaellige", "zufällige"],
+    ["ernsthaften Kaeufern", "ernsthaften Käufern"],
+    ["Vertriebsuebergabe", "Vertriebsübergabe"],
+    ["Erstgespraech", "Erstgespräch"],
+    ["Qualitaet", "Qualität"],
+    ["woechentlich", "wöchentlich"],
+    ["fuehren", "führen"],
+    ["gefuehrt", "geführt"],
+    ["Pruefen", "Prüfen"],
+    ["pruefen", "prüfen"],
+    ["Pruefung", "Prüfung"],
+    ["Suchpruefung", "Suchprüfung"],
+    ["moechten", "möchten"],
+    ["erhoehen", "erhöhen"],
+    ["hoert", "hört"],
+    ["frueh", "früh"],
+    ["Kaeufertyp", "Käufertyp"],
+    ["Bloecke", "Blöcke"],
+    ["Verfuegbarkeit", "Verfügbarkeit"],
+    ["uebertriebener", "übertriebener"],
+    ["schuetzen", "schützen"],
+    ["gewuenschter", "gewünschter"],
+    ["nuetzlich", "nützlich"],
+    ["Datensaetze", "Datensätze"],
+    ["Gruende", "Gründe"],
+    ["erklaert", "erklärt"],
+    ["unnoetige", "unnötige"],
+    ["Fuehrung", "Führung"],
+    ["Realitaet", "Realität"],
+    ["Kanaele", "Kanäle"],
+    ["Einwaende", "Einwände"],
+    ["auswaehlen", "auswählen"],
+    ["Verkaeuferabsicht", "Verkäuferabsicht"],
+    ["Portalabhaengigkeit", "Portalabhängigkeit"],
+    ["koennen", "können"],
+    ["koennte", "könnte"],
+    ["erhaelt", "erhält"],
+    ["Verkaeuferaufklaerung", "Verkäuferaufklärung"],
+    ["Selbststaendige", "Selbstständige"],
+    ["bestaetigungs", "bestätigungs"],
+    ["Bestaetigungs", "Bestätigungs"],
+    ["haetten", "hätten"],
+    ["haelt", "hält"],
+    ["taeglichen", "täglichen"],
+    ["abhaengt", "abhängt"],
+    ["ueberwiegend", "überwiegend"]
+  ];
+
+  return replacements.reduce((text, [from, to]) => text.replaceAll(from, to), value);
+}
+
 function pipelineSvg(lang, audience) {
   const labels =
     lang === "de"
@@ -732,7 +805,7 @@ function renderHtml(book) {
 
 async function main() {
   const rendered = playbooks.map((book) => {
-    const html = renderHtml(book);
+    const html = book.lang === "de" ? restoreGermanUmlauts(renderHtml(book)) : renderHtml(book);
     const htmlPath = path.join(outDir, `${book.slug}.html`);
     fs.writeFileSync(htmlPath, html, "utf8");
     console.log(`Created ${path.relative(root, htmlPath)}`);

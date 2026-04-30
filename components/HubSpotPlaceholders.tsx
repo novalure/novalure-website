@@ -11,13 +11,17 @@ const copy = {
       email: "Work email",
       company: "Company"
     },
+    selectorLabel: "Choose your playbook",
+    developer: "Developer Pipeline Playbook",
+    agent: "Real Estate Agent Lead Playbook",
     submit: "Send me the Playbook",
     auditSubmit: "Request audit",
     loading: "Preparing your request...",
     error: "Please complete the required fields before submitting.",
-    success: "Your playbook is on its way. Want us to review your current lead system?",
+    success: "Your playbook is on its way.",
+    successBody: "Want us to review your current lead system next?",
     successCta: "Book a Private Growth Audit",
-    formPlaceholder: "HubSpot form placeholder",
+    formPlaceholder: "Playbook delivery",
     meetingTitle: "HubSpot Meeting Scheduler",
     meetingBody: "Connect HUBSPOT_MEETING_SCHEDULER_EMBED / NEXT_PUBLIC_HUBSPOT_MEETING_URL to render the live scheduler."
   },
@@ -27,13 +31,17 @@ const copy = {
       email: "Geschäftliche E-Mail",
       company: "Unternehmen"
     },
+    selectorLabel: "Wählen Sie Ihr Playbook",
+    developer: "Bauträger-Pipeline-Playbook",
+    agent: "Makler-Lead-Playbook",
     submit: "Playbook anfordern",
     auditSubmit: "Audit anfragen",
     loading: "Ihre Anfrage wird vorbereitet...",
     error: "Bitte füllen Sie die erforderlichen Felder aus.",
-    success: "Ihr Playbook ist unterwegs. Möchten Sie, dass wir Ihr aktuelles Lead-System prüfen?",
+    success: "Ihr Playbook ist unterwegs.",
+    successBody: "Möchten Sie, dass wir Ihr aktuelles Lead-System prüfen?",
     successCta: "Privates Growth Audit buchen",
-    formPlaceholder: "HubSpot Formular Platzhalter",
+    formPlaceholder: "Playbook-Versand",
     meetingTitle: "HubSpot Meeting Scheduler",
     meetingBody: "HUBSPOT_MEETING_SCHEDULER_EMBED / NEXT_PUBLIC_HUBSPOT_MEETING_URL verbinden, um den Live-Scheduler zu rendern."
   }
@@ -44,13 +52,21 @@ export function FormLoadingState({ locale }: { locale: Locale }) {
 }
 
 export function FormErrorState({ locale }: { locale: Locale }) {
-  return <p className="form-state form-state-error" role="alert">{copy[locale].error}</p>;
+  return (
+    <p className="form-state form-state-error" role="alert">
+      {copy[locale].error}
+    </p>
+  );
 }
 
-export function FormSuccessState({ locale }: { locale: Locale }) {
+export function FormSuccessState({ locale, playbook }: { locale: Locale; playbook: PlaybookKey }) {
+  const title = playbook === "developer" ? copy[locale].developer : copy[locale].agent;
+
   return (
     <div className="form-state form-state-success" role="status">
-      <p>{copy[locale].success}</p>
+      <span>{title}</span>
+      <strong>{copy[locale].success}</strong>
+      <p>{copy[locale].successBody}</p>
       <a className="button button-secondary" href={locale === "en" ? "/en/contact" : "/de/kontakt"}>
         {copy[locale].successCta}
       </a>
@@ -60,18 +76,16 @@ export function FormSuccessState({ locale }: { locale: Locale }) {
 
 export function HubSpotForm({
   locale,
-  playbook
+  playbook = "developer",
+  selectable = false
 }: {
   locale: Locale;
-  playbook: PlaybookKey;
+  playbook?: PlaybookKey;
+  selectable?: boolean;
 }) {
   const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [selectedPlaybook, setSelectedPlaybook] = useState<PlaybookKey>(playbook);
   const text = copy[locale];
-  const formId =
-    playbook === "developer"
-      ? process.env.NEXT_PUBLIC_HUBSPOT_DEVELOPER_FORM_ID
-      : process.env.NEXT_PUBLIC_HUBSPOT_AGENT_FORM_ID;
-  const placeholder = playbook === "developer" ? "HUBSPOT_FORM_DEVELOPER_PLAYBOOK" : "HUBSPOT_FORM_AGENT_PLAYBOOK";
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -87,7 +101,7 @@ export function HubSpotForm({
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           locale,
-          playbook,
+          playbook: selectedPlaybook,
           name: data.get("name"),
           email: data.get("email"),
           company: data.get("company"),
@@ -106,13 +120,38 @@ export function HubSpotForm({
   }
 
   return (
-    <section className="hubspot-card">
+    <section className={`hubspot-card${selectable ? " hubspot-card-wide" : ""}`}>
       <div className="hubspot-meta">
         <span>{text.formPlaceholder}</span>
-        <code>{formId || placeholder}</code>
+        <strong>{selectedPlaybook === "developer" ? text.developer : text.agent}</strong>
       </div>
       {state !== "success" && (
         <form className="contact-form" onSubmit={submit}>
+          {selectable && (
+            <fieldset className="playbook-selector">
+              <legend>{text.selectorLabel}</legend>
+              <label className={selectedPlaybook === "developer" ? "is-selected" : ""}>
+                <input
+                  type="radio"
+                  name="playbook"
+                  value="developer"
+                  checked={selectedPlaybook === "developer"}
+                  onChange={() => setSelectedPlaybook("developer")}
+                />
+                <span>{text.developer}</span>
+              </label>
+              <label className={selectedPlaybook === "agent" ? "is-selected" : ""}>
+                <input
+                  type="radio"
+                  name="playbook"
+                  value="agent"
+                  checked={selectedPlaybook === "agent"}
+                  onChange={() => setSelectedPlaybook("agent")}
+                />
+                <span>{text.agent}</span>
+              </label>
+            </fieldset>
+          )}
           <label>
             {text.fields.name}
             <input name="name" autoComplete="name" />
@@ -125,12 +164,14 @@ export function HubSpotForm({
             {text.fields.company}
             <input name="company" autoComplete="organization" />
           </label>
-          <button className="button button-primary" type="submit">{text.submit}</button>
+          <button className="button button-primary" type="submit">
+            {text.submit}
+          </button>
         </form>
       )}
       {state === "loading" && <FormLoadingState locale={locale} />}
       {state === "error" && <FormErrorState locale={locale} />}
-      {state === "success" && <FormSuccessState locale={locale} />}
+      {state === "success" && <FormSuccessState locale={locale} playbook={selectedPlaybook} />}
     </section>
   );
 }

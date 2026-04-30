@@ -88,7 +88,7 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
   },
   de: {
     home: "Start",
-    developers: "Bautraeger",
+    developers: "Bauträger",
     agents: "Makler",
     playbooks: "Playbooks",
     contact: "Kontakt",

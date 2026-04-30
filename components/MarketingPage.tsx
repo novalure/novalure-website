@@ -171,6 +171,31 @@ function PlaybookConversion({ locale, title, body }: { locale: "en" | "de"; titl
   );
 }
 
+function PlaybookHub({ locale, title, body }: { locale: "en" | "de"; title: string; body: string }) {
+  return (
+    <section className="playbook-section">
+      <div className="section-heading">
+        <p className="eyebrow">{locale === "en" ? "Playbook selection" : "Playbook-Auswahl"}</p>
+        <h2>{title}</h2>
+        <p>{body}</p>
+      </div>
+      <div className="playbook-hub-grid">
+        {playbooks[locale].map((playbook) => (
+          <article className="playbook-summary-card" key={playbook.key}>
+            <span className="pill">{playbook.key === "developer" ? (locale === "en" ? "Developers" : "Bauträger") : locale === "en" ? "Agents" : "Makler"}</span>
+            <h3>{playbook.title}</h3>
+            <p>{playbook.subtitle}</p>
+            <ul className="check-list">
+              {playbook.learns.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </article>
+        ))}
+        <HubSpotForm locale={locale} playbook="developer" selectable />
+      </div>
+    </section>
+  );
+}
+
 function BeforeAfter({ content }: { content: HomeContent }) {
   return (
     <section className="before-after">
@@ -270,7 +295,7 @@ function PlaybooksPage({ content }: { content: PageContent }) {
   return (
     <main>
       <Hero content={content} />
-      <PlaybookConversion
+      <PlaybookHub
         locale={content.locale}
         title={content.locale === "en" ? "Two playbooks. One goal: better qualified pipeline." : "Zwei Playbooks. Ein Ziel: bessere qualifizierte Pipeline."}
         body={content.description}
