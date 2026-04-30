@@ -145,37 +145,24 @@ function ModuleSection({ content }: { content: HomeContent }) {
 }
 
 function PlaybookConversion({ locale, title, body }: { locale: "en" | "de"; title: string; body: string }) {
-  return (
-    <section className="playbook-section">
-      <div className="section-heading">
-        <p className="eyebrow">{locale === "en" ? "Primary conversion" : "Primäre Conversion"}</p>
-        <h2>{title}</h2>
-        <p>{body}</p>
-      </div>
-      <div className="playbook-grid">
-        {playbooks[locale].map((playbook) => (
-          <article className="playbook-card" key={playbook.key}>
-            <div>
-              <span className="pill">{playbook.key === "developer" ? "Developers" : locale === "en" ? "Agents" : "Makler"}</span>
-              <h3>{playbook.title}</h3>
-              <p>{playbook.subtitle}</p>
-              <ul className="check-list">
-                {playbook.learns.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-            </div>
-            <HubSpotForm locale={locale} playbook={playbook.key} />
-          </article>
-        ))}
-      </div>
-    </section>
-  );
+  return <PlaybookHub locale={locale} title={title} body={body} eyebrow={locale === "en" ? "Primary conversion" : "Primäre Conversion"} />;
 }
 
-function PlaybookHub({ locale, title, body }: { locale: "en" | "de"; title: string; body: string }) {
+function PlaybookHub({
+  locale,
+  title,
+  body,
+  eyebrow
+}: {
+  locale: "en" | "de";
+  title: string;
+  body: string;
+  eyebrow?: string;
+}) {
   return (
     <section className="playbook-section">
       <div className="section-heading">
-        <p className="eyebrow">{locale === "en" ? "Playbook selection" : "Playbook-Auswahl"}</p>
+        <p className="eyebrow">{eyebrow || (locale === "en" ? "Playbook selection" : "Playbook-Auswahl")}</p>
         <h2>{title}</h2>
         <p>{body}</p>
       </div>
