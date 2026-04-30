@@ -138,6 +138,7 @@ Playbook forms submit to the local API route `/api/playbook`. That route sends t
 ## Resend Playbook Delivery
 
 Resend is used to send the selected Playbook by email after the form is submitted.
+The four PDF assets are included under `public/playbooks` and are served from `/playbooks/...pdf`.
 
 Required variables:
 
@@ -145,15 +146,18 @@ Required variables:
 - `RESEND_FROM_EMAIL`
 - `DEVELOPER_PLAYBOOK_URL`
 - `AGENT_PLAYBOOK_URL`
+- Optional localized overrides: `DEVELOPER_PLAYBOOK_URL_EN`, `DEVELOPER_PLAYBOOK_URL_DE`, `AGENT_PLAYBOOK_URL_EN`, `AGENT_PLAYBOOK_URL_DE`
 
 Recommended flow:
 
 1. Verify `novalure.eu` in Resend.
 2. Add the DNS records Resend gives you.
 3. Create an API key.
-4. Upload each Playbook PDF to a private or unlisted asset URL.
-5. Set the two Playbook URL variables in Vercel.
+4. Use the built-in PDF URLs or upload each Playbook PDF to a private or unlisted asset URL.
+5. Set the Playbook URL variables in Vercel only if you want to override the built-in URLs.
 6. Submit a test form and confirm the contact appears in HubSpot and the Playbook email arrives.
+
+To regenerate the HTML sources, run `npm run playbooks`. In this Codex workspace, PDFs were rendered from those HTML sources with `scripts/render-playbook-pdfs.py`.
 
 ## Cookie Consent and Tracking
 

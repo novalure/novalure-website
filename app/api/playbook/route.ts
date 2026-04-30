@@ -45,8 +45,26 @@ function getSiteUrl() {
   return process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
 }
 
-function getPlaybookUrl(playbook: PlaybookKey) {
-  return playbook === "developer" ? process.env.DEVELOPER_PLAYBOOK_URL : process.env.AGENT_PLAYBOOK_URL;
+function getPlaybookUrl(playbook: PlaybookKey, locale: Locale) {
+  const siteUrl = getSiteUrl();
+  const fallback =
+    playbook === "developer"
+      ? locale === "de"
+        ? `${siteUrl}/playbooks/bautraeger-pipeline-playbook-de.pdf`
+        : `${siteUrl}/playbooks/developer-pipeline-playbook-en.pdf`
+      : locale === "de"
+        ? `${siteUrl}/playbooks/makler-lead-playbook-de.pdf`
+        : `${siteUrl}/playbooks/real-estate-agent-lead-playbook-en.pdf`;
+
+  if (playbook === "developer") {
+    return locale === "de"
+      ? process.env.DEVELOPER_PLAYBOOK_URL_DE || process.env.DEVELOPER_PLAYBOOK_URL || fallback
+      : process.env.DEVELOPER_PLAYBOOK_URL_EN || process.env.DEVELOPER_PLAYBOOK_URL || fallback;
+  }
+
+  return locale === "de"
+    ? process.env.AGENT_PLAYBOOK_URL_DE || process.env.AGENT_PLAYBOOK_URL || fallback
+    : process.env.AGENT_PLAYBOOK_URL_EN || process.env.AGENT_PLAYBOOK_URL || fallback;
 }
 
 function getFormId(playbook: PlaybookKey) {
@@ -120,10 +138,10 @@ async function sendPlaybookEmail({
 }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
-  const playbookUrl = getPlaybookUrl(playbook);
+  const playbookUrl = getPlaybookUrl(playbook, locale);
   const siteUrl = getSiteUrl();
 
-  if (!apiKey || !from || !playbookUrl) {
+  if (!apiKey || !from) {
     throw new Error("Resend configuration missing");
   }
 
