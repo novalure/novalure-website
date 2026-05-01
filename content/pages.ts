@@ -302,7 +302,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         body:
           "Novalure combines commercial sales thinking with funnel architecture, performance marketing, CRM operations and sales assets. It feels focused because the team is specialist, not generic.",
         pillars: ["Real Estate Sales Strategy", "Funnel Architecture", "Performance Marketing", "CRM & Lead Operations", "Sales Assets & Content"],
-        founder: "Franz Romih — Founder & Real Estate Sales Lead"
+        founder: "Franz Romih — Real Estate Sales Lead"
       },
       faq: sharedFaq.en,
       finalCtaTitle: "Download the Playbook. Then decide if your current lead system deserves a private audit."
@@ -467,7 +467,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         body:
           "Novalure verbindet kommerzielles Vertriebsdenken mit Funnel Architecture, Performance Marketing, CRM Operations und Sales Assets. Fokussiert, weil das Team spezialisiert ist.",
         pillars: ["Real Estate Sales Strategy", "Funnel Architecture", "Performance Marketing", "CRM & Lead Operations", "Sales Assets & Content"],
-        founder: "Franz Romih — Gründer & Real Estate Sales Lead"
+        founder: "Franz Romih — Real Estate Sales Lead"
       },
       faq: sharedFaq.de,
       finalCtaTitle: "Laden Sie das Playbook herunter. Danach entscheiden Sie, ob Ihr aktuelles Lead-System ein privates Audit verdient."
