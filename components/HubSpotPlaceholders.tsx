@@ -182,6 +182,7 @@ export function HubSpotMeetingEmbed({ locale }: { locale: Locale }) {
     ? process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE
     : process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN;
   const meetingUrl = localizedMeetingUrl || process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL;
+  const schedulerUrl = meetingUrl ? withSchedulerLocale(meetingUrl, locale) : "";
 
   return (
     <section className="hubspot-card meeting-card">
@@ -189,10 +190,10 @@ export function HubSpotMeetingEmbed({ locale }: { locale: Locale }) {
         <span className="panel-label">{text.meetingTitle}</span>
         <p>{text.meetingBody}</p>
       </div>
-      {meetingUrl ? (
+      {schedulerUrl ? (
         <iframe
           className="hubspot-meeting-frame"
-          src={meetingUrl}
+          src={schedulerUrl}
           title={text.meetingTitle}
           loading="lazy"
         />
@@ -201,4 +202,10 @@ export function HubSpotMeetingEmbed({ locale }: { locale: Locale }) {
       )}
     </section>
   );
+}
+
+function withSchedulerLocale(url: string, locale: Locale) {
+  const separator = url.includes("?") ? "&" : "?";
+  const hubspotLocale = locale === "de" ? "de-de" : "en-us";
+  return `${url}${separator}locale=${hubspotLocale}`;
 }
