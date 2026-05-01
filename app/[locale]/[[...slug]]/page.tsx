@@ -5,6 +5,8 @@ import { pages } from "@/content/pages";
 import { getAlternates, getLocalizedParams, getPageKey, isLocale, type Locale } from "@/lib/i18n";
 import { pageSchemas } from "@/lib/structured-data";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
+
 type RouteParams = {
   locale: string;
   slug?: string[];
@@ -25,13 +27,22 @@ export function generateMetadata({ params }: { params: RouteParams }): Metadata 
     title: content.seoTitle,
     description: content.description,
     alternates: getAlternates(locale, key),
+    robots: ["imprint", "privacy", "cookies"].includes(key)
+      ? { index: false, follow: true }
+      : { index: true, follow: true },
     openGraph: {
       title: content.seoTitle,
       description: content.description,
-      url: getAlternates(locale, key).canonical,
-      locale,
-      alternateLocale: locale === "en" ? "de" : "en",
+      url: `${siteUrl}${getAlternates(locale, key).canonical}`,
+      locale: locale === "de" ? "de_DE" : "en_US",
+      alternateLocale: locale === "en" ? "de_DE" : "en_US",
       images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: content.title }]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: content.seoTitle,
+      description: content.description,
+      images: ["/og-default.svg"]
     }
   };
 }

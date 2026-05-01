@@ -33,7 +33,7 @@ const playbookCopy = {
       intro: "Hier ist das Playbook für eigene Verkäufer- und Käufer-Leads jenseits von Portalabhängigkeit.",
       cta: "Playbook öffnen"
     },
-    audit: "Wenn Sie möchten, dass wir Ihr aktuelles Lead-System prüfen, können Sie hier ein privates Growth Audit buchen:"
+    audit: "Wenn Sie möchten, dass wir Ihr aktuelles Lead-System prüfen, können Sie hier ein privates Wachstumsaudit buchen:"
   }
 };
 

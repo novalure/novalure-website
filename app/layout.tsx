@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: "Novalure",
+  creator: "Novalure",
+  publisher: "Novalure",
   title: {
     default: "Novalure",
     template: "%s"
@@ -22,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );

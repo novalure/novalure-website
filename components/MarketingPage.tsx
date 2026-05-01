@@ -368,7 +368,7 @@ function FinalCta({ content, title }: { content: PageContent; title?: string }) 
           {content.locale === "en" ? "Download Playbook" : "Playbook herunterladen"}
         </Link>
         <Link className="button button-secondary dark" href={getPath(content.locale, "contact")}>
-          {content.locale === "en" ? "Book Private Growth Audit" : "Privates Growth Audit buchen"}
+          {content.locale === "en" ? "Book Private Growth Audit" : "Privates Wachstumsaudit buchen"}
         </Link>
       </div>
     </section>

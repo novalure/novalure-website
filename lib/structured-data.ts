@@ -1,7 +1,7 @@
 import { routeMap, type Locale, type PageKey } from "@/lib/i18n";
 import type { FaqItem, PageContent } from "@/content/pages";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
 
 export function organizationSchema(locale: Locale) {
   return {
@@ -14,6 +14,7 @@ export function organizationSchema(locale: Locale) {
       locale === "en"
         ? "PropTech Sales System for real estate developers and agents."
         : "PropTech Sales System für Bauträger und Immobilienmakler.",
+    logo: `${siteUrl}/novalure-logo.png`,
     areaServed: ["AT", "DE", "CH", "LI", "IE", "EU"],
     founder: {
       "@type": "Person",
@@ -30,7 +31,7 @@ export function websiteSchema(locale: Locale) {
     "@id": `${siteUrl}/#website`,
     name: "Novalure",
     url: `${siteUrl}${routeMap.home[locale]}`,
-    inLanguage: locale
+    inLanguage: locale === "de" ? "de-DE" : "en-US"
   };
 }
 
@@ -76,10 +77,6 @@ export function pageSchemas(content: PageContent) {
     websiteSchema(content.locale),
     breadcrumbSchema(content.locale, content.key, content.title)
   ];
-
-  if (content.faq?.length) {
-    schemas.push(faqSchema(content.faq));
-  }
 
   return schemas;
 }

@@ -64,7 +64,7 @@ const labels = {
   },
   de: {
     download: "Playbook herunterladen",
-    audit: "Privates Growth Audit buchen",
+    audit: "Privates Wachstumsaudit buchen",
     developerPlaybook: "Bauträger-Pipeline-Playbook",
     agentPlaybook: "Makler-Lead-Playbook"
   }
@@ -313,7 +313,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       template: "audience",
       eyebrow: "For developers",
       title: "Your project does not need more impressions. It needs a controllable buyer pipeline.",
-      seoTitle: "For Developers | Novalure PropTech Sales System",
+      seoTitle: "PropTech Sales System for Real Estate Developers | Novalure",
       description:
         "Developer-focused PropTech Sales System for project funnel architecture, buyer qualification, CRM handover and launch reporting.",
       primaryCta: { label: labels.en.download, target: "playbooks" },
@@ -334,7 +334,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       template: "audience",
       eyebrow: "For real estate agents",
       title: "Stop depending only on portals. Build your own lead pipeline.",
-      seoTitle: "For Agents | Novalure PropTech Sales System",
+      seoTitle: "Real Estate Agent Lead Generation System | Novalure",
       description:
         "Agent-focused lead infrastructure for seller lead generation, buyer lead generation, local funnels, CRM follow-up and pipeline visibility.",
       primaryCta: { label: labels.en.download, target: "playbooks" },
@@ -355,7 +355,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       template: "playbooks",
       eyebrow: "Playbook hub",
       title: "Choose the Playbook for your pipeline problem.",
-      seoTitle: "Playbooks | Novalure",
+      seoTitle: "Real Estate Sales Playbooks for Developers & Agents | Novalure",
       description:
         "Download the Developer Pipeline Playbook or Real Estate Agent Lead Playbook through HubSpot forms.",
       primaryCta: { label: labels.en.download, target: "playbooks" },
@@ -369,12 +369,12 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       template: "contact",
       eyebrow: "Private Growth Audit",
       title: "Book a private review of your current lead system.",
-      seoTitle: "Contact | Book a Private Growth Audit",
+      seoTitle: "Book a Private Growth Audit for Real Estate Sales | Novalure",
       description:
         "Book a no-pressure private audit to review your project positioning, funnel logic, CRM handover and lead quality gaps.",
       primaryCta: { label: labels.en.audit, target: "contact" },
       secondaryCta: { label: labels.en.download, target: "playbooks" },
-      heroBullets: ["No generic pitch", "Lead-system diagnosis", "Clear next steps", "HubSpot scheduler placeholder"],
+      heroBullets: ["No generic pitch", "Lead-system diagnosis", "Clear next steps", "Microsoft Teams booking"],
       sections: [
         { title: "What the audit is", body: "A focused review of your current lead generation, sales handover and pipeline visibility." },
         { title: "Who it is for", body: "Developers, project sellers, broker teams and agents who want better qualified conversations." },
@@ -459,7 +459,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         id: "prozess",
         title: "Ein Sales-System-Prozess, kein Kampagnenraten.",
         body: "Jeder Schritt reduziert Rauschen, schützt Vertriebszeit und macht Pipeline-Bewegung sichtbar.",
-        steps: ["Privates Growth Audit", "Strategie & Funnel Architecture", "Build & Setup", "Campaign Launch", "Lead Qualification", "CRM-Übergabe", "Optimierung & Reporting"]
+        steps: ["Privates Wachstumsaudit", "Strategie & Funnel-Architektur", "Aufbau & Einrichtung", "Kampagnenstart", "Lead-Qualifizierung", "CRM-Übergabe", "Optimierung & Reporting"]
       },
       team: {
         id: "team",
@@ -478,7 +478,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       template: "audience",
       eyebrow: "Für Bauträger",
       title: "Ihr Projekt braucht nicht mehr Impressionen. Es braucht eine steuerbare Käufer-Pipeline.",
-      seoTitle: "Für Bauträger | Novalure PropTech Sales System",
+      seoTitle: "PropTech Sales System für Bauträger | Novalure",
       description:
         "PropTech Sales System für Bauträger: Projekt-Funnel-Architektur, Käuferqualifizierung, CRM-Übergabe und Launch-Reporting.",
       primaryCta: { label: labels.de.download, target: "playbooks" },
@@ -499,7 +499,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       template: "audience",
       eyebrow: "Für Immobilienmakler",
       title: "Verlassen Sie sich nicht nur auf Portale. Bauen Sie Ihre eigene Lead-Pipeline.",
-      seoTitle: "Für Makler | Novalure PropTech Sales System",
+      seoTitle: "Leadgenerierung für Immobilienmakler | Novalure",
       description:
         "Lead-Infrastruktur für Immobilienmakler: Verkäufer-Leads, Käufer-Leads, lokale Funnels, CRM-Follow-up und Pipeline-Sichtbarkeit.",
       primaryCta: { label: labels.de.download, target: "playbooks" },
@@ -520,7 +520,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       template: "playbooks",
       eyebrow: "Playbook Hub",
       title: "Wählen Sie das Playbook für Ihr Pipeline-Problem.",
-      seoTitle: "Playbooks | Novalure",
+      seoTitle: "Immobilien-Playbooks für Bauträger & Makler | Novalure",
       description:
         "Laden Sie das Bauträger-Pipeline-Playbook oder Makler-Lead-Playbook über HubSpot-Formulare herunter.",
       primaryCta: { label: labels.de.download, target: "playbooks" },
@@ -532,14 +532,14 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       key: "contact",
       locale: "de",
       template: "contact",
-      eyebrow: "Privates Growth Audit",
+      eyebrow: "Privates Wachstumsaudit",
       title: "Buchen Sie eine private Prüfung Ihres aktuellen Lead-Systems.",
-      seoTitle: "Kontakt | Privates Growth Audit buchen",
+      seoTitle: "Privates Wachstumsaudit für Immobilienvertrieb | Novalure",
       description:
         "Buchen Sie ein unverbindliches privates Audit für Positionierung, Funnel-Logik, CRM-Übergabe und Leadqualitätslücken.",
       primaryCta: { label: labels.de.audit, target: "contact" },
       secondaryCta: { label: labels.de.download, target: "playbooks" },
-      heroBullets: ["Kein generischer Pitch", "Lead-System-Diagnose", "Klare nächste Schritte", "HubSpot Scheduler Platzhalter"],
+      heroBullets: ["Kein generischer Pitch", "Lead-System-Diagnose", "Klare nächste Schritte", "Microsoft Teams Termin"],
       sections: [
         { title: "Was das Audit ist", body: "Eine fokussierte Prüfung Ihrer aktuellen Leadgenerierung, Vertriebsübergabe und Pipeline-Sichtbarkeit." },
         { title: "Für wen es geeignet ist", body: "Bauträger, Projektvertriebe, Maklerteams und Immobilienmakler, die bessere qualifizierte Gespräche wollen." },

@@ -68,8 +68,8 @@ export function getAlternates(locale: Locale, key: PageKey) {
   return {
     canonical: routeMap[key][locale],
     languages: {
-      en: routeMap[key].en,
-      de: routeMap[key].de,
+      "en-US": routeMap[key].en,
+      "de-DE": routeMap[key].de,
       "x-default": routeMap[key].en
     }
   };
