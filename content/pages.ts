@@ -745,6 +745,108 @@ function legal(locale: Locale, key: "imprint" | "privacy" | "cookies"): PageCont
     };
   }
 
+  if (key === "cookies") {
+    return {
+      key,
+      locale,
+      template: "legal",
+      eyebrow: "Cookie information",
+      title: "Cookie Policy",
+      seoTitle: "Cookie Policy | Novalure",
+      description:
+        "This Cookie Policy explains how Novalure CLG uses cookies, pixels, analytics tools, marketing tags and external embeds on www.novalure.eu.",
+      primaryCta: { label: labels[locale].download, target: "playbooks" },
+      secondaryCta: { label: labels[locale].audit, target: "contact" },
+      heroBullets: [
+        "Necessary cookies are always active",
+        "Analytics and marketing require consent",
+        "Consent can be changed at any time",
+        "GDPR and Irish ePrivacy aligned"
+      ],
+      sections: [
+        {
+          title: "1. Introduction",
+          body:
+            "This Cookie Policy explains how Novalure CLG (\"we\", \"us\", \"our\") uses cookies and similar technologies on www.novalure.eu. Similar technologies include pixels, tags, local storage, scripts, tracking identifiers and embedded third-party tools. This policy should be read together with our Privacy Policy."
+        },
+        {
+          title: "2. What Cookies Are",
+          body:
+            "Cookies are small text files stored on your device when you visit a website. They can help a website work properly, remember preferences, measure performance, analyse user behaviour, support marketing campaigns or display external embedded content."
+        },
+        {
+          title: "3. Legal Basis and Consent",
+          body:
+            "Under GDPR and Irish ePrivacy rules, strictly necessary cookies may be used where they are required to provide the website or a service requested by the user. Optional cookies and similar technologies, including analytics, marketing, behavioural tracking and many third-party embeds, are used only where legally permitted and, where required, only after your prior consent. Consent must be freely given, specific, informed and unambiguous. You can withdraw or change your consent at any time."
+        },
+        {
+          title: "4. Cookie Banner and Consent Choices",
+          body:
+            "Our cookie banner is designed to give you a clear choice. Optional categories are not pre-selected. You can accept all optional cookies, reject all optional cookies and use necessary cookies only, or save a custom selection by category. Rejecting optional cookies does not prevent you from using the website."
+        },
+        {
+          title: "5. Necessary Technologies",
+          body:
+            "Necessary technologies are required for the basic operation, security and functionality of the website. They may include technologies used for routing, page delivery, security, form operation, consent storage and basic technical functionality. These technologies do not require consent where they are strictly necessary."
+        },
+        {
+          title: "6. Analytics Technologies",
+          body:
+            "Analytics technologies help us understand how visitors use the website, which pages are visited, how users interact with content and where technical or content improvements may be needed. We may use Google Analytics 4, Google Tag Manager and Hotjar for analytics, performance measurement, interaction analysis and website improvement. These tools are activated only where the relevant consent has been given."
+        },
+        {
+          title: "7. Marketing and Advertising Technologies",
+          body:
+            "Marketing technologies help us measure campaign performance, understand lead sources, build advertising audiences and improve B2B marketing communication. We may use Meta Pixel, LinkedIn Insight Tag, HubSpot Tracking Code, Google Tag Manager and related advertising or conversion measurement technologies. These tools are activated only where the relevant consent has been given."
+        },
+        {
+          title: "8. External Media and Embedded Services",
+          body:
+            "Some parts of the website may use external services or embeds, such as HubSpot forms, HubSpot meeting scheduler, Microsoft Teams-related meeting workflows or other third-party content. Where these services set optional cookies or process data for non-essential purposes, they are loaded only after the relevant consent where required."
+        },
+        {
+          title: "9. Tools That May Be Used",
+          body:
+            "Depending on configuration and your consent choices, the website may use the following providers or systems: Vercel for hosting and delivery, Sanity for content management, HubSpot for forms, CRM, tracking and meeting scheduling, Resend for transactional email delivery, Microsoft 365 and Microsoft Teams for communication and meetings, Google Analytics 4, Google Tag Manager, Meta Pixel, Hotjar and LinkedIn Insight Tag."
+        },
+        {
+          title: "10. Consent Categories",
+          body:
+            "Necessary: required for the website and always active. Analytics: used to measure and improve website performance and user experience. Marketing: used to measure advertising campaigns, lead sources and remarketing audiences. External media and embeds: used to display or enable third-party content and embedded tools."
+        },
+        {
+          title: "11. Managing or Withdrawing Consent",
+          body:
+            "You can change or withdraw your consent at any time by opening the cookie settings on the website. When you withdraw consent, optional tracking technologies will no longer be activated from that point forward. You can also delete cookies through your browser settings."
+        },
+        {
+          title: "12. Browser Settings",
+          body:
+            "Most browsers allow you to block, delete or restrict cookies. If you disable cookies through your browser, some website functions may not work as intended. Browser-level settings are separate from the consent choices provided on this website."
+        },
+        {
+          title: "13. International Transfers",
+          body:
+            "Some providers may process data outside the EU or EEA. Where this occurs, Novalure relies on adequacy decisions, Standard Contractual Clauses or other lawful transfer mechanisms under GDPR, as further explained in our Privacy Policy."
+        },
+        {
+          title: "14. Updates to This Cookie Policy",
+          body:
+            "We may update this Cookie Policy if our website, legal requirements or technology providers change. The current version is always available on this website."
+        },
+        {
+          title: "15. Contact",
+          body:
+            "If you have questions about cookies, consent or data protection, please contact Novalure CLG at hello@novalure.eu."
+        },
+        {
+          title: "Last Updated",
+          body: "December 2025"
+        }
+      ]
+    };
+  }
+
   return {
     key,
     locale,
