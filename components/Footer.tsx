@@ -48,7 +48,7 @@ export function Footer({ locale }: { locale: Locale }) {
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} Novalure</span>
-        <span>Sanity, HubSpot and tracking integrations ready for production IDs.</span>
+        <span>Novalure CLG · Dublin, Ireland</span>
       </div>
     </footer>
   );
