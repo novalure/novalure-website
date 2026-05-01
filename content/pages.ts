@@ -633,6 +633,118 @@ function legal(locale: Locale, key: "imprint" | "privacy" | "cookies"): PageCont
     };
   }
 
+  if (key === "privacy") {
+    return {
+      key,
+      locale,
+      template: "legal",
+      eyebrow: "Data protection",
+      title: "Privacy Policy",
+      seoTitle: "Privacy Policy | Novalure",
+      description:
+        "This Privacy Policy explains how Novalure CLG collects, uses, stores and protects personal data under the GDPR and Irish data protection law.",
+      primaryCta: { label: labels[locale].download, target: "playbooks" },
+      secondaryCta: { label: labels[locale].audit, target: "contact" },
+      heroBullets: [
+        "Novalure CLG",
+        "GDPR and Irish Data Protection Act 2018",
+        "Consent-based analytics and marketing tracking",
+        "hello@novalure.eu"
+      ],
+      sections: [
+        {
+          title: "1. Introduction",
+          body:
+            "This Privacy Policy explains how Novalure CLG (\"we\", \"us\", \"our\") collects, uses, stores and protects personal data in accordance with the General Data Protection Regulation (EU) 2016/679 (GDPR), the Irish Data Protection Act 2018 and applicable ePrivacy rules. We are committed to protecting your privacy and handling your personal data in a transparent and lawful manner."
+        },
+        {
+          title: "2. Data Controller",
+          body:
+            "The data controller is Novalure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland. E-mail: hello@novalure.eu. Website: www.novalure.eu."
+        },
+        {
+          title: "3. Scope of Application",
+          body:
+            "This Privacy Policy applies to visitors of our website, prospective clients, investors and business partners, users downloading playbooks, users booking meetings and users contacting us via email, forms or other communication channels."
+        },
+        {
+          title: "4. Legal Basis for Processing",
+          body:
+            "We process personal data on one or more of the following legal bases under Article 6 GDPR: consent, performance of a contract or pre-contractual measures, compliance with legal obligations, and legitimate interests such as business communication, website security, internal administration and B2B marketing where such interests are not overridden by your rights."
+        },
+        {
+          title: "5. Categories of Personal Data",
+          body:
+            "Depending on your interaction with us, we may process identification data, contact data, company information, business and project-related information, communication content, form submissions, meeting booking information, marketing preferences and technical data such as IP address, browser type, device information, cookie identifiers, page interactions and referral information."
+        },
+        {
+          title: "6. Purposes of Processing",
+          body:
+            "We process personal data to operate and secure the website, respond to enquiries, provide advisory and consulting services, manage contractual and pre-contractual relationships, deliver requested playbooks, schedule meetings, maintain CRM records, analyse website performance, measure marketing campaigns, improve user experience and comply with legal or regulatory obligations."
+        },
+        {
+          title: "7. Forms, Playbooks and Meeting Bookings",
+          body:
+            "When you submit a playbook form or book a meeting, we process the information you provide in order to respond to your request, send the relevant playbook, prepare the meeting and manage follow-up communication. We may use HubSpot for forms, CRM and meeting scheduling, Resend for transactional email delivery and Microsoft Teams or Microsoft 365 for meeting communication."
+        },
+        {
+          title: "8. Cookies, Analytics and Tracking Technologies",
+          body:
+            "Our website uses cookies and similar technologies. Strictly necessary technologies are used to operate the website and remember consent preferences. Analytics, marketing and behavioural tracking technologies are used only where legally permitted and, where required, only after your prior consent. These may include Google Analytics 4, Google Tag Manager, Meta Pixel, Hotjar, HubSpot Tracking Code, LinkedIn Insight Tag and other analytics or advertising tools configured in the cookie consent system. You can withdraw or change your consent at any time through the cookie settings on the website."
+        },
+        {
+          title: "9. Hosting and Technical Infrastructure",
+          body:
+            "Our website may be hosted and delivered through professional technical service providers such as Vercel and related infrastructure providers. We may also use Sanity for content management, HubSpot for CRM and forms, Resend for email delivery, Microsoft 365 and Microsoft Teams for communication, and other service providers required to operate the website and business systems."
+        },
+        {
+          title: "10. Disclosure of Data to Third Parties",
+          body:
+            "We do not sell or rent personal data. Personal data may be disclosed to processors and service providers, professional advisors, authorities where legally required, and business partners where this is necessary for the requested service or communication. Processors are bound by contractual safeguards, including Data Processing Agreements where required."
+        },
+        {
+          title: "11. International Data Transfers",
+          body:
+            "Some service providers may process data outside the EU or EEA. Where personal data is transferred internationally, we rely on adequacy decisions, Standard Contractual Clauses, supplementary safeguards or another lawful transfer mechanism under Articles 44 to 49 GDPR."
+        },
+        {
+          title: "12. Data Retention",
+          body:
+            "We retain personal data only for as long as necessary for the relevant purpose, including responding to enquiries, maintaining business records, fulfilling contracts, complying with statutory retention obligations and establishing or defending legal claims. Marketing and tracking data is retained in accordance with the relevant tool settings and consent choices."
+        },
+        {
+          title: "13. Your Rights",
+          body:
+            "You have the right of access, rectification, erasure, restriction of processing, data portability, objection to processing and withdrawal of consent at any time. Requests can be submitted to hello@novalure.eu. Withdrawal of consent does not affect the lawfulness of processing based on consent before its withdrawal."
+        },
+        {
+          title: "14. Right to Lodge a Complaint",
+          body:
+            "You have the right to lodge a complaint with a supervisory authority. The competent supervisory authority in Ireland is the Data Protection Commission (DPC), 6 Pembroke Row, Dublin 2, D02 X963, Ireland."
+        },
+        {
+          title: "15. Security Measures",
+          body:
+            "We implement appropriate technical and organisational measures to protect personal data against loss, misuse, unauthorised access, disclosure, alteration or destruction."
+        },
+        {
+          title: "16. Changes to This Privacy Policy",
+          body:
+            "We may update this Privacy Policy where necessary to reflect legal, technical or business changes. The current version is always available on our website."
+        },
+        {
+          title: "17. Contact",
+          body:
+            "If you have any questions about this Privacy Policy or the processing of your personal data, please contact Novalure CLG at hello@novalure.eu."
+        },
+        {
+          title: "Last Updated",
+          body: "December 2025"
+        }
+      ]
+    };
+  }
+
   return {
     key,
     locale,
