@@ -571,6 +571,66 @@ function legal(locale: Locale, key: "imprint" | "privacy" | "cookies"): PageCont
     ? "This legal page is a placeholder and requires legal review before launch. Do not publish without replacing the bracketed fields with verified legal information."
     : "Diese rechtliche Seite ist ein Platzhalter und erfordert vor dem Launch eine rechtliche Prüfung. Bitte nicht veröffentlichen, bevor die Platzhalter mit geprüften Angaben ersetzt wurden.";
 
+  if (key === "imprint") {
+    const imprintTitle = locale === "en" ? "Legal Imprint" : "Impressum";
+    const imprintBody =
+      "This imprint is based on the company information provided in Novalure CLG's General Terms and Conditions. It should be reviewed by legal counsel before final publication.";
+
+    return {
+      key,
+      locale,
+      template: "legal",
+      eyebrow: "Company information",
+      title: imprintTitle,
+      seoTitle: `${imprintTitle} | Novalure`,
+      description: "Company and contact information for Novalure CLG, an Irish company limited by guarantee.",
+      primaryCta: { label: labels[locale].download, target: "playbooks" },
+      secondaryCta: { label: labels[locale].audit, target: "contact" },
+      heroBullets: [
+        "Novalure CLG",
+        "20 Harcourt Street, Dublin 2, D02 H364, Ireland",
+        "hello@novalure.eu",
+        "Ireland"
+      ],
+      sections: [
+        {
+          title: "Company Information",
+          body: imprintBody,
+          items: [
+            "Novalure CLG",
+            "A company limited by guarantee incorporated under the laws of Ireland",
+            "Registered office: 20 Harcourt Street, Dublin 2, D02 H364, Ireland",
+            "E-mail: hello@novalure.eu"
+          ]
+        },
+        {
+          title: "Business Activity",
+          body:
+            "Novalure CLG operates as an independent international advisory and consulting firm specialising in real estate-related structuring, project advisory and investor sourcing services."
+        },
+        {
+          title: "Regulatory Position",
+          body:
+            "Novalure provides non-regulated advisory and consulting services. Novalure does not act as a regulated real estate broker, financial intermediary, investment firm, credit institution, payment service provider, trustee or escrow agent."
+        },
+        {
+          title: "No Handling of Client or Investor Funds",
+          body:
+            "Novalure never holds, receives, manages or administers client funds, investor funds or third-party assets. All payments between clients and third parties are conducted directly between those parties."
+        },
+        {
+          title: "Legal Review Notice",
+          body:
+            "This imprint should be reviewed by qualified legal counsel before publication. Company registration number, VAT number and any additional mandatory disclosure details should be added if legally required."
+        },
+        {
+          title: "Last Updated",
+          body: "December 2025"
+        }
+      ]
+    };
+  }
+
   return {
     key,
     locale,
