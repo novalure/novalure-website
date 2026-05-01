@@ -22,8 +22,8 @@ const copy = {
     successBody: "Want us to review your current lead system next?",
     successCta: "Book a Private Growth Audit",
     formPlaceholder: "Playbook delivery",
-    meetingTitle: "HubSpot Meeting Scheduler",
-    meetingBody: "Connect HUBSPOT_MEETING_SCHEDULER_EMBED / NEXT_PUBLIC_HUBSPOT_MEETING_URL to render the live scheduler."
+    meetingTitle: "Book your Private Growth Audit",
+    meetingBody: "Choose a time that works for you. The calendar opens with live availability and sends the Microsoft Teams link after booking."
   },
   de: {
     fields: {
@@ -40,10 +40,10 @@ const copy = {
     error: "Bitte füllen Sie die erforderlichen Felder aus.",
     success: "Ihr Playbook ist unterwegs.",
     successBody: "Möchten Sie, dass wir Ihr aktuelles Lead-System prüfen?",
-    successCta: "Privates Growth Audit buchen",
+    successCta: "Privates Wachstumsaudit buchen",
     formPlaceholder: "Playbook-Versand",
-    meetingTitle: "HubSpot Meeting Scheduler",
-    meetingBody: "HUBSPOT_MEETING_SCHEDULER_EMBED / NEXT_PUBLIC_HUBSPOT_MEETING_URL verbinden, um den Live-Scheduler zu rendern."
+    meetingTitle: "Privates Wachstumsaudit buchen",
+    meetingBody: "Wählen Sie einen passenden Termin. Der Kalender zeigt verfügbare Zeiten und sendet nach der Buchung den Microsoft Teams-Link."
   }
 };
 
@@ -178,7 +178,10 @@ export function HubSpotForm({
 
 export function HubSpotMeetingEmbed({ locale }: { locale: Locale }) {
   const text = copy[locale];
-  const meetingUrl = process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL;
+  const localizedMeetingUrl = locale === "de"
+    ? process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE
+    : process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN;
+  const meetingUrl = localizedMeetingUrl || process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL;
 
   return (
     <section className="hubspot-card meeting-card">
@@ -186,7 +189,16 @@ export function HubSpotMeetingEmbed({ locale }: { locale: Locale }) {
         <span className="panel-label">{text.meetingTitle}</span>
         <p>{text.meetingBody}</p>
       </div>
-      <code>{meetingUrl || "HUBSPOT_MEETING_SCHEDULER_EMBED"}</code>
+      {meetingUrl ? (
+        <iframe
+          className="hubspot-meeting-frame"
+          src={meetingUrl}
+          title={text.meetingTitle}
+          loading="lazy"
+        />
+      ) : (
+        <code>{locale === "de" ? "NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE" : "NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN"}</code>
+      )}
     </section>
   );
 }

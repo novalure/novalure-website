@@ -130,7 +130,9 @@ The site is prepared for:
 
 - Developer Playbook form: `NEXT_PUBLIC_HUBSPOT_DEVELOPER_FORM_ID`
 - Agent Playbook form: `NEXT_PUBLIC_HUBSPOT_AGENT_FORM_ID`
-- Meeting Scheduler: `NEXT_PUBLIC_HUBSPOT_MEETING_URL`
+- Meeting Scheduler fallback: `NEXT_PUBLIC_HUBSPOT_MEETING_URL`
+- English Meeting Scheduler: `NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN`
+- German Meeting Scheduler: `NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE`
 - HubSpot Tracking Code: `NEXT_PUBLIC_HUBSPOT_TRACKING_CODE_ID`
 
 Playbook forms submit to the local API route `/api/playbook`. That route sends the submission to HubSpot's Forms API when portal and form IDs are configured.
