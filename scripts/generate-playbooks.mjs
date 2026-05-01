@@ -670,6 +670,13 @@ function matrixSvg(lang, audience) {
     lang === "de"
       ? ["Nurture", "Pruefen", "Disqualifizieren", "Sales-ready"]
       : ["Nurture", "Review", "Disqualify", "Sales-ready"];
+  const label = (text, x, y, color, size = 25) => {
+    if (text.length > 13) {
+      const [first, second] = text.includes("-") ? text.split("-") : [text.slice(0, 8), text.slice(8)];
+      return `<text x="${x}" y="${y - 11}" text-anchor="middle" fill="${color}" font-size="${size - 3}" font-family="Arial" font-weight="800"><tspan x="${x}">${esc(first)}${text.includes("-") ? "-" : ""}</tspan><tspan x="${x}" dy="28">${esc(second)}</tspan></text>`;
+    }
+    return `<text x="${x}" y="${y}" text-anchor="middle" fill="${color}" font-size="${size}" font-family="Arial" font-weight="800">${esc(text)}</text>`;
+  };
   return `
   <svg viewBox="0 0 920 520" role="img" aria-label="Qualification matrix">
     <rect width="920" height="520" rx="28" fill="#f7f4eb"/>
@@ -681,13 +688,10 @@ function matrixSvg(lang, audience) {
     <rect x="500" y="250" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
     <rect x="190" y="95" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
     <rect x="500" y="95" width="250" height="140" rx="20" fill="#111318"/>
-    <text x="315" y="325" text-anchor="middle" fill="#111318" font-size="25" font-family="Arial" font-weight="800">${cells[0]}</text>
-    <text x="625" y="325" text-anchor="middle" fill="#111318" font-size="25" font-family="Arial" font-weight="800">${cells[1]}</text>
-    <text x="315" y="170" text-anchor="middle" fill="#111318" font-size="25" font-family="Arial" font-weight="800">${cells[2]}</text>
-    <text x="625" y="170" text-anchor="middle" fill="#ffd43b" font-size="25" font-family="Arial" font-weight="800">${cells[3]}</text>
-    <circle cx="705" cy="130" r="14" fill="#ffd43b"/>
-    <circle cx="728" cy="154" r="9" fill="#ffd43b" opacity=".7"/>
-    <circle cx="675" cy="178" r="7" fill="#ffd43b" opacity=".5"/>
+    ${label(cells[0], 315, 325, "#111318")}
+    ${label(cells[1], 625, 325, "#111318")}
+    ${label(cells[2], 315, 170, "#111318", 23)}
+    ${label(cells[3], 625, 170, "#ffd43b")}
   </svg>`;
 }
 
@@ -739,7 +743,7 @@ function renderHtml(book) {
   body { margin: 0; background: #d8d4c9; color: #111318; font-family: Arial, Helvetica, sans-serif; }
   .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 20mm; background: #fbfaf6; page-break-after: always; position: relative; overflow: hidden; }
   .cover { background: radial-gradient(circle at 70% 22%, rgba(255,212,59,.24), transparent 28%), linear-gradient(135deg, #08090c, #151923 58%, #08090c); color: #fff; }
-  .logo { width: 172px; height: auto; object-fit: contain; margin-bottom: 38mm; }
+  .logo { width: 292px; height: auto; object-fit: contain; margin-bottom: 30mm; }
   .eyebrow { color: #ffd43b; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 800; font-size: 12px; }
   h1 { font-size: 56px; line-height: .98; letter-spacing: -1.8px; margin: 12px 0 18px; max-width: 690px; }
   .subtitle { color: #d9dee8; font-size: 21px; line-height: 1.45; max-width: 620px; }
@@ -765,7 +769,7 @@ function renderHtml(book) {
   .section:nth-child(odd) .bullets li { background: #191e27; border-color: #303846; color: #fff; }
   .summary { background: #111318; color: #fff; }
   .summary .body { color: #d7deea; max-width: 690px; margin-bottom: 26px; }
-  .summary .logo { margin-bottom: 42mm; }
+  .summary .logo { margin-bottom: 34mm; }
   .cta { display: inline-block; margin-top: 16px; padding: 15px 22px; border-radius: 999px; background: #ffd43b; color: #171000; font-weight: 900; text-decoration: none; }
   .footer { position: absolute; left: 20mm; right: 20mm; bottom: 11mm; display: flex; justify-content: space-between; color: #8b93a0; font-size: 10px; }
   .page:after { content: ""; position: absolute; right: -60px; bottom: -60px; width: 190px; height: 190px; border-radius: 50%; background: rgba(255,212,59,.12); }

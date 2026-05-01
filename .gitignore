@@ -14,3 +14,4 @@ vercel
 .codex-temp
 .codex-python-packages
 public/playbooks/previews
+public/playbooks/*-check.html

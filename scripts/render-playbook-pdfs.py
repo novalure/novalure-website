@@ -167,11 +167,14 @@ def matrix(c, x, y, width, height, lang):
         (x + width / 2 + 8, y + height / 2 + 8, labels[3], True),
     ]
     for cx, cy, label, dark in cells:
+        cell_w = width / 2 - 58
+        cell_h = height / 2 - 45
         c.setFillColor(colors.HexColor("#111318") if dark else colors.white)
-        c.roundRect(cx, cy, width / 2 - 58, height / 2 - 45, 10, stroke=0, fill=1)
+        c.roundRect(cx, cy, cell_w, cell_h, 10, stroke=0, fill=1)
         c.setFillColor(colors.HexColor("#ffd43b") if dark else colors.HexColor("#111318"))
-        c.setFont("Helvetica-Bold", 10)
-        c.drawCentredString(cx + (width / 2 - 58) / 2, cy + 34, label)
+        label_style = style(9.2 if len(label) > 13 else 10.2, 12, colors.HexColor("#ffd43b") if dark else colors.HexColor("#111318"), True, 1)
+        p, ph = paragraph(label, label_style, cell_w - 12)
+        p.drawOn(c, cx + 6, cy + (cell_h - ph) / 2 + 1)
     c.setStrokeColor(colors.HexColor("#111318"))
     c.line(x + 22, y + 25, x + width - 22, y + 25)
     c.line(x + 22, y + 25, x + 22, y + height - 18)
@@ -231,7 +234,7 @@ def render(book):
     page = 1
 
     background(c, dark=True)
-    draw_logo(c, M, H - 35 * mm, 50 * mm, dark=True)
+    draw_logo(c, M, H - 35 * mm, 78 * mm, dark=True)
     c.setFillColor(colors.HexColor("#ffd43b"))
     c.setFont("Helvetica-Bold", 9)
     c.drawString(M, H - 82 * mm, book["eyebrow"].upper())
@@ -276,7 +279,7 @@ def render(book):
         page += 1
 
     background(c, dark=True)
-    draw_logo(c, M, H - 34 * mm, 50 * mm, dark=True)
+    draw_logo(c, M, H - 34 * mm, 78 * mm, dark=True)
     final_title = "Lassen Sie Ihr aktuelles Lead-System prüfen." if book["lang"] == "de" else "Have your current lead system reviewed."
     final_body = (
         "Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein privates Growth Audit. Wir prüfen Funnel, Lead-Qualifizierung, CRM-Übergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen."
@@ -298,7 +301,13 @@ def render(book):
 
 
 def main():
-    for html_path in sorted(OUT_DIR.glob("*.html")):
+    playbook_names = {
+        "developer-pipeline-playbook-en.html",
+        "bautraeger-pipeline-playbook-de.html",
+        "real-estate-agent-lead-playbook-en.html",
+        "makler-lead-playbook-de.html",
+    }
+    for html_path in sorted(path for path in OUT_DIR.glob("*.html") if path.name in playbook_names):
         render(parse_book(html_path))
 
 
