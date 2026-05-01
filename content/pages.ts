@@ -589,8 +589,8 @@ function legal(locale: Locale, key: "imprint" | "privacy" | "cookies"): PageCont
       heroBullets: [
         "Novalure CLG",
         "20 Harcourt Street, Dublin 2, D02 H364, Ireland",
+        "Registration number: 796735",
         "hello@novalure.eu",
-        "Ireland"
       ],
       sections: [
         {
@@ -599,6 +599,8 @@ function legal(locale: Locale, key: "imprint" | "privacy" | "cookies"): PageCont
           items: [
             "Novalure CLG",
             "A company limited by guarantee incorporated under the laws of Ireland",
+            "Registered with: Companies Registration Office (CRO), Ireland",
+            "Registration number: 796735",
             "Registered office: 20 Harcourt Street, Dublin 2, D02 H364, Ireland",
             "E-mail: hello@novalure.eu"
           ]
