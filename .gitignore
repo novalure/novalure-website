@@ -10,3 +10,7 @@ node_modules
 next-start*.log
 vercel
 .vercel
+.pip-cache
+.codex-temp
+.codex-python-packages
+public/playbooks/previews

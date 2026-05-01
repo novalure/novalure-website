@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "playbooks": "node scripts/generate-playbooks.mjs"
+    "playbooks": "node scripts/generate-playbooks.mjs",
+    "playbook-previews": "node scripts/render-playbook-previews.mjs"
   },
   "dependencies": {
     "@portabletext/react": "^3.2.1",

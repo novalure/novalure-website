@@ -13,6 +13,7 @@ from reportlab.platypus import Paragraph
 ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "public" / "playbooks"
 LOGO = ROOT / "public" / "novalure-logo.png"
+LOGO_WHITE = ROOT / "public" / "novalure-logo-white.png"
 W, H = A4
 M = 20 * mm
 
@@ -99,9 +100,10 @@ def footer(c, page, lang, dark=False):
     c.drawRightString(W - M, 10 * mm, str(page).zfill(2))
 
 
-def draw_logo(c, x, y, width):
+def draw_logo(c, x, y, width, dark=False):
+    logo_path = LOGO_WHITE if dark and LOGO_WHITE.exists() else LOGO
     try:
-        c.drawImage(str(LOGO), x, y, width=width, height=width * 0.37, mask="auto", preserveAspectRatio=True)
+        c.drawImage(str(logo_path), x, y, width=width, height=width * 0.37, mask="auto", preserveAspectRatio=True)
     except Exception:
         c.setFillColor(colors.white)
         c.setFont("Helvetica-Bold", 20)
@@ -229,7 +231,7 @@ def render(book):
     page = 1
 
     background(c, dark=True)
-    draw_logo(c, M, H - 35 * mm, 50 * mm)
+    draw_logo(c, M, H - 35 * mm, 50 * mm, dark=True)
     c.setFillColor(colors.HexColor("#ffd43b"))
     c.setFont("Helvetica-Bold", 9)
     c.drawString(M, H - 82 * mm, book["eyebrow"].upper())
@@ -274,7 +276,7 @@ def render(book):
         page += 1
 
     background(c, dark=True)
-    draw_logo(c, M, H - 34 * mm, 50 * mm)
+    draw_logo(c, M, H - 34 * mm, 50 * mm, dark=True)
     final_title = "Lassen Sie Ihr aktuelles Lead-System prüfen." if book["lang"] == "de" else "Have your current lead system reviewed."
     final_body = (
         "Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein privates Growth Audit. Wir prüfen Funnel, Lead-Qualifizierung, CRM-Übergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen."
@@ -284,10 +286,11 @@ def render(book):
     y = para(c, final_title, M, H - 82 * mm, W - 2 * M, style(26, 30, colors.white, True))
     y = para(c, final_body, M, y - 14, W - 2 * M - 10 * mm, style(12, 18, colors.HexColor("#d7deea")))
     c.setFillColor(colors.HexColor("#ffd43b"))
-    c.roundRect(M, y - 24, 72 * mm, 14 * mm, 7 * mm, stroke=0, fill=1)
+    button_y = y - 24 * mm
+    c.roundRect(M, button_y, 72 * mm, 14 * mm, 7 * mm, stroke=0, fill=1)
     c.setFillColor(colors.HexColor("#111318"))
     c.setFont("Helvetica-Bold", 11)
-    c.drawCentredString(M + 36 * mm, y - 7, "novalure.eu")
+    c.drawCentredString(M + 36 * mm, button_y + 5 * mm, "novalure.eu")
     pipeline(c, M, 36 * mm, W - 2 * M, 58 * mm, book["lang"], book["audience"])
     footer(c, page, book["lang"], dark=True)
     c.save()

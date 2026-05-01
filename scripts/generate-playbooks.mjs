@@ -15,7 +15,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const outDir = path.join(root, "public", "playbooks");
 const logoPath = path.join(root, "public", "novalure-logo.png");
+const whiteLogoPath = path.join(root, "public", "novalure-logo-white.png");
 const logoData = `data:image/png;base64,${fs.readFileSync(logoPath).toString("base64")}`;
+const whiteLogoData = `data:image/png;base64,${fs.readFileSync(whiteLogoPath).toString("base64")}`;
 
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -549,6 +551,13 @@ function esc(value) {
 }
 
 function restoreGermanUmlauts(value) {
+  const protectedDataUrls = [];
+  const protectedValue = value.replace(/data:image\/png;base64,[^"]+/g, (match) => {
+    const token = `__NOVALURE_DATA_URL_${protectedDataUrls.length}__`;
+    protectedDataUrls.push(match);
+    return token;
+  });
+
   const replacements = [
     ["Bautraeger", "Bauträger"],
     ["Kaeufer", "Käufer"],
@@ -618,7 +627,8 @@ function restoreGermanUmlauts(value) {
     ["ueberwiegend", "überwiegend"]
   ];
 
-  return replacements.reduce((text, [from, to]) => text.replaceAll(from, to), value);
+  const restored = replacements.reduce((text, [from, to]) => text.replaceAll(from, to), protectedValue);
+  return protectedDataUrls.reduce((text, dataUrl, index) => text.replaceAll(`__NOVALURE_DATA_URL_${index}__`, dataUrl), restored);
 }
 
 function pipelineSvg(lang, audience) {
@@ -754,8 +764,9 @@ function renderHtml(book) {
   .section:nth-child(odd) .body { color: #d0d7e2; }
   .section:nth-child(odd) .bullets li { background: #191e27; border-color: #303846; color: #fff; }
   .summary { background: #111318; color: #fff; }
-  .summary .body { color: #d7deea; }
-  .cta { display: inline-block; margin-top: 24px; padding: 15px 22px; border-radius: 999px; background: #ffd43b; color: #171000; font-weight: 900; text-decoration: none; }
+  .summary .body { color: #d7deea; max-width: 690px; margin-bottom: 26px; }
+  .summary .logo { margin-bottom: 42mm; }
+  .cta { display: inline-block; margin-top: 16px; padding: 15px 22px; border-radius: 999px; background: #ffd43b; color: #171000; font-weight: 900; text-decoration: none; }
   .footer { position: absolute; left: 20mm; right: 20mm; bottom: 11mm; display: flex; justify-content: space-between; color: #8b93a0; font-size: 10px; }
   .page:after { content: ""; position: absolute; right: -60px; bottom: -60px; width: 190px; height: 190px; border-radius: 50%; background: rgba(255,212,59,.12); }
   .note { font-size: 13px; color: #606977; line-height: 1.5; margin-top: 24px; }
@@ -764,7 +775,7 @@ function renderHtml(book) {
 <body>
   <main>
     <section class="page cover">
-      <img class="logo" src="${logoData}" alt="Novalure">
+      <img class="logo" src="${whiteLogoData}" alt="Novalure">
       <div class="eyebrow">${esc(book.eyebrow)} | ${esc(ui.label)}</div>
       <h1>${title}</h1>
       <p class="subtitle">${esc(book.subtitle)}</p>
@@ -790,7 +801,7 @@ function renderHtml(book) {
     </section>
     ${sections}
     <section class="page summary">
-      <img class="logo" src="${logoData}" alt="Novalure">
+      <img class="logo" src="${whiteLogoData}" alt="Novalure">
       <div class="kicker">${book.lang === "de" ? "Naechster Schritt" : "Next step"}</div>
       <h2>${book.lang === "de" ? "Lassen Sie Ihr aktuelles Lead-System pruefen." : "Have your current lead system reviewed."}</h2>
       <p class="body">${book.lang === "de" ? "Wenn Sie sehen moechten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein privates Growth Audit. Wir pruefen Funnel, Lead-Qualifizierung, CRM-Uebergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen." : "If you want to see which layers are missing in your current setup, book a Private Growth Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without fake promises."}</p>
