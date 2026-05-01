@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.novalure.eu/en</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en" />
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.novalure.eu/de</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en" />
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.novalure.eu/en/developers</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en/developers" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de/bautraeger" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en/developers" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.novalure.eu/de/bautraeger</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en/developers" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de/bautraeger" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en/developers" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.novalure.eu/en/agents</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en/agents" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de/makler" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en/agents" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.novalure.eu/de/makler</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en/agents" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de/makler" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en/agents" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.novalure.eu/en/playbooks</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en/playbooks" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de/playbooks" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en/playbooks" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.novalure.eu/de/playbooks</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en/playbooks" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de/playbooks" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en/playbooks" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.novalure.eu/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en/contact" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.novalure.eu/de/kontakt</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.novalure.eu/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.novalure.eu/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.novalure.eu/en/contact" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>
