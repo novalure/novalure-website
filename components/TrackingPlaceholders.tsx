@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID;
 
 function loadGoogleAnalytics() {
   if (!gaMeasurementId || gaMeasurementId === "G-XXXXXXXXXX") return;
@@ -66,6 +66,15 @@ export function TrackingPlaceholders() {
   const lastPageView = useRef<string | null>(null);
 
   useEffect(() => {
+    function readSavedConsent() {
+      try {
+        const saved = window.localStorage.getItem("novalure-cookie-consent");
+        return saved ? JSON.parse(saved) as ConsentState : null;
+      } catch {
+        return null;
+      }
+    }
+
     function activate(event: Event) {
       const consent = (event as CustomEvent<ConsentState>).detail;
       analyticsAllowed.current = Boolean(consent.analytics);
@@ -95,6 +104,10 @@ export function TrackingPlaceholders() {
     }
 
     window.addEventListener("novalure:consent", activate);
+    const savedConsent = readSavedConsent();
+    if (savedConsent) {
+      activate(new CustomEvent("novalure:consent", { detail: savedConsent }));
+    }
     return () => window.removeEventListener("novalure:consent", activate);
   }, []);
 
