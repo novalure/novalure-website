@@ -70,15 +70,12 @@ function absolute(path: string) {
 export function GET() {
   const lastmod = new Date().toISOString();
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes
   .map(
     (route) => `  <url>
     <loc>${absolute(route.loc)}</loc>
     <lastmod>${lastmod}</lastmod>
-    <xhtml:link rel="alternate" hreflang="en-US" href="${absolute(route.alternates.en)}" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="${absolute(route.alternates.de)}" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${absolute(route.alternates.default)}" />
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
   </url>`
