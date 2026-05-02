@@ -16,50 +16,10 @@ declare global {
   }
 }
 
-const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID;
-
-function loadGoogleAnalytics() {
-  if (!gaMeasurementId || gaMeasurementId === "G-XXXXXXXXXX") return;
-
-  try {
-    const disableKey = `ga-disable-${gaMeasurementId}`;
-    window[disableKey as keyof Window] = false as never;
-
-    if (!document.querySelector(`script[data-novalure-ga="${gaMeasurementId}"]`)) {
-      const script = document.createElement("script");
-      script.async = true;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`;
-      script.dataset.novalureGa = gaMeasurementId;
-      document.head.appendChild(script);
-    }
-
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function gtag(...args: unknown[]) {
-      window.dataLayer?.push(args);
-    };
-
-    window.gtag("js", new Date());
-    window.gtag("config", gaMeasurementId, {
-      send_page_view: false,
-      anonymize_ip: true
-    });
-  } catch {
-    // Tracking must never block the website render.
-  }
-}
-
-function disableGoogleAnalytics() {
-  if (!gaMeasurementId || gaMeasurementId === "G-XXXXXXXXXX") return;
-  try {
-    const disableKey = `ga-disable-${gaMeasurementId}`;
-    window[disableKey as keyof Window] = true as never;
-  } catch {
-    // Ignore browser privacy restrictions.
-  }
-}
+const gaMeasurementId = "G-0LV11ZNV38";
 
 function sendPageView(path: string) {
-  if (!gaMeasurementId || gaMeasurementId === "G-XXXXXXXXXX" || !window.gtag) return;
+  if (!window.gtag) return;
 
   try {
     window.gtag("event", "page_view", {
@@ -104,10 +64,7 @@ export function TrackingPlaceholders() {
         analyticsAllowed.current = consent.analytics;
 
         if (consent.analytics) {
-          loadGoogleAnalytics();
           sendPageView(`${window.location.pathname}${window.location.search}`);
-        } else {
-          disableGoogleAnalytics();
         }
 
         if (consent.analytics || consent.marketing) {
