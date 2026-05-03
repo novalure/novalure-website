@@ -853,7 +853,26 @@ code {
 
 .content-section {
   min-height: 360px;
+  min-width: 0;
+  overflow-x: hidden;
   border-radius: 0;
+}
+
+.content-section h2 {
+  max-width: 100%;
+  margin-bottom: 22px;
+  font-size: clamp(2.55rem, 3.1vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: auto;
+}
+
+.content-section p,
+.content-section .check-list {
+  max-width: 100%;
 }
 
 .meeting-section {
@@ -1137,6 +1156,19 @@ code {
     display: none;
   }
 
+  .section-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .content-section {
+    min-height: 320px;
+  }
+
+  .content-section h2 {
+    font-size: 3.1rem;
+    line-height: 1.1;
+  }
+
   .process-list,
   .layer-grid,
   .module-grid {
@@ -1250,6 +1282,11 @@ code {
     grid-template-columns: 1fr;
   }
 
+  .content-section h2 {
+    font-size: 2.65rem;
+    line-height: 1.1;
+  }
+
   .cta-band,
   .footer-bottom,
   .cookie-banner {
@@ -1277,6 +1314,15 @@ code {
 
   h1 {
     font-size: clamp(3rem, 16vw, 4.2rem);
+  }
+
+  .content-section {
+    padding: 28px;
+  }
+
+  .content-section h2 {
+    font-size: 2.05rem;
+    line-height: 1.12;
   }
 
   .hero-actions .button,
