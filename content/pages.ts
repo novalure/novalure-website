@@ -311,20 +311,20 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       key: "developers",
       locale: "en",
       template: "audience",
-      eyebrow: "For developers",
-      title: "Your project does not need more impressions. It needs a controllable buyer pipeline.",
-      seoTitle: "PropTech Sales System for Real Estate Developers | Novalure",
-      description:
-        "Developer-focused PropTech Sales System for project funnel architecture, buyer qualification, CRM handover and launch reporting.",
+    eyebrow: "For real estate developers",
+    title: "Real estate developer lead generation for a controllable buyer pipeline.",
+    seoTitle: "Real Estate Developer Lead Generation | Project Pipeline | Novalure",
+    description:
+      "Real estate developer lead generation for new-build and investment projects: project funnels, buyer qualification, CRM handover and pipeline visibility.",
       primaryCta: { label: labels.en.download, target: "playbooks" },
       secondaryCta: { label: labels.en.audit, target: "contact" },
-      heroBullets: ["New developments", "Investment projects", "Project sales teams", "CRM-ready buyer demand"],
-      sections: [
-        { title: "Developer pain points", body: "Launches often create attention before they create sales clarity. Ad spend rises, enquiries stay mixed and sales teams receive leads without context.", items: ["Campaigns optimized for CPL instead of pipeline", "Landing pages that do not qualify intent", "No structured CRM handover"] },
-        { title: "Developer PropTech Sales System", body: "Novalure connects positioning, project landing pages, traffic, qualification and sales reporting into one controlled launch architecture." },
-        { title: "Project funnel architecture", body: "Each project gets a dedicated funnel logic around location, buyer profile, investment case, unit mix and next-step readiness." },
-        { title: "Buyer qualification logic", body: "We separate casual curiosity from buyer signals your team can act on, without inventing unverifiable lead promises." },
-        { title: "CRM handover", body: "Sales receives source, intent and conversation context so the first call starts closer to a real buying discussion." }
+    heroBullets: ["Real estate developer leads", "New-build projects", "Buyer qualification", "Project funnels"],
+    sections: [
+      { title: "Real estate developer lead generation needs more than reach", body: "Project launches often create attention before they create sales clarity. Property developer marketing only becomes useful when enquiries are qualified, routed and visible in the sales pipeline.", items: ["Project marketing optimized for CPL instead of pipeline", "Landing pages that do not qualify buyer intent", "No structured CRM handover for project sales"] },
+      { title: "Property developer marketing system", body: "Novalure connects positioning, project landing pages, paid search and social traffic, lead qualification and sales reporting into one controlled launch architecture." },
+      { title: "Project funnel architecture for real estate developers", body: "Each project gets a dedicated funnel logic around location, buyer profile, investment case, unit mix and next-step readiness." },
+      { title: "Buyer qualification before sales handover", body: "We separate casual curiosity from buyer signals your team can act on, without inventing unverifiable lead promises." },
+      { title: "CRM handover for project sales teams", body: "Sales receives source, intent and conversation context so the first call starts closer to a real buying discussion." }
       ],
       faq: sharedFaq.en.slice(0, 8)
     },
@@ -333,19 +333,19 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "en",
       template: "audience",
       eyebrow: "For real estate agents",
-      title: "Stop depending only on portals. Build your own lead pipeline.",
-      seoTitle: "Real Estate Agent Lead Generation System | Novalure",
-      description:
-        "Agent-focused lead infrastructure for seller lead generation, buyer lead generation, local funnels, CRM follow-up and pipeline visibility.",
+    title: "Real estate agent lead generation beyond portals.",
+    seoTitle: "Real Estate Agent Lead Generation | Agent Sales System | Novalure",
+    description:
+      "Build your own real estate agent lead generation system with seller and buyer funnels, lead qualification, CRM handover and structured follow-up.",
       primaryCta: { label: labels.en.download, target: "playbooks" },
       secondaryCta: { label: labels.en.audit, target: "contact" },
-      heroBullets: ["Seller demand", "Buyer funnels", "Local authority", "Follow-up structure"],
-      sections: [
-        { title: "Agent pain points", body: "Portals can create exposure, but they rarely create owned pipeline. Serious agents need seller and buyer lead flows they can control.", items: ["Portal dependency", "Weak owner intent", "Buyer enquiries without readiness", "Manual follow-up gaps"] },
-        { title: "Seller lead generation", body: "Localized campaigns and landing pages position your team as the specialist for a market, property type or seller situation." },
-        { title: "Buyer lead generation", body: "Search and social funnels capture active demand and filter for viewing readiness, budget context and intent." },
-        { title: "Local funnel system", body: "Your pipeline becomes an owned operating asset, not just a list of third-party enquiries." },
-        { title: "CRM follow-up", body: "Leads are structured so your team knows who to contact, why they converted and what follow-up should happen next." }
+    heroBullets: ["Real estate agent leads", "Seller lead generation", "Buyer funnels", "CRM follow-up"],
+    sections: [
+      { title: "Real estate agent lead generation without portal dependency", body: "Portals can create exposure, but they rarely create owned pipeline. Serious real estate agents need seller and buyer lead flows they can control, qualify and follow up consistently.", items: ["Portal dependency", "Weak seller intent", "Buyer enquiries without readiness", "Manual follow-up gaps"] },
+      { title: "Seller lead generation for real estate agents", body: "Localized campaigns and landing pages position your team as the specialist for a market, property type or seller situation." },
+      { title: "Buyer lead generation with local funnel logic", body: "Search and social funnels capture active demand and filter for viewing readiness, budget context and intent." },
+      { title: "Owned local funnel system", body: "Your pipeline becomes an owned operating asset, not just a list of third-party enquiries." },
+      { title: "CRM follow-up for real estate agents", body: "Leads are structured so your team knows who to contact, why they converted and what follow-up should happen next." }
       ],
       faq: sharedFaq.en.slice(0, 8)
     },
@@ -476,20 +476,20 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       key: "developers",
       locale: "de",
       template: "audience",
-      eyebrow: "Für Bauträger",
-      title: "Ihr Projekt braucht nicht mehr Impressionen. Es braucht eine steuerbare Käufer-Pipeline.",
-      seoTitle: "PropTech Sales System für Bauträger | Novalure",
-      description:
-        "PropTech Sales System für Bauträger: Projekt-Funnel-Architektur, Käuferqualifizierung, CRM-Übergabe und Launch-Reporting.",
+    eyebrow: "Für Bauträger und Projektentwickler",
+    title: "Bauträger Marketing für eine kontrollierbare Käufer-Pipeline.",
+    seoTitle: "Bauträger Marketing & Leadgenerierung | Projekt-Pipeline | Novalure",
+    description:
+      "Bauträger Marketing für Neubau- und Immobilienprojekte: Projekt-Funnel, Käuferqualifizierung, CRM-Übergabe und planbare Pipeline statt nur Impressionen.",
       primaryCta: { label: labels.de.download, target: "playbooks" },
       secondaryCta: { label: labels.de.audit, target: "contact" },
-      heroBullets: ["Neubauprojekte", "Investmentprojekte", "Projektvertrieb", "CRM-fähige Käufernachfrage"],
-      sections: [
-        { title: "Bauträger-Pain-Points", body: "Launches erzeugen oft Aufmerksamkeit, bevor Vertriebsklarheit entsteht. Media-Kosten steigen, Anfragen bleiben gemischt und der Vertrieb erhält Leads ohne Kontext.", items: ["Kampagnen optimieren CPL statt Pipeline", "Landingpages qualifizieren Intent nicht sauber", "Keine strukturierte CRM-Übergabe"] },
-        { title: "Developer PropTech Sales System", body: "Novalure verbindet Positionierung, Projekt-Landingpages, Traffic, Qualifizierung und Sales Reporting in einer kontrollierten Launch-Architektur." },
-        { title: "Projekt-Funnel-Architektur", body: "Jedes Projekt erhält eine eigene Funnel-Logik rund um Lage, Käuferprofil, Investment Case, Wohnungsmix und Next-Step-Reife." },
-        { title: "Käufer-Qualifizierungslogik", body: "Wir trennen allgemeine Neugier von Kaufsignalen, mit denen Ihr Vertrieb arbeiten kann, ohne nicht belegbare Lead-Versprechen zu machen." },
-        { title: "CRM-Übergabe", body: "Der Vertrieb erhält Quelle, Intent und Gesprächskontext, damit der erste Kontakt näher an einem echten Kaufgespräch beginnt." }
+    heroBullets: ["Bauträger Leads", "Neubauprojekte", "Käuferqualifizierung", "Projekt-Funnel"],
+    sections: [
+      { title: "Bauträger Marketing braucht mehr als Reichweite", body: "Projektlaunches erzeugen oft Aufmerksamkeit, bevor Vertriebsklarheit entsteht. Bauträger Marketing wird erst wertvoll, wenn Käuferanfragen qualifiziert, sauber übergeben und im Vertrieb sichtbar werden.", items: ["Kampagnen optimieren CPL statt Projekt-Pipeline", "Landingpages qualifizieren Käufer-Intent nicht sauber", "Keine strukturierte CRM-Übergabe für den Projektvertrieb"] },
+      { title: "Leadgenerierung für Neubau- und Immobilienprojekte", body: "Novalure verbindet Positionierung, Projekt-Landingpages, Google- und Meta-Kampagnen, Qualifizierung und Sales Reporting in einer kontrollierten Launch-Architektur." },
+      { title: "Projekt-Funnel für Bauträger", body: "Jedes Projekt erhält eine eigene Funnel-Logik rund um Lage, Käuferprofil, Investment Case, Wohnungsmix und Next-Step-Reife." },
+      { title: "Käuferqualifizierung vor der Vertriebsübergabe", body: "Wir trennen allgemeine Neugier von Kaufsignalen, mit denen Ihr Vertrieb arbeiten kann, ohne nicht belegbare Lead-Versprechen zu machen." },
+      { title: "CRM-Übergabe für Projektvertrieb", body: "Der Vertrieb erhält Quelle, Intent und Gesprächskontext, damit der erste Kontakt näher an einem echten Kaufgespräch beginnt." }
       ],
       faq: sharedFaq.de.slice(0, 8)
     },
@@ -498,19 +498,19 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "de",
       template: "audience",
       eyebrow: "Für Immobilienmakler",
-      title: "Verlassen Sie sich nicht nur auf Portale. Bauen Sie Ihre eigene Lead-Pipeline.",
-      seoTitle: "Leadgenerierung für Immobilienmakler | Novalure",
-      description:
-        "Lead-Infrastruktur für Immobilienmakler: Verkäufer-Leads, Käufer-Leads, lokale Funnels, CRM-Follow-up und Pipeline-Sichtbarkeit.",
+    title: "Leadgenerierung für Immobilienmakler, die nicht bei Portalen endet.",
+    seoTitle: "Leadgenerierung für Immobilienmakler | Makler Lead System | Novalure",
+    description:
+      "Novalure baut ein digitales Lead-System für Immobilienmakler: Verkäufer- und Käufer-Leads, Qualifizierung, CRM-Übergabe und weniger Portalabhängigkeit.",
       primaryCta: { label: labels.de.download, target: "playbooks" },
       secondaryCta: { label: labels.de.audit, target: "contact" },
-      heroBullets: ["Verkäufernachfrage", "Käufer-Funnels", "Lokale Autorität", "Follow-up-Struktur"],
-      sections: [
-        { title: "Makler-Pain-Points", body: "Portale schaffen Reichweite, aber selten eigene Pipeline. Professionelle Makler brauchen Verkäufer- und Käufer-Flows, die sie steuern können.", items: ["Portalabhängigkeit", "Schwacher Eigentümer-Intent", "Käuferanfragen ohne Reife", "Manuelle Follow-up-Lücken"] },
-        { title: "Seller Lead Generation", body: "Lokalisierte Kampagnen und Landingpages positionieren Ihr Team als Spezialist für Markt, Objekttyp oder Verkäufersituation." },
-        { title: "Buyer Lead Generation", body: "Search- und Social-Funnels erfassen aktive Nachfrage und filtern nach Besichtigungsnähe, Budgetkontext und Intent." },
-        { title: "Lokales Funnel-System", body: "Ihre Pipeline wird zu einem eigenen Betriebsvermögen, nicht nur zu einer Liste externer Anfragen." },
-        { title: "CRM-Follow-up", body: "Leads sind so strukturiert, dass Ihr Team weiß, wen es kontaktieren sollte, warum die Person konvertiert hat und welcher nächste Schritt sinnvoll ist." }
+    heroBullets: ["Immobilienmakler Leads", "Verkäufer-Leads", "Käufer-Leads", "CRM-Follow-up"],
+    sections: [
+      { title: "Makler Leadgenerierung ohne reine Portalabhängigkeit", body: "Portale schaffen Reichweite, aber selten eine eigene Pipeline. Professionelle Immobilienmakler brauchen Verkäufer- und Käufer-Flows, die sie selbst steuern, qualifizieren und nachverfolgen können.", items: ["Portalabhängigkeit", "Schwacher Eigentümer-Intent", "Käuferanfragen ohne Reife", "Manuelle Follow-up-Lücken"] },
+      { title: "Verkäufer-Leadgenerierung für Immobilienmakler", body: "Lokalisierte Kampagnen und Landingpages positionieren Ihr Team als Spezialist für Markt, Objekttyp oder Verkäufersituation." },
+      { title: "Käufer-Leadgenerierung mit lokaler Funnel-Logik", body: "Search- und Social-Funnels erfassen aktive Nachfrage und filtern nach Besichtigungsnähe, Budgetkontext und Intent." },
+      { title: "Eigenes lokales Funnel-System", body: "Ihre Pipeline wird zu einem eigenen Betriebsvermögen, nicht nur zu einer Liste externer Anfragen." },
+      { title: "CRM-Follow-up für Maklerteams", body: "Leads sind so strukturiert, dass Ihr Team weiß, wen es kontaktieren sollte, warum die Person konvertiert hat und welcher nächste Schritt sinnvoll ist." }
       ],
       faq: sharedFaq.de.slice(0, 8)
     },
