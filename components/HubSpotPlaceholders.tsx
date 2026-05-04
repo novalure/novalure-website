@@ -14,7 +14,8 @@ const copy = {
     fields: {
       name: "Name",
       email: "Work email",
-      company: "Company"
+      company: "Company",
+      phone: "Phone number"
     },
     selectorLabel: "Choose your playbook",
     developer: "Developer Pipeline Playbook",
@@ -34,7 +35,8 @@ const copy = {
     fields: {
       name: "Name",
       email: "Geschäftliche E-Mail",
-      company: "Unternehmen"
+      company: "Unternehmen",
+      phone: "Telefonnummer"
     },
     selectorLabel: "Wählen Sie Ihr Playbook",
     developer: "Bauträger-Pipeline-Playbook",
@@ -95,7 +97,7 @@ export function HubSpotForm({
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    if (!data.get("name") || !data.get("email")) {
+    if (!data.get("name") || !data.get("email") || !data.get("company") || !data.get("phone")) {
       setState("error");
       return;
     }
@@ -110,6 +112,7 @@ export function HubSpotForm({
           name: data.get("name"),
           email: data.get("email"),
           company: data.get("company"),
+          phone: data.get("phone"),
           pageUri: window.location.href
         })
       });
@@ -159,15 +162,19 @@ export function HubSpotForm({
           )}
           <label>
             {text.fields.name}
-            <input name="name" autoComplete="name" />
+            <input name="name" autoComplete="name" required />
           </label>
           <label>
             {text.fields.email}
-            <input name="email" type="email" autoComplete="email" />
+            <input name="email" type="email" autoComplete="email" required />
           </label>
           <label>
             {text.fields.company}
-            <input name="company" autoComplete="organization" />
+            <input name="company" autoComplete="organization" required />
+          </label>
+          <label>
+            {text.fields.phone}
+            <input name="phone" type="tel" autoComplete="tel" required />
           </label>
           <button className="button button-primary" type="submit">
             {text.submit}

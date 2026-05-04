@@ -78,12 +78,14 @@ async function submitToHubSpot({
   name,
   email,
   company,
+  phone,
   pageUri
 }: {
   playbook: PlaybookKey;
   name: string;
   email: string;
   company: string;
+  phone: string;
   pageUri: string;
 }) {
   const portalId = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
@@ -102,6 +104,7 @@ async function submitToHubSpot({
         { name: "email", value: email },
         { name: "firstname", value: name },
         { name: "company", value: company },
+        { name: "phone", value: phone },
         { name: "requested_playbook", value: playbook }
       ],
       context: {
@@ -180,14 +183,15 @@ export async function POST(request: NextRequest) {
     const playbook: PlaybookKey = body.playbook === "agent" ? "agent" : "developer";
     const name = typeof body.name === "string" ? body.name.trim() : "";
     const company = typeof body.company === "string" ? body.company.trim() : "";
+    const phone = typeof body.phone === "string" ? body.phone.trim() : "";
 
-    if (!name || !isEmail(body.email)) {
+    if (!name || !company || !phone || !isEmail(body.email)) {
       return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
     }
 
     const pageUri = typeof body.pageUri === "string" ? body.pageUri : getSiteUrl();
 
-    await submitToHubSpot({ playbook, name, email: body.email, company, pageUri });
+    await submitToHubSpot({ playbook, name, email: body.email, company, phone, pageUri });
     await sendPlaybookEmail({ locale, playbook, name, email: body.email });
 
     return NextResponse.json({ ok: true });

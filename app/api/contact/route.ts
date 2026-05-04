@@ -12,7 +12,19 @@ const autoReplyCopy = {
   en: {
     subject: "Thank you for your inquiry – Novalure",
     button: "Book a 30-minute strategy call",
-    body: (firstName: string, bookingLink: string) => `Hi ${firstName},
+    htmlBody: (firstName: string) => `Hi ${firstName},
+
+thank you for reaching out to Novalure.
+
+We have received your inquiry and will get back to you as soon as possible.
+
+You have taken the right step if you want to build a stronger and more scalable sales pipeline.
+
+If you want to move faster, you can directly book a 30-minute strategy call here:
+
+Best regards
+The Novalure Team`,
+    textBody: (firstName: string, bookingLink: string) => `Hi ${firstName},
 
 thank you for reaching out to Novalure.
 
@@ -30,7 +42,17 @@ The Novalure Team`
   de: {
     subject: "Vielen Dank für Ihre Anfrage – Novalure",
     button: "30-minütiges Gespräch buchen",
-    body: (firstName: string, bookingLink: string) => `Hallo ${firstName},
+    htmlBody: (firstName: string) => `Hallo ${firstName},
+
+vielen Dank für Ihre Anfrage.
+
+Wir melden uns umgehend bei Ihnen.
+
+Wenn Sie direkt weitermachen möchten, können Sie hier ein 30-minütiges Gespräch buchen:
+
+Beste Grüße
+Ihr Novalure Team`,
+    textBody: (firstName: string, bookingLink: string) => `Hallo ${firstName},
 
 vielen Dank für Ihre Anfrage.
 
@@ -163,7 +185,8 @@ Timestamp: ${timestamp}`;
       throw new Error(internalEmail.error.message);
     }
 
-    const customerText = autoReplyCopy[language].body(firstName, bookingUrl);
+    const customerText = autoReplyCopy[language].textBody(firstName, bookingUrl);
+    const customerHtmlText = autoReplyCopy[language].htmlBody(firstName);
     const customerEmail = await resend.emails.send({
       from: sender,
       to: email,
@@ -171,7 +194,7 @@ Timestamp: ${timestamp}`;
       text: customerText,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827; max-width: 620px; margin: 0 auto; padding: 28px;">
-          <p>${textToHtml(customerText)}</p>
+          <p>${textToHtml(customerHtmlText)}</p>
           <p style="margin: 28px 0;">
             <a href="${escapeHtml(bookingUrl)}" style="display: inline-block; background: #ffd43b; color: #211800; font-weight: 700; text-decoration: none; padding: 14px 20px; border-radius: 999px;">
               ${escapeHtml(autoReplyCopy[language].button)}
