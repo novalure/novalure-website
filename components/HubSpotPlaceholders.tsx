@@ -4,6 +4,11 @@ import { FormEvent, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import type { PlaybookKey } from "@/content/pages";
 
+const defaultMeetingUrls: Record<Locale, string> = {
+  en: "https://meetings-eu1.hubspot.com/franz-romih/private-growth-audit-en",
+  de: "https://meetings-eu1.hubspot.com/franz-romih"
+};
+
 const copy = {
   en: {
     fields: {
@@ -181,7 +186,7 @@ export function HubSpotMeetingEmbed({ locale }: { locale: Locale }) {
   const localizedMeetingUrl = locale === "de"
     ? process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE
     : process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN;
-  const meetingUrl = localizedMeetingUrl || process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL;
+  const meetingUrl = localizedMeetingUrl || process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL || defaultMeetingUrls[locale];
   const schedulerUrl = meetingUrl ? withSchedulerLocale(meetingUrl, locale) : "";
 
   return (

@@ -3,12 +3,16 @@ import { Resend } from "resend";
 
 type Locale = "en" | "de";
 
-const bookingLink = "[BOOKING LINK PLACEHOLDER]";
+const defaultBookingUrls: Record<Locale, string> = {
+  en: "https://meetings-eu1.hubspot.com/franz-romih/private-growth-audit-en",
+  de: "https://meetings-eu1.hubspot.com/franz-romih"
+};
 
 const autoReplyCopy = {
   en: {
     subject: "Thank you for your inquiry – Novalure",
-    body: (firstName: string) => `Hi ${firstName},
+    button: "Book a 30-minute strategy call",
+    body: (firstName: string, bookingLink: string) => `Hi ${firstName},
 
 thank you for reaching out to Novalure.
 
@@ -25,7 +29,8 @@ The Novalure Team`
   },
   de: {
     subject: "Vielen Dank für Ihre Anfrage – Novalure",
-    body: (firstName: string) => `Hallo ${firstName},
+    button: "30-minütiges Gespräch buchen",
+    body: (firstName: string, bookingLink: string) => `Hallo ${firstName},
 
 vielen Dank für Ihre Anfrage.
 
@@ -64,6 +69,27 @@ function textToHtml(value: string) {
   return escapeHtml(value).replace(/\n/g, "<br />");
 }
 
+function getSiteUrl() {
+  return process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
+}
+
+function withSchedulerLocale(url: string, language: Locale) {
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}locale=${language === "de" ? "de-de" : "en-us"}`;
+}
+
+function getBookingLink(language: Locale) {
+  const localized = language === "de" ? process.env.CONTACT_BOOKING_URL_DE : process.env.CONTACT_BOOKING_URL_EN;
+  const configuredUrl =
+    localized ||
+    process.env.CONTACT_BOOKING_URL ||
+    (language === "de" ? process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE : process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN) ||
+    process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL ||
+    defaultBookingUrls[language];
+
+  return withSchedulerLocale(configuredUrl, language) || `${getSiteUrl()}${language === "de" ? "/de/kontakt" : "/en/contact"}#book-audit`;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -71,9 +97,11 @@ export async function POST(request: NextRequest) {
     const lastName = clean(body.lastName);
     const email = clean(body.email);
     const phone = clean(body.phone);
+    const company = clean(body.company);
+    const interest = clean(body.interest);
     const language: Locale = body.language === "de" ? "de" : "en";
 
-    if (!firstName || !lastName || !phone || !isValidEmail(email)) {
+    if (!firstName || !lastName || !phone || !company || !interest || !isValidEmail(email)) {
       return NextResponse.json({ error: "Invalid form submission" }, { status: 400 });
     }
 
@@ -87,6 +115,15 @@ export async function POST(request: NextRequest) {
 
     const resend = new Resend(apiKey);
     const timestamp = new Date().toISOString();
+    const bookingUrl = getBookingLink(language);
+    const interestLabel =
+      interest === "developers"
+        ? language === "de"
+          ? "Bauträger"
+          : "Developers"
+        : language === "de"
+          ? "Immobilienmakler"
+          : "Real Estate Agents";
 
     const internalText = `New Novalure contact inquiry
 
@@ -94,6 +131,8 @@ First Name: ${firstName}
 Last Name: ${lastName}
 Email: ${email}
 Phone: ${phone}
+Company: ${company}
+Interest: ${interestLabel}
 Language: ${language.toUpperCase()}
 Timestamp: ${timestamp}`;
 
@@ -104,6 +143,8 @@ Timestamp: ${timestamp}`;
         <p><strong>Last Name:</strong> ${escapeHtml(lastName)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+        <p><strong>Company:</strong> ${escapeHtml(company)}</p>
+        <p><strong>Interest:</strong> ${escapeHtml(interestLabel)}</p>
         <p><strong>Language:</strong> ${language.toUpperCase()}</p>
         <p><strong>Timestamp:</strong> ${escapeHtml(timestamp)}</p>
       </div>
@@ -122,15 +163,20 @@ Timestamp: ${timestamp}`;
       throw new Error(internalEmail.error.message);
     }
 
-    const customerText = autoReplyCopy[language].body(firstName);
+    const customerText = autoReplyCopy[language].body(firstName, bookingUrl);
     const customerEmail = await resend.emails.send({
       from: sender,
       to: email,
       subject: autoReplyCopy[language].subject,
       text: customerText,
       html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827;">
+        <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827; max-width: 620px; margin: 0 auto; padding: 28px;">
           <p>${textToHtml(customerText)}</p>
+          <p style="margin: 28px 0;">
+            <a href="${escapeHtml(bookingUrl)}" style="display: inline-block; background: #ffd43b; color: #211800; font-weight: 700; text-decoration: none; padding: 14px 20px; border-radius: 999px;">
+              ${escapeHtml(autoReplyCopy[language].button)}
+            </a>
+          </p>
         </div>
       `
     });
