@@ -957,7 +957,8 @@ code {
 }
 
 .contact-field input,
-.contact-field select {
+.contact-field select,
+.contact-field textarea {
   width: 100%;
   min-height: 50px;
   padding: 0 14px;
@@ -965,6 +966,16 @@ code {
   background: #f8fafc;
   border: 1px solid var(--line);
   border-radius: 14px;
+}
+
+.contact-field-full {
+  grid-column: 1 / -1;
+}
+
+.contact-field textarea {
+  min-height: 132px;
+  padding: 14px;
+  resize: vertical;
 }
 
 .contact-field select {
@@ -976,7 +987,8 @@ code {
 }
 
 .contact-field input:focus,
-.contact-field select:focus {
+.contact-field select:focus,
+.contact-field textarea:focus {
   border-color: var(--gold-strong);
   outline: 0;
   box-shadow: 0 0 0 4px rgba(255, 212, 59, 0.24);

@@ -12,6 +12,7 @@ type FormValues = {
   phone: string;
   company: string;
   interest: string;
+  inquiry: string;
 };
 
 const emptyValues: FormValues = {
@@ -20,7 +21,8 @@ const emptyValues: FormValues = {
   email: "",
   phone: "",
   company: "",
-  interest: ""
+  interest: "",
+  inquiry: ""
 };
 
 const copy = {
@@ -34,7 +36,8 @@ const copy = {
       email: "Business Email",
       phone: "Phone Number",
       company: "Company",
-      interest: "Interested in"
+      interest: "Interested in",
+      inquiry: "Your Request"
     },
     interests: {
       placeholder: "Select an option",
@@ -46,7 +49,8 @@ const copy = {
       lastName: "Last name",
       email: "you@company.com",
       phone: "+353...",
-      company: "Company name"
+      company: "Company name",
+      inquiry: "Briefly describe what you would like to discuss."
     },
     submit: "Send Inquiry",
     loading: "Sending...",
@@ -63,7 +67,8 @@ const copy = {
       email: "Geschäftsemail",
       phone: "Telefonnummer",
       company: "Unternehmen",
-      interest: "Interesse"
+      interest: "Interesse",
+      inquiry: "Ihr Anliegen"
     },
     interests: {
       placeholder: "Option auswählen",
@@ -75,7 +80,8 @@ const copy = {
       lastName: "Nachname",
       email: "sie@unternehmen.com",
       phone: "+43...",
-      company: "Unternehmen"
+      company: "Unternehmen",
+      inquiry: "Beschreiben Sie kurz, worum es geht."
     },
     submit: "Anfrage senden",
     loading: "Wird gesendet...",
@@ -96,7 +102,7 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
 
   const isLoading = status === "loading";
 
-  function updateValue(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+  function updateValue(event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     const { name, value } = event.target;
     setValues((current) => ({ ...current, [name]: value }));
   }
@@ -111,6 +117,7 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
       phone: values.phone.trim(),
       company: values.company.trim(),
       interest: values.interest.trim(),
+      inquiry: values.inquiry.trim(),
       language: locale
     };
 
@@ -120,6 +127,7 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
       !payload.phone ||
       !payload.company ||
       !payload.interest ||
+      !payload.inquiry ||
       !isValidEmail(payload.email)
     ) {
       setStatus("error");
@@ -223,6 +231,16 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
               <option value="developers">{text.interests.developers}</option>
               <option value="agents">{text.interests.agents}</option>
             </select>
+          </label>
+          <label className="contact-field contact-field-full">
+            <span>{text.fields.inquiry}</span>
+            <textarea
+              name="inquiry"
+              value={values.inquiry}
+              onChange={updateValue}
+              placeholder={text.placeholders.inquiry}
+              required
+            />
           </label>
           <div className="contact-form-actions">
             <button className="button button-primary" type="submit" disabled={isLoading}>

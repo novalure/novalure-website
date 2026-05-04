@@ -121,9 +121,10 @@ export async function POST(request: NextRequest) {
     const phone = clean(body.phone);
     const company = clean(body.company);
     const interest = clean(body.interest);
+    const inquiry = clean(body.inquiry);
     const language: Locale = body.language === "de" ? "de" : "en";
 
-    if (!firstName || !lastName || !phone || !company || !interest || !isValidEmail(email)) {
+    if (!firstName || !lastName || !phone || !company || !interest || !inquiry || !isValidEmail(email)) {
       return NextResponse.json({ error: "Invalid form submission" }, { status: 400 });
     }
 
@@ -155,6 +156,7 @@ Email: ${email}
 Phone: ${phone}
 Company: ${company}
 Interest: ${interestLabel}
+Inquiry: ${inquiry}
 Language: ${language.toUpperCase()}
 Timestamp: ${timestamp}`;
 
@@ -167,6 +169,7 @@ Timestamp: ${timestamp}`;
         <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
         <p><strong>Company:</strong> ${escapeHtml(company)}</p>
         <p><strong>Interest:</strong> ${escapeHtml(interestLabel)}</p>
+        <p><strong>Inquiry:</strong><br />${textToHtml(inquiry)}</p>
         <p><strong>Language:</strong> ${language.toUpperCase()}</p>
         <p><strong>Timestamp:</strong> ${escapeHtml(timestamp)}</p>
       </div>
