@@ -35,15 +35,15 @@ function findLocalBrowser() {
 const shared = {
   en: {
     label: "English edition",
-    primaryCta: "Book a Private Growth Audit",
-    primaryUrl: "https://www.novalure.eu/en/contact",
+    primaryCta: "Book Pipeline Audit",
+    primaryUrl: "https://www.novalure.eu/en/contact#book-audit",
     footer: "Novalure | PropTech Sales System for real estate developers and agents",
     note: "This playbook is a strategic guide, not a promise of specific lead numbers, revenue, delivery timing or legal compliance. Use it to diagnose and structure your sales system before making operational decisions."
   },
   de: {
     label: "Deutsche Ausgabe",
-    primaryCta: "Privates Growth Audit buchen",
-    primaryUrl: "https://www.novalure.eu/de/kontakt",
+    primaryCta: "Pipeline-Audit buchen",
+    primaryUrl: "https://www.novalure.eu/de/kontakt#book-audit",
     footer: "Novalure | PropTech Sales System fuer Bautraeger und Immobilienmakler",
     note: "Dieses Playbook ist ein strategischer Leitfaden und kein Versprechen bestimmter Lead-Zahlen, Umsaetze, Lieferzeiten oder rechtlicher Konformitaet. Nutzen Sie es zur Diagnose und Strukturierung Ihres Vertriebssystems."
   }
@@ -808,7 +808,7 @@ function renderHtml(book) {
       <img class="logo" src="${whiteLogoData}" alt="Novalure">
       <div class="kicker">${book.lang === "de" ? "Naechster Schritt" : "Next step"}</div>
       <h2>${book.lang === "de" ? "Lassen Sie Ihr aktuelles Lead-System pruefen." : "Have your current lead system reviewed."}</h2>
-      <p class="body">${book.lang === "de" ? "Wenn Sie sehen moechten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein privates Growth Audit. Wir pruefen Funnel, Lead-Qualifizierung, CRM-Uebergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen." : "If you want to see which layers are missing in your current setup, book a Private Growth Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without fake promises."}</p>
+      <p class="body">${book.lang === "de" ? "Wenn Sie sehen moechten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein Pipeline-Audit. Wir pruefen Funnel, Lead-Qualifizierung, CRM-Uebergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen." : "If you want to see which layers are missing in your current setup, book a Pipeline Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without fake promises."}</p>
       <a class="cta" href="${esc(ui.primaryUrl)}">${esc(ui.primaryCta)}</a>
       <p class="note">${esc(ui.note)}</p>
       <div class="footer"><span>${esc(ui.footer)}</span><span>${book.lang === "de" ? "Ende" : "End"}</span></div>

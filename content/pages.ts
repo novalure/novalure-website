@@ -58,13 +58,13 @@ export type HomeContent = PageContent & {
 const labels = {
   en: {
     download: "Download Playbook",
-    audit: "Book Private Growth Audit",
+    audit: "Book Pipeline Audit",
     developerPlaybook: "Developer Pipeline Playbook",
     agentPlaybook: "Real Estate Agent Lead Playbook"
   },
   de: {
     download: "Playbook herunterladen",
-    audit: "Privates Wachstumsaudit buchen",
+    audit: "Pipeline-Audit buchen",
     developerPlaybook: "Bauträger-Pipeline-Playbook",
     agentPlaybook: "Makler-Lead-Playbook"
   }
@@ -294,7 +294,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         id: "process",
         title: "A sales-system process, not campaign guesswork.",
         body: "Each step is designed to reduce noise, protect sales time and make pipeline movement visible.",
-        steps: ["Private Growth Audit", "Strategy & Funnel Architecture", "Build & Setup", "Campaign Launch", "Lead Qualification", "CRM Handover", "Optimization & Reporting"]
+        steps: ["Pipeline Audit", "Strategy & Funnel Architecture", "Build & Setup", "Campaign Launch", "Lead Qualification", "CRM Handover", "Optimization & Reporting"]
       },
       team: {
         id: "team",
@@ -305,7 +305,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         founder: "Franz Romih — Real Estate Sales Lead"
       },
       faq: sharedFaq.en,
-      finalCtaTitle: "Download the Playbook. Then decide if your current lead system deserves a private audit."
+      finalCtaTitle: "Download the Playbook. Then book a Pipeline Audit when you want your current lead system reviewed."
     },
     developers: {
       key: "developers",
@@ -367,11 +367,11 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       key: "contact",
       locale: "en",
       template: "contact",
-      eyebrow: "Private Growth Audit",
+      eyebrow: "Pipeline Audit",
       title: "Book a private review of your current lead system.",
-      seoTitle: "Book a Private Growth Audit for Real Estate Sales | Novalure",
+      seoTitle: "Book a Pipeline Audit for Real Estate Sales | Novalure",
       description:
-        "Book a no-pressure private audit to review your project positioning, funnel logic, CRM handover and lead quality gaps.",
+        "Book a no-pressure Pipeline Audit to review your project positioning, funnel logic, CRM handover and lead quality gaps.",
       primaryCta: { label: labels.en.audit, target: "contact" },
       secondaryCta: { label: labels.en.download, target: "playbooks" },
       heroBullets: ["No generic pitch", "Lead-system diagnosis", "Clear next steps", "Microsoft Teams booking"],
@@ -459,7 +459,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         id: "prozess",
         title: "Ein Sales-System-Prozess, kein Kampagnenraten.",
         body: "Jeder Schritt reduziert Rauschen, schützt Vertriebszeit und macht Pipeline-Bewegung sichtbar.",
-        steps: ["Privates Wachstumsaudit", "Strategie & Funnel-Architektur", "Aufbau & Einrichtung", "Kampagnenstart", "Lead-Qualifizierung", "CRM-Übergabe", "Optimierung & Reporting"]
+        steps: ["Pipeline-Audit", "Strategie & Funnel-Architektur", "Aufbau & Einrichtung", "Kampagnenstart", "Lead-Qualifizierung", "CRM-Übergabe", "Optimierung & Reporting"]
       },
       team: {
         id: "team",
@@ -470,7 +470,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         founder: "Franz Romih — Real Estate Sales Lead"
       },
       faq: sharedFaq.de,
-      finalCtaTitle: "Laden Sie das Playbook herunter. Danach entscheiden Sie, ob Ihr aktuelles Lead-System ein privates Audit verdient."
+      finalCtaTitle: "Laden Sie das Playbook herunter. Danach buchen Sie ein Pipeline-Audit, wenn Ihr aktuelles Lead-System geprüft werden soll."
     },
     developers: {
       key: "developers",
@@ -532,11 +532,11 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       key: "contact",
       locale: "de",
       template: "contact",
-      eyebrow: "Privates Wachstumsaudit",
+      eyebrow: "Pipeline-Audit",
       title: "Buchen Sie eine private Prüfung Ihres aktuellen Lead-Systems.",
-      seoTitle: "Privates Wachstumsaudit für Immobilienvertrieb | Novalure",
+      seoTitle: "Pipeline-Audit für Immobilienvertrieb | Novalure",
       description:
-        "Buchen Sie ein unverbindliches privates Audit für Positionierung, Funnel-Logik, CRM-Übergabe und Leadqualitätslücken.",
+        "Buchen Sie ein unverbindliches Pipeline-Audit für Positionierung, Funnel-Logik, CRM-Übergabe und Leadqualitätslücken.",
       primaryCta: { label: labels.de.audit, target: "contact" },
       secondaryCta: { label: labels.de.download, target: "playbooks" },
       heroBullets: ["Kein generischer Pitch", "Lead-System-Diagnose", "Klare nächste Schritte", "Microsoft Teams Termin"],

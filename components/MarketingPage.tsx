@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getPath } from "@/lib/i18n";
 import { playbooks, type HomeContent, type PageContent } from "@/content/pages";
+import { ContactInquiryForm } from "@/components/ContactInquiryForm";
 import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholders";
 import { PipelineVisual } from "@/components/PipelineVisual";
 
@@ -20,10 +21,10 @@ function Hero({ content, visual = false }: { content: PageContent; visual?: bool
         <h1>{content.title}</h1>
         <p className="hero-description">{content.description}</p>
         <div className="hero-actions">
-          <Link className="button button-primary" href={getPath(content.locale, content.primaryCta.target)}>
+          <Link className="button button-primary" href={getCtaHref(content.locale, content.primaryCta.target)}>
             {content.primaryCta.label}
           </Link>
-          <Link className="button button-secondary" href={getPath(content.locale, content.secondaryCta.target)}>
+          <Link className="button button-secondary" href={getCtaHref(content.locale, content.secondaryCta.target)}>
             {content.secondaryCta.label}
           </Link>
         </div>
@@ -152,15 +153,17 @@ function PlaybookHub({
   locale,
   title,
   body,
-  eyebrow
+  eyebrow,
+  id
 }: {
   locale: "en" | "de";
   title: string;
   body: string;
   eyebrow?: string;
+  id?: string;
 }) {
   return (
-    <section className="playbook-section">
+    <section className="playbook-section" id={id}>
       <div className="section-heading">
         <p className="eyebrow">{eyebrow || (locale === "en" ? "Playbook selection" : "Playbook-Auswahl")}</p>
         <h2>{title}</h2>
@@ -306,10 +309,17 @@ function ContactPage({ content }: { content: PageContent }) {
           </article>
         ))}
       </section>
-      <section className="meeting-section">
+      <PlaybookHub
+        id="playbook-download"
+        locale={content.locale}
+        title={content.locale === "en" ? "Download the Playbook before the audit." : "Laden Sie das Playbook vor dem Audit herunter."}
+        body={content.locale === "en" ? "Choose the relevant Playbook and receive it by email before we review your pipeline." : "Wählen Sie das passende Playbook und erhalten Sie es per E-Mail, bevor wir Ihre Pipeline prüfen."}
+      />
+      <section className="meeting-section" id="book-audit">
         <HubSpotMeetingEmbed locale={content.locale} />
       </section>
       <FaqSection locale={content.locale} items={content.faq || []} />
+      <ContactInquiryForm locale={content.locale} />
     </main>
   );
 }
@@ -361,16 +371,28 @@ function FinalCta({ content, title }: { content: PageContent; title?: string }) 
     <section className="cta-band">
       <div>
         <p className="eyebrow">{content.locale === "en" ? "Next step" : "Nächster Schritt"}</p>
-        <h2>{title || (content.locale === "en" ? "Download the Playbook first. Book the audit when you want the system reviewed." : "Laden Sie zuerst das Playbook herunter. Buchen Sie das Audit, wenn Ihr System geprüft werden soll.")}</h2>
+        <h2>{title || (content.locale === "en" ? "Download the Playbook first. Book a Pipeline Audit when you want the system reviewed." : "Laden Sie zuerst das Playbook herunter. Buchen Sie ein Pipeline-Audit, wenn Ihr System geprüft werden soll.")}</h2>
       </div>
       <div className="hero-actions">
-        <Link className="button button-primary" href={getPath(content.locale, "playbooks")}>
+        <Link className="button button-primary" href={getCtaHref(content.locale, "playbooks")}>
           {content.locale === "en" ? "Download Playbook" : "Playbook herunterladen"}
         </Link>
-        <Link className="button button-secondary dark" href={getPath(content.locale, "contact")}>
-          {content.locale === "en" ? "Book Private Growth Audit" : "Privates Wachstumsaudit buchen"}
+        <Link className="button button-secondary dark" href={getCtaHref(content.locale, "contact")}>
+          {content.locale === "en" ? "Book Pipeline Audit" : "Pipeline-Audit buchen"}
         </Link>
       </div>
     </section>
   );
+}
+
+function getCtaHref(locale: "en" | "de", target: PageContent["primaryCta"]["target"]) {
+  if (target === "playbooks") {
+    return `${getPath(locale, "contact")}#playbook-download`;
+  }
+
+  if (target === "contact") {
+    return `${getPath(locale, "contact")}#book-audit`;
+  }
+
+  return getPath(locale, target);
 }

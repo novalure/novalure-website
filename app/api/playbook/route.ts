@@ -18,7 +18,7 @@ const playbookCopy = {
       intro: "Here is the playbook for building owned seller and buyer lead flow beyond portal dependency.",
       cta: "Open the Playbook"
     },
-    audit: "If you want us to review your current lead system, you can book a Private Growth Audit here:"
+    audit: "If you want us to review your current lead system, you can book a Pipeline Audit here:"
   },
   de: {
     developer: {
@@ -33,7 +33,7 @@ const playbookCopy = {
       intro: "Hier ist das Playbook für eigene Verkäufer- und Käufer-Leads jenseits von Portalabhängigkeit.",
       cta: "Playbook öffnen"
     },
-    audit: "Wenn Sie möchten, dass wir Ihr aktuelles Lead-System prüfen, können Sie hier ein privates Wachstumsaudit buchen:"
+    audit: "Wenn Sie möchten, dass wir Ihr aktuelles Lead-System prüfen, können Sie hier ein Pipeline-Audit buchen:"
   }
 };
 
@@ -147,7 +147,7 @@ async function sendPlaybookEmail({
 
   const resend = new Resend(apiKey);
   const copy = playbookCopy[locale][playbook];
-  const auditUrl = `${siteUrl}${locale === "de" ? "/de/kontakt" : "/en/contact"}`;
+  const auditUrl = `${siteUrl}${locale === "de" ? "/de/kontakt" : "/en/contact"}#book-audit`;
   const greeting = locale === "de" ? `Hallo ${name},` : `Hi ${name},`;
 
   await resend.emails.send({

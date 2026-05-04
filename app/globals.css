@@ -39,8 +39,15 @@ a {
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
 }
 
 :focus-visible {
@@ -408,7 +415,8 @@ h3 {
 .team-section,
 .faq-section,
 .legal-section,
-.meeting-section {
+.meeting-section,
+.contact-inquiry-section {
   padding: clamp(58px, 8vw, 118px) clamp(20px, 6vw, 92px);
 }
 
@@ -420,7 +428,8 @@ h3 {
 
 .problem-section,
 .legal-section,
-.meeting-section {
+.meeting-section,
+.contact-inquiry-section {
   background: #ffffff;
 }
 
@@ -438,6 +447,11 @@ h3 {
   background:
     radial-gradient(circle at 82% 12%, rgba(255, 212, 59, 0.12), transparent 32%),
     linear-gradient(135deg, #07080b, #121822);
+}
+
+#playbook-download,
+#book-audit {
+  scroll-margin-top: 120px;
 }
 
 .system-section .section-heading p,
@@ -895,6 +909,94 @@ code {
   background: #ffffff;
 }
 
+.contact-inquiry-section {
+  border-top: 1px solid var(--line);
+}
+
+.contact-inquiry-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(320px, 1fr);
+  gap: clamp(28px, 5vw, 70px);
+  align-items: start;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.contact-inquiry-copy {
+  max-width: 480px;
+}
+
+.contact-inquiry-copy h2 {
+  margin-bottom: 18px;
+  font-size: clamp(2.2rem, 3.5vw, 4.3rem);
+  line-height: 1.04;
+}
+
+.contact-inquiry-copy p:last-child {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.contact-inquiry-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: clamp(20px, 3vw, 30px);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: 0 18px 60px rgba(8, 13, 24, 0.08);
+}
+
+.contact-field {
+  display: grid;
+  gap: 8px;
+  color: var(--graphite);
+  font-size: 0.9rem;
+  font-weight: 820;
+}
+
+.contact-field input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  color: var(--ink);
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.contact-field input:focus {
+  border-color: var(--gold-strong);
+  outline: 0;
+  box-shadow: 0 0 0 4px rgba(255, 212, 59, 0.24);
+}
+
+.contact-form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.contact-form-status {
+  min-height: 22px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+.contact-form-status.is-success {
+  color: #16794c;
+}
+
+.contact-form-status.is-error {
+  color: #b42318;
+}
+
 .panel-label {
   display: block;
   margin-bottom: 12px;
@@ -965,6 +1067,17 @@ code {
   justify-items: start;
   gap: 18px;
   max-width: 560px;
+}
+
+.footer-contact {
+  display: grid;
+  gap: 8px;
+  color: #aeb8c7;
+  font-weight: 720;
+}
+
+.footer-contact a:hover {
+  color: #ffffff;
 }
 
 .site-footer nav {
@@ -1271,6 +1384,8 @@ code {
   .team-grid,
   .section-grid,
   .faq-list,
+  .contact-inquiry-shell,
+  .contact-inquiry-form,
   .footer-main {
     grid-template-columns: 1fr;
   }
@@ -1327,8 +1442,15 @@ code {
 
   .hero-actions .button,
   .cta-band .button,
+  .contact-form-actions,
+  .contact-form-actions .button,
   .cookie-actions .button {
     width: 100%;
+  }
+
+  .contact-form-actions {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .process-list,

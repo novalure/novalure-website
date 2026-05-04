@@ -282,9 +282,9 @@ def render(book):
     draw_logo(c, M, H - 34 * mm, 78 * mm, dark=True)
     final_title = "Lassen Sie Ihr aktuelles Lead-System prüfen." if book["lang"] == "de" else "Have your current lead system reviewed."
     final_body = (
-        "Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein privates Growth Audit. Wir prüfen Funnel, Lead-Qualifizierung, CRM-Übergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen."
+        "Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein Pipeline-Audit. Wir prüfen Funnel, Lead-Qualifizierung, CRM-Übergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen."
         if book["lang"] == "de"
-        else "If you want to see which layers are missing in your current setup, book a Private Growth Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without fake promises."
+        else "If you want to see which layers are missing in your current setup, book a Pipeline Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without fake promises."
     )
     y = para(c, final_title, M, H - 82 * mm, W - 2 * M, style(26, 30, colors.white, True))
     y = para(c, final_body, M, y - 14, W - 2 * M - 10 * mm, style(12, 18, colors.HexColor("#d7deea")))

@@ -5,13 +5,17 @@ import { Logo } from "@/components/Logo";
 const footerCopy = {
   en: {
     intro: "PropTech Sales System for developers and agents who need qualified demand, clean handovers and pipeline visibility.",
-    cta: "Book Audit",
+    cta: "Book Pipeline Audit",
+    email: "Email",
+    phone: "Phone",
     resources: "Pages",
     legal: "Legal"
   },
   de: {
     intro: "PropTech Sales System für Bauträger und Makler, die qualifizierte Nachfrage, klare Übergaben und Pipeline-Sichtbarkeit brauchen.",
-    cta: "Audit buchen",
+    cta: "Pipeline-Audit buchen",
+    email: "E-Mail",
+    phone: "Telefon",
     resources: "Seiten",
     legal: "Rechtliches"
   }
@@ -26,7 +30,11 @@ export function Footer({ locale }: { locale: Locale }) {
         <div className="footer-brand">
           <Logo locale={locale} />
           <p>{copy.intro}</p>
-          <Link className="button button-primary" href={getPath(locale, "contact")}>{copy.cta}</Link>
+          <div className="footer-contact">
+            <a href="mailto:hello@novalure.eu">{copy.email}: hello@novalure.eu</a>
+            <a href="tel:+353892695248">{copy.phone}: +353 (0)89 269 5248</a>
+          </div>
+          <Link className="button button-primary" href={`${getPath(locale, "contact")}#book-audit`}>{copy.cta}</Link>
         </div>
         <nav aria-label={copy.resources}>
           <h2>{copy.resources}</h2>

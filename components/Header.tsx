@@ -21,6 +21,8 @@ export function Header({ locale }: { locale: Locale }) {
     | keyof typeof routeMap
     | undefined;
   const switchHref = activeKey ? routeMap[activeKey][switchLocale] : getPath(switchLocale, "home");
+  const playbookHref = `${getPath(locale, "contact")}#playbook-download`;
+  const auditHref = `${getPath(locale, "contact")}#book-audit`;
 
   return (
     <header className={`site-header ${open ? "menu-open" : ""}`}>
@@ -38,12 +40,12 @@ export function Header({ locale }: { locale: Locale }) {
       </nav>
 
       <div className="header-actions desktop-actions">
-        <Link className="button button-secondary" href={getPath(locale, "contact")}>{labels.secondary}</Link>
-        <Link className="button button-primary" href={getPath(locale, "playbooks")}>{labels.primary}</Link>
+        <Link className="button button-secondary" href={auditHref}>{labels.secondary}</Link>
+        <Link className="button button-primary" href={playbookHref}>{labels.primary}</Link>
         <Link className="locale-switch" href={switchHref} hrefLang={switchLocale}>{switchLocale.toUpperCase()}</Link>
       </div>
 
-      <Link className="button button-primary mobile-sticky-cta" href={getPath(locale, "playbooks")}>
+      <Link className="button button-primary mobile-sticky-cta" href={playbookHref}>
         {labels.primary}
       </Link>
 
@@ -70,7 +72,7 @@ export function Header({ locale }: { locale: Locale }) {
             {item.type === "route" ? navLabels[locale][item.key] : anchorLabels[locale][item.key]}
           </Link>
         ))}
-        <Link className="button button-secondary" href={getPath(locale, "contact")} onClick={() => setOpen(false)}>
+        <Link className="button button-secondary" href={auditHref} onClick={() => setOpen(false)}>
           {labels.secondary}
         </Link>
         <Link className="locale-switch mobile-locale" href={switchHref} hrefLang={switchLocale} onClick={() => setOpen(false)}>

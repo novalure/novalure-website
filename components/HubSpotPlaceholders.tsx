@@ -15,14 +15,14 @@ const copy = {
     developer: "Developer Pipeline Playbook",
     agent: "Real Estate Agent Lead Playbook",
     submit: "Send me the Playbook",
-    auditSubmit: "Request audit",
+    auditSubmit: "Request Pipeline Audit",
     loading: "Preparing your request...",
     error: "Please complete the required fields before submitting.",
     success: "Your playbook is on its way.",
     successBody: "Want us to review your current lead system next?",
-    successCta: "Book a Private Growth Audit",
+    successCta: "Book Pipeline Audit",
     formPlaceholder: "Playbook delivery",
-    meetingTitle: "Book your Private Growth Audit",
+    meetingTitle: "Book your Pipeline Audit",
     meetingBody: "Choose a time that works for you. The calendar opens with live availability and sends the Microsoft Teams link after booking."
   },
   de: {
@@ -35,14 +35,14 @@ const copy = {
     developer: "Bauträger-Pipeline-Playbook",
     agent: "Makler-Lead-Playbook",
     submit: "Playbook anfordern",
-    auditSubmit: "Audit anfragen",
+    auditSubmit: "Pipeline-Audit anfragen",
     loading: "Ihre Anfrage wird vorbereitet...",
     error: "Bitte füllen Sie die erforderlichen Felder aus.",
     success: "Ihr Playbook ist unterwegs.",
     successBody: "Möchten Sie, dass wir Ihr aktuelles Lead-System prüfen?",
-    successCta: "Privates Wachstumsaudit buchen",
+    successCta: "Pipeline-Audit buchen",
     formPlaceholder: "Playbook-Versand",
-    meetingTitle: "Privates Wachstumsaudit buchen",
+    meetingTitle: "Pipeline-Audit buchen",
     meetingBody: "Wählen Sie einen passenden Termin. Der Kalender zeigt verfügbare Zeiten und sendet nach der Buchung den Microsoft Teams-Link."
   }
 };
@@ -67,7 +67,7 @@ export function FormSuccessState({ locale, playbook }: { locale: Locale; playboo
       <span>{title}</span>
       <strong>{copy[locale].success}</strong>
       <p>{copy[locale].successBody}</p>
-      <a className="button button-secondary" href={locale === "en" ? "/en/contact" : "/de/kontakt"}>
+      <a className="button button-secondary" href={locale === "en" ? "/en/contact#book-audit" : "/de/kontakt#book-audit"}>
         {copy[locale].successCta}
       </a>
     </div>
