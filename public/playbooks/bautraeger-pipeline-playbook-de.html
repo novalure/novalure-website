@@ -2,194 +2,356 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<title>Bauen Sie eine steuerbare Käufer-Pipeline für Immobilienprojekte.</title>
+<title>Pipeline-Briefing für Bauträger</title>
 <style>
   @page { size: A4; margin: 0; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: #d8d4c9; color: #111318; font-family: Arial, Helvetica, sans-serif; }
-  .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 20mm; background: #fbfaf6; page-break-after: always; position: relative; overflow: hidden; }
-  .cover { background: radial-gradient(circle at 70% 22%, rgba(255,212,59,.24), transparent 28%), linear-gradient(135deg, #08090c, #151923 58%, #08090c); color: #fff; }
-  .logo { width: 292px; height: auto; object-fit: contain; margin-bottom: 30mm; }
-  .eyebrow { color: #ffd43b; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 800; font-size: 12px; }
-  h1 { font-size: 56px; line-height: .98; letter-spacing: -1.8px; margin: 12px 0 18px; max-width: 690px; }
-  .subtitle { color: #d9dee8; font-size: 21px; line-height: 1.45; max-width: 620px; }
-  .promise { color: #fff1aa; font-size: 17px; line-height: 1.5; max-width: 620px; margin-top: 28px; }
-  .cover-card { position: absolute; left: 20mm; right: 20mm; bottom: 20mm; border: 1px solid rgba(255,255,255,.16); border-radius: 22px; padding: 18px; background: rgba(255,255,255,.06); }
+  body {
+    margin: 0;
+    color: #111318;
+    background: #d8d4c9;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    text-rendering: geometricPrecision;
+  }
+  .cover, .intro, .chapter, .summary {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 20mm;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover, .summary {
+    color: #fff;
+    background:
+      radial-gradient(circle at 78% 16%, rgba(255, 212, 59, .22), transparent 29%),
+      radial-gradient(circle at 16% 88%, rgba(66, 211, 155, .12), transparent 28%),
+      linear-gradient(135deg, #07080b 0%, #111722 58%, #07080b 100%);
+  }
+  .intro, .chapter { background: #fbfaf6; }
+  .chapter:nth-of-type(odd) { color: #fff; background: #101217; }
+  .logo { width: 270px; height: auto; object-fit: contain; margin-bottom: 34mm; }
+  .eyebrow, .chapter-kicker {
+    color: #ffd43b;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+  }
+  h1 {
+    max-width: 178mm;
+    margin: 12px 0 18px;
+    font-size: 54px;
+    line-height: .97;
+    letter-spacing: 0;
+  }
+  h2 {
+    max-width: 170mm;
+    margin: 0 0 16px;
+    font-size: 38px;
+    line-height: 1.06;
+    letter-spacing: 0;
+  }
+  h3 {
+    margin: 24px 0 8px;
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  p {
+    max-width: 166mm;
+    margin: 0 0 13px;
+    color: #303640;
+    font-size: 15.7px;
+    line-height: 1.55;
+  }
+  .chapter:nth-of-type(odd) p { color: #d0d7e2; }
+  .subtitle { max-width: 155mm; color: #d9dee8; font-size: 21px; line-height: 1.44; }
+  .meta { margin-top: 22px; color: #fff1aa; font-size: 15px; line-height: 1.5; }
+  .cover-card {
+    position: absolute;
+    left: 20mm;
+    right: 20mm;
+    bottom: 20mm;
+    padding: 18px 20px;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 20px;
+    background: rgba(255,255,255,.06);
+    color: #e9eef7;
+    font-size: 15px;
+  }
   .cover-card strong { color: #ffd43b; }
-  .toc { background: #fbfaf6; }
-  h2 { font-size: 38px; line-height: 1.08; margin: 0 0 16px; letter-spacing: -1px; }
-  h3 { font-size: 24px; margin: 0 0 10px; }
-  .kicker { color: #666f7d; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; font-size: 12px; margin-bottom: 12px; }
-  .body { font-size: 18px; line-height: 1.62; color: #303640; max-width: 710px; }
-  .bullets { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px; }
-  .bullets li { font-size: 16px; line-height: 1.45; padding: 15px 16px 15px 44px; border: 1px solid #e1ddd2; border-radius: 16px; background: #fff; position: relative; }
-  .bullets li:before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #ffd43b; position: absolute; left: 20px; top: 21px; box-shadow: 0 0 0 5px rgba(255,212,59,.18); }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
-  .card { border: 1px solid #ded9ce; border-radius: 18px; padding: 18px; background: #fff; min-height: 132px; }
-  .card p { color: #3f4652; line-height: 1.5; }
-  .visual { margin-top: 28px; }
-  .visual svg { width: 100%; height: auto; display: block; }
-  .section-number { color: #ffd43b; font-weight: 900; font-size: 16px; margin-bottom: 18px; }
-  .section:nth-child(odd) { background: #101217; color: #fff; }
-  .section:nth-child(odd) .body { color: #d0d7e2; }
-  .section:nth-child(odd) .bullets li { background: #191e27; border-color: #303846; color: #fff; }
-  .summary { background: #111318; color: #fff; }
-  .summary .body { color: #d7deea; max-width: 690px; margin-bottom: 26px; }
-  .summary .logo { margin-bottom: 34mm; }
-  .cta { display: inline-block; margin-top: 16px; padding: 15px 22px; border-radius: 999px; background: #ffd43b; color: #171000; font-weight: 900; text-decoration: none; }
-  .footer { position: absolute; left: 20mm; right: 20mm; bottom: 11mm; display: flex; justify-content: space-between; color: #8b93a0; font-size: 10px; }
-  .page:after { content: ""; position: absolute; right: -60px; bottom: -60px; width: 190px; height: 190px; border-radius: 50%; background: rgba(255,212,59,.12); }
-  .note { font-size: 13px; color: #606977; line-height: 1.5; margin-top: 24px; }
+  .section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .section-grid article {
+    min-height: 34mm;
+    padding: 16px;
+    border: 1px solid #ded9ce;
+    border-radius: 16px;
+    background: #fff;
+  }
+  .section-grid span {
+    display: block;
+    margin-bottom: 8px;
+    color: #9a7100;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+  }
+  .section-grid strong { display: block; font-size: 16px; line-height: 1.25; }
+  .system-map {
+    margin-top: 26px;
+    padding: 20px;
+    border-radius: 24px;
+    background: #111318;
+  }
+  .system-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 36px;
+    margin-bottom: 10px;
+    padding: 0 16px;
+    border-radius: 999px;
+    color: #fff;
+    background: #202630;
+    font-weight: 850;
+  }
+  .system-row:last-child { margin-bottom: 0; color: #111318; background: #ffd43b; }
+  .chapter-body { margin-top: 20px; }
+  .chapter-body .callout {
+    margin: 20px 0;
+    padding: 17px 18px;
+    border-left: 5px solid #ffd43b;
+    border-radius: 14px;
+    background: #fff6c9;
+    color: #171000;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 720;
+  }
+  .chapter:nth-of-type(odd) .callout {
+    background: rgba(255, 212, 59, .12);
+    color: #fff4b8;
+  }
+  .bullets {
+    display: grid;
+    gap: 9px;
+    margin: 18px 0 20px;
+    padding: 0;
+    list-style: none;
+  }
+  .bullets li {
+    position: relative;
+    padding: 12px 14px 12px 38px;
+    border: 1px solid #e1ddd2;
+    border-radius: 14px;
+    background: #fff;
+    color: #262c36;
+    font-size: 14.2px;
+    line-height: 1.38;
+  }
+  .chapter:nth-of-type(odd) .bullets li {
+    border-color: #303846;
+    background: #191e27;
+    color: #fff;
+  }
+  .bullets li::before {
+    content: "";
+    position: absolute;
+    left: 17px;
+    top: 18px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #ffd43b;
+    box-shadow: 0 0 0 5px rgba(255,212,59,.17);
+  }
+  .table-wrap { margin: 18px 0 22px; overflow: hidden; border-radius: 16px; border: 1px solid #ded9ce; }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: 12.4px; line-height: 1.34; }
+  th { background: #111318; color: #ffd43b; font-weight: 850; text-align: left; }
+  th, td { padding: 10px 11px; border-bottom: 1px solid #e8e2d5; vertical-align: top; }
+  td:first-child, th:first-child { width: 12%; }
+  td:last-child, th:last-child { width: 16%; text-align: center; }
+  .chapter:nth-of-type(odd) .table-wrap { border-color: #303846; }
+  .chapter:nth-of-type(odd) table { background: #191e27; color: #fff; }
+  .chapter:nth-of-type(odd) td { border-bottom-color: #303846; }
+  .note { margin-top: 22px; color: #667085; font-size: 13px; line-height: 1.5; }
+  .summary p { color: #d7deea; font-size: 17px; }
+  .cta {
+    display: inline-flex;
+    margin-top: 16px;
+    padding: 15px 22px;
+    border-radius: 999px;
+    background: #ffd43b;
+    color: #171000;
+    font-weight: 900;
+    text-decoration: none;
+  }
+  footer {
+    position: absolute;
+    left: 20mm;
+    right: 20mm;
+    bottom: 10mm;
+    display: flex;
+    justify-content: space-between;
+    color: #8b93a0;
+    font-size: 9.5px;
+  }
+  .chapter:nth-of-type(odd) footer, .summary footer { color: #b8c0cc; }
+  .page-mark {
+    position: absolute;
+    right: -18mm;
+    bottom: -18mm;
+    width: 58mm;
+    height: 58mm;
+    border-radius: 999px;
+    background: rgba(255,212,59,.10);
+  }
 </style>
 </head>
 <body>
   <main>
-    <section class="page cover">
+    <section class="cover">
+      <div class="page-mark"></div>
       <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArAAAACxCAYAAAA8h446AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFE0AABRNAZTKjS8AAFHUSURBVHhe7d15gBxHdTj+96rn2EOn1zpsHT6wDT64bAcnhJsQchAIXwwBQiABAg75mkA4DQlr4BsSCCQhISE2R7gSQEAAE8wPCIgrBhJhCyNjImNLWltaSXvN7hzdXVXvvd8fXT3b0zsjrQ4b27wPjDXTR3V1dc/2m+qqagCllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUj9rWJ6glFJKqbuHiBSvu8X3UnjfhYh9pyv1804DWKWUUuoYNBqNtSuGh5/OiI9ExBoAtI0xc865BQBIRcQCgDPGtKIociLiIQIH5J1PPHkAEhEnIr5SqXhmTqvVqhUR2263Xb3u3fy892ma+rPPPntBg1illtIAVimllFomEakS0WeNMb9RnneCCACImQkAvAikADITRdEvG2Nmywsr9fPOlCcopZRSaikRQSL6U2PMk0UGV4qKSPeVf2bm8CIQoZ4WA2HZSERqxphhAFiJCKcYY9a0Wi29TivVh9bAKqWUUsvAzKMisgMRHohoEELwiQAAmF1O+wW2GOZBvnxhWURcsg4iAhExIk4i4kO0BlappfSXnVJKKXUUofNVHRFXAywGnTio99US0vPK1l8avEIIbI0xAACEiFyer5TSAFYppZRaLiciHQABQAAJ/8sD0iwYzV+Lsnn5J+y+X+ybFf4trMbMiIhORLg0coFSSgNYpZRS6ugQUYwxTQD4GgB2Y9dC64B8yfKEQpOB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" alt="Novalure">
-      <div class="eyebrow">Bauträger-Pipeline-Playbook | Deutsche Ausgabe</div>
-      <h1>Bauen Sie eine steuerbare Käufer-Pipeline für Immobilienprojekte.</h1>
-      <p class="subtitle">Ein praktischer Leitfaden für Bauträger, Projektentwickler und Neubauvertriebe, die qualifizierte Gespräche statt Kampagnenrauschen brauchen.</p>
-      <p class="promise">Dieses Playbook zeigt, wie Projektpositionierung, Landingpages, Nachfrage, Qualifizierung und CRM-Übergabe zu einer Vertriebsinfrastruktur verbunden werden.</p>
-      <div class="visual">
-  <svg viewBox="0 0 920 260" role="img" aria-label="Pipeline diagram">
-    <defs>
-      <linearGradient id="g1" x1="0" x2="1"><stop stop-color="#fff4b8"/><stop offset="1" stop-color="#ffd43b"/></linearGradient>
-      <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    </defs>
-    <rect width="920" height="260" rx="28" fill="#101217"/>
-    <path d="M80 132 C210 40, 330 220, 470 130 S690 44, 840 130" fill="none" stroke="#343944" stroke-width="3" stroke-dasharray="8 10"/>
-    <g filter="url(#glow)">
-          <circle cx="92" cy="96" r="23" fill="url(#g1)"/>
-          <circle cx="92" cy="96" r="8" fill="#111318"/>
-          <rect x="26" y="134" width="132" height="42" rx="14" fill="#1b1f27" stroke="#333a45"/>
-          <text x="92" y="160" text-anchor="middle" fill="#ffffff" font-size="15" font-family="Arial" font-weight="700">Nachfrage</text>
-        </g><g filter="url(#glow)">
-          <circle cx="272" cy="158" r="23" fill="url(#g1)"/>
-          <circle cx="272" cy="158" r="8" fill="#111318"/>
-          <rect x="206" y="196" width="132" height="42" rx="14" fill="#1b1f27" stroke="#333a45"/>
-          <text x="272" y="222" text-anchor="middle" fill="#ffffff" font-size="15" font-family="Arial" font-weight="700">Projekt-Funnel</text>
-        </g><g filter="url(#glow)">
-          <circle cx="452" cy="96" r="23" fill="url(#g1)"/>
-          <circle cx="452" cy="96" r="8" fill="#111318"/>
-          <rect x="386" y="134" width="132" height="42" rx="14" fill="#1b1f27" stroke="#333a45"/>
-          <text x="452" y="160" text-anchor="middle" fill="#ffffff" font-size="15" font-family="Arial" font-weight="700">Qualifizierung</text>
-        </g><g filter="url(#glow)">
-          <circle cx="632" cy="158" r="23" fill="url(#g1)"/>
-          <circle cx="632" cy="158" r="8" fill="#111318"/>
-          <rect x="566" y="196" width="132" height="42" rx="14" fill="#1b1f27" stroke="#333a45"/>
-          <text x="632" y="222" text-anchor="middle" fill="#ffffff" font-size="15" font-family="Arial" font-weight="700">CRM</text>
-        </g><g filter="url(#glow)">
-          <circle cx="812" cy="96" r="23" fill="url(#g1)"/>
-          <circle cx="812" cy="96" r="8" fill="#111318"/>
-          <rect x="746" y="134" width="132" height="42" rx="14" fill="#1b1f27" stroke="#333a45"/>
-          <text x="812" y="160" text-anchor="middle" fill="#ffffff" font-size="15" font-family="Arial" font-weight="700">Vertrieb</text>
-        </g>
-  </svg></div>
+      <div class="eyebrow">Bauträger-Pipeline-Leitfaden | Deutsche Ausgabe</div>
+      <h1>Pipeline-Briefing für Bauträger</h1>
+      <p class="subtitle">Wo Vorverkauf wirklich verloren geht — und woran echte Pipeline-Profis ihn erkennen.</p>
+      <p class="meta">Von Franz Romih, Lead Strategist · NovaLure CLG · Dublin<br>Mai 2026</p>
       <div class="cover-card"><strong>Novalure</strong> Novalure | PropTech Sales System für Bauträger und Immobilienmakler</div>
     </section>
-    <section class="page toc">
-      <div class="kicker">Für wen dieses Playbook ist</div>
+
+    <section class="intro">
+      <div class="page-mark"></div>
+      <div class="eyebrow">Was Sie in diesem Leitfaden prüfen</div>
       <h2>Ein System, kein weiterer Marketing-Ordner.</h2>
-      <p class="body">Dieses Dokument ist als Arbeitsgrundlage gedacht. Es hilft Ihnen, Ihr aktuelles Setup zu prüfen, Lücken sichtbar zu machen und die nächsten operativen Schritte sauber zu priorisieren.</p>
-      <div class="grid"><div class="card"><h3>Bauträger vor oder während eines Projektlaunches</h3><p>Relevant, wenn Pipeline-Qualität wichtiger ist als reines Lead-Volumen.</p></div><div class="card"><h3>Neubauanbieter mit längeren Entscheidungszyklen</h3><p>Relevant, wenn Pipeline-Qualität wichtiger ist als reines Lead-Volumen.</p></div><div class="card"><h3>Projektvertriebe für Investment- oder Eigennutzerprojekte</h3><p>Relevant, wenn Pipeline-Qualität wichtiger ist als reines Lead-Volumen.</p></div><div class="card"><h3>Vertriebsteams, die vor dem Erstgespräch besseren CRM-Kontext brauchen</h3><p>Relevant, wenn Pipeline-Qualität wichtiger ist als reines Lead-Volumen.</p></div></div>
-      <p class="note">Dieses Playbook ist ein strategischer Leitfaden und kein Versprechen bestimmter Lead-Zahlen, Umsätze, Lieferzeiten oder rechtlicher Konformität. Nutzen Sie es zur Diagnose und Strukturierung Ihres Vertriebssystems.</p>
-      <div class="footer"><span>Novalure | PropTech Sales System für Bauträger und Immobilienmakler</span><span>02</span></div>
+      <p>Dieses Dokument ist als Arbeitsgrundlage gedacht. Es macht Pipeline-Lecks sichtbar und hilft, die nächsten operativen Schritte sauber zu priorisieren.</p>
+      <div class="section-grid"><article><span>01</span><strong>1. Was die meisten gerade nicht sehen wollen</strong></article><article><span>02</span><strong>2. Die Pipeline-Lecks, die wir am häufigsten sehen</strong></article><article><span>03</span><strong>3. Der 5-Minuten-Selbstcheck</strong></article><article><span>04</span><strong>4. Warum die meisten Lösungen nicht funktionieren</strong></article><article><span>05</span><strong>5. Wie ein funktionierendes System aussieht</strong></article><article><span>06</span><strong>6. Der nächste Schritt: 30 Minuten, die alles verändern können</strong></article></div>
+      <div class="system-map">
+        <div class="system-row"><span>01</span><span>Nachfrage</span></div>
+        <div class="system-row"><span>02</span><span>Qualifizierung</span></div>
+        <div class="system-row"><span>03</span><span>CRM-Übergabe</span></div>
+        <div class="system-row"><span>04</span><span>Sales-ready Pipeline</span></div>
+      </div>
+      <p class="note">Dieser Leitfaden ist eine strategische Arbeitsgrundlage. Er ersetzt keine rechtliche, steuerliche oder finanzielle Beratung und enthält keine Garantie für bestimmte Lead-, Umsatz- oder Reservierungszahlen.</p>
+      <footer>Novalure | PropTech Sales System für Bauträger und Immobilienmakler<span>02</span></footer>
     </section>
-    <section class="page">
-      <div class="kicker">Systemkarte</div>
-      <h2>Vier Schichten. Ein Ergebnis.</h2>
-      <p class="body">Die folgenden Grafiken zeigen das Betriebssystem hinter qualifizierter Immobilien-Pipeline: Nachfrage wird nicht nur erzeugt, sondern geführt, gefiltert und mit Kontext an den Vertrieb übergeben.</p>
-      <div class="visual">
-  <svg viewBox="0 0 920 340" role="img" aria-label="Four layer system">
-    <rect width="920" height="340" rx="28" fill="#111318"/>
-    <rect x="115" y="54" width="690" height="48" rx="18" fill="#202630" stroke="#3a4350"/>
-        <text x="143" y="85" fill="#ffffff" font-family="Arial" font-size="20" font-weight="800">1. Funnel</text><rect x="150" y="120" width="620" height="48" rx="18" fill="#202630" stroke="#3a4350"/>
-        <text x="178" y="151" fill="#ffffff" font-family="Arial" font-size="20" font-weight="800">2. Demand</text><rect x="185" y="186" width="550" height="48" rx="18" fill="#202630" stroke="#3a4350"/>
-        <text x="213" y="217" fill="#ffffff" font-family="Arial" font-size="20" font-weight="800">3. Qualifizierung</text><rect x="220" y="252" width="480" height="48" rx="18" fill="#ffd43b" stroke="#3a4350"/>
-        <text x="248" y="283" fill="#111318" font-family="Arial" font-size="20" font-weight="800">4. CRM</text>
-    <text x="690" y="285" fill="#aeb6c3" font-family="Arial" font-size="17">Ein Ergebnis: sales-ready Pipeline</text>
-  </svg></div>
-      <div class="visual">
-  <svg viewBox="0 0 920 520" role="img" aria-label="Qualification matrix">
-    <rect width="920" height="520" rx="28" fill="#f7f4eb"/>
-    <line x1="160" y1="420" x2="790" y2="420" stroke="#1b1f27" stroke-width="3"/>
-    <line x1="160" y1="420" x2="160" y2="90" stroke="#1b1f27" stroke-width="3"/>
-    <text x="475" y="475" text-anchor="middle" fill="#111318" font-size="24" font-family="Arial" font-weight="700">Absicht</text>
-    <text x="70" y="255" text-anchor="middle" fill="#111318" font-size="24" font-family="Arial" font-weight="700" transform="rotate(-90 70 255)">Fit</text>
-    <rect x="190" y="250" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
-    <rect x="500" y="250" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
-    <rect x="190" y="95" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
-    <rect x="500" y="95" width="250" height="140" rx="20" fill="#111318"/>
-    <text x="315" y="325" text-anchor="middle" fill="#111318" font-size="25" font-family="Arial" font-weight="800">Nurture</text>
-    <text x="625" y="325" text-anchor="middle" fill="#111318" font-size="25" font-family="Arial" font-weight="800">Prüfen</text>
-    <text x="315" y="159" text-anchor="middle" fill="#111318" font-size="20" font-family="Arial" font-weight="800"><tspan x="315">Disquali</tspan><tspan x="315" dy="28">fizieren</tspan></text>
-    <text x="625" y="170" text-anchor="middle" fill="#ffd43b" font-size="25" font-family="Arial" font-weight="800">Sales-ready</text>
-  </svg></div>
-      <div class="footer"><span>Novalure | PropTech Sales System für Bauträger und Immobilienmakler</span><span>03</span></div>
-    </section>
+
     
-        <section class="page section">
-          <div class="section-number">01</div>
-          <h2>Das Kernproblem: Projektmarketing hört oft zu früh auf</h2>
-          <p class="body">Viele Projektkampagnen erzeugen Sichtbarkeit: Impressionen, Portal-Anfragen, Expose-Downloads und Reporting. Sichtbarkeit ist hilfreich, aber noch keine Käufer-Pipeline. Eine Pipeline entsteht erst, wenn Nachfrage erfasst, gefiltert, angereichert und mit genug Kontext an den Vertrieb übergeben wird.</p>
-          <ul class="bullets"><li>Ein Lead ohne Projekt-Fit bindet Zeit.</li><li>Eine Formularanfrage ohne Budgetkontext ist nur ein Datensatz.</li><li>Ein Kampagnenreport ohne CRM-Feedback zeigt nicht, wo echte Kaufabsicht entsteht.</li><li>Ein Launch ohne Qualifizierung macht den Vertrieb zum manuellen Filter.</li></ul>
+        <section class="chapter">
+          <div class="chapter-kicker">01 / Bauträger-Pipeline-Leitfaden</div>
+          <h2>1. Was die meisten gerade nicht sehen wollen</h2>
+          <div class="chapter-body"><p>Die Vermarktungsdauer für Neubauprojekte hat sich seit 2021 in vielen DACH-Mikrolagen fast verdoppelt. Die Bank wartet nicht mit. Sie wartet auf Ihre Vorverkaufsquote. Wer 2026 bei 30 % steht, wo er 60 % gebraucht hätte, hat kein Werbeproblem. Er hat ein Pipeline-Problem.</p>
+<p>ImmoScout24 und willhaben liefern weiterhin Anfragen. Aber die Qualität ist seit 2023 messbar gefallen, und die Kosten pro qualifiziertem Lead steigen weiter. Wer das nicht spürt, misst nicht richtig. Die meisten Bauträger glauben, sie hätten ein Reichweiten-Problem. Sie haben in Wahrheit ein Filter-Problem.</p>
+<p>Vier von zehn mittelgroßen DACH-Bauträgern verlieren mindestens eine Wohnung pro Quartal an einen Lead, der eigentlich qualifiziert war. Niemand bemerkt es. Niemand misst es. Es passiert trotzdem. Das macht es so teuer: Es schmerzt nicht akut, sondern blutet langsam.</p>
+<p>Klassische Werbeagenturen liefern weiter Kampagnen, keine Pipelines. Sie schreiben Headlines, schalten Anzeigen, optimieren Klickraten. Was zwischen Klick und Reservierung passiert, ist ihr blinder Fleck. Genau dort entscheiden sich 2026 Vorverkaufsquoten.</p>
+<aside class="callout">Klartext: Die Lücke zwischen „Anfragen kommen rein“ und „Wohnungen gehen raus“ ist 2026 das ungelöste Problem im DACH-Bauträgermarkt. Genau diese Lücke ist unsere Spezialität.</aside></div>
+          <footer>Novalure | PropTech Sales System für Bauträger und Immobilienmakler<span>03</span></footer>
         </section>
-        <section class="page section">
-          <div class="section-number">02</div>
-          <h2>Das Pipeline-Prinzip</h2>
-          <p class="body">Ihr Projekt braucht nicht mehr zufällige Aufmerksamkeit. Es braucht kontrollierte Bewegung vom ersten Signal bis zum qualifizierten Käufergespraech. Jeder Schritt sollte Unsicherheit reduzieren: Wer ist diese Person, was sucht sie, warum dieses Projekt, wie weit ist die Entscheidung und was soll der Vertrieb als Nächstes tun?</p>
-          <ul class="bullets"><li>Positionieren Sie das Projekt entlang der Kaufentscheidung, nicht nur entlang der Architektur.</li><li>Trennen Sie Interessenten von ernsthaften Käufern vor der Vertriebsübergabe.</li><li>Nutzen Sie CRM-Felder, die dem Erstgespräch helfen.</li><li>Bewerten Sie Pipeline-Qualität wöchentlich, nicht nur Traffic-Volumen.</li></ul>
+        
+        <section class="chapter">
+          <div class="chapter-kicker">02 / Bauträger-Pipeline-Leitfaden</div>
+          <h2>2. Die Pipeline-Lecks, die wir am häufigsten sehen</h2>
+          <div class="chapter-body"><p>Vier Muster sehen wir in fast jedem Bauträger-Audit. Sie liegen selten am Vertriebstresen. Sie liegen davor, daneben oder dahinter. Und sie kosten — leise, kontinuierlich, unsichtbar.</p>
+<h3>Leck Nr. 1 — Die Anfrage, die nie wirklich qualifiziert wurde</h3>
+<p>Eine Anfrage kommt rein. Vorname, Nachname, eventuell ein Satz. Ein Mitarbeiter ruft zurück, vereinbart einen Vor-Ort-Termin. Dort steht dann jemand, der weder finanziert ist, noch Eigennutzer, noch in den nächsten zwölf Monaten kauft. Vertriebszeit verbrannt. Termin ohne Reservierung. Die meisten nennen das „halt das Übliche“.</p>
+<p>Wir sehen das in 8 von 10 Bauträger-Audits: Es gibt keine Vor-Termin-Qualifizierung. Drei oder vier präzise Fragen vor dem Termin würden 30 bis 50 % der unproduktiven Termine verhindern. Welche Fragen, in welcher Reihenfolge, mit welcher Verbindlichkeit — genau dort liegt der Hebel, und genau dort liegt nicht der Punkt dieses Dokuments.</p>
+<p>Diagnose-Hinweis: Wenn Ihr Vertrieb pro Termin durchschnittlich weniger als 1 von 4 Reservierungen abschließt, sitzt das Problem fast nie im Vertriebsgespräch. Es sitzt davor.</p>
+<p>Im Audit zeigen wir Ihnen exakt, wo — an Ihren letzten 20 Anfragen.</p>
+<h3>Leck Nr. 2 — Der unsichtbare Tracking-Tod</h3>
+<p>Sie investieren ein Werbebudget in Meta, Google, ImmoScout24. Sie sehen Klicks, Anfragen, vielleicht Termine. Was Sie nicht sehen: welcher Kanal liefert Reservierungen, welcher nur teure Klicker. iOS-Privacy, Cookie-Banner, falsche Pixel-Einbindung — das DSGVO-konforme Server-Side-Tracking, das Sie eigentlich bräuchten, ist bei den meisten Bauträgern entweder gar nicht da oder falsch konfiguriert.</p>
+<p>In einem Audit letzten Quartal haben wir innerhalb von 12 Minuten ein Tracking-Loch entdeckt, das 31 % der bezahlten Anfragen unsichtbar machte. Das Team wusste davon nichts. Konsequenz: Drei Monate Budget-Optimierung gegen die falschen Daten.</p>
+<p>Diagnose-Hinweis: Wenn Ihr Marketing-Bericht jeden Monat „Klicks“, „Anfragen“ und „CPL“ zeigt, aber nicht „Reservierungen pro Quelle nach 60 Tagen“, fliegen Sie blind.</p>
+<p>Im Audit prüfen wir es konkret an Ihrem Setup. Was wir dabei jedes Mal finden, überrascht uns selbst nicht mehr — den Bauträger schon.</p>
+<h3>Leck Nr. 3 — Die Übergabe, die im E-Mail-Postfach erstickt</h3>
+<p>Eine qualifizierte Anfrage kommt am Freitag um 18:42 Uhr. Sie landet im Sales-Postfach. Montag 10:14 Uhr ruft jemand zurück. 63 Stunden später. In dieser Zeit hat der Interessent zwei weitere Bauträger angeschrieben. Einer davon hat Samstagvormittag geantwortet — automatisch, mit einer ersten Qualifizierungsfrage und einem Termin-Link.</p>
+<p>Was im CRM eines Bauträgers steht, der gerade gewinnt, ist nicht „mehr Datenfelder“. Es ist ein Handover, der dem Vertrieb in 30 Sekunden alles gibt: Quelle, Erst-Intent, Budget, Timing, Nachfass-Historie. Nicht mehr — aber das verlässlich.</p>
+<p>Diagnose-Hinweis: Wenn Ihre Vertriebler vor jedem Rückruf erst „die E-Mails sortieren“, verbrennen Sie 15 bis 25 % Reaktionszeit. Multipliziert mit acht bis zwölf Anfragen pro Woche, über ein Quartal — Sie können sich ausrechnen, wie viele Reservierungen das gekostet hat.</p>
+<p>Wie das CRM-Handover bei Ihnen konkret aussehen müsste, ist eine Frage Ihres Projekt-Mix und Ihres Vertriebstempos. Im Audit zeigen wir es.</p>
+<h3>Leck Nr. 4 — Die 14 Tage, in denen der Lead kalt wird</h3>
+<p>60 bis 70 % der Wohnungskäufer entscheiden nicht im Erstgespräch. Sie vergleichen, sie zögern, sie warten auf Finanzierung, sie sprechen mit dem Partner. Was zwischen Tag 2 und Tag 21 passiert, entscheidet, ob Sie verkaufen oder die Konkurrenz. Die meisten Bauträger machen hier denselben Fehler: gar nichts. Oder schlimmer — drei generische „Schauen Sie nochmal vorbei“-Mails.</p>
+<p>Eine systematische Nachfass-Logik ist 2026 kein Marketing-Luxus mehr. Sie ist die Differenz zwischen 30 % und 55 % Termin-zu-Reservierung-Quote. Wir sagen hier nicht, wie diese Sequenz aussehen muss — die Antwort hängt von Käuferzielgruppe, Bauphase und Reservierungsmechanik ab.</p>
+<p>Diagnose-Hinweis: Schauen Sie in Ihre letzten 50 abgesprungenen Leads. Wie viele davon haben in den 21 Tagen nach Erstkontakt einen einzigen sinnvollen Touchpoint von Ihnen gesehen, der nicht „Newsletter“ hieß? Wenn die Antwort unter 70 % liegt, haben Sie hier ein millionenwertes Problem.</p>
+<p>Im Audit quantifizieren wir es — an Ihren echten Zahlen, nicht an Branchen-Durchschnitten.</p>
+<aside class="callout">Klartext: Diese vier Lecks zu erkennen ist der einfache Teil. Sie in der richtigen Reihenfolge zu schließen, ist die Arbeit. Und genau hier wird es interessant.</aside></div>
+          <footer>Novalure | PropTech Sales System für Bauträger und Immobilienmakler<span>04</span></footer>
         </section>
-        <section class="page section">
-          <div class="section-number">03</div>
-          <h2>Das Vier-Schichten-System für Projekte</h2>
-          <p class="body">Ein starkes Bauträger-System besteht aus vier verbundenen Schichten. Fehlt eine davon, wird die Pipeline instabil: Kampagnen bringen Volumen, Landingpages sammeln schwache Anfragen oder das CRM enthält Datensätze, denen niemand vertraut.</p>
-          <ul class="bullets"><li>Projekt-Funnel-Architektur: Botschaft, Angebot, Seitenfluss und Conversion-Logik.</li><li>Multi-Channel-Nachfrage: Search, Social, Retargeting und gezielte Content-Assets.</li><li>Käufer-Qualifizierung: Budget, Zeithorizont, Nutzung, Lage-Fit und Bereitschaft.</li><li>CRM-Übergabe und Reporting: saubere Datensätze, Quellenkontext, Follow-up-Status und Feedback.</li></ul>
+        
+        <section class="chapter">
+          <div class="chapter-kicker">03 / Bauträger-Pipeline-Leitfaden</div>
+          <h2>3. Der 5-Minuten-Selbstcheck</h2>
+          <div class="chapter-body"><p>Sieben Fragen. Skala 1 (trifft überhaupt nicht zu) bis 5 (vollständig umgesetzt und gelebt). Notieren Sie ehrlich. Das Ergebnis ist nur für Sie.</p>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Frage</th><th>1–5</th></tr></thead><tbody><tr><td>1</td><td>Wir wissen für jedes aktive Projekt, wie viele qualifizierte Anfragen pro Woche eingehen — nach Quelle getrennt.</td><td></td></tr><tr><td>2</td><td>Unser Conversion-Tracking ist von einem Externen geprüft, nicht nur intern „eingerichtet“.</td><td></td></tr><tr><td>3</td><td>Vor jedem Vor-Ort-Termin wird der Interessent durch mindestens vier Qualifizierungsfragen vorgefiltert.</td><td></td></tr><tr><td>4</td><td>Eingehende Anfragen erhalten innerhalb von 60 Minuten eine erste qualifizierte Antwort — auch außerhalb der Bürozeiten.</td><td></td></tr><tr><td>5</td><td>Wir haben eine automatisierte E-Mail-Sequenz, die Interessenten 14+ Tage warmhält, ohne dass jemand manuell schreibt.</td><td></td></tr><tr><td>6</td><td>Wir wissen, wie viele unserer Anfragen nach 21 Tagen ohne Reservierung „kalt“ werden — und warum.</td><td></td></tr><tr><td>7</td><td>Vertriebsteam und Marketing besprechen wöchentlich Top-Leads — nicht nur Monatsreports.</td><td></td></tr></tbody></table></div>
+<h3>Auswertung</h3>
+<p>7–14 Punkte — Sie verlassen sich auf Glück. Wenn Sie ehrlich sind, wussten Sie das schon. Die Frage ist, was Sie jetzt tun.</p>
+<p>15–25 Punkte — Sie haben Bausteine, aber kein System. Genau hier verliert man die meiste Pipeline — nicht ganz unten, sondern halbwegs gut aufgestellt mit unsichtbaren Lücken.</p>
+<p>26–35 Punkte — Sie sind weiter als die meisten. Die Frage ist nur, wie skalierbar Ihr System ist — und ob es einen zweiten Markt oder eine zweite Sprache aushält.</p></div>
+          <footer>Novalure | PropTech Sales System für Bauträger und Immobilienmakler<span>05</span></footer>
         </section>
-        <section class="page section">
-          <div class="section-number">04</div>
-          <h2>Projekt-Funnel-Architektur</h2>
-          <p class="body">Der Funnel muss die Kaufentscheidung verstaendlicher machen. Er sollte die Fragen beantworten, die ernsthafte Käufer bereits haben: Warum dieses Projekt, welche Einheit passt, welche Lage-Logik steckt dahinter, was ist der Investment- oder Eigennutzer-Case, was passiert als Nächstes und welche Informationen sind vor einem Gespräch sinnvoll?</p>
-          <ul class="bullets"><li>Hero-Botschaft: Projektergebnis, Käufertyp und Kernunterscheidung.</li><li>Entscheidungsbloecke: Lage, Verfügbarkeit, Einheitentypen, Investmentlogik, Prozess.</li><li>Conversion-Pfad: Playbook, Projektpaket, private Prüfung, Vertriebsgespraech.</li><li>Trust-Pfad: klare naechste Schritte statt übertriebener Versprechen.</li></ul>
+        
+        <section class="chapter">
+          <div class="chapter-kicker">04 / Bauträger-Pipeline-Leitfaden</div>
+          <h2>4. Warum die meisten Lösungen nicht funktionieren</h2>
+          <div class="chapter-body"><p>Wenn ein Bauträger merkt, dass die Pipeline nicht trägt, greifen die meisten zu einem von drei Hebeln. In der Praxis lösen alle drei das eigentliche Problem nicht — und einer davon verschärft es.</p>
+<h3>„Mehr Werbebudget“</h3>
+<p>Funktioniert nicht, wenn das Pipeline-Loch dahinter sitzt. Mehr Anfragen mit denselben Lecks heißt schlicht mehr verbranntes Geld. Wir haben Bauträger gesehen, die ihr Budget verdoppelt haben — und die Vorverkaufsquote ist konstant geblieben. Weil das Geld nie das Problem war.</p>
+<h3>„Neue Website / neuer Funnel“</h3>
+<p>Funktioniert nicht, wenn CRM und Sales-Handover nicht mitziehen. Eine schöne Projekt-Landingpage ohne dahinter laufende Qualifizierung, Übergabe und Nachfass-Logik ist eine Fassade. Sie verbessert das Eingangsformular. Sie verbessert nicht den Verkauf.</p>
+<h3>„SDR / zusätzlicher Vertriebsmitarbeiter“</h3>
+<p>Funktioniert nicht, wenn die Lead-Qualität strukturell schlecht ist. Sie verbrennen Personalkosten an unqualifizierten Anfragen. Bauträger, die sich aus einem Pipeline-Problem heraus einstellen, lösen es nicht. Sie skalieren es.</p>
+<p>Ein PropTech Sales System ist kein Werbe-Add-on, kein Website-Refresh und kein Personalersatz. Es ist die Vertriebsinfrastruktur, in der diese drei Bausteine erst überhaupt funktionieren. Wer in dieser Reihenfolge denkt — Infrastruktur zuerst, dann Werbung, dann Personal — gewinnt im DACH-Markt 2026 strukturell.</p></div>
+          <footer>Novalure | PropTech Sales System für Bauträger und Immobilienmakler<span>06</span></footer>
         </section>
-        <section class="page section">
-          <div class="section-number">05</div>
-          <h2>Käufer-Qualifizierung</h2>
-          <p class="body">Qualifizierung soll Vertriebszeit schützen, ohne den Käufer abzuschrecken. Gute Formulare und Follow-up-Flows fragen nach Dingen, die zur Entscheidung passen: Nutzung, bevorzugter Einheitentyp, Budgetkorridor, Kaufhorizont, Finanzierungsstatus und gewünschter nächster Schritt.</p>
-          <ul class="bullets"><li>Nutzen Sie progressive Fragen und fragen Sie nicht alles auf einmal.</li><li>Trennen Sie Dringlichkeit von Fit; schnell bedeutet nicht automatisch qualifiziert.</li><li>Erfassen Sie Ausschlusskriterien früh genug, um unnötige Calls zu vermeiden.</li><li>Das CRM sollte sichtbar machen, warum ein Lead Aufmerksamkeit verdient.</li></ul>
+        
+        <section class="chapter">
+          <div class="chapter-kicker">05 / Bauträger-Pipeline-Leitfaden</div>
+          <h2>5. Wie ein funktionierendes System aussieht</h2>
+          <div class="chapter-body"><p>Wir beschreiben hier das Endbild bewusst nur in Konturen. Wie es bei Ihnen konkret aussieht, hängt von Ihrem Projekt-Mix, Ihrer Käuferstruktur und Ihrer Bauphase ab. Die Komponenten sind aber in jedem Setup dieselben.</p>
+<p>1. Eine projektspezifische Funnel-Strecke, die Anfragen schon vor dem Vertriebstermin qualifiziert — bilingual nutzbar, wenn Ihr Investorenmix das verlangt.</p>
+<p>2. Ein CRM-Handover, der dem Vertrieb in 30 Sekunden alles gibt, was er braucht: Quelle, Intent, Budget, Timing.</p>
+<p>3. Eine automatisierte Nachfass-Logik, die in den ersten 21 Tagen wertvoll bleibt — ohne dass jemand sie manuell schreibt.</p>
+<p>4. Ein wöchentliches Pipeline-Reporting, das zeigt, wo Geld liegen bleibt — pro Kanal, pro Phase, pro Sales-Mitarbeiter.</p>
+<aside class="callout">Wir bauen genau das. In 10 bis 15 Werktagen nach Asset-Freigabe. In Deutsch und Englisch nativ. Ohne Lead-Versprechen, mit klar definierter System-Liefer-Garantie. Was das für Ihr Projekt konkret bedeutet, klären wir im Audit.</aside></div>
+          <footer>Novalure | PropTech Sales System für Bauträger und Immobilienmakler<span>07</span></footer>
         </section>
-        <section class="page section">
-          <div class="section-number">06</div>
-          <h2>CRM-ready Übergabe</h2>
-          <p class="body">Die Übergabe entscheidet, ob Marketing operativ nützlich wird. Ein CRM-Datensatz sollte zeigen, woher der Lead kommt, was angefragt wurde, welche Antworten gegeben wurden, auf welcher Seite die Conversion entstand und welches Follow-up sinnvoll ist.</p>
-          <ul class="bullets"><li>Mindestfelder: Quelle, Kampagne, Projekt, Käufertyp, Budgetrahmen, Zeithorizont, gewünschter nächster Schritt.</li><li>Vertriebsaufgabe: Owner, Frist für Erstkontakt, Follow-up-Sequenz.</li><li>Reporting: Qualifizierungsrate, gebuchte Gespräche, No-Fit-Gründe und Vertriebsfeedback.</li><li>Governance: gemeinsame Definitionen für Anfrage, qualifizierten Lead, Opportunity und Lost Reason.</li></ul>
+        
+        <section class="chapter">
+          <div class="chapter-kicker">06 / Bauträger-Pipeline-Leitfaden</div>
+          <h2>6. Der nächste Schritt: 30 Minuten, die alles verändern können</h2>
+          <div class="chapter-body"><h3>Was es ist</h3>
+<p>Ein 30-minütiges Diagnose-Gespräch per Microsoft Teams mit Franz Romih persönlich.</p>
+<h3>Was Sie bekommen</h3>
+<ul class="bullets"><li>Drei konkrete Pipeline-Lecks Ihres aktuellen Setups, benannt am Beispiel Ihrer eigenen Anfragen.</li><li>Eine ehrliche Fit-Bewertung — auch wenn das Ergebnis ist, dass wir nicht passen.</li><li>Klarheit über den richtigen nächsten Schritt — mit oder ohne uns.</li></ul>
+<h3>Was es nicht ist</h3>
+<ul class="bullets"><li>Kein Verkaufsgespräch.</li><li>Kein generischer Pitch.</li><li>Kein schriftlicher Gratisreport.</li></ul>
+<h3>Wer es buchen sollte</h3>
+<ul class="bullets"><li>Bauträger mit konkretem Vermarktungs- oder Vorverkaufsdruck in den nächsten 4 bis 8 Wochen.</li><li>Entscheider mit Budget- und Mandatsverantwortung.</li><li>Wer den ehrlichen Wunsch hat, den Pipeline-Status seines aktuellen Projekts diagnostiziert zu bekommen.</li></ul>
+<h3>Wer es nicht buchen sollte</h3>
+<ul class="bullets"><li>Wer „nur mal schauen“ will.</li><li>Wer keine Vertriebs- oder Marketingverantwortung hat.</li><li>Wer eine Lead- oder Reservierungsgarantie sucht.</li></ul>
+<h3>Kontakt</h3>
+<p>Web: www.novalure.eu</p>
+<p>Telefon: +353 89 269 5248</p>
+<p>E-Mail: hello@novalure.eu</p>
+<p>Sitz: NovaLure CLG, Dublin, Ireland</p>
+<aside class="callout">Klartext zum Abschluss: Wenn Sie nach diesen 9 Seiten denken: „Klingt logisch, aber ich brauche Klarheit für meine konkrete Situation“ — dann ist das genau der Grund, warum es das Pipeline-Audit gibt. 30 Minuten. Ehrlich. Konkret. Kostenlos.</aside></div>
+          <footer>Novalure | PropTech Sales System für Bauträger und Immobilienmakler<span>08</span></footer>
         </section>
-        <section class="page section">
-          <div class="section-number">07</div>
-          <h2>Launch-Checkliste</h2>
-          <p class="body">Bevor Media-Budget skaliert wird, sollte das Projekt durch einen Readiness-Check laufen. Es geht nicht um Perfektion. Es geht darum, kein Budget in einen Funnel zu lenken, der nicht qualifizieren, übergeben oder lernen kann.</p>
-          <ul class="bullets"><li>Die Positionierung ist für einen konkreten Käufertyp formuliert.</li><li>Die Landingpage erklärt den Kauf-Case klar auf Mobile.</li><li>Jeder CTA hat einen nächsten Schritt und einen Verantwortlichen.</li><li>Formulare erfassen echte Absicht ohne unnötige Reibung.</li><li>HubSpot- oder CRM-Felder passen zum Vertriebsprozess.</li><li>Follow-up-Vorlagen existieren vor dem ersten Lead.</li><li>Reports zeigen Pipeline-Qualität statt nur Klicks.</li></ul>
-        </section>
-        <section class="page section">
-          <div class="section-number">08</div>
-          <h2>Was Sie jede Woche prüfen sollten</h2>
-          <p class="body">Ein Pipeline-System verbessert sich durch Rhythmus. Prüfen Sie jede Woche dieselben Fragen, damit Marketing, Vertrieb und Führung auf derselben Realität entscheiden.</p>
-          <ul class="bullets"><li>Welche Kanäle erzeugen qualifizierte Gespräche?</li><li>Welche Seiten konvertieren, bringen aber schwachen Fit?</li><li>Welche Qualifizierungsantworten korrelieren mit ernsthaften Gesprächen?</li><li>Wo warten Leads zu lange auf Follow-up?</li><li>Welche Einwände tauchen oft genug auf, um Page-Content zu werden?</li><li>Welche CRM-Felder fehlen für das Erstgespräch?</li></ul>
-        </section>
-        <section class="page section">
-          <div class="section-number">09</div>
-          <h2>Empfohlener nächster Schritt</h2>
-          <p class="body">Vergleichen Sie Ihren aktuellen Projektlaunch mit den vier Schichten. Markieren Sie jede unklare oder fehlende Schicht, bevor Sie Media-Budget erhöhen. Wenn das System nicht verbunden ist, erzeugt mehr Traffic meistens mehr manuelle Arbeit statt mehr Pipeline.</p>
-          <ul class="bullets"><li>Aktuellen Funnel auditieren.</li><li>Käufer-Qualifizierungsmodell definieren.</li><li>CRM-Felder mit der Vertriebsübergabe abgleichen.</li><li>Reporting-Loop vor Skalierung aufbauen.</li></ul>
-        </section>
-    <section class="page summary">
+        
+
+    <section class="summary">
+      <div class="page-mark"></div>
       <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArAAAACxCAYAAAA8h446AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFE0AABRNAZTKjS8AAFHUSURBVHhe7d15gBxHdTj+96rn2EOn1zpsHT6wDT64bAcnhJsQchAIXwwBQiABAg75mkA4DQlr4BsSCCQhISE2R7gSQEAAE8wPCIgrBhJhCyNjImNLWltaSXvN7hzdXVXvvd8fXT3b0zsjrQ4b27wPjDXTR3V1dc/2m+qqagCllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUj9rWJ6glFJKqbuHiBSvu8X3UnjfhYh9pyv1804DWKWUUuoYNBqNtSuGh5/OiI9ExBoAtI0xc865BQBIRcQCgDPGtKIociLiIQIH5J1PPHkAEhEnIr5SqXhmTqvVqhUR2263Xb3u3fy892ma+rPPPntBg1illtIAVimllFomEakS0WeNMb9RnneCCACImQkAvAikADITRdEvG2Nmywsr9fPOlCcopZRSaikRQSL6U2PMk0UGV4qKSPeVf2bm8CIQoZ4WA2HZSERqxphhAFiJCKcYY9a0Wi29TivVh9bAKqWUUsvAzKMisgMRHohoEELwiQAAmF1O+wW2GOZBvnxhWURcsg4iAhExIk4i4kO0BlappfSXnVJKKXUUofNVHRFXAywGnTio99US0vPK1l8avEIIbI0xAACEiFyer5TSAFYppZRaLiciHQABQAAJ/8sD0iwYzV+Lsnn5J+y+X+ybFf4trMbMiIhORLg0coFSSgNYpZRS6ugQUYwxTQD4GgB2Y9dC64B8yfKEQpOB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" alt="Novalure">
-      <div class="kicker">Nächster Schritt</div>
+      <div class="eyebrow">Der nächste Schritt</div>
       <h2>Lassen Sie Ihr aktuelles Lead-System prüfen.</h2>
-      <p class="body">Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein Pipeline-Audit. Wir prüfen Funnel, Lead-Qualifizierung, CRM-Übergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen.</p>
+      <p>Wenn Sie sehen möchten, welche Lücken in Ihrem aktuellen Setup wirklich Pipeline kosten, buchen Sie ein Pipeline-Audit. Wir prüfen Funnel, Lead-Qualifizierung, CRM-Übergabe und Reporting anhand Ihres konkreten Systems.</p>
       <a class="cta" href="https://www.novalure.eu/de/kontakt#book-audit">Pipeline-Audit buchen</a>
-      <p class="note">Dieses Playbook ist ein strategischer Leitfaden und kein Versprechen bestimmter Lead-Zahlen, Umsätze, Lieferzeiten oder rechtlicher Konformität. Nutzen Sie es zur Diagnose und Strukturierung Ihres Vertriebssystems.</p>
-      <div class="footer"><span>Novalure | PropTech Sales System für Bauträger und Immobilienmakler</span><span>Ende</span></div>
+      <p class="note">Dieser Leitfaden ist eine strategische Arbeitsgrundlage. Er ersetzt keine rechtliche, steuerliche oder finanzielle Beratung und enthält keine Garantie für bestimmte Lead-, Umsatz- oder Reservierungszahlen.</p>
+      <footer>Novalure | PropTech Sales System für Bauträger und Immobilienmakler<span>09</span></footer>
     </section>
   </main>
 </body>
