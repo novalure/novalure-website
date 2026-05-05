@@ -22,16 +22,16 @@ const playbookCopy = {
   },
   de: {
     developer: {
-      subject: "Ihr Bauträger-Pipeline-Playbook",
-      headline: "Ihr Bauträger-Pipeline-Playbook ist bereit",
-      intro: "Hier ist das Playbook für den Aufbau einer steuerbaren Käufer-Pipeline für Immobilienprojekte.",
-      cta: "Playbook öffnen"
+      subject: "Ihr Bauträger-Pipeline-Leitfaden",
+      headline: "Ihr Bauträger-Pipeline-Leitfaden ist bereit",
+      intro: "Hier ist der Leitfaden für den Aufbau einer steuerbaren Käufer-Pipeline für Immobilienprojekte.",
+      cta: "Leitfaden öffnen"
     },
     agent: {
-      subject: "Ihr Makler-Lead-Playbook",
-      headline: "Ihr Makler-Lead-Playbook ist bereit",
-      intro: "Hier ist das Playbook für eigene Verkäufer- und Käufer-Leads jenseits von Portalabhängigkeit.",
-      cta: "Playbook öffnen"
+      subject: "Ihr Makler-Lead-Leitfaden",
+      headline: "Ihr Makler-Lead-Leitfaden ist bereit",
+      intro: "Hier ist der Leitfaden für eigene Verkäufer- und Käufer-Leads jenseits von Portalabhängigkeit.",
+      cta: "Leitfaden öffnen"
     },
     audit: "Wenn Sie möchten, dass wir Ihr aktuelles Lead-System prüfen, können Sie hier ein Pipeline-Audit buchen:"
   }

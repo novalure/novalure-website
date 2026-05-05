@@ -90,7 +90,7 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     home: "Start",
     developers: "Bauträger",
     agents: "Makler",
-    playbooks: "Playbooks",
+    playbooks: "Leitfäden",
     contact: "Kontakt",
     imprint: "Impressum",
     privacy: "Datenschutz",

@@ -8,7 +8,7 @@ import { Logo } from "@/components/Logo";
 
 const ctaLabels = {
   en: { primary: "Download Playbook", secondary: "Book Audit", menu: "Menu", close: "Close menu" },
-  de: { primary: "Playbook herunterladen", secondary: "Audit buchen", menu: "Menü", close: "Menü schließen" }
+  de: { primary: "Leitfaden herunterladen", secondary: "Audit buchen", menu: "Menü", close: "Menü schließen" }
 };
 
 export function Header({ locale }: { locale: Locale }) {

@@ -165,7 +165,7 @@ function PlaybookHub({
   return (
     <section className="playbook-section" id={id}>
       <div className="section-heading">
-        <p className="eyebrow">{eyebrow || (locale === "en" ? "Playbook selection" : "Playbook-Auswahl")}</p>
+        <p className="eyebrow">{eyebrow || (locale === "en" ? "Playbook selection" : "Leitfaden-Auswahl")}</p>
         <h2>{title}</h2>
         <p>{body}</p>
       </div>
@@ -287,7 +287,7 @@ function PlaybooksPage({ content }: { content: PageContent }) {
       <Hero content={content} />
       <PlaybookHub
         locale={content.locale}
-        title={content.locale === "en" ? "Two playbooks. One goal: better qualified pipeline." : "Zwei Playbooks. Ein Ziel: bessere qualifizierte Pipeline."}
+        title={content.locale === "en" ? "Two playbooks. One goal: better qualified pipeline." : "Zwei Leitfäden. Ein Ziel: eine besser qualifizierte Pipeline."}
         body={content.description}
       />
       <FaqSection locale={content.locale} items={content.faq || []} />
@@ -312,8 +312,8 @@ function ContactPage({ content }: { content: PageContent }) {
       <PlaybookHub
         id="playbook-download"
         locale={content.locale}
-        title={content.locale === "en" ? "Download the Playbook before the audit." : "Laden Sie das Playbook vor dem Audit herunter."}
-        body={content.locale === "en" ? "Choose the relevant Playbook and receive it by email before we review your pipeline." : "Wählen Sie das passende Playbook und erhalten Sie es per E-Mail, bevor wir Ihre Pipeline prüfen."}
+        title={content.locale === "en" ? "Download the Playbook before the audit." : "Laden Sie den Leitfaden vor dem Audit herunter."}
+        body={content.locale === "en" ? "Choose the relevant Playbook and receive it by email before we review your pipeline." : "Wählen Sie den passenden Leitfaden und erhalten Sie ihn per E-Mail, bevor wir Ihre Pipeline prüfen."}
       />
       <section className="meeting-section" id="book-audit">
         <HubSpotMeetingEmbed locale={content.locale} />
@@ -371,11 +371,11 @@ function FinalCta({ content, title }: { content: PageContent; title?: string }) 
     <section className="cta-band">
       <div>
         <p className="eyebrow">{content.locale === "en" ? "Next step" : "Nächster Schritt"}</p>
-        <h2>{title || (content.locale === "en" ? "Download the Playbook first. Book a Pipeline Audit when you want the system reviewed." : "Laden Sie zuerst das Playbook herunter. Buchen Sie ein Pipeline-Audit, wenn Ihr System geprüft werden soll.")}</h2>
+        <h2>{title || (content.locale === "en" ? "Download the Playbook first. Book a Pipeline Audit when you want the system reviewed." : "Laden Sie zuerst den Leitfaden herunter. Buchen Sie ein Pipeline-Audit, wenn Ihr System geprüft werden soll.")}</h2>
       </div>
       <div className="hero-actions">
         <Link className="button button-primary" href={getCtaHref(content.locale, "playbooks")}>
-          {content.locale === "en" ? "Download Playbook" : "Playbook herunterladen"}
+          {content.locale === "en" ? "Download Playbook" : "Leitfaden herunterladen"}
         </Link>
         <Link className="button button-secondary dark" href={getCtaHref(content.locale, "contact")}>
           {content.locale === "en" ? "Book Pipeline Audit" : "Pipeline-Audit buchen"}

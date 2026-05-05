@@ -38,17 +38,17 @@ const copy = {
       company: "Unternehmen",
       phone: "Telefonnummer"
     },
-    selectorLabel: "Wählen Sie Ihr Playbook",
-    developer: "Bauträger-Pipeline-Playbook",
-    agent: "Makler-Lead-Playbook",
-    submit: "Playbook anfordern",
+    selectorLabel: "Wählen Sie Ihren Leitfaden",
+    developer: "Bauträger-Pipeline-Leitfaden",
+    agent: "Makler-Lead-Leitfaden",
+    submit: "Leitfaden anfordern",
     auditSubmit: "Pipeline-Audit anfragen",
     loading: "Ihre Anfrage wird vorbereitet...",
     error: "Bitte füllen Sie die erforderlichen Felder aus.",
-    success: "Ihr Playbook ist unterwegs.",
+    success: "Ihr Leitfaden ist unterwegs.",
     successBody: "Möchten Sie, dass wir Ihr aktuelles Lead-System prüfen?",
     successCta: "Pipeline-Audit buchen",
-    formPlaceholder: "Playbook-Versand",
+    formPlaceholder: "Leitfaden-Versand",
     meetingTitle: "Pipeline-Audit buchen",
     meetingBody: "Wählen Sie einen passenden Termin. Der Kalender zeigt verfügbare Zeiten und sendet nach der Buchung den Microsoft-Teams-Link."
   }

@@ -63,10 +63,10 @@ const labels = {
     agentPlaybook: "Real Estate Agent Lead Playbook"
   },
   de: {
-    download: "Playbook herunterladen",
+    download: "Leitfaden herunterladen",
     audit: "Pipeline-Audit buchen",
-    developerPlaybook: "Bauträger-Pipeline-Playbook",
-    agentPlaybook: "Makler-Lead-Playbook"
+    developerPlaybook: "Bauträger-Pipeline-Leitfaden",
+    agentPlaybook: "Makler-Lead-Leitfaden"
   }
 };
 
@@ -198,8 +198,8 @@ const sharedFaq: Record<Locale, FaqItem[]> = {
       answer: "Die Website und das System sind für HubSpot Forms, Meeting Scheduling, CRM-Übergabe und Tracking vorbereitet. Andere CRM-Setups können im Audit besprochen werden."
     },
     {
-      question: "Was passiert nach dem Playbook-Download?",
-      answer: "HubSpot erfasst die Anfrage, sendet das passende Playbook per E-Mail und bietet als nächsten Schritt ein Pipeline-Audit des aktuellen Lead-Systems an."
+      question: "Was passiert nach dem Leitfaden-Download?",
+      answer: "HubSpot erfasst die Anfrage, sendet den passenden Leitfaden per E-Mail und bietet als nächsten Schritt ein Pipeline-Audit des aktuellen Lead-Systems an."
     },
     {
       question: "Ist die Website DSGVO-konform vorbereitet?",
@@ -446,8 +446,8 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         ]
       },
       playbookSection: {
-        title: "Starten Sie mit dem Playbook, das zu Ihrer Pipeline passt.",
-        body: "Kein direkter PDF-Download. Wählen Sie das relevante Playbook, senden Sie das Formular ab und HubSpot sendet die passende Ressource per E-Mail."
+        title: "Starten Sie mit dem Leitfaden, der zu Ihrer Pipeline passt.",
+        body: "Kein direkter PDF-Download. Wählen Sie den relevanten Leitfaden, senden Sie das Formular ab und HubSpot sendet die passende Ressource per E-Mail."
       },
       beforeAfter: {
         beforeTitle: "Vor Novalure",
@@ -470,7 +470,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         founder: "Franz Romih — Real Estate Sales Lead"
       },
       faq: sharedFaq.de,
-      finalCtaTitle: "Laden Sie das Playbook herunter. Danach buchen Sie ein Pipeline-Audit, wenn Ihr aktuelles Lead-System geprüft werden soll."
+      finalCtaTitle: "Laden Sie den Leitfaden herunter. Danach buchen Sie ein Pipeline-Audit, wenn Ihr aktuelles Lead-System geprüft werden soll."
     },
     developers: {
       key: "developers",
@@ -518,11 +518,11 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       key: "playbooks",
       locale: "de",
       template: "playbooks",
-      eyebrow: "Playbook Hub",
-      title: "Wählen Sie das Playbook für Ihr Pipeline-Problem.",
-      seoTitle: "Immobilien-Playbooks für Bauträger & Makler | Novalure",
+      eyebrow: "Leitfaden-Hub",
+      title: "Wählen Sie den Leitfaden für Ihr Pipeline-Problem.",
+      seoTitle: "Immobilien-Leitfäden für Bauträger & Makler | Novalure",
       description:
-        "Laden Sie das Bauträger-Pipeline-Playbook oder Makler-Lead-Playbook über HubSpot-Formulare herunter.",
+        "Laden Sie den Bauträger-Pipeline-Leitfaden oder Makler-Lead-Leitfaden über HubSpot-Formulare herunter.",
       primaryCta: { label: labels.de.download, target: "playbooks" },
       secondaryCta: { label: labels.de.audit, target: "contact" },
       heroBullets: ["Bauträger-Pipeline", "Makler-Lead-Systeme", "HubSpot-Versand", "Audit als nächster Schritt"],
