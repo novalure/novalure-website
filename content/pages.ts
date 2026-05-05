@@ -149,15 +149,15 @@ const sharedFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "What happens after someone downloads the Playbook?",
-      answer: "HubSpot captures the request, sends the relevant Playbook by email and offers a secondary audit CTA for teams that want their current lead system reviewed."
+      answer: "HubSpot captures the request, sends the relevant Playbook by email and offers a clear next step: a Pipeline Audit for teams that want their current lead system reviewed."
     },
     {
-      question: "Is this GDPR-ready?",
-      answer: "The build is prepared for consent-first tracking and lawful HubSpot embeds. Final legal wording, vendor lists and consent settings must be reviewed before launch."
+      question: "Is the website prepared for GDPR compliance?",
+      answer: "The website is prepared for consent-first tracking and lawful HubSpot embeds. Final legal wording, vendor lists and consent settings must be reviewed before launch."
     },
     {
       question: "What budget should a client expect?",
-      answer: "Budgets depend on market, project type, sales cycle, assets and media requirements. Pricing is handled through a private audit and custom proposal, not public packages."
+      answer: "Budgets depend on market, project type, sales cycle, assets and media requirements. Pricing is defined after the Pipeline Audit as a custom proposal, not through public packages."
     },
     {
       question: "Who actually does the work?",
@@ -187,7 +187,7 @@ const sharedFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Garantieren Sie Leads?",
-      answer: "Nein. Wir versprechen keine nicht belegbaren Lead-Zahlen. Wir bauen das System, die Qualifizierungslogik und das Reporting, um Leadqualität und Vertriebsübersicht zu verbessern."
+      answer: "Nein. Wir versprechen keine unbelegbaren Lead-Zahlen. Wir bauen das System, die Qualifizierungslogik und das Reporting, um Leadqualität und Vertriebsübersicht zu verbessern."
     },
     {
       question: "Wie funktioniert Lead-Qualifizierung?",
@@ -199,19 +199,19 @@ const sharedFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Was passiert nach dem Playbook-Download?",
-      answer: "HubSpot erfasst die Anfrage, sendet das passende Playbook per E-Mail und bietet als nächsten Schritt ein privates Audit des aktuellen Lead-Systems an."
+      answer: "HubSpot erfasst die Anfrage, sendet das passende Playbook per E-Mail und bietet als nächsten Schritt ein Pipeline-Audit des aktuellen Lead-Systems an."
     },
     {
-      question: "Ist das DSGVO-ready?",
-      answer: "Der Build ist für consent-basiertes Tracking und rechtlich steuerbare HubSpot-Embeds vorbereitet. Finale Rechtstexte, Vendorenlisten und Consent-Einstellungen müssen vor dem Launch geprüft werden."
+      question: "Ist die Website DSGVO-konform vorbereitet?",
+      answer: "Die Website ist für consent-basiertes Tracking und rechtlich steuerbare HubSpot-Embeds vorbereitet. Finale Rechtstexte, Anbieterlisten und Consent-Einstellungen müssen vor dem Launch geprüft werden."
     },
     {
       question: "Mit welchem Budget sollte man rechnen?",
-      answer: "Das hängt von Markt, Projektart, Sales Cycle, vorhandenen Assets und Media-Anforderungen ab. Preise entstehen nach Diagnose im privaten Audit und als individuelles Angebot."
+      answer: "Das hängt von Markt, Projektart, Sales Cycle, vorhandenen Assets und Media-Anforderungen ab. Preise werden nach der Diagnose im Pipeline-Audit als individuelles Angebot festgelegt."
     },
     {
       question: "Wer setzt die Arbeit um?",
-      answer: "Ein senior-geführtes Spezialistenteam verbindet Real Estate Sales Strategy, Funnel Architecture, Performance Marketing, CRM & Lead Operations sowie Sales Assets & Content."
+      answer: "Ein senior-geführtes Spezialistenteam verbindet Immobilienvertriebsstrategie, Funnel-Architektur, Performance Marketing, CRM- und Lead-Operations sowie Vertriebs-Assets und Content."
     },
     {
       question: "Warum gibt es keine öffentlichen Preise?",
@@ -252,7 +252,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         ]
       },
       problem: {
-        title: "You do not have a lead problem. You have a wrong-leads problem.",
+        title: "You do not have a lead problem. You have a problem with the wrong leads.",
         body:
           "Most marketing setups bring volume. Volume is not the metric. Pipeline is. Portals, ads and landing pages only matter when they create qualified conversations your sales team can act on.",
         points: [
@@ -265,16 +265,16 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         title: "Four layers. One outcome.",
         body: "No magic. No black box. Engineered around how property is actually sold.",
         layers: [
-          { label: "Layer 1", title: "Project Funnel Architecture", body: "One project, one market, one buyer logic. Mobile-first pages built to qualify intent before submission." },
-          { label: "Layer 2", title: "Multi-Channel Lead Generation", body: "Google, Meta and retargeting campaigns connected to buyer behavior, not vanity traffic." },
+          { label: "Layer 1", title: "Project Funnel Architecture", body: "One project, one market, one buyer logic. Mobile-first pages built to qualify intent before enquiry." },
+          { label: "Layer 2", title: "Multi-Channel Lead Generation", body: "Google, Meta and retargeting campaigns connected to buyer behavior, not vanity metrics." },
           { label: "Layer 3", title: "Lead Qualification Layer", body: "Intent, fit and readiness filters prioritize serious buyers and sellers before sales handover." },
           { label: "Layer 4", title: "CRM Handover & Reporting", body: "Leads reach your CRM with source context, qualification notes and reporting your team can use." }
         ]
       },
       modules: {
-        title: "Four modules. Pick what fits your growth system.",
+        title: "Four modules. Pick what fits your sales system.",
         items: [
-          { title: "Project Marketing for Developers", audience: "Developers", body: "Launch funnels for new developments, investment units and project sell-out." },
+          { title: "Project Marketing for Developers", audience: "Developers", body: "Launch funnels for new developments, investment units and project sales." },
           { title: "Seller Lead Generation for Agents", audience: "Agents", body: "Localized funnels for homeowners with genuine selling intent." },
           { title: "Buyer Lead Generation for Agents", audience: "Agents", body: "Search and social campaigns filtered for buyer intent and viewing readiness." },
           { title: "Sales Asset Production", audience: "Both", body: "Landing copy, lead magnets, sales decks, project visuals and campaign assets." }
@@ -292,7 +292,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       },
       process: {
         id: "process",
-        title: "A sales-system process, not campaign guesswork.",
+        title: "A structured sales-system process, not campaign guesswork.",
         body: "Each step is designed to reduce noise, protect sales time and make pipeline movement visible.",
         steps: ["Pipeline Audit", "Strategy & Funnel Architecture", "Build & Setup", "Campaign Launch", "Lead Qualification", "CRM Handover", "Optimization & Reporting"]
       },
@@ -300,7 +300,7 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         id: "team",
         title: "Senior-led specialist team, built around real estate sales.",
         body:
-          "Novalure combines commercial sales thinking with funnel architecture, performance marketing, CRM operations and sales assets. It feels focused because the team is specialist, not generic.",
+          "Novalure combines commercial sales thinking with funnel architecture, performance marketing, CRM operations and sales assets. The work stays focused because the team is specialist, not generic.",
         pillars: ["Real Estate Sales Strategy", "Funnel Architecture", "Performance Marketing", "CRM & Lead Operations", "Sales Assets & Content"],
         founder: "Franz Romih — Real Estate Sales Lead"
       },
@@ -398,75 +398,75 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
         "Novalure ist ein PropTech Sales System für Bauträger und Immobilienmakler. Wir bauen digitale Vertriebsinfrastruktur vom ersten Klick bis zum qualifizierten Gespräch.",
       primaryCta: { label: labels.de.download, target: "playbooks" },
       secondaryCta: { label: labels.de.audit, target: "contact" },
-      heroBullets: ["Keine klassische Agentur", "Nicht nur eine Website", "Nicht einfach nur Werbung", "Vom ersten Klick zur CRM-fähigen Chance"],
+      heroBullets: ["Keine klassische Agentur", "Nicht nur eine Website", "Nicht einfach nur Werbung", "Vom ersten Klick zur CRM-fähigen Verkaufschance"],
       audience: {
-        title: "Gebaut für die zwei Immobilien-Teams, die Pipeline-Klarheit am stärksten brauchen.",
+        title: "Entwickelt für die zwei Immobilien-Teams, die Pipeline-Klarheit am stärksten brauchen.",
         cards: [
           {
             title: "Für Bauträger",
-            body: "Steuern Sie Käufernachfrage für Neubauprojekte, Investmentprojekte und Projektlaunches, bevor Momentum im Vertrieb verloren geht.",
+            body: "Steuern Sie Käufernachfrage für Neubauprojekte, Investmentprojekte und Projekt-Launches, bevor Vertriebsmomentum verloren geht.",
             hrefKey: "developers",
             points: ["Projekt-Funnel-Architektur", "Käufer-Intent-Qualifizierung", "CRM-fähige Übergabe"]
           },
           {
             title: "Für Immobilienmakler",
-            body: "Reduzieren Sie Portalabhängigkeit und bauen Sie eigene Verkäufer- und Käufer-Funnels für ernsthafte Gespräche.",
+            body: "Reduzieren Sie Portalabhängigkeit und bauen Sie eigene Verkäufer- und Käufer-Funnels für ernsthafte Gespräche auf.",
             hrefKey: "agents",
             points: ["Verkäufer-Lead-Systeme", "Käufer-Lead-Funnels", "Strukturiertes Follow-up"]
           }
         ]
       },
       problem: {
-        title: "Sie haben kein Lead-Problem. Sie haben ein Falsche-Leads-Problem.",
+        title: "Sie haben kein Lead-Problem. Sie haben ein Problem mit den falschen Leads.",
         body:
-          "Die meisten Marketing-Setups bringen Volumen. Volumen ist nicht die Metrik. Pipeline ist es. Portale, Anzeigen und Landingpages zählen nur, wenn daraus qualifizierte Gespräche entstehen.",
+          "Die meisten Marketing-Setups bringen Volumen. Volumen ist jedoch nicht die entscheidende Metrik. Entscheidend ist Pipeline. Portale, Anzeigen und Landingpages zählen nur, wenn daraus qualifizierte Gespräche entstehen.",
         points: [
-          { title: "Klickberichte ohne Vertriebsklarheit", body: "Kampagnen optimieren häufig Aufmerksamkeit, während Ihr Vertrieb Reife, Kontext und nächste Schritte braucht." },
+          { title: "Klickberichte ohne Vertriebsklarheit", body: "Kampagnen optimieren häufig auf Aufmerksamkeit, während Ihr Vertrieb Reifegrad, Kontext und nächste Schritte braucht." },
           { title: "Unqualifizierte Anfragen kosten Zeit", body: "Wenn Leadqualität nicht gesteuert wird, filtert Ihr Vertrieb, statt zu verkaufen." },
-          { title: "Portale sind kein System", body: "Sie können Reichweite schaffen, aber sie besitzen nicht Ihre Funnel-Logik, CRM-Übergabe oder Follow-up-Disziplin." }
+          { title: "Portale sind kein System", body: "Sie können Reichweite schaffen, ersetzen aber keine eigene Funnel-Logik, CRM-Übergabe oder Follow-up-Disziplin." }
         ]
       },
       system: {
         title: "Vier Schichten. Ein Ergebnis.",
-        body: "Keine Magie. Keine Black Box. Konstruiert entlang der Realität, wie Immobilien verkauft werden.",
+        body: "Keine Magie. Keine Black Box. Entwickelt entlang der Realität, wie Immobilien verkauft werden.",
         layers: [
-          { label: "Schicht 1", title: "Projekt-Funnel-Architektur", body: "Ein Projekt, ein Markt, eine Käuferlogik. Mobile-first Seiten, die Intent vor der Anfrage qualifizieren." },
-          { label: "Schicht 2", title: "Multi-Channel-Lead-Generation", body: "Google, Meta und Retargeting verbunden mit Kaufverhalten statt Vanity Traffic." },
-          { label: "Schicht 3", title: "Lead-Qualifizierungs-Schicht", body: "Intent-, Fit- und Bereitschaftsfilter priorisieren ernsthafte Käufer und Verkäufer vor der Übergabe." },
+          { label: "Schicht 1", title: "Projekt-Funnel-Architektur", body: "Ein Projekt, ein Markt, eine Käuferlogik. Mobile-first-Seiten, die Kaufabsicht vor der Anfrage qualifizieren." },
+          { label: "Schicht 2", title: "Multi-Channel-Leadgenerierung", body: "Google, Meta und Retargeting werden mit Kaufverhalten verbunden, nicht mit reinen Reichweitenkennzahlen." },
+          { label: "Schicht 3", title: "Lead-Qualifizierung", body: "Intent-, Fit- und Bereitschaftsfilter priorisieren ernsthafte Käufer und Verkäufer vor der Übergabe." },
           { label: "Schicht 4", title: "CRM-Übergabe & Reporting", body: "Leads erreichen Ihr CRM mit Quellenkontext, Qualifizierungsnotizen und nutzbarem Reporting." }
         ]
       },
       modules: {
-        title: "Vier Module. Wählen Sie, was zu Ihrem Growth System passt.",
+        title: "Vier Module. Wählen Sie, was zu Ihrem Vertriebssystem passt.",
         items: [
-          { title: "Project Marketing für Bauträger", audience: "Bauträger", body: "Launch-Funnels für Neubauprojekte, Investment-Einheiten und Projektvertrieb." },
-          { title: "Seller Lead Generation für Makler", audience: "Makler", body: "Lokalisierte Funnels für Eigentümer mit echter Verkaufsabsicht." },
-          { title: "Buyer Lead Generation für Makler", audience: "Makler", body: "Search- und Social-Kampagnen, gefiltert nach Käufer-Intent und Besichtigungsnähe." },
-          { title: "Sales Asset Production", audience: "Beide", body: "Landing Copy, Lead Magnets, Sales Decks, Projektvisuals und Kampagnenassets." }
+          { title: "Projektmarketing für Bauträger", audience: "Bauträger", body: "Launch-Funnels für Neubauprojekte, Investment-Einheiten und Projektvertrieb." },
+          { title: "Verkäufer-Leadgenerierung für Makler", audience: "Makler", body: "Lokalisierte Funnels für Eigentümer mit echter Verkaufsabsicht." },
+          { title: "Käufer-Leadgenerierung für Makler", audience: "Makler", body: "Search- und Social-Kampagnen, gefiltert nach Käufer-Intent und Besichtigungsnähe." },
+          { title: "Vertriebs-Assets", audience: "Beide", body: "Landingpage-Texte, Lead Magnets, Sales Decks, Projektvisuals und Kampagnenassets." }
         ]
       },
       playbookSection: {
         title: "Starten Sie mit dem Playbook, das zu Ihrer Pipeline passt.",
-        body: "Kein direkter PDF-Download. Wählen Sie das relevante Playbook, senden Sie das Formular ab und HubSpot verschickt die passende Ressource per E-Mail."
+        body: "Kein direkter PDF-Download. Wählen Sie das relevante Playbook, senden Sie das Formular ab und HubSpot sendet die passende Ressource per E-Mail."
       },
       beforeAfter: {
         beforeTitle: "Vor Novalure",
         afterTitle: "Nach dem System",
-        before: ["Portalabhängigkeit", "Unqualifizierte Anfragen", "Keine CRM-Übergabe", "Keine Follow-up-Automation", "Klickberichte ohne Vertriebsklarheit", "Vertrieb verliert Zeit"],
+        before: ["Portalabhängigkeit", "Unqualifizierte Anfragen", "Keine CRM-Übergabe", "Keine Follow-up-Automatisierung", "Klickberichte ohne Vertriebsklarheit", "Vertrieb verliert Zeit"],
         after: ["Qualifizierte Gespräche", "CRM-fähige Leads", "Strukturiertes Follow-up", "Klare Funnel-Logik", "Besserer Vertriebsfokus", "Pipeline-Sichtbarkeit"]
       },
       process: {
         id: "prozess",
-        title: "Ein Sales-System-Prozess, kein Kampagnenraten.",
-        body: "Jeder Schritt reduziert Rauschen, schützt Vertriebszeit und macht Pipeline-Bewegung sichtbar.",
+        title: "Ein strukturierter Sales-System-Prozess, kein Raten bei Kampagnen.",
+        body: "Jeder Schritt reduziert Rauschen, schützt Vertriebszeit und macht Pipeline-Entwicklung sichtbar.",
         steps: ["Pipeline-Audit", "Strategie & Funnel-Architektur", "Aufbau & Einrichtung", "Kampagnenstart", "Lead-Qualifizierung", "CRM-Übergabe", "Optimierung & Reporting"]
       },
       team: {
         id: "team",
-        title: "Senior-geführtes Spezialistenteam, gebaut um Real Estate Sales.",
+        title: "Senior-geführtes Spezialistenteam für Immobilienvertrieb.",
         body:
-          "Novalure verbindet kommerzielles Vertriebsdenken mit Funnel Architecture, Performance Marketing, CRM Operations und Sales Assets. Fokussiert, weil das Team spezialisiert ist.",
-        pillars: ["Real Estate Sales Strategy", "Funnel Architecture", "Performance Marketing", "CRM & Lead Operations", "Sales Assets & Content"],
+          "Novalure verbindet kommerzielles Vertriebsdenken mit Funnel-Architektur, Performance Marketing, CRM-Operations und Vertriebs-Assets. Die Arbeit bleibt fokussiert, weil das Team spezialisiert ist.",
+        pillars: ["Immobilienvertriebsstrategie", "Funnel-Architektur", "Performance Marketing", "CRM- und Lead-Operations", "Vertriebs-Assets & Content"],
         founder: "Franz Romih — Real Estate Sales Lead"
       },
       faq: sharedFaq.de,

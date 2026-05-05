@@ -59,7 +59,7 @@ function HomePage({ content }: { content: HomeContent }) {
 
       <section className="audience-section">
         <div className="section-heading">
-          <p className="eyebrow">{locale === "en" ? "Who it serves" : "Für wen es gebaut ist"}</p>
+          <p className="eyebrow">{locale === "en" ? "Who it serves" : "Für wen es entwickelt wurde"}</p>
           <h2>{content.audience.title}</h2>
         </div>
         <div className="audience-grid">
@@ -146,7 +146,7 @@ function ModuleSection({ content }: { content: HomeContent }) {
 }
 
 function PlaybookConversion({ locale, title, body }: { locale: "en" | "de"; title: string; body: string }) {
-  return <PlaybookHub locale={locale} title={title} body={body} eyebrow={locale === "en" ? "Primary conversion" : "Primäre Conversion"} />;
+  return <PlaybookHub locale={locale} title={title} body={body} eyebrow={locale === "en" ? "Primary entry point" : "Primärer Einstieg"} />;
 }
 
 function PlaybookHub({
@@ -235,8 +235,8 @@ function TeamBlock({ content }: { content: HomeContent }) {
           <h3>{content.team.founder}</h3>
           <p>
             {content.locale === "en"
-              ? "Commercial real estate sales thinking connected to the operating system behind qualified pipeline."
-              : "Kommerzielles Immobilienvertriebsdenken verbunden mit dem Betriebssystem hinter qualifizierter Pipeline."}
+              ? "Commercial real estate sales thinking connected to the system behind qualified pipeline."
+              : "Kommerzielles Immobilienvertriebsdenken, verbunden mit dem System für qualifizierte Pipeline."}
           </p>
         </article>
         <div className="pillar-grid">
