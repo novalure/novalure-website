@@ -50,7 +50,7 @@ const copy = {
     successCta: "Pipeline-Audit buchen",
     formPlaceholder: "Playbook-Versand",
     meetingTitle: "Pipeline-Audit buchen",
-    meetingBody: "Wählen Sie einen passenden Termin. Der Kalender zeigt verfügbare Zeiten und sendet nach der Buchung den Microsoft Teams-Link."
+    meetingBody: "Wählen Sie einen passenden Termin. Der Kalender zeigt verfügbare Zeiten und sendet nach der Buchung den Microsoft-Teams-Link."
   }
 };
 

@@ -37,7 +37,7 @@ const copy = {
       phone: "Phone Number",
       company: "Company",
       interest: "Interested in",
-      inquiry: "Your Request"
+      inquiry: "Your Message"
     },
     interests: {
       placeholder: "Select an option",
@@ -60,7 +60,7 @@ const copy = {
   de: {
     eyebrow: "Direkte Anfrage",
     title: "Senden Sie eine vertrauliche Anfrage.",
-    body: "Hinterlassen Sie Ihre Kontaktdaten. Das Novalure Team meldet sich direkt bei Ihnen.",
+    body: "Hinterlassen Sie Ihre Kontaktdaten. Das Novalure-Team meldet sich direkt bei Ihnen.",
     fields: {
       firstName: "Vorname",
       lastName: "Nachname",
