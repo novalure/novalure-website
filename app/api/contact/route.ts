@@ -91,22 +91,42 @@ function textToHtml(value: string) {
   return escapeHtml(value).replace(/\n/g, "<br />");
 }
 
+function renderEmailButton(href: string, label: string) {
+  return `
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:28px 0;">
+      <tr>
+        <td bgcolor="#ffd43b" style="border:1px solid #ffd43b;border-radius:8px;">
+          <a href="${escapeHtml(href)}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:20px;font-weight:700;color:#211800;text-decoration:none;border-radius:8px;">
+            ${escapeHtml(label)}
+          </a>
+        </td>
+      </tr>
+    </table>
+  `;
+}
+
 function getSiteUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
+  const configuredUrl = cleanUrl(process.env.NEXT_PUBLIC_SITE_URL);
+  return (configuredUrl || "https://www.novalure.eu").replace(/\/+$/, "");
+}
+
+function cleanUrl(value: string | undefined) {
+  return value?.trim() || "";
 }
 
 function withSchedulerLocale(url: string, language: Locale) {
-  const separator = url.includes("?") ? "&" : "?";
-  return `${url}${separator}locale=${language === "de" ? "de-de" : "en-us"}`;
+  const cleanSchedulerUrl = cleanUrl(url);
+  const separator = cleanSchedulerUrl.includes("?") ? "&" : "?";
+  return `${cleanSchedulerUrl}${separator}locale=${language === "de" ? "de-de" : "en-us"}`;
 }
 
 function getBookingLink(language: Locale) {
-  const localized = language === "de" ? process.env.CONTACT_BOOKING_URL_DE : process.env.CONTACT_BOOKING_URL_EN;
+  const localized = language === "de" ? cleanUrl(process.env.CONTACT_BOOKING_URL_DE) : cleanUrl(process.env.CONTACT_BOOKING_URL_EN);
   const configuredUrl =
     localized ||
-    process.env.CONTACT_BOOKING_URL ||
-    (language === "de" ? process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE : process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN) ||
-    process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL ||
+    cleanUrl(process.env.CONTACT_BOOKING_URL) ||
+    (language === "de" ? cleanUrl(process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE) : cleanUrl(process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN)) ||
+    cleanUrl(process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL) ||
     defaultBookingUrls[language];
 
   return withSchedulerLocale(configuredUrl, language) || `${getSiteUrl()}${language === "de" ? "/de/kontakt" : "/en/contact"}#book-audit`;
@@ -198,11 +218,7 @@ Timestamp: ${timestamp}`;
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827; max-width: 620px; margin: 0 auto; padding: 28px;">
           <p>${textToHtml(customerHtmlText)}</p>
-          <p style="margin: 28px 0;">
-            <a href="${escapeHtml(bookingUrl)}" style="display: inline-block; background: #ffd43b; color: #211800; font-weight: 700; text-decoration: none; padding: 14px 20px; border-radius: 999px;">
-              ${escapeHtml(autoReplyCopy[language].button)}
-            </a>
-          </p>
+          ${renderEmailButton(bookingUrl, autoReplyCopy[language].button)}
         </div>
       `
     });

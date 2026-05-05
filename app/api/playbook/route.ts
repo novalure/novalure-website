@@ -42,7 +42,42 @@ function isEmail(value: unknown): value is string {
 }
 
 function getSiteUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
+  const configuredUrl = cleanUrl(process.env.NEXT_PUBLIC_SITE_URL);
+  return (configuredUrl || "https://www.novalure.eu").replace(/\/+$/, "");
+}
+
+function cleanUrl(value: string | undefined) {
+  return value?.trim() || "";
+}
+
+function escapeHtml(value: string) {
+  const replacements: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  };
+
+  return value.replace(/[&<>"']/g, (character) => replacements[character] ?? character);
+}
+
+function renderEmailButton(href: string, label: string, variant: "primary" | "secondary" = "primary") {
+  const background = variant === "primary" ? "#ffd43b" : "#111318";
+  const color = variant === "primary" ? "#211800" : "#ffffff";
+  const border = variant === "primary" ? "#ffd43b" : "#111318";
+
+  return `
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:24px 0;">
+      <tr>
+        <td bgcolor="${background}" style="border:1px solid ${border};border-radius:8px;">
+          <a href="${escapeHtml(href)}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:20px;font-weight:700;color:${color};text-decoration:none;border-radius:8px;">
+            ${escapeHtml(label)}
+          </a>
+        </td>
+      </tr>
+    </table>
+  `;
 }
 
 function getPlaybookUrl(playbook: PlaybookKey, locale: Locale) {
@@ -58,13 +93,13 @@ function getPlaybookUrl(playbook: PlaybookKey, locale: Locale) {
 
   if (playbook === "developer") {
     return locale === "de"
-      ? process.env.DEVELOPER_PLAYBOOK_URL_DE || process.env.DEVELOPER_PLAYBOOK_URL || fallback
-      : process.env.DEVELOPER_PLAYBOOK_URL_EN || process.env.DEVELOPER_PLAYBOOK_URL || fallback;
+      ? cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL_DE) || cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL) || fallback
+      : cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL_EN) || cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL) || fallback;
   }
 
   return locale === "de"
-    ? process.env.AGENT_PLAYBOOK_URL_DE || process.env.AGENT_PLAYBOOK_URL || fallback
-    : process.env.AGENT_PLAYBOOK_URL_EN || process.env.AGENT_PLAYBOOK_URL || fallback;
+    ? cleanUrl(process.env.AGENT_PLAYBOOK_URL_DE) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback
+    : cleanUrl(process.env.AGENT_PLAYBOOK_URL_EN) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback;
 }
 
 function getFormId(playbook: PlaybookKey) {
@@ -152,6 +187,7 @@ async function sendPlaybookEmail({
   const copy = playbookCopy[locale][playbook];
   const auditUrl = `${siteUrl}${locale === "de" ? "/de/kontakt" : "/en/contact"}#book-audit`;
   const greeting = locale === "de" ? `Hallo ${name},` : `Hi ${name},`;
+  const auditCta = locale === "de" ? "Pipeline-Audit buchen" : "Book a Pipeline Audit";
 
   await resend.emails.send({
     from,
@@ -159,16 +195,12 @@ async function sendPlaybookEmail({
     subject: copy.subject,
     html: `
       <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111318;max-width:620px;margin:0 auto;padding:32px">
-        <h1 style="font-size:28px;line-height:1.1;margin:0 0 18px">${copy.headline}</h1>
-        <p>${greeting}</p>
-        <p>${copy.intro}</p>
-        <p>
-          <a href="${playbookUrl}" style="display:inline-block;background:#ffd43b;color:#211800;font-weight:700;text-decoration:none;padding:14px 20px;border-radius:999px">
-            ${copy.cta}
-          </a>
-        </p>
-        <p>${playbookCopy[locale].audit}</p>
-        <p><a href="${auditUrl}">${auditUrl}</a></p>
+        <h1 style="font-size:28px;line-height:1.1;margin:0 0 18px">${escapeHtml(copy.headline)}</h1>
+        <p>${escapeHtml(greeting)}</p>
+        <p>${escapeHtml(copy.intro)}</p>
+        ${renderEmailButton(playbookUrl, copy.cta)}
+        <p style="margin-top:28px;">${escapeHtml(playbookCopy[locale].audit)}</p>
+        ${renderEmailButton(auditUrl, auditCta, "secondary")}
         <p style="color:#667085;font-size:13px;margin-top:32px">Novalure · PropTech Sales System</p>
       </div>
     `,

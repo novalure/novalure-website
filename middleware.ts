@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const germanCountryCodes = new Set(["AT", "DE", "CH", "LI"]);
+const germanCountryCodes = new Set(["AT", "DE", "CH"]);
 const allowedPaths = new Set([
   "/en",
   "/en/developers",
@@ -34,8 +34,7 @@ export function middleware(request: NextRequest) {
   }
 
   const country = request.geo?.country?.toUpperCase();
-  const acceptLanguage = request.headers.get("accept-language") || "";
-  const prefersGerman = country ? germanCountryCodes.has(country) : acceptLanguage.toLowerCase().includes("de");
+  const prefersGerman = country ? germanCountryCodes.has(country) : false;
   const url = request.nextUrl.clone();
   url.pathname = prefersGerman ? "/de" : "/en";
 
