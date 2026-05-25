@@ -291,7 +291,7 @@ const homeContent: Record<Locale, HomeContent> = {
     title: "Ihr Vertrieb soll verkaufen, nicht Leads sortieren.",
     seoTitle: "NovaLure | Vertriebsprobleme im Immobilienvertrieb lösen",
     description:
-      "NovaLure löst das Problem zwischen Anfrage und Verkaufsgespräch: Wir qualifizieren Immobilien-Leads, übergeben sie mit Kontext in unser eigenes CRM und zeigen Quelle, Motivation, Timing, Budgetnähe und nächsten Schritt, bevor Ihr Team anruft.",
+      "NovaLure qualifiziert Immobilien-Leads, priorisiert sie in unserem eigenen CRM und zeigt Ihrem Vertrieb Quelle, Motivation, Timing, Budgetnähe und den nächsten Schritt vor dem ersten Anruf.",
     metaDescription:
       "NovaLure löst Vertriebsprobleme im Immobilienvertrieb: Lead-Qualifizierung, eigenes CRM, Handover-Kontext und klare Priorität für Bauträger, Projektvertriebe und Maklerteams.",
     primaryCta: { label: "Vertriebsproblem prüfen", target: "contact", anchor: "book-audit" },
@@ -398,7 +398,7 @@ const homeContent: Record<Locale, HomeContent> = {
     title: "Sales should sell, not sort raw leads.",
     seoTitle: "NovaLure | Solving real estate sales problems with CRM-ready leads",
     description:
-      "NovaLure fixes the gap between enquiry and sales conversation: we qualify real estate leads, hand them over with context in our own CRM, and show source, motivation, timing, budget proximity and next step before the first call.",
+      "NovaLure qualifies real estate leads, prioritises them in our own CRM, and shows sales the source, motivation, timing, budget fit and next step before the first call.",
     metaDescription:
       "NovaLure solves real estate sales problems with lead qualification, its own CRM, handover context and clearer sales priority for developers and agent teams.",
     primaryCta: { label: "Review sales problem", target: "contact", anchor: "book-audit" },

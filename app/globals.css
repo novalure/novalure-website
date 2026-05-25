@@ -527,7 +527,16 @@ h3 {
   background: transparent;
 }
 
+.hero-loop-poster {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
+}
+
 .hero-loop-video-mobile,
+.hero-loop-poster-mobile,
 .hero-video-fallback {
   display: none;
 }
@@ -3190,13 +3199,14 @@ code {
     right: auto;
     bottom: auto;
     justify-self: center;
-    width: min(88vw, 340px);
+    width: min(82vw, 320px);
     max-width: calc(100vw - 32px);
-    margin: -44px auto 0;
+    margin: 8px auto 0;
     overflow: hidden;
     aspect-ratio: 4 / 5;
     transform: none;
     pointer-events: none;
+    isolation: isolate;
   }
 
   .hero-loop-video-desktop {
@@ -3205,6 +3215,13 @@ code {
 
   .hero-loop-video-mobile {
     display: block;
+    transform: translateY(-34%) scale(1.08);
+    transform-origin: top center;
+  }
+
+  .hero-loop-poster-mobile {
+    transform: translateY(-34%) scale(1.08);
+    transform-origin: top center;
   }
 
   .funnel-hero-image,
@@ -3357,6 +3374,18 @@ code {
 @media (min-width: 341px) and (max-width: 380px) {
   .pipeline-pulse {
     offset-path: path("M 43 322 C 101 196, 171 291, 211 169 S 278 79, 318 130");
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 560px) {
+    .hero-loop-video-mobile {
+      display: none;
+    }
+
+    .hero-loop-poster-mobile {
+      display: block;
+    }
   }
 }
 
