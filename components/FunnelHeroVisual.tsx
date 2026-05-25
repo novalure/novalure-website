@@ -27,7 +27,7 @@ export function FunnelHeroVisual({ locale }: { locale: Locale }) {
         preload="auto"
         aria-hidden="true"
       >
-        <source src="/videos/novalure-hero-transparent-mobile.webm" type="video/webm" />
+        <source src="/videos/novalure-hero-transparent-mobile.webm?v=20260525-transparent-mobile" type="video/webm" />
       </video>
       <div className="hero-video-fallback" aria-hidden="true">
         <span>NovaLure CRM</span>
