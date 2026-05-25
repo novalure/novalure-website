@@ -3,72 +3,51 @@ import { Resend } from "resend";
 
 type Locale = "en" | "de";
 
-const defaultBookingUrls: Record<Locale, string> = {
-  en: "https://meetings-eu1.hubspot.com/franz-romih/private-growth-audit-en",
-  de: "https://meetings-eu1.hubspot.com/franz-romih"
-};
-
 const autoReplyCopy = {
   en: {
-    subject: "Thank you for your inquiry – Novalure",
-    button: "Book a 30-minute strategy call",
-    htmlBody: (firstName: string) => `Hi ${firstName},
+    auditSubject: "Your NovaLure Pipeline Audit request",
+    directSubject: "Your NovaLure enquiry",
+    auditButton: "View preparation checklist",
+    directButton: "Visit NovaLure",
+    auditBody: (name: string) => `Hi ${name},
 
-thank you for reaching out to Novalure.
+thank you for the audit request.
 
-We have received your inquiry and will get back to you as soon as possible.
+We will review your details first. The Pipeline Audit is a diagnosis and qualification step, not a free consulting report and not a lead guarantee.
 
-You have taken the right step if you want to build a stronger and more scalable sales pipeline.
+Please prepare your current project or market area, lead sources, CRM or lead-management process, current landing pages or campaigns, biggest sales bottleneck, budget readiness and decision status.`,
+    directBody: (name: string) => `Hi ${name},
 
-If you want to move faster, you can directly book a 30-minute strategy call here:
+thank you for your enquiry.
 
-Best regards
-The Novalure Team`,
-    textBody: (firstName: string, bookingLink: string) => `Hi ${firstName},
-
-thank you for reaching out to Novalure.
-
-We have received your inquiry and will get back to you as soon as possible.
-
-You have taken the right step if you want to build a stronger and more scalable sales pipeline.
-
-If you want to move faster, you can directly book a 30-minute strategy call here:
-
-${bookingLink}
-
-Best regards
-The Novalure Team`
+We have received your message and will review it directly.`
   },
   de: {
-    subject: "Vielen Dank für Ihre Anfrage – Novalure",
-    button: "30-minütiges Gespräch buchen",
-    htmlBody: (firstName: string) => `Hallo ${firstName},
+    auditSubject: "Ihre NovaLure Pipeline-Audit-Anfrage",
+    directSubject: "Ihre NovaLure Anfrage",
+    auditButton: "Vorbereitungsliste ansehen",
+    directButton: "NovaLure öffnen",
+    auditBody: (name: string) => `Hallo ${name},
+
+vielen Dank für Ihre Audit-Anfrage.
+
+Wir prüfen Ihre Angaben zuerst. Das Pipeline-Audit ist eine Diagnose und Qualifizierung, kein kostenloses Gutachten und keine Lead-Garantie.
+
+Bitte bereiten Sie Ihr aktuelles Projekt oder Marktgebiet, Leadquellen, CRM- oder Leadmanagement-Prozess, aktuelle Landingpages oder Kampagnen, größten Vertriebsengpass, Budgetfähigkeit und Entscheiderstatus vor.`,
+    directBody: (name: string) => `Hallo ${name},
 
 vielen Dank für Ihre Anfrage.
 
-Wir melden uns umgehend bei Ihnen.
-
-Wenn Sie direkt weitermachen möchten, können Sie hier ein 30-minütiges Gespräch buchen:
-
-Beste Grüße
-Ihr Novalure Team`,
-    textBody: (firstName: string, bookingLink: string) => `Hallo ${firstName},
-
-vielen Dank für Ihre Anfrage.
-
-Wir melden uns umgehend bei Ihnen.
-
-Wenn Sie direkt weitermachen möchten, können Sie hier ein 30-minütiges Gespräch buchen:
-
-${bookingLink}
-
-Beste Grüße
-Ihr Novalure Team`
+Wir haben Ihre Nachricht erhalten und prüfen sie direkt.`
   }
 } as const;
 
 function clean(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function cleanList(value: unknown) {
+  return Array.isArray(value) ? value.map((item) => clean(item)).filter(Boolean) : [];
 }
 
 function isValidEmail(value: string) {
@@ -114,111 +93,165 @@ function cleanUrl(value: string | undefined) {
   return value?.trim() || "";
 }
 
-function withSchedulerLocale(url: string, language: Locale) {
-  const cleanSchedulerUrl = cleanUrl(url);
-  const separator = cleanSchedulerUrl.includes("?") ? "&" : "?";
-  return `${cleanSchedulerUrl}${separator}locale=${language === "de" ? "de-de" : "en-us"}`;
+function formatRows(rows: Record<string, string | string[]>) {
+  return Object.entries(rows)
+    .map(([label, value]) => `${label}: ${Array.isArray(value) ? value.join(", ") : value}`)
+    .join("\n");
 }
 
-function getBookingLink(language: Locale) {
-  const localized = language === "de" ? cleanUrl(process.env.CONTACT_BOOKING_URL_DE) : cleanUrl(process.env.CONTACT_BOOKING_URL_EN);
-  const configuredUrl =
-    localized ||
-    cleanUrl(process.env.CONTACT_BOOKING_URL) ||
-    (language === "de" ? cleanUrl(process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE) : cleanUrl(process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN)) ||
-    cleanUrl(process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL) ||
-    defaultBookingUrls[language];
-
-  return withSchedulerLocale(configuredUrl, language) || `${getSiteUrl()}${language === "de" ? "/de/kontakt" : "/en/contact"}#book-audit`;
+function formatRowsHtml(rows: Record<string, string | string[]>) {
+  return Object.entries(rows)
+    .map(([label, value]) => `<p><strong>${escapeHtml(label)}:</strong> ${escapeHtml(Array.isArray(value) ? value.join(", ") : value)}</p>`)
+    .join("");
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const language: Locale = body.language === "de" ? "de" : "en";
     const firstName = clean(body.firstName);
     const lastName = clean(body.lastName);
+    const isDirectInquiry = Boolean(firstName || lastName || body.inquiry);
+    const name = clean(body.name) || `${firstName} ${lastName}`.trim();
     const email = clean(body.email);
-    const phone = clean(body.phone);
     const company = clean(body.company);
-    const interest = clean(body.interest);
-    const inquiry = clean(body.inquiry);
-    const language: Locale = body.language === "de" ? "de" : "en";
+    const role = clean(body.role);
+    const website = clean(body.website);
+    const targetGroup = clean(body.targetGroup || body.interest);
+    const projectMarket = clean(body.projectMarket);
+    const leadProblem = clean(body.leadProblem || body.inquiry);
+    const crm = clean(body.crm);
+    const leadVolume = clean(body.leadVolume);
+    const salesBottleneck = clean(body.salesBottleneck);
+    const assets = cleanList(body.assets);
+    const startTiming = clean(body.startTiming);
+    const budgetReadiness = clean(body.budgetReadiness);
+    const decisionStatus = clean(body.decisionStatus);
+    const whyNow = clean(body.whyNow);
+    const phone = clean(body.phone);
+    const pageUri = clean(body.pageUri);
+    const utm = typeof body.utm === "object" && body.utm ? body.utm as Record<string, unknown> : {};
 
-    if (!firstName || !lastName || !phone || !company || !interest || !inquiry || !isValidEmail(email)) {
+    const directInvalid = isDirectInquiry && (
+      !firstName ||
+      !lastName ||
+      !phone ||
+      !company ||
+      !targetGroup ||
+      !leadProblem ||
+      !isValidEmail(email)
+    );
+    const auditInvalid = !isDirectInquiry && (
+      !name ||
+      !company ||
+      !role ||
+      !website ||
+      !targetGroup ||
+      !projectMarket ||
+      !leadProblem ||
+      !crm ||
+      !leadVolume ||
+      !salesBottleneck ||
+      !startTiming ||
+      !budgetReadiness ||
+      !decisionStatus ||
+      !whyNow ||
+      !isValidEmail(email)
+    );
+
+    if (directInvalid || auditInvalid) {
       return NextResponse.json({ error: "Invalid form submission" }, { status: 400 });
     }
 
     const apiKey = process.env.RESEND_API_KEY;
-    const sender = process.env.CONTACT_SENDER_EMAIL || "hello@novalure.eu";
+    const sender = process.env.CONTACT_SENDER_EMAIL || process.env.RESEND_FROM_EMAIL || "hello@novalure.eu";
 
     if (!apiKey) {
       console.error("Contact form email configuration is missing.");
       return NextResponse.json({ error: "Email configuration missing" }, { status: 500 });
     }
 
+    const rows: Record<string, string | string[]> = isDirectInquiry
+      ? {
+          Name: name,
+          Email: email,
+          Phone: phone,
+          Company: company,
+          Interest: targetGroup,
+          Message: leadProblem,
+          Language: language.toUpperCase(),
+          Source: clean(body.source) || "direct_inquiry_form",
+          Timestamp: new Date().toISOString()
+        }
+      : {
+          Name: name,
+          Email: email,
+          Company: company,
+          Role: role,
+          Website: website,
+          "Target group": targetGroup,
+          "Project / market area": projectMarket,
+          "Lead problem": leadProblem,
+          CRM: crm,
+          "Monthly lead volume": leadVolume,
+          "Sales bottleneck": salesBottleneck,
+          Assets: assets,
+          "Start timing": startTiming,
+          "Budget readiness": budgetReadiness,
+          "Decision status": decisionStatus,
+          "Why now": whyNow,
+          Language: language.toUpperCase(),
+          "Page URI": pageUri,
+          "UTM source": clean(utm.utm_source),
+          "UTM medium": clean(utm.utm_medium),
+          "UTM campaign": clean(utm.utm_campaign),
+          "UTM content": clean(utm.utm_content),
+          "UTM term": clean(utm.utm_term),
+          Timestamp: new Date().toISOString()
+        };
+
     const resend = new Resend(apiKey);
-    const timestamp = new Date().toISOString();
-    const bookingUrl = getBookingLink(language);
-    const interestLabel =
-      interest === "developers"
-        ? language === "de"
-          ? "Bauträger"
-          : "Developers"
-        : language === "de"
-          ? "Immobilienmakler"
-          : "Real Estate Agents";
-
-    const internalText = `New Novalure contact inquiry
-
-First Name: ${firstName}
-Last Name: ${lastName}
-Email: ${email}
-Phone: ${phone}
-Company: ${company}
-Interest: ${interestLabel}
-Inquiry: ${inquiry}
-Language: ${language.toUpperCase()}
-Timestamp: ${timestamp}`;
-
-    const internalHtml = `
-      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
-        <h2>New Novalure contact inquiry</h2>
-        <p><strong>First Name:</strong> ${escapeHtml(firstName)}</p>
-        <p><strong>Last Name:</strong> ${escapeHtml(lastName)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
-        <p><strong>Company:</strong> ${escapeHtml(company)}</p>
-        <p><strong>Interest:</strong> ${escapeHtml(interestLabel)}</p>
-        <p><strong>Inquiry:</strong><br />${textToHtml(inquiry)}</p>
-        <p><strong>Language:</strong> ${language.toUpperCase()}</p>
-        <p><strong>Timestamp:</strong> ${escapeHtml(timestamp)}</p>
-      </div>
-    `;
+    const softFit =
+      budgetReadiness.toLowerCase().includes("nein") ||
+      budgetReadiness.toLowerCase().includes("no,") ||
+      decisionStatus.toLowerCase().includes("recherchiere") ||
+      decisionStatus.toLowerCase().includes("only researching");
 
     const internalEmail = await resend.emails.send({
       from: sender,
       to: "hello@novalure.eu",
-      subject: `New Novalure contact inquiry (${language.toUpperCase()})`,
+      subject: isDirectInquiry
+        ? `New NovaLure direct enquiry (${language.toUpperCase()})`
+        : `${softFit ? "[Soft fit] " : ""}New NovaLure Pipeline Audit request (${language.toUpperCase()})`,
       replyTo: email,
-      text: internalText,
-      html: internalHtml
+      text: `${isDirectInquiry ? "New NovaLure direct enquiry" : "New NovaLure Pipeline Audit request"}\n\n${formatRows(rows)}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
+          <h2>${isDirectInquiry ? "New NovaLure direct enquiry" : "New NovaLure Pipeline Audit request"}</h2>
+          ${!isDirectInquiry && softFit ? "<p><strong>Soft-fit signal:</strong> Budget or decision status suggests Build+Run may be too early.</p>" : ""}
+          ${formatRowsHtml(rows)}
+        </div>
+      `
     });
 
-    if (internalEmail.error) {
-      throw new Error(internalEmail.error.message);
-    }
+    if (internalEmail.error) throw new Error(internalEmail.error.message);
 
-    const customerText = autoReplyCopy[language].textBody(firstName, bookingUrl);
-    const customerHtmlText = autoReplyCopy[language].htmlBody(firstName);
+    const reply = autoReplyCopy[language];
+    const replySubject = isDirectInquiry ? reply.directSubject : reply.auditSubject;
+    const replyBody = isDirectInquiry ? reply.directBody(name) : reply.auditBody(name);
+    const replyButton = isDirectInquiry ? reply.directButton : reply.auditButton;
+    const thankYouPath = language === "de" ? "/de/kontakt/danke" : "/en/contact/thank-you";
+    const thankYouUrl = isDirectInquiry ? getSiteUrl() : `${getSiteUrl()}${thankYouPath}`;
+
     const customerEmail = await resend.emails.send({
       from: sender,
       to: email,
-      subject: autoReplyCopy[language].subject,
-      text: customerText,
+      subject: replySubject,
+      text: `${replyBody}\n\n${thankYouUrl}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827; max-width: 620px; margin: 0 auto; padding: 28px;">
-          <p>${textToHtml(customerHtmlText)}</p>
-          ${renderEmailButton(bookingUrl, autoReplyCopy[language].button)}
+          <p>${textToHtml(replyBody)}</p>
+          ${renderEmailButton(thankYouUrl, replyButton)}
         </div>
       `
     });
@@ -227,7 +260,7 @@ Timestamp: ${timestamp}`;
       console.error("Contact form auto-reply failed:", customerEmail.error);
     }
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, softFit: isDirectInquiry ? false : softFit });
   } catch (error) {
     console.error("Contact form submission failed:", error);
     return NextResponse.json({ error: "Contact form submission failed" }, { status: 500 });

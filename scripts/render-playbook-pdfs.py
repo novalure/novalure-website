@@ -284,7 +284,7 @@ def render(book):
     final_body = (
         "Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein Pipeline-Audit. Wir prüfen Funnel, Lead-Qualifizierung, CRM-Übergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen."
         if book["lang"] == "de"
-        else "If you want to see which layers are missing in your current setup, book a Pipeline Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without fake promises."
+        else "If you want to see which layers are missing in your current setup, book a Pipeline Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without false promises."
     )
     y = para(c, final_title, M, H - 82 * mm, W - 2 * M, style(26, 30, colors.white, True))
     y = para(c, final_body, M, y - 14, W - 2 * M - 10 * mm, style(12, 18, colors.HexColor("#d7deea")))

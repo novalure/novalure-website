@@ -32,6 +32,16 @@ function sendPageView(path: string) {
   }
 }
 
+function sendFunnelEvent(name: string, params: Record<string, unknown> = {}) {
+  if (!window.gtag) return;
+
+  try {
+    window.gtag("event", name, params);
+  } catch {
+    // Ignore analytics delivery failures.
+  }
+}
+
 export function TrackingPlaceholders() {
   const pathname = usePathname();
   const analyticsAllowed = useRef(false);
@@ -64,6 +74,10 @@ export function TrackingPlaceholders() {
         analyticsAllowed.current = consent.analytics;
 
         if (consent.analytics) {
+          window.gtag?.("consent", "update", {
+            analytics_storage: "granted",
+            ad_storage: consent.marketing ? "granted" : "denied"
+          });
           sendPageView(`${window.location.pathname}${window.location.search}`);
         }
 
@@ -102,6 +116,49 @@ export function TrackingPlaceholders() {
     lastPageView.current = page;
     sendPageView(page);
   }, [pathname]);
+
+  useEffect(() => {
+    function trackClick(event: MouseEvent) {
+      if (!analyticsAllowed.current) return;
+      const target = event.target instanceof Element ? event.target.closest("[data-track]") : null;
+      if (!target) return;
+      sendFunnelEvent("cta_click", {
+        cta_id: target.getAttribute("data-track"),
+        cta_text: target.textContent?.trim() || "",
+        page_path: window.location.pathname
+      });
+    }
+
+    function trackFunnelEvent(event: Event) {
+      if (!analyticsAllowed.current) return;
+      const detail = (event as CustomEvent<Record<string, unknown>>).detail || {};
+      const name = typeof detail.name === "string" ? detail.name : "funnel_event";
+      sendFunnelEvent(name, detail);
+    }
+
+    const observer = typeof IntersectionObserver !== "undefined"
+      ? new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!analyticsAllowed.current || !entry.isIntersecting) return;
+            const id = entry.target.getAttribute("data-track-section");
+            if (id) {
+              sendFunnelEvent("proof_section_view", { section_id: id, page_path: window.location.pathname });
+              observer?.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.35 })
+      : null;
+
+    document.addEventListener("click", trackClick);
+    window.addEventListener("novalure:funnel-event", trackFunnelEvent);
+    document.querySelectorAll("[data-track-section]").forEach((element) => observer?.observe(element));
+
+    return () => {
+      document.removeEventListener("click", trackClick);
+      window.removeEventListener("novalure:funnel-event", trackFunnelEvent);
+      observer?.disconnect();
+    };
+  }, []);
 
   return null;
 }

@@ -10,6 +10,9 @@ export type PageKey =
   | "agents"
   | "playbooks"
   | "contact"
+  | "handover"
+  | "playbookThanks"
+  | "auditThanks"
   | "imprint"
   | "privacy"
   | "cookies";
@@ -20,6 +23,9 @@ export const routeMap: Record<PageKey, Record<Locale, string>> = {
   agents: { en: "/en/agents", de: "/de/makler" },
   playbooks: { en: "/en/playbooks", de: "/de/playbooks" },
   contact: { en: "/en/contact", de: "/de/kontakt" },
+  handover: { en: "/en/real-estate-crm-handover", de: "/de/immobilien-crm-handover" },
+  playbookThanks: { en: "/en/playbooks/thank-you", de: "/de/playbooks/danke" },
+  auditThanks: { en: "/en/contact/thank-you", de: "/de/kontakt/danke" },
   imprint: { en: "/en/legal/imprint", de: "/de/rechtliches/impressum" },
   privacy: { en: "/en/legal/privacy", de: "/de/rechtliches/datenschutz" },
   cookies: { en: "/en/legal/cookies", de: "/de/rechtliches/cookies" }
@@ -27,20 +33,25 @@ export const routeMap: Record<PageKey, Record<Locale, string>> = {
 
 export type NavigationItem =
   | { type: "route"; key: PageKey }
-  | { type: "anchor"; key: "system" | "process" | "team"; href: Record<Locale, string> };
+  | { type: "anchor"; key: "proof" | "system"; href: Record<Locale, string> };
 
 export const navigationItems: NavigationItem[] = [
+  { type: "route", key: "home" },
   { type: "route", key: "developers" },
   { type: "route", key: "agents" },
+  { type: "anchor", key: "proof", href: { en: "/en#proof", de: "/de#proof" } },
   { type: "route", key: "playbooks" },
-  { type: "anchor", key: "system", href: { en: "/en#system", de: "/de#system" } },
-  { type: "anchor", key: "process", href: { en: "/en#process", de: "/de#prozess" } },
-  { type: "anchor", key: "team", href: { en: "/en#team", de: "/de#team" } },
   { type: "route", key: "contact" }
 ];
 
 export const legalKeys: PageKey[] = ["imprint", "privacy", "cookies"];
 export const allPageKeys = Object.keys(routeMap) as PageKey[];
+
+const routeAliases: Partial<Record<Locale, Partial<Record<string, PageKey>>>> = {
+  de: {
+    "/de/legal/privacy": "privacy"
+  }
+};
 
 export function isLocale(value: string): value is Locale {
   return locales.includes(value as Locale);
@@ -50,25 +61,40 @@ export function getPath(locale: Locale, key: PageKey) {
   return routeMap[key][locale];
 }
 
+export function getPlaybookFormPath(locale: Locale) {
+  return `${getPath(locale, "playbooks")}#playbook-download`;
+}
+
 export function getPageKey(locale: Locale, slug?: string[]): PageKey | null {
   const path = `/${locale}${slug?.length ? `/${slug.join("/")}` : ""}`;
+  const alias = routeAliases[locale]?.[path];
+  if (alias) return alias;
   return allPageKeys.find((key) => routeMap[key][locale] === path) ?? null;
 }
 
 export function getLocalizedParams() {
-  return allPageKeys.flatMap((key) =>
+  const canonicalParams = allPageKeys.flatMap((key) =>
     locales.map((locale) => {
       const slug = routeMap[key][locale].replace(`/${locale}`, "").split("/").filter(Boolean);
       return { locale, slug };
     })
   );
+
+  const aliasParams = Object.entries(routeAliases).flatMap(([locale, aliases]) =>
+    Object.keys(aliases || {}).map((path) => ({
+      locale: locale as Locale,
+      slug: path.replace(`/${locale}`, "").split("/").filter(Boolean)
+    }))
+  );
+
+  return [...canonicalParams, ...aliasParams];
 }
 
 export function getAlternates(locale: Locale, key: PageKey) {
   return {
     canonical: routeMap[key][locale],
     languages: {
-      "en-US": routeMap[key].en,
+      "en-GB": routeMap[key].en,
       "de-DE": routeMap[key].de,
       "x-default": routeMap[key].en
     }
@@ -80,8 +106,11 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     home: "Home",
     developers: "Developers",
     agents: "Agents",
-    playbooks: "Playbooks",
-    contact: "Contact",
+    playbooks: "Playbook",
+    contact: "Pipeline Audit",
+    handover: "CRM Handover",
+    playbookThanks: "Playbook requested",
+    auditThanks: "Audit requested",
     imprint: "Imprint",
     privacy: "Privacy",
     cookies: "Cookies"
@@ -90,23 +119,24 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     home: "Start",
     developers: "Bauträger",
     agents: "Makler",
-    playbooks: "Leitfäden",
-    contact: "Kontakt",
+    playbooks: "Playbook",
+    contact: "Pipeline-Audit",
+    handover: "CRM-Handover",
+    playbookThanks: "Playbook angefordert",
+    auditThanks: "Audit angefragt",
     imprint: "Impressum",
     privacy: "Datenschutz",
     cookies: "Cookies"
   }
 };
 
-export const anchorLabels: Record<Locale, Record<"system" | "process" | "team", string>> = {
+export const anchorLabels: Record<Locale, Record<"proof" | "system", string>> = {
   en: {
-    system: "System",
-    process: "Process",
-    team: "Team"
+    proof: "Proof / examples",
+    system: "System"
   },
   de: {
-    system: "System",
-    process: "Prozess",
-    team: "Team"
+    proof: "Proof / Systembeispiele",
+    system: "System"
   }
 };

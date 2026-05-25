@@ -1,25 +1,26 @@
 import { routeMap, type Locale, type PageKey } from "@/lib/i18n";
+import { getSiteUrl } from "@/lib/site-url";
 import type { FaqItem, PageContent } from "@/content/pages";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
+const siteUrl = getSiteUrl();
 
 export function organizationSchema(locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
-    name: "Novalure",
+    name: "NovaLure",
     url: `${siteUrl}${routeMap.home[locale]}`,
     description:
       locale === "en"
-        ? "PropTech Sales System for real estate developers and agents."
-        : "PropTech Sales System für Bauträger und Immobilienmakler.",
+        ? "CRM-ready lead systems for real estate sales."
+        : "CRM-fähige Lead-Systeme für den Immobilienvertrieb.",
     logo: `${siteUrl}/novalure-logo.png`,
     areaServed: ["AT", "DE", "CH", "LI", "IE", "EU"],
     founder: {
       "@type": "Person",
       name: "Franz Romih",
-      jobTitle: locale === "en" ? "Founder & Real Estate Sales Lead" : "Gründer & Real Estate Sales Lead"
+      jobTitle: locale === "en" ? "Team Lead" : "Teamleitung"
     }
   };
 }
@@ -29,9 +30,9 @@ export function websiteSchema(locale: Locale) {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${siteUrl}/#website`,
-    name: "Novalure",
+    name: "NovaLure",
     url: `${siteUrl}${routeMap.home[locale]}`,
-    inLanguage: locale === "de" ? "de-DE" : "en-US"
+    inLanguage: locale === "de" ? "de-DE" : "en-GB"
   };
 }
 
@@ -77,6 +78,10 @@ export function pageSchemas(content: PageContent) {
     websiteSchema(content.locale),
     breadcrumbSchema(content.locale, content.key, content.title)
   ];
+
+  if (content.faq?.length) {
+    schemas.push(faqSchema(content.faq));
+  }
 
   return schemas;
 }

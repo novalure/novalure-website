@@ -27,22 +27,22 @@ const emptyValues: FormValues = {
 
 const copy = {
   en: {
-    eyebrow: "Direct inquiry",
-    title: "Send a confidential inquiry.",
-    body: "Share your contact details and the Novalure team will respond directly.",
+    eyebrow: "Direct enquiry",
+    title: "Send a confidential enquiry.",
+    body: "Share your contact details and the NovaLure team will respond directly.",
     fields: {
-      firstName: "First Name",
-      lastName: "Last Name",
-      email: "Business Email",
-      phone: "Phone Number",
+      firstName: "First name",
+      lastName: "Last name",
+      email: "Work email",
+      phone: "Phone number",
       company: "Company",
-      interest: "Interested in",
-      inquiry: "Your Message"
+      interest: "Area of interest",
+      inquiry: "Your message"
     },
     interests: {
       placeholder: "Select an option",
       developers: "Developers",
-      agents: "Real Estate Agents"
+      agents: "Real estate agents"
     },
     placeholders: {
       firstName: "First name",
@@ -52,15 +52,15 @@ const copy = {
       company: "Company name",
       inquiry: "Briefly describe what you would like to discuss."
     },
-    submit: "Send Inquiry",
+    submit: "Send enquiry",
     loading: "Sending...",
-    success: "Thank you. Your inquiry has been received.",
+    success: "Thank you. Your enquiry has been received.",
     error: "Something went wrong. Please try again or email hello@novalure.eu"
   },
   de: {
     eyebrow: "Direkte Anfrage",
     title: "Senden Sie eine vertrauliche Anfrage.",
-    body: "Hinterlassen Sie Ihre Kontaktdaten. Das Novalure-Team meldet sich direkt bei Ihnen.",
+    body: "Hinterlassen Sie Ihre Kontaktdaten. Das NovaLure-Team meldet sich direkt bei Ihnen.",
     fields: {
       firstName: "Vorname",
       lastName: "Nachname",
@@ -118,7 +118,8 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
       company: values.company.trim(),
       interest: values.interest.trim(),
       inquiry: values.inquiry.trim(),
-      language: locale
+      language: locale,
+      source: "direct_inquiry_form"
     };
 
     if (
@@ -145,10 +146,9 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
         body: JSON.stringify(payload)
       });
 
-      if (!response.ok) {
-        throw new Error("Contact request failed");
-      }
+      if (!response.ok) throw new Error("Contact request failed");
 
+      window.dispatchEvent(new CustomEvent("novalure:funnel-event", { detail: { name: "contact_inquiry_submit" } }));
       setValues(emptyValues);
       setStatus("success");
       setStatusMessage(text.success);
@@ -159,70 +159,33 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
   }
 
   return (
-    <section className="contact-inquiry-section" aria-labelledby="contact-inquiry-title">
+    <section className="contact-inquiry-section" id="audit-form" aria-labelledby="contact-inquiry-title">
       <div className="contact-inquiry-shell">
         <div className="contact-inquiry-copy">
           <p className="eyebrow">{text.eyebrow}</p>
           <h2 id="contact-inquiry-title">{text.title}</h2>
           <p>{text.body}</p>
         </div>
-        <form className="contact-inquiry-form" onSubmit={submitForm}>
+        <form className="contact-inquiry-form" onSubmit={submitForm} data-track-form="contact">
           <label className="contact-field">
             <span>{text.fields.firstName}</span>
-            <input
-              name="firstName"
-              value={values.firstName}
-              onChange={updateValue}
-              placeholder={text.placeholders.firstName}
-              required
-              autoComplete="given-name"
-            />
+            <input name="firstName" value={values.firstName} onChange={updateValue} placeholder={text.placeholders.firstName} required autoComplete="given-name" />
           </label>
           <label className="contact-field">
             <span>{text.fields.lastName}</span>
-            <input
-              name="lastName"
-              value={values.lastName}
-              onChange={updateValue}
-              placeholder={text.placeholders.lastName}
-              required
-              autoComplete="family-name"
-            />
+            <input name="lastName" value={values.lastName} onChange={updateValue} placeholder={text.placeholders.lastName} required autoComplete="family-name" />
           </label>
           <label className="contact-field">
             <span>{text.fields.email}</span>
-            <input
-              name="email"
-              type="email"
-              value={values.email}
-              onChange={updateValue}
-              placeholder={text.placeholders.email}
-              required
-              autoComplete="email"
-            />
+            <input name="email" type="email" value={values.email} onChange={updateValue} placeholder={text.placeholders.email} required autoComplete="email" />
           </label>
           <label className="contact-field">
             <span>{text.fields.phone}</span>
-            <input
-              name="phone"
-              type="tel"
-              value={values.phone}
-              onChange={updateValue}
-              placeholder={text.placeholders.phone}
-              required
-              autoComplete="tel"
-            />
+            <input name="phone" type="tel" value={values.phone} onChange={updateValue} placeholder={text.placeholders.phone} required autoComplete="tel" />
           </label>
           <label className="contact-field">
             <span>{text.fields.company}</span>
-            <input
-              name="company"
-              value={values.company}
-              onChange={updateValue}
-              placeholder={text.placeholders.company}
-              required
-              autoComplete="organization"
-            />
+            <input name="company" value={values.company} onChange={updateValue} placeholder={text.placeholders.company} required autoComplete="organization" />
           </label>
           <label className="contact-field">
             <span>{text.fields.interest}</span>
@@ -234,24 +197,13 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
           </label>
           <label className="contact-field contact-field-full">
             <span>{text.fields.inquiry}</span>
-            <textarea
-              name="inquiry"
-              value={values.inquiry}
-              onChange={updateValue}
-              placeholder={text.placeholders.inquiry}
-              required
-            />
+            <textarea name="inquiry" value={values.inquiry} onChange={updateValue} placeholder={text.placeholders.inquiry} required />
           </label>
           <div className="contact-form-actions">
             <button className="button button-primary" type="submit" disabled={isLoading}>
               {isLoading ? text.loading : text.submit}
             </button>
-            <p
-              className={`contact-form-status ${status === "success" ? "is-success" : ""} ${
-                status === "error" ? "is-error" : ""
-              }`}
-              aria-live="polite"
-            >
+            <p className={`contact-form-status ${status === "success" ? "is-success" : ""} ${status === "error" ? "is-error" : ""}`} aria-live="polite">
               {statusMessage}
             </p>
           </div>

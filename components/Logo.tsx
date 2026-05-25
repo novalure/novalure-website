@@ -4,11 +4,11 @@ import { getPath, type Locale } from "@/lib/i18n";
 
 export function Logo({ locale }: { locale: Locale }) {
   return (
-    <Link className="brand" href={getPath(locale, "home")} aria-label="Novalure home">
+    <Link className="brand" href={getPath(locale, "home")} aria-label="NovaLure home">
       <Image
         className="brand-logo-image"
         src="/novalure-logo.png"
-        alt="Novalure"
+        alt="NovaLure"
         width={376}
         height={138}
         priority

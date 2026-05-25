@@ -3,13 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { anchorLabels, getPath, navLabels, navigationItems, routeMap, type Locale } from "@/lib/i18n";
+import { anchorLabels, getPath, getPlaybookFormPath, navLabels, navigationItems, routeMap, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
 
 const ctaLabels = {
-  en: { primary: "Download Playbook", secondary: "Book Audit", menu: "Menu", close: "Close menu" },
-  de: { primary: "Leitfaden herunterladen", secondary: "Audit buchen", menu: "Menü", close: "Menü schließen" }
+  en: { primary: "Pipeline Audit", secondary: "Playbook", menu: "Menu", close: "Close menu" },
+  de: { primary: "Pipeline-Audit", secondary: "Playbook", menu: "Menü", close: "Menü schließen" }
 };
+
+const headerNavigationItems = navigationItems.filter(
+  (item) => item.type !== "route" || (item.key !== "playbooks" && item.key !== "contact")
+);
 
 export function Header({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
@@ -21,18 +25,23 @@ export function Header({ locale }: { locale: Locale }) {
     | keyof typeof routeMap
     | undefined;
   const switchHref = activeKey ? routeMap[activeKey][switchLocale] : getPath(switchLocale, "home");
-  const playbookHref = `${getPath(locale, "contact")}#playbook-download`;
+  const playbookHref = getPlaybookFormPath(locale);
   const auditHref = `${getPath(locale, "contact")}#book-audit`;
 
   return (
     <header className={`site-header ${open ? "menu-open" : ""}`}>
-      <Logo locale={locale} />
+      <div className="header-brand-group">
+        <Logo locale={locale} />
+        <span className="header-trust-badge">
+          {locale === "de" ? "Verwurzelt in Irland · Tätig in DACH, UK & international" : "Rooted in Ireland · Active in DACH, UK & international"}
+        </span>
+      </div>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
-        {navigationItems.map((item) => (
+        {headerNavigationItems.map((item) => (
           <Link
             key={item.type === "route" ? item.key : item.key}
-            href={item.type === "route" ? getPath(locale, item.key) : item.href[locale]}
+            href={item.type === "route" ? item.key === "playbooks" ? playbookHref : getPath(locale, item.key) : item.href[locale]}
           >
             {item.type === "route" ? navLabels[locale][item.key] : anchorLabels[locale][item.key]}
           </Link>
@@ -40,12 +49,12 @@ export function Header({ locale }: { locale: Locale }) {
       </nav>
 
       <div className="header-actions desktop-actions">
-        <Link className="button button-secondary" href={auditHref}>{labels.secondary}</Link>
-        <Link className="button button-primary" href={playbookHref}>{labels.primary}</Link>
+        <Link className="button button-secondary" href={playbookHref} data-track="nav_playbook">{labels.secondary}</Link>
+        <Link className="button button-primary" href={auditHref} data-track="nav_audit">{labels.primary}</Link>
         <Link className="locale-switch" href={switchHref} hrefLang={switchLocale}>{switchLocale.toUpperCase()}</Link>
       </div>
 
-      <Link className="button button-primary mobile-sticky-cta" href={playbookHref}>
+      <Link className="button button-primary mobile-sticky-cta" href={auditHref}>
         {labels.primary}
       </Link>
 
@@ -63,17 +72,20 @@ export function Header({ locale }: { locale: Locale }) {
       </button>
 
       <nav className="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-        {navigationItems.map((item) => (
+        {headerNavigationItems.map((item) => (
           <Link
             key={item.type === "route" ? item.key : item.key}
-            href={item.type === "route" ? getPath(locale, item.key) : item.href[locale]}
+            href={item.type === "route" ? item.key === "playbooks" ? playbookHref : getPath(locale, item.key) : item.href[locale]}
             onClick={() => setOpen(false)}
           >
             {item.type === "route" ? navLabels[locale][item.key] : anchorLabels[locale][item.key]}
           </Link>
         ))}
-        <Link className="button button-secondary" href={auditHref} onClick={() => setOpen(false)}>
+        <Link className="button button-secondary" href={playbookHref} onClick={() => setOpen(false)}>
           {labels.secondary}
+        </Link>
+        <Link className="button button-primary" href={auditHref} onClick={() => setOpen(false)}>
+          {labels.primary}
         </Link>
         <Link className="locale-switch mobile-locale" href={switchHref} hrefLang={switchLocale} onClick={() => setOpen(false)}>
           {switchLocale.toUpperCase()}

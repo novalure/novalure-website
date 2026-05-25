@@ -15,3 +15,10 @@ vercel
 .codex-python-packages
 public/playbooks/previews
 public/playbooks/*-check.html
+next-browser-check.log
+next-funnel-dev*.log
+next-smoke*.log
+onepage-funnel-preview.html
+
+.vercel
+.env*.local

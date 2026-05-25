@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import { MarketingPage } from "@/components/MarketingPage";
 import { pages } from "@/content/pages";
 import { getAlternates, getLocalizedParams, getPageKey, isLocale, type Locale } from "@/lib/i18n";
+import { getSiteUrl } from "@/lib/site-url";
 import { pageSchemas } from "@/lib/structured-data";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
+const siteUrl = getSiteUrl();
 
 type RouteParams = {
   locale: string;
@@ -22,17 +23,18 @@ export function generateMetadata({ params }: { params: RouteParams }): Metadata 
   const key = getPageKey(locale, params.slug);
   if (!key) return {};
   const content = pages[locale][key];
+  const description = content.metaDescription ?? content.description;
 
   return {
     title: content.seoTitle,
-    description: content.description,
+    description,
     alternates: getAlternates(locale, key),
-    robots: ["imprint", "privacy", "cookies"].includes(key)
+    robots: ["imprint", "privacy", "cookies", "playbookThanks", "auditThanks"].includes(key)
       ? { index: false, follow: true }
       : { index: true, follow: true },
     openGraph: {
       title: content.seoTitle,
-      description: content.description,
+      description,
       url: `${siteUrl}${getAlternates(locale, key).canonical}`,
       locale: locale === "de" ? "de_DE" : "en_US",
       alternateLocale: locale === "en" ? "de_DE" : "en_US",
@@ -41,7 +43,7 @@ export function generateMetadata({ params }: { params: RouteParams }): Metadata 
     twitter: {
       card: "summary_large_image",
       title: content.seoTitle,
-      description: content.description,
+      description,
       images: ["/og-default.svg"]
     }
   };

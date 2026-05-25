@@ -14,9 +14,7 @@ try {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const outDir = path.join(root, "public", "playbooks");
-const logoPath = path.join(root, "public", "novalure-logo.png");
 const whiteLogoPath = path.join(root, "public", "novalure-logo-white.png");
-const logoData = `data:image/png;base64,${fs.readFileSync(logoPath).toString("base64")}`;
 const whiteLogoData = `data:image/png;base64,${fs.readFileSync(whiteLogoPath).toString("base64")}`;
 
 fs.mkdirSync(outDir, { recursive: true });
@@ -35,19 +33,463 @@ function findLocalBrowser() {
 const shared = {
   en: {
     label: "English edition",
-    primaryCta: "Book Pipeline Audit",
+    primaryCta: "Request a Pipeline Audit",
     primaryUrl: "https://www.novalure.eu/en/contact#book-audit",
-    footer: "Novalure | PropTech Sales System for real estate developers and agents",
-    note: "This playbook is a strategic guide, not a promise of specific lead numbers, revenue, delivery timing or legal compliance. Use it to diagnose and structure your sales system before making operational decisions."
+    footer: "NovaLure | CRM-ready lead systems for real estate sales",
+    introEyebrow: "Why this playbook exists",
+    introTitle: "A diagnosis tool, not a free funnel plan.",
+    introBody:
+      "This playbook is built to surface whether your current lead system creates sales context or only contact details. It gives enough structure to identify the problem, not a complete implementation plan that replaces a proper diagnosis.",
+    introCardBody: "Relevant when you need sharper sales context before the next call.",
+    systemEyebrow: "Diagnosis frame",
+    systemTitle: "Demand only becomes pipeline when sales can act on it.",
+    systemBody:
+      "The operating question is simple: does your system capture the right signal, qualify intent, hand context to the CRM and create a clear next step for sales?",
+    summaryEyebrow: "Next step",
+    summaryTitle: "Have your current lead system reviewed.",
+    summaryBody:
+      "If you have a concrete project, market area or lead-quality problem, the Pipeline Audit is the next step. We review funnel logic, intent filtering, CRM handover and follow-up readiness. No free full funnel plan. No lead guarantee. Clear diagnosis before proposal.",
+    note:
+      "This playbook is a diagnostic lead magnet. It is not a promise of lead volume, revenue, delivery timing or legal compliance, and it does not include a full funnel blueprint, media strategy or scoring model."
   },
   de: {
     label: "Deutsche Ausgabe",
-    primaryCta: "Pipeline-Audit buchen",
+    primaryCta: "Pipeline-Audit anfragen",
     primaryUrl: "https://www.novalure.eu/de/kontakt#book-audit",
-    footer: "Novalure | PropTech Sales System fuer Bautraeger und Immobilienmakler",
-    note: "Dieses Playbook ist ein strategischer Leitfaden und kein Versprechen bestimmter Lead-Zahlen, Umsaetze, Lieferzeiten oder rechtlicher Konformitaet. Nutzen Sie es zur Diagnose und Strukturierung Ihres Vertriebssystems."
+    footer: "NovaLure | CRM-fähige Lead-Systeme für den Immobilienvertrieb",
+    introEyebrow: "Warum dieses Playbook existiert",
+    introTitle: "Ein Diagnose-Werkzeug, kein kostenloser Funnel-Plan.",
+    introBody:
+      "Dieses Playbook soll sichtbar machen, ob Ihr aktuelles Lead-System Vertriebskontext erzeugt oder nur Kontaktdaten sammelt. Es gibt genug Struktur, um das Problem zu erkennen, aber keinen vollständigen Umsetzungsplan, der eine saubere Diagnose ersetzt.",
+    introCardBody: "Relevant, wenn Ihr Vertrieb vor dem nächsten Call mehr Kontext braucht.",
+    systemEyebrow: "Diagnose-Rahmen",
+    systemTitle: "Nachfrage wird erst Pipeline, wenn der Vertrieb damit arbeiten kann.",
+    systemBody:
+      "Die operative Frage ist einfach: Erfasst Ihr System das richtige Signal, qualifiziert es Absicht, übergibt es Kontext ins CRM und erzeugt es einen klaren nächsten Schritt für Sales?",
+    summaryEyebrow: "Nächster Schritt",
+    summaryTitle: "Lassen Sie Ihr aktuelles Lead-System prüfen.",
+    summaryBody:
+      "Wenn Sie ein konkretes Projekt, Marktgebiet oder Leadproblem haben, ist das Pipeline-Audit der nächste Schritt. Wir prüfen Funnel-Logik, Intent-Filter, CRM-Handover und Follow-up-Reife. Kein vollständiger Gratis-Funnelplan. Keine Lead-Garantie. Klare Diagnose vor Angebot.",
+    note:
+      "Dieses Playbook ist ein diagnostischer Lead Magnet. Es verspricht keine Leadmenge, Umsätze, Lieferzeiten oder rechtliche Konformität und enthält keinen vollständigen Funnel-Blueprint, keine Media-Strategie und kein Scoring-Modell."
   }
 };
+
+const developerSectionsEn = [
+  {
+    title: "The actual problem: enquiries without sales context",
+    body:
+      "Developer campaigns often look active while sales still works manually. The funnel collects names, brochure requests or vague project interest, but the CRM does not explain why this person matters now. More traffic then creates more sorting work instead of more qualified buyer conversations.",
+    bullets: [
+      "A project enquiry is not sales-ready just because it has a phone number.",
+      "A buyer who likes the architecture may still be far from timing, budget or decision readiness.",
+      "A campaign that reports leads without CRM feedback cannot show where real buyer intent starts.",
+      "If sales has to rebuild the context on every first call, the handover is not doing its job."
+    ],
+    question: "Where does your sales team currently lose time: before the call, during the call or after the lead enters the CRM?"
+  },
+  {
+    title: "Typical project pipeline leaks",
+    body:
+      "Most weak project funnels do not fail in one dramatic place. They lose quality in several small handovers: from ad to page, from page to form, from form to CRM and from CRM to follow-up. The leak is commercial, not cosmetic.",
+    bullets: [
+      "The page explains the project but not the buying decision.",
+      "The form captures contact details but not project fit, timing or buyer type.",
+      "The CRM record shows a source but not the reason for urgency.",
+      "Follow-up starts the same way for every lead, regardless of readiness.",
+      "Reporting focuses on cost per lead while sales still filters manually."
+    ],
+    question: "Which of these leaks can you prove is under control today?"
+  },
+  {
+    title: "What a sales-ready project lead must show",
+    body:
+      "A sales-ready project lead gives the first call a useful starting point. It does not need to reveal every detail, but it should show enough context for sales to decide whether to call, how to open the call and what next step makes sense.",
+    bullets: [
+      "Project or location interest is visible before sales opens the record.",
+      "Buyer type, unit logic or use case is at least directionally clear.",
+      "Timing and budget proximity are not hidden in free-text notes.",
+      "Source, landing page and requested asset are connected to the record.",
+      "The next step is obvious enough that follow-up can start without guesswork."
+    ],
+    question: "If your CRM does not show this context reliably, is the lead weak or is the handover incomplete?"
+  },
+  {
+    title: "Mini scorecard: audit readiness",
+    body:
+      "Audit readiness does not mean the system is already strong. It means the business has a concrete enough situation to diagnose: project, market pressure, current lead sources, sales process and a real commercial reason to improve lead quality.",
+    bullets: [
+      "There is a specific project, launch, stock pressure or market area.",
+      "Leads already exist, but sales cannot trust or prioritize them cleanly.",
+      "The CRM or lead management process is visible enough to inspect.",
+      "Sales can explain which leads waste time and which create real conversations.",
+      "Budget and decision readiness can be discussed without pretending the audit is free consulting."
+    ],
+    question: "Can you name the project, lead problem and sales bottleneck in one sentence?"
+  },
+  {
+    title: "Symptoms worth reviewing, not a full solution",
+    body:
+      "This playbook intentionally stops before a complete blueprint. A serious project funnel depends on market, offer, assets, sales capacity, CRM maturity and timing. Generic advice can create activity while the real bottleneck remains untouched.",
+    bullets: [
+      "High lead volume but low booked-call quality points to weak qualification.",
+      "Many brochure downloads but few serious conversations points to unclear next steps.",
+      "Fast follow-up with poor outcomes points to bad fit, not only bad sales execution.",
+      "Slow follow-up points to ownership, CRM and process gaps.",
+      "Low trust in reports points to missing definitions between marketing and sales."
+    ],
+    question: "Which symptom is expensive enough that it deserves diagnosis before more media spend?"
+  },
+  {
+    title: "What the Pipeline Audit clarifies",
+    body:
+      "The Pipeline Audit is not a free strategy workshop. It is a focused diagnosis of whether a Build+Run mandate makes sense and where the current system loses commercial quality before sales can act.",
+    bullets: [
+      "Where project demand enters the system and where context is lost.",
+      "Whether the landing page and lead asset attract the right buyer type.",
+      "Whether intent filtering protects sales time or only adds friction.",
+      "Whether CRM handover gives sales enough context for the first call.",
+      "Whether follow-up and reporting can support at least three months of Run."
+    ],
+    question: "Which audit question would be uncomfortable to answer from your current data?"
+  },
+  {
+    title: "When the audit fits and when it does not",
+    body:
+      "The audit is useful when there is a real project, sales pressure and willingness to build a system. It is not useful when the goal is only to collect free ideas, demand a lead guarantee or avoid CRM and sales discipline.",
+    bullets: [
+      "Fit: active project, launch pressure, internal sales ownership and budget readiness.",
+      "Fit: existing lead sources that produce volume but not enough usable context.",
+      "No fit: no concrete project, no sales function or no willingness to operate the system.",
+      "No fit: expectation of guaranteed lead numbers or a full funnel plan from a free call."
+    ],
+    question: "Are you trying to diagnose a commercial bottleneck or only gather more marketing ideas?"
+  },
+  {
+    title: "Clear next step: audit the lead system",
+    body:
+      "If the scorecard exposed a real gap, the useful next step is not another generic checklist. It is a 30-minute diagnosis of the current system and a decision on whether Build+Run is commercially sensible.",
+    bullets: [
+      "Use the audit to test whether the system is missing funnel logic, qualification or CRM handover.",
+      "Bring one concrete project, market area or lead-quality problem.",
+      "Prepare the current lead sources, CRM process and biggest sales bottleneck.",
+      "Expect a clear assessment, not a free implementation plan."
+    ],
+    question: "Should your next move be more traffic, or a diagnosis of why current demand is not becoming pipeline?"
+  }
+];
+
+const developerSectionsDe = [
+  {
+    title: "Das eigentliche Problem: Anfragen ohne Vertriebskontext",
+    body:
+      "Bauträger-Kampagnen wirken oft aktiv, während der Vertrieb trotzdem manuell sortiert. Der Funnel sammelt Namen, Exposé-Anfragen oder vages Projektinteresse, aber das CRM erklärt nicht, warum diese Person jetzt relevant ist. Mehr Traffic erzeugt dann mehr Sortierarbeit statt mehr qualifizierte Käufergespräche.",
+    bullets: [
+      "Eine Projektanfrage ist nicht sales-ready, nur weil eine Telefonnummer vorhanden ist.",
+      "Ein Interessent, dem die Architektur gefällt, ist noch nicht automatisch nah an Timing, Budget oder Entscheidung.",
+      "Ein Kampagnenreport ohne CRM-Feedback zeigt nicht, wo echte Kaufabsicht beginnt.",
+      "Wenn Sales den Kontext im Erstgespräch neu aufbauen muss, erfüllt die Übergabe ihren Zweck nicht."
+    ],
+    question: "Wo verliert Ihr Vertrieb aktuell Zeit: vor dem Call, im Call oder nachdem der Lead im CRM landet?"
+  },
+  {
+    title: "Typische Pipeline-Leaks bei Projekten",
+    body:
+      "Schwache Projekt-Funnels scheitern selten an einer einzigen Stelle. Qualität geht in mehreren kleinen Übergaben verloren: von der Anzeige zur Seite, von der Seite zum Formular, vom Formular ins CRM und vom CRM ins Follow-up. Das Leak ist wirtschaftlich, nicht kosmetisch.",
+    bullets: [
+      "Die Seite erklärt das Projekt, aber nicht die Kaufentscheidung.",
+      "Das Formular erfasst Kontaktdaten, aber nicht Projekt-Fit, Timing oder Käufertyp.",
+      "Der CRM-Datensatz zeigt eine Quelle, aber keinen Grund für Priorität.",
+      "Follow-up startet für jeden Lead gleich, unabhängig von Reife und Kontext.",
+      "Reporting betrachtet Kosten pro Lead, während Sales weiterhin manuell filtert."
+    ],
+    question: "Welches dieser Leaks können Sie heute nachweislich ausschließen?"
+  },
+  {
+    title: "Was ein sales-ready Projektlead zeigen muss",
+    body:
+      "Ein sales-ready Projektlead gibt dem ersten Gespräch einen belastbaren Einstieg. Er muss nicht jedes Detail enthalten, aber genug Kontext zeigen, damit Sales entscheiden kann, ob ein Call sinnvoll ist, wie der Einstieg lautet und welcher nächste Schritt passt.",
+    bullets: [
+      "Projekt- oder Lageinteresse ist sichtbar, bevor Sales den Datensatz öffnet.",
+      "Käufertyp, Einheitenlogik oder Nutzung sind zumindest grob erkennbar.",
+      "Timing und Budgetnähe verschwinden nicht in freien Notizen.",
+      "Quelle, Landingpage und angefragtes Asset sind mit dem Datensatz verbunden.",
+      "Der nächste Schritt ist klar genug, damit Follow-up ohne Raten beginnen kann."
+    ],
+    question: "Wenn Ihr CRM diesen Kontext nicht zuverlässig zeigt, ist dann der Lead schwach oder die Übergabe unvollständig?"
+  },
+  {
+    title: "Mini-Scorecard: Ist Ihr System audit-reif?",
+    body:
+      "Audit-Reife bedeutet nicht, dass das System bereits stark ist. Es bedeutet, dass die Situation konkret genug für eine Diagnose ist: Projekt, Marktdruck, aktuelle Leadquellen, Sales-Prozess und ein echter wirtschaftlicher Grund, Leadqualität zu verbessern.",
+    bullets: [
+      "Es gibt ein konkretes Projekt, einen Launch, Abverkaufsdruck oder ein Marktgebiet.",
+      "Leads existieren bereits, aber Sales kann sie nicht sauber priorisieren.",
+      "CRM oder Leadmanagement sind sichtbar genug, um geprüft zu werden.",
+      "Sales kann erklären, welche Leads Zeit binden und welche echte Gespräche erzeugen.",
+      "Budget- und Entscheidungsfähigkeit können geklärt werden, ohne das Audit als Gratisberatung zu behandeln."
+    ],
+    question: "Können Sie Projekt, Leadproblem und Vertriebsengpass in einem Satz benennen?"
+  },
+  {
+    title: "Symptome prüfen, keine vollständige Lösung verschenken",
+    body:
+      "Dieses Playbook endet bewusst vor dem vollständigen Blueprint. Ein seriöser Projekt-Funnel hängt von Markt, Angebot, Assets, Sales-Kapazität, CRM-Reife und Timing ab. Allgemeine Tipps können Aktivität erzeugen, während der eigentliche Engpass unberührt bleibt.",
+    bullets: [
+      "Viele Leads, aber wenige gute Calls deuten auf schwache Qualifizierung.",
+      "Viele Exposé-Downloads, aber wenige Gespräche deuten auf unklare nächste Schritte.",
+      "Schnelles Follow-up mit schwachen Ergebnissen deutet auf schlechten Fit, nicht nur Sales-Ausführung.",
+      "Langsames Follow-up deutet auf Ownership-, CRM- und Prozesslücken.",
+      "Geringes Vertrauen ins Reporting deutet auf fehlende Definitionen zwischen Marketing und Vertrieb."
+    ],
+    question: "Welches Symptom ist teuer genug, dass es vor weiterem Media-Budget diagnostiziert werden sollte?"
+  },
+  {
+    title: "Welche Fragen das Pipeline-Audit klärt",
+    body:
+      "Das Pipeline-Audit ist kein kostenloser Strategie-Workshop. Es ist eine fokussierte Diagnose, ob ein Build+Run-Mandat sinnvoll ist und wo das aktuelle System wirtschaftliche Qualität verliert, bevor Sales handeln kann.",
+    bullets: [
+      "Wo Projektnachfrage ins System eintritt und wo Kontext verloren geht.",
+      "Ob Landingpage und Lead-Asset den richtigen Käufertyp anziehen.",
+      "Ob Intent-Filter Vertriebszeit schützt oder nur zusätzliche Reibung erzeugt.",
+      "Ob CRM-Handover genug Kontext für den ersten Call liefert.",
+      "Ob Follow-up und Reporting mindestens drei Monate Run tragen können."
+    ],
+    question: "Welche Audit-Frage könnten Sie mit Ihren aktuellen Daten nur unsicher beantworten?"
+  },
+  {
+    title: "Wann das Audit passt und wann nicht",
+    body:
+      "Das Audit ist sinnvoll, wenn ein echtes Projekt, Vertriebsdruck und die Bereitschaft zum Systemaufbau vorhanden sind. Es ist nicht sinnvoll, wenn nur kostenlose Ideen gesammelt, Lead-Garantien erwartet oder CRM- und Vertriebsdisziplin vermieden werden sollen.",
+    bullets: [
+      "Passend: aktives Projekt, Launch-Druck, Sales-Verantwortung und Budgetfähigkeit.",
+      "Passend: vorhandene Leadquellen mit Volumen, aber zu wenig nutzbarem Kontext.",
+      "Nicht passend: kein konkretes Projekt, kein aktiver Vertrieb oder keine Bereitschaft zum Betrieb.",
+      "Nicht passend: Erwartung garantierter Leadzahlen oder eines vollständigen Gratis-Funnelplans."
+    ],
+    question: "Wollen Sie einen wirtschaftlichen Engpass diagnostizieren oder nur weitere Marketingideen sammeln?"
+  },
+  {
+    title: "Klarer nächster Schritt: Lead-System prüfen lassen",
+    body:
+      "Wenn die Scorecard eine echte Lücke sichtbar gemacht hat, ist der nächste sinnvolle Schritt keine weitere allgemeine Checkliste. Sinnvoll ist eine 30-Minuten-Diagnose des aktuellen Systems und die Entscheidung, ob Build+Run wirtschaftlich tragfähig ist.",
+    bullets: [
+      "Nutzen Sie das Audit, um fehlende Funnel-Logik, Qualifizierung oder CRM-Handover zu prüfen.",
+      "Bringen Sie ein konkretes Projekt, Marktgebiet oder Leadqualitätsproblem mit.",
+      "Bereiten Sie aktuelle Leadquellen, CRM-Prozess und größten Vertriebsengpass vor.",
+      "Erwarten Sie eine klare Einschätzung, keinen kostenlosen Umsetzungsplan."
+    ],
+    question: "Brauchen Sie wirklich mehr Traffic, oder zuerst eine Diagnose, warum bestehende Nachfrage nicht zur Pipeline wird?"
+  }
+];
+
+const agentSectionsEn = [
+  {
+    title: "The actual problem: seller and buyer leads without context",
+    body:
+      "Agent lead generation often produces contact details before it produces sales context. Seller leads arrive without motivation, timing or property reality. Buyer leads arrive without budget proximity, search logic or readiness. The team then spends time discovering basics that the system should have prepared.",
+    bullets: [
+      "A seller lead is not valuable if selling intent is unclear.",
+      "A buyer lead is not sales-ready if budget, timing and search area are missing.",
+      "Portal dependency creates activity, but not enough control over source, segment or follow-up.",
+      "If follow-up depends on individual memory, the lead system is not yet operating."
+    ],
+    question: "Where does your team currently lose more time: seller qualification, buyer sorting or follow-up discipline?"
+  },
+  {
+    title: "Typical agent pipeline leaks",
+    body:
+      "Broker pipelines usually leak where curiosity is treated like intent. A valuation click, portal enquiry or local guide download can be useful, but only if the system separates weak signals from serious next steps.",
+    bullets: [
+      "Seller funnels invite curiosity but do not reveal urgency or motivation.",
+      "Buyer funnels collect interest but do not separate search profile from casual browsing.",
+      "Local expertise is used as content, but not as a conversion filter.",
+      "CRM stages are too broad to show who needs a call now.",
+      "Nurture is either absent or too generic to create a future sales conversation."
+    ],
+    question: "Which lead type currently looks active in reporting but weak in real conversations?"
+  },
+  {
+    title: "What a sales-ready agent lead must show",
+    body:
+      "A useful agent lead does not need to expose the entire private situation. It should show enough context to choose the right conversation: seller review, buyer search call, nurture path or no-fit decision.",
+    bullets: [
+      "Seller context: property type, location, likely timeline and reason for interest.",
+      "Buyer context: search area, property type, budget proximity, financing direction and timing.",
+      "Source context: asset, page, campaign or referral path that created the signal.",
+      "Follow-up context: owner, last action, next step and segment.",
+      "Readiness context: why this person should be contacted now or nurtured later."
+    ],
+    question: "If this context is missing, is your team following up with a lead or reconstructing the lead from scratch?"
+  },
+  {
+    title: "Mini scorecard: audit readiness",
+    body:
+      "An agent funnel is audit-ready when there is a concrete market, an active sales function and a visible lead-quality problem. The audit is not for teams that only want more names. It is for teams that want to understand why existing demand is not becoming reliable pipeline.",
+    bullets: [
+      "There is a defined local market, property segment or seller/buyer focus.",
+      "The team already receives enquiries, portal leads, valuation requests or website conversions.",
+      "Sales can explain which leads waste time and which become real conversations.",
+      "CRM or lead management exists, even if it is incomplete.",
+      "Budget for Build+Run can be discussed if the diagnosis supports it."
+    ],
+    question: "Can you state which segment should improve first and why now?"
+  },
+  {
+    title: "Symptoms worth reviewing, not a full solution",
+    body:
+      "This playbook does not provide a full seller funnel, buyer nurture sequence or campaign plan. Those decisions depend on market position, sales capacity, local trust, assets and CRM maturity. The useful first step is to identify which symptom is causing commercial drag.",
+    bullets: [
+      "Many valuation leads but few serious selling conversations indicate weak intent filtering.",
+      "Many buyer enquiries but poor appointment quality indicate missing search and budget context.",
+      "High portal activity but low owned pipeline indicates channel dependency.",
+      "Manual follow-up and lost reminders indicate CRM and process gaps.",
+      "Unclear source quality indicates reporting that cannot guide decisions."
+    ],
+    question: "Which symptom keeps repeating even after more campaigns, portals or content?"
+  },
+  {
+    title: "What the Pipeline Audit clarifies",
+    body:
+      "The Pipeline Audit reviews whether your current agent lead system can qualify, segment and hand over leads in a way sales can use. It does not produce a free full campaign plan.",
+    bullets: [
+      "Whether seller and buyer demand are separated before sales attention.",
+      "Whether lead magnets attract the right local signal or only generic curiosity.",
+      "Whether CRM fields make seller and buyer readiness visible.",
+      "Whether follow-up has enough structure to protect future opportunities.",
+      "Whether Build+Run is commercially sensible for the market and team."
+    ],
+    question: "Which part of your lead system would be hardest to inspect honestly today?"
+  },
+  {
+    title: "When the audit fits and when it does not",
+    body:
+      "The audit fits broker teams, agencies and professional agents with a concrete market, active sales discipline and a real lead-quality problem. It does not fit if the expectation is raw lead volume, a guarantee or a free implementation plan.",
+    bullets: [
+      "Fit: local specialization, active follow-up and a clear sales bottleneck.",
+      "Fit: existing traffic or portal dependency that needs owned pipeline structure.",
+      "No fit: no sales ownership, no CRM discipline or no implementation budget.",
+      "No fit: expectation that a free call should replace strategy, build and run."
+    ],
+    question: "Do you have a lead-quality problem that can be diagnosed, or only a wish for more volume?"
+  },
+  {
+    title: "Clear next step: review the funnel before scaling it",
+    body:
+      "If your current system cannot separate seller intent, buyer readiness and follow-up priority, scaling it will usually scale the confusion. The next step is a focused diagnosis before more lead volume is added.",
+    bullets: [
+      "Use the audit to test seller intent, buyer segmentation and CRM handover.",
+      "Bring one local market, target segment or lead source that currently creates friction.",
+      "Prepare examples of good and weak leads from recent weeks.",
+      "Expect a decision on whether Build+Run makes sense, not a free operating manual."
+    ],
+    question: "Should you add more enquiries, or first inspect why current enquiries do not become reliable sales conversations?"
+  }
+];
+
+const agentSectionsDe = [
+  {
+    title: "Das eigentliche Problem: Verkäufer- und Käuferleads ohne Kontext",
+    body:
+      "Makler-Leadgenerierung erzeugt oft Kontaktdaten, bevor sie Vertriebskontext erzeugt. Verkäuferleads kommen ohne Motivation, Timing oder Objektrealität. Käuferleads kommen ohne Budgetnähe, Suchlogik oder Reife. Das Team verbringt Zeit mit Basisfragen, die das System vorbereiten müsste.",
+    bullets: [
+      "Ein Verkäuferlead ist nicht wertvoll, wenn die Verkaufsabsicht unklar bleibt.",
+      "Ein Käuferlead ist nicht sales-ready, wenn Budget, Timing und Suchgebiet fehlen.",
+      "Portalabhängigkeit erzeugt Aktivität, aber zu wenig Kontrolle über Quelle, Segment und Follow-up.",
+      "Wenn Follow-up von persönlicher Erinnerung abhängt, arbeitet das Lead-System noch nicht."
+    ],
+    question: "Wo verliert Ihr Team aktuell mehr Zeit: Verkäuferqualifizierung, Käufersortierung oder Follow-up-Disziplin?"
+  },
+  {
+    title: "Typische Pipeline-Leaks bei Maklerteams",
+    body:
+      "Makler-Pipelines verlieren Qualität oft dort, wo Neugier wie Absicht behandelt wird. Ein Bewertungs-Klick, eine Portal-Anfrage oder ein lokaler Guide-Download kann nützlich sein, aber nur, wenn das System schwache Signale von ernsthaften nächsten Schritten trennt.",
+    bullets: [
+      "Verkäufer-Funnels erzeugen Neugier, zeigen aber nicht Dringlichkeit oder Motivation.",
+      "Käufer-Funnels erfassen Interesse, trennen aber Suchprofil nicht von Stöbern.",
+      "Lokale Expertise wird als Content genutzt, aber nicht als Conversion-Filter.",
+      "CRM-Stufen sind zu grob, um zu zeigen, wer jetzt einen Call braucht.",
+      "Nurturing fehlt oder ist zu allgemein, um spätere Verkaufsgespräche aufzubauen."
+    ],
+    question: "Welcher Leadtyp sieht im Reporting aktiv aus, ist aber in echten Gesprächen schwach?"
+  },
+  {
+    title: "Was ein sales-ready Maklerlead zeigen muss",
+    body:
+      "Ein brauchbarer Maklerlead muss nicht die gesamte private Situation offenlegen. Er sollte aber genug Kontext zeigen, um die richtige Gesprächsart zu wählen: Verkäuferprüfung, Suchprofil-Call, Nurture-Pfad oder No-Fit-Entscheidung.",
+    bullets: [
+      "Verkäuferkontext: Objektart, Lage, wahrscheinliches Timing und Grund des Interesses.",
+      "Käuferkontext: Suchgebiet, Objektart, Budgetnähe, Finanzierungsrichtung und Timing.",
+      "Quellenkontext: Asset, Seite, Kampagne oder Empfehlungspfad, der das Signal erzeugt hat.",
+      "Follow-up-Kontext: Owner, letzte Aktion, nächster Schritt und Segment.",
+      "Reifekontext: warum diese Person jetzt kontaktiert oder später gepflegt werden sollte."
+    ],
+    question: "Wenn dieser Kontext fehlt, fasst Ihr Team dann einem Lead nach oder rekonstruiert es den Lead neu?"
+  },
+  {
+    title: "Mini-Scorecard: Ist Ihr System audit-reif?",
+    body:
+      "Ein Makler-Funnel ist audit-reif, wenn ein konkreter Markt, aktive Vertriebsarbeit und ein sichtbares Leadqualitätsproblem vorhanden sind. Das Audit ist nicht für Teams gedacht, die nur mehr Namen wollen. Es ist für Teams gedacht, die verstehen wollen, warum bestehende Nachfrage keine verlässliche Pipeline wird.",
+    bullets: [
+      "Es gibt einen definierten lokalen Markt, ein Objektsegment oder einen Verkäufer-/Käuferfokus.",
+      "Das Team erhält bereits Anfragen, Portal-Leads, Bewertungsanfragen oder Website-Conversions.",
+      "Sales kann erklären, welche Leads Zeit binden und welche echte Gespräche werden.",
+      "CRM oder Leadmanagement existiert, auch wenn es unvollständig ist.",
+      "Budget für Build+Run kann besprochen werden, wenn die Diagnose es rechtfertigt."
+    ],
+    question: "Können Sie benennen, welches Segment zuerst besser werden soll und warum jetzt?"
+  },
+  {
+    title: "Symptome prüfen, keine vollständige Lösung verschenken",
+    body:
+      "Dieses Playbook liefert keinen vollständigen Verkäufer-Funnel, keine Käufer-Nurture-Sequenz und keinen Kampagnenplan. Diese Entscheidungen hängen von Marktposition, Sales-Kapazität, lokaler Vertrauensbasis, Assets und CRM-Reife ab. Der erste sinnvolle Schritt ist, das Symptom mit wirtschaftlicher Wirkung zu erkennen.",
+    bullets: [
+      "Viele Bewertungsleads, aber wenige ernsthafte Verkaufsgespräche deuten auf schwache Intent-Filter.",
+      "Viele Käuferanfragen, aber schwache Terminqualität deuten auf fehlenden Such- und Budgetkontext.",
+      "Hohe Portalaktivität, aber geringe eigene Pipeline deutet auf Kanalabhängigkeit.",
+      "Manuelles Follow-up und verlorene Erinnerungen deuten auf CRM- und Prozesslücken.",
+      "Unklare Quellenqualität deutet auf Reporting, das keine Entscheidungen führen kann."
+    ],
+    question: "Welches Symptom wiederholt sich trotz weiterer Kampagnen, Portale oder Inhalte?"
+  },
+  {
+    title: "Welche Fragen das Pipeline-Audit klärt",
+    body:
+      "Das Pipeline-Audit prüft, ob Ihr aktuelles Makler-Lead-System Leads so qualifizieren, segmentieren und übergeben kann, dass Sales damit arbeiten kann. Es liefert keinen vollständigen Kampagnenplan gratis.",
+    bullets: [
+      "Ob Verkäufer- und Käufernachfrage vor Sales-Aufwand sauber getrennt werden.",
+      "Ob Lead Magnets das richtige lokale Signal anziehen oder nur allgemeine Neugier.",
+      "Ob CRM-Felder Verkäufer- und Käuferreife sichtbar machen.",
+      "Ob Follow-up genug Struktur hat, um spätere Chancen zu schützen.",
+      "Ob Build+Run für Markt und Team wirtschaftlich sinnvoll ist."
+    ],
+    question: "Welcher Teil Ihres Lead-Systems wäre heute am schwierigsten ehrlich zu prüfen?"
+  },
+  {
+    title: "Wann das Audit passt und wann nicht",
+    body:
+      "Das Audit passt für Maklerteams, Agenturen und professionelle Makler mit konkretem Markt, aktiver Vertriebsdisziplin und echtem Leadqualitätsproblem. Es passt nicht, wenn nur rohe Leadmenge, eine Garantie oder ein kostenloser Umsetzungsplan erwartet wird.",
+    bullets: [
+      "Passend: lokale Spezialisierung, aktives Follow-up und klarer Vertriebsengpass.",
+      "Passend: vorhandener Traffic oder Portalabhängigkeit, die eigene Pipeline-Struktur braucht.",
+      "Nicht passend: keine Sales-Verantwortung, keine CRM-Disziplin oder kein Umsetzungsbudget.",
+      "Nicht passend: Erwartung, dass ein kostenloser Call Strategie, Build und Run ersetzt."
+    ],
+    question: "Haben Sie ein Leadqualitätsproblem, das diagnostiziert werden kann, oder nur den Wunsch nach mehr Volumen?"
+  },
+  {
+    title: "Klarer nächster Schritt: Funnel prüfen, bevor er skaliert",
+    body:
+      "Wenn Ihr aktuelles System Verkäuferabsicht, Käuferreife und Follow-up-Priorität nicht sauber trennt, skaliert mehr Volumen meistens die Unklarheit. Der nächste Schritt ist eine fokussierte Diagnose, bevor weitere Leads hinzukommen.",
+    bullets: [
+      "Nutzen Sie das Audit, um Verkäufer-Intent, Käufersegmentierung und CRM-Handover zu prüfen.",
+      "Bringen Sie einen lokalen Markt, ein Zielsegment oder eine Leadquelle mit, die aktuell Reibung erzeugt.",
+      "Bereiten Sie Beispiele guter und schwacher Leads aus den letzten Wochen vor.",
+      "Erwarten Sie eine Entscheidung, ob Build+Run sinnvoll ist, kein kostenloses Betriebshandbuch."
+    ],
+    question: "Sollten Sie mehr Anfragen hinzufügen oder zuerst prüfen, warum aktuelle Anfragen keine verlässlichen Verkaufsgespräche werden?"
+  }
+];
 
 const playbooks = [
   {
@@ -55,490 +497,72 @@ const playbooks = [
     lang: "en",
     audience: "developer",
     eyebrow: "Developer Pipeline Playbook",
-    title: "Build a controllable buyer pipeline for real estate projects.",
+    title: "Are your project leads sales-ready, or just contact details?",
     subtitle:
-      "A practical operating guide for developers, project sellers and new-build teams who need qualified conversations instead of campaign noise.",
+      "A diagnostic guide for developers and project sales teams that need buyer conversations with CRM context, not more campaign noise.",
     promise:
-      "This playbook shows how to connect project positioning, landing pages, paid demand, qualification and CRM handover into one sales infrastructure.",
+      "Use this playbook to identify where project demand loses quality before sales can act, then decide whether a Pipeline Audit is the right next step.",
     forWhom: [
-      "Real estate developers preparing a project launch",
-      "New-build providers selling units with longer decision cycles",
-      "Investment property project sellers who need buyer readiness",
-      "Sales teams that need cleaner CRM context before calling leads"
+      "Developers with a concrete launch, project or sales pressure",
+      "Project sales teams receiving enquiries but missing buyer context",
+      "New-build or investment teams that need cleaner CRM handover",
+      "Teams considering Build+Run but not yet sure where the leak sits"
     ],
-    sections: [
-      {
-        title: "The core problem: project marketing often stops too early",
-        body:
-          "Most project campaigns are built to create visibility: impressions, portal enquiries, brochure downloads and campaign reports. Visibility is useful, but it is not the same as a buyer pipeline. A project pipeline only exists when demand is captured, filtered, enriched and handed to sales with enough context to create the next conversation.",
-        bullets: [
-          "A lead without project fit is a distraction.",
-          "A form submission without budget context is only a name in a database.",
-          "A campaign report without CRM feedback cannot teach the sales team where real intent comes from.",
-          "A launch without qualification turns sales into manual filtering."
-        ]
-      },
-      {
-        title: "The pipeline principle",
-        body:
-          "Your project does not need more random attention. It needs controlled movement from first signal to qualified buyer conversation. Every step should reduce uncertainty: who is this person, what do they want, why this project, what is their decision stage, and what should sales do next?",
-        bullets: [
-          "Position the project around the real buying decision, not only the architecture.",
-          "Separate curious visitors from serious buyers before sales handover.",
-          "Use CRM fields that help the first call, not only marketing attribution.",
-          "Review pipeline quality weekly, not only traffic volume."
-        ]
-      },
-      {
-        title: "The four-layer project system",
-        body:
-          "A strong developer system has four layers working together. If one layer is missing, the pipeline becomes fragile: campaigns generate volume, landing pages collect weak enquiries, or the CRM receives records nobody trusts.",
-        bullets: [
-          "Project funnel architecture: message, offer, page flow and conversion logic.",
-          "Multi-channel demand: paid search, paid social, retargeting and selected organic assets.",
-          "Buyer qualification: budget, time horizon, use case, location fit and readiness.",
-          "CRM handover and reporting: clean records, source context, follow-up status and feedback loops."
-        ]
-      },
-      {
-        title: "Project funnel architecture",
-        body:
-          "The funnel should make the buying decision easier to understand. It must answer the questions serious buyers already have: why this project, what kind of unit fits them, what is the location logic, what is the investment or lifestyle case, what happens next, and what information must they provide before a serious conversation.",
-        bullets: [
-          "Hero message: project outcome, buyer type and core differentiator.",
-          "Decision blocks: location, availability, unit logic, investment angle, process.",
-          "Conversion path: playbook, project pack, private review, sales conversation.",
-          "Trust path: transparent next steps instead of exaggerated claims."
-        ]
-      },
-      {
-        title: "Buyer qualification logic",
-        body:
-          "Qualification should protect sales time without making the buyer feel interrogated. The best forms and follow-up flows ask questions that feel natural to the decision: intended use, preferred unit type, budget corridor, purchase horizon, financing status and desired next step.",
-        bullets: [
-          "Use progressive questions: do not ask everything on the first screen.",
-          "Mark urgency separately from fit; fast does not always mean qualified.",
-          "Capture disqualifying factors early enough to avoid wasted calls.",
-          "Let the CRM show why the lead is worth attention."
-        ]
-      },
-      {
-        title: "CRM-ready handover",
-        body:
-          "The handover is where most marketing systems become useful or useless. A CRM record should tell sales where the lead came from, what they requested, which answers they gave, what page they converted on, and what follow-up should happen next.",
-        bullets: [
-          "Minimum CRM fields: source, campaign, project, buyer type, budget range, time horizon, preferred next step.",
-          "Sales task: assigned owner, first-contact deadline, follow-up sequence.",
-          "Reporting: qualified rate, booked-call rate, no-fit reasons and sales feedback.",
-          "Governance: agreed definitions for enquiry, qualified lead, opportunity and lost reason."
-        ]
-      },
-      {
-        title: "Launch checklist",
-        body:
-          "Before media spend scales, run the project through a readiness check. The goal is not perfection. The goal is to avoid spending budget into a funnel that cannot qualify, hand over or learn.",
-        bullets: [
-          "Project positioning is specific enough for a defined buyer type.",
-          "Landing page explains the buying case clearly on mobile.",
-          "Every CTA has a next step and owner.",
-          "Forms capture meaningful intent without creating friction.",
-          "HubSpot or CRM fields match the sales process.",
-          "Follow-up templates exist before the first lead arrives.",
-          "Reports show pipeline quality, not only clicks."
-        ]
-      },
-      {
-        title: "What to review every week",
-        body:
-          "A pipeline system improves through operating rhythm. Review the same questions weekly so marketing, sales and leadership make decisions from the same reality.",
-        bullets: [
-          "Which channels created qualified conversations?",
-          "Which pages converted but created weak fit?",
-          "Which qualification answers predict serious sales conversations?",
-          "Where are leads waiting too long for follow-up?",
-          "Which objections repeat often enough to become page content?",
-          "Which CRM fields are missing for the first sales call?"
-        ]
-      },
-      {
-        title: "Recommended next step",
-        body:
-          "Map your current project launch against the four layers. Mark every missing or unclear layer before increasing media budget. If the system is not connected, more traffic will usually create more manual work instead of more pipeline.",
-        bullets: [
-          "Audit the current funnel.",
-          "Define the buyer qualification model.",
-          "Align CRM fields with sales handover.",
-          "Build the reporting loop before scaling."
-        ]
-      }
-    ]
+    sections: developerSectionsEn
   },
   {
     slug: "bautraeger-pipeline-playbook-de",
     lang: "de",
     audience: "developer",
-    eyebrow: "Bautraeger-Pipeline-Playbook",
-    title: "Bauen Sie eine steuerbare Kaeufer-Pipeline fuer Immobilienprojekte.",
+    eyebrow: "Bauträger-Pipeline-Playbook",
+    title: "Sind Ihre Projektleads sales-ready oder nur Kontaktdaten?",
     subtitle:
-      "Ein praktischer Leitfaden fuer Bautraeger, Projektentwickler und Neubauvertriebe, die qualifizierte Gespraeche statt Kampagnenrauschen brauchen.",
+      "Ein Diagnose-Leitfaden für Bauträger, Projektentwickler und Neubauvertriebe, die Käufergespräche mit CRM-Kontext brauchen, nicht mehr Kampagnenrauschen.",
     promise:
-      "Dieses Playbook zeigt, wie Projektpositionierung, Landingpages, Nachfrage, Qualifizierung und CRM-Uebergabe zu einer Vertriebsinfrastruktur verbunden werden.",
+      "Nutzen Sie dieses Playbook, um zu erkennen, wo Projektnachfrage vor dem Vertrieb an Qualität verliert, und ob ein Pipeline-Audit der richtige nächste Schritt ist.",
     forWhom: [
-      "Bautraeger vor oder waehrend eines Projektlaunches",
-      "Neubauanbieter mit laengeren Entscheidungszyklen",
-      "Projektvertriebe fuer Investment- oder Eigennutzerprojekte",
-      "Vertriebsteams, die vor dem Erstgespraech besseren CRM-Kontext brauchen"
+      "Bauträger mit konkretem Launch, Projekt oder Vertriebsdruck",
+      "Projektvertriebe mit Anfragen, aber zu wenig Käuferkontext",
+      "Neubau- oder Investmentteams, die saubereres CRM-Handover brauchen",
+      "Teams, die Build+Run prüfen, aber den Engpass noch nicht klar sehen"
     ],
-    sections: [
-      {
-        title: "Das Kernproblem: Projektmarketing hoert oft zu frueh auf",
-        body:
-          "Viele Projektkampagnen erzeugen Sichtbarkeit: Impressionen, Portal-Anfragen, Expose-Downloads und Reporting. Sichtbarkeit ist hilfreich, aber noch keine Kaeufer-Pipeline. Eine Pipeline entsteht erst, wenn Nachfrage erfasst, gefiltert, angereichert und mit genug Kontext an den Vertrieb uebergeben wird.",
-        bullets: [
-          "Ein Lead ohne Projekt-Fit bindet Zeit.",
-          "Eine Formularanfrage ohne Budgetkontext ist nur ein Datensatz.",
-          "Ein Kampagnenreport ohne CRM-Feedback zeigt nicht, wo echte Kaufabsicht entsteht.",
-          "Ein Launch ohne Qualifizierung macht den Vertrieb zum manuellen Filter."
-        ]
-      },
-      {
-        title: "Das Pipeline-Prinzip",
-        body:
-          "Ihr Projekt braucht nicht mehr zufaellige Aufmerksamkeit. Es braucht kontrollierte Bewegung vom ersten Signal bis zum qualifizierten Kaeufergespraech. Jeder Schritt sollte Unsicherheit reduzieren: Wer ist diese Person, was sucht sie, warum dieses Projekt, wie weit ist die Entscheidung und was soll der Vertrieb als Naechstes tun?",
-        bullets: [
-          "Positionieren Sie das Projekt entlang der Kaufentscheidung, nicht nur entlang der Architektur.",
-          "Trennen Sie Interessenten von ernsthaften Kaeufern vor der Vertriebsuebergabe.",
-          "Nutzen Sie CRM-Felder, die dem Erstgespraech helfen.",
-          "Bewerten Sie Pipeline-Qualitaet woechentlich, nicht nur Traffic-Volumen."
-        ]
-      },
-      {
-        title: "Das Vier-Schichten-System fuer Projekte",
-        body:
-          "Ein starkes Bautraeger-System besteht aus vier verbundenen Schichten. Fehlt eine davon, wird die Pipeline instabil: Kampagnen bringen Volumen, Landingpages sammeln schwache Anfragen oder das CRM enthaelt Datensaetze, denen niemand vertraut.",
-        bullets: [
-          "Projekt-Funnel-Architektur: Botschaft, Angebot, Seitenfluss und Conversion-Logik.",
-          "Multi-Channel-Nachfrage: Search, Social, Retargeting und gezielte Content-Assets.",
-          "Kaeufer-Qualifizierung: Budget, Zeithorizont, Nutzung, Lage-Fit und Bereitschaft.",
-          "CRM-Uebergabe und Reporting: saubere Datensaetze, Quellenkontext, Follow-up-Status und Feedback."
-        ]
-      },
-      {
-        title: "Projekt-Funnel-Architektur",
-        body:
-          "Der Funnel muss die Kaufentscheidung verstaendlicher machen. Er sollte die Fragen beantworten, die ernsthafte Kaeufer bereits haben: Warum dieses Projekt, welche Einheit passt, welche Lage-Logik steckt dahinter, was ist der Investment- oder Eigennutzer-Case, was passiert als Naechstes und welche Informationen sind vor einem Gespraech sinnvoll?",
-        bullets: [
-          "Hero-Botschaft: Projektergebnis, Kaeufertyp und Kernunterscheidung.",
-          "Entscheidungsbloecke: Lage, Verfuegbarkeit, Einheitentypen, Investmentlogik, Prozess.",
-          "Conversion-Pfad: Playbook, Projektpaket, private Pruefung, Vertriebsgespraech.",
-          "Trust-Pfad: klare naechste Schritte statt uebertriebener Versprechen."
-        ]
-      },
-      {
-        title: "Kaeufer-Qualifizierung",
-        body:
-          "Qualifizierung soll Vertriebszeit schuetzen, ohne den Kaeufer abzuschrecken. Gute Formulare und Follow-up-Flows fragen nach Dingen, die zur Entscheidung passen: Nutzung, bevorzugter Einheitentyp, Budgetkorridor, Kaufhorizont, Finanzierungsstatus und gewuenschter naechster Schritt.",
-        bullets: [
-          "Nutzen Sie progressive Fragen und fragen Sie nicht alles auf einmal.",
-          "Trennen Sie Dringlichkeit von Fit; schnell bedeutet nicht automatisch qualifiziert.",
-          "Erfassen Sie Ausschlusskriterien frueh genug, um unnoetige Calls zu vermeiden.",
-          "Das CRM sollte sichtbar machen, warum ein Lead Aufmerksamkeit verdient."
-        ]
-      },
-      {
-        title: "CRM-ready Uebergabe",
-        body:
-          "Die Uebergabe entscheidet, ob Marketing operativ nuetzlich wird. Ein CRM-Datensatz sollte zeigen, woher der Lead kommt, was angefragt wurde, welche Antworten gegeben wurden, auf welcher Seite die Conversion entstand und welches Follow-up sinnvoll ist.",
-        bullets: [
-          "Mindestfelder: Quelle, Kampagne, Projekt, Kaeufertyp, Budgetrahmen, Zeithorizont, gewuenschter naechster Schritt.",
-          "Vertriebsaufgabe: Owner, Frist fuer Erstkontakt, Follow-up-Sequenz.",
-          "Reporting: Qualifizierungsrate, gebuchte Gespraeche, No-Fit-Gruende und Vertriebsfeedback.",
-          "Governance: gemeinsame Definitionen fuer Anfrage, qualifizierten Lead, Opportunity und Lost Reason."
-        ]
-      },
-      {
-        title: "Launch-Checkliste",
-        body:
-          "Bevor Media-Budget skaliert wird, sollte das Projekt durch einen Readiness-Check laufen. Es geht nicht um Perfektion. Es geht darum, kein Budget in einen Funnel zu lenken, der nicht qualifizieren, uebergeben oder lernen kann.",
-        bullets: [
-          "Die Positionierung ist fuer einen konkreten Kaeufertyp formuliert.",
-          "Die Landingpage erklaert den Kauf-Case klar auf Mobile.",
-          "Jeder CTA hat einen naechsten Schritt und einen Verantwortlichen.",
-          "Formulare erfassen echte Absicht ohne unnoetige Reibung.",
-          "HubSpot- oder CRM-Felder passen zum Vertriebsprozess.",
-          "Follow-up-Vorlagen existieren vor dem ersten Lead.",
-          "Reports zeigen Pipeline-Qualitaet statt nur Klicks."
-        ]
-      },
-      {
-        title: "Was Sie jede Woche pruefen sollten",
-        body:
-          "Ein Pipeline-System verbessert sich durch Rhythmus. Pruefen Sie jede Woche dieselben Fragen, damit Marketing, Vertrieb und Fuehrung auf derselben Realitaet entscheiden.",
-        bullets: [
-          "Welche Kanaele erzeugen qualifizierte Gespraeche?",
-          "Welche Seiten konvertieren, bringen aber schwachen Fit?",
-          "Welche Qualifizierungsantworten korrelieren mit ernsthaften Gespraechen?",
-          "Wo warten Leads zu lange auf Follow-up?",
-          "Welche Einwaende tauchen oft genug auf, um Page-Content zu werden?",
-          "Welche CRM-Felder fehlen fuer das Erstgespraech?"
-        ]
-      },
-      {
-        title: "Empfohlener naechster Schritt",
-        body:
-          "Vergleichen Sie Ihren aktuellen Projektlaunch mit den vier Schichten. Markieren Sie jede unklare oder fehlende Schicht, bevor Sie Media-Budget erhoehen. Wenn das System nicht verbunden ist, erzeugt mehr Traffic meistens mehr manuelle Arbeit statt mehr Pipeline.",
-        bullets: [
-          "Aktuellen Funnel auditieren.",
-          "Kaeufer-Qualifizierungsmodell definieren.",
-          "CRM-Felder mit der Vertriebsuebergabe abgleichen.",
-          "Reporting-Loop vor Skalierung aufbauen."
-        ]
-      }
-    ]
+    sections: developerSectionsDe
   },
   {
     slug: "real-estate-agent-lead-playbook-en",
     lang: "en",
     audience: "agent",
     eyebrow: "Real Estate Agent Lead Playbook",
-    title: "Build owned seller and buyer pipeline beyond portal dependency.",
+    title: "Do your seller and buyer leads create conversations, or just follow-up work?",
     subtitle:
-      "A field guide for agents, broker teams and real estate sales teams that want qualified conversations they can control.",
+      "A diagnostic guide for agents and broker teams that need owned pipeline, clearer intent and follow-up context beyond portals.",
     promise:
-      "This playbook shows how to build local seller and buyer funnels, qualify intent and move opportunities into a structured follow-up system.",
+      "Use this playbook to see where seller and buyer demand loses quality, then decide whether a Pipeline Audit should review the system.",
     forWhom: [
-      "Independent real estate agents who want more owned demand",
-      "Broker teams that rely too heavily on portals",
-      "Agencies that need seller lead generation and buyer nurture",
-      "Sales teams that need a cleaner follow-up rhythm"
+      "Broker teams with portal dependency and weak owned pipeline",
+      "Agents receiving seller or buyer enquiries without clear readiness",
+      "Real estate teams that need CRM context before follow-up",
+      "Teams considering Build+Run for a defined local market"
     ],
-    sections: [
-      {
-        title: "The core problem: portal dependency is not a pipeline",
-        body:
-          "Portals can create visibility, but they rarely create control. The agent competes inside someone else’s marketplace, receives mixed intent and often starts from a weak context. Owned pipeline means you create your own demand paths: seller education, valuation intent, buyer segmentation, local proof of expertise and CRM follow-up.",
-        bullets: [
-          "Portal leads are often shared with many competitors.",
-          "Seller intent is fragile when the first contact is generic.",
-          "Buyer enquiries need segmentation before sales attention.",
-          "Without follow-up infrastructure, today’s weak signal is simply lost."
-        ]
-      },
-      {
-        title: "The owned pipeline principle",
-        body:
-          "An agent lead system should not only ask for contact details. It should create a reason to engage, qualify the next step and keep the relationship alive until the person is ready. Good real estate sales is timing plus trust plus structured follow-up.",
-        bullets: [
-          "Use local expertise as the conversion asset.",
-          "Separate seller leads from buyer leads and nurture them differently.",
-          "Capture motivation, timing and property context early.",
-          "Follow up with useful assets, not random reminders."
-        ]
-      },
-      {
-        title: "Seller lead generation",
-        body:
-          "Seller leads usually need education before they are ready to talk. A strong seller funnel gives them a reason to share information: pricing context, market readiness, selling timeline, property potential, preparation checklist or a private valuation conversation.",
-        bullets: [
-          "Lead magnet: local seller guide, pricing checklist, market-readiness audit.",
-          "Landing page: address the decision to sell, not only valuation.",
-          "Qualification: property type, location, selling horizon, motivation and current obstacle.",
-          "Follow-up: market insight, preparation steps and invitation to a private review."
-        ]
-      },
-      {
-        title: "Buyer lead generation",
-        body:
-          "Buyer leads need structure because not every buyer is equally ready. A buyer funnel should identify search criteria, budget corridor, financing readiness, location preference and urgency. Then it should match follow-up to the buyer’s stage.",
-        bullets: [
-          "Segment first-time buyers, investors, movers and premium buyers.",
-          "Capture desired area, property type, budget and financing status.",
-          "Offer property alerts, buyer readiness guides or private search review.",
-          "Use CRM stages so serious buyers are not mixed with passive browsers."
-        ]
-      },
-      {
-        title: "The local funnel system",
-        body:
-          "Real estate is local. The funnel should prove that you understand the market better than a generic platform. Use area pages, market notes, seller questions, buyer guides and social proof that is process-based rather than fabricated.",
-        bullets: [
-          "Local pages: areas, property types, buyer/seller scenarios.",
-          "Content assets: seller checklist, buyer readiness guide, market update.",
-          "Ads: local intent and retargeting rather than broad attention.",
-          "CRM: lifecycle stages for seller nurture and buyer nurture."
-        ]
-      },
-      {
-        title: "Qualification before the first call",
-        body:
-          "The first call should not begin with basic discovery that could have been captured earlier. The CRM should already show why the person engaged, what they want, what timing they indicated and what helpful next step is likely.",
-        bullets: [
-          "Seller fields: property type, location, ownership situation, target timing, reason for selling.",
-          "Buyer fields: use case, preferred location, budget, financing, purchase horizon.",
-          "Source fields: campaign, asset, landing page and conversion path.",
-          "Follow-up fields: owner, next step, last touch and planned touch."
-        ]
-      },
-      {
-        title: "Follow-up rhythm",
-        body:
-          "A lead system becomes valuable when it keeps useful contact without becoming annoying. The rhythm should match the lead type and readiness. Seller nurture is trust-heavy; buyer nurture is timing-heavy.",
-        bullets: [
-          "Day 0: confirmation email and next-step clarity.",
-          "Day 1-2: useful context related to the original request.",
-          "Week 1: invite to private review if fit is strong.",
-          "Monthly: market insight or search update for longer-term leads.",
-          "Trigger-based: re-engage when the lead revisits, clicks or requests more information."
-        ]
-      },
-      {
-        title: "Operating checklist",
-        body:
-          "Before you scale campaigns, confirm that your agent system can qualify and follow up. Otherwise, more leads will create more unanswered messages, weak calls and unclear pipeline.",
-        bullets: [
-          "Seller and buyer funnels are separated.",
-          "Each funnel has a specific lead magnet or conversion offer.",
-          "Qualification fields match your real sales process.",
-          "CRM stages are simple enough to be used daily.",
-          "Follow-up templates exist before campaigns start.",
-          "Weekly review includes lead quality, not only cost per lead.",
-          "No fake proof, fake testimonials or fake numbers are used."
-        ]
-      },
-      {
-        title: "Recommended next step",
-        body:
-          "Audit where your current enquiries come from and how much control you actually have. If your pipeline depends mostly on portals, begin with one owned seller funnel and one owned buyer nurture path before scaling more channels.",
-        bullets: [
-          "Choose one local seller segment.",
-          "Build one useful seller asset.",
-          "Create one buyer segmentation flow.",
-          "Connect both to CRM stages and follow-up."
-        ]
-      }
-    ]
+    sections: agentSectionsEn
   },
   {
     slug: "makler-lead-playbook-de",
     lang: "de",
     audience: "agent",
     eyebrow: "Makler-Lead-Playbook",
-    title: "Bauen Sie eigene Verkaeufer- und Kaeufer-Pipeline jenseits von Portalabhaengigkeit.",
+    title: "Erzeugen Ihre Verkäufer- und Käuferleads Gespräche oder nur Follow-up-Arbeit?",
     subtitle:
-      "Ein Praxisleitfaden fuer Immobilienmakler, Maklerteams und Vertriebsorganisationen, die qualifizierte Gespraeche kontrollierbar aufbauen wollen.",
+      "Ein Diagnose-Leitfaden für Makler und Maklerteams, die eigene Pipeline, klarere Absicht und Follow-up-Kontext jenseits von Portalen brauchen.",
     promise:
-      "Dieses Playbook zeigt, wie lokale Verkaeufer- und Kaeufer-Funnels aufgebaut, Absicht qualifiziert und Chancen in ein strukturiertes Follow-up-System ueberfuehrt werden.",
+      "Nutzen Sie dieses Playbook, um zu erkennen, wo Verkäufer- und Käufernachfrage an Qualität verliert, und ob ein Pipeline-Audit das System prüfen sollte.",
     forWhom: [
-      "Selbststaendige Immobilienmakler, die eigene Nachfrage aufbauen wollen",
-      "Maklerteams mit starker Portalabhaengigkeit",
-      "Immobilienunternehmen, die Verkaeufer-Leads und Kaeufer-Nurturing brauchen",
-      "Vertriebsteams, die einen klareren Follow-up-Rhythmus benoetigen"
+      "Maklerteams mit Portalabhängigkeit und schwacher eigener Pipeline",
+      "Makler mit Verkäufer- oder Käuferanfragen ohne klare Reife",
+      "Immobilienteams, die vor dem Follow-up mehr CRM-Kontext brauchen",
+      "Teams, die Build+Run für einen definierten lokalen Markt prüfen"
     ],
-    sections: [
-      {
-        title: "Das Kernproblem: Portalabhaengigkeit ist keine Pipeline",
-        body:
-          "Portale koennen Sichtbarkeit schaffen, aber selten Kontrolle. Der Makler konkurriert in einem fremden Marktplatz, erhaelt gemischte Absicht und startet oft mit schwachem Kontext. Eigene Pipeline bedeutet: eigene Nachfragepfade aufbauen - Verkaeuferaufklaerung, Bewertungsintention, Kaeufersegmentierung, lokale Expertise und CRM-Follow-up.",
-        bullets: [
-          "Portal-Leads werden haeufig mit mehreren Wettbewerbern geteilt.",
-          "Verkaeuferabsicht ist fragil, wenn der Erstkontakt generisch wirkt.",
-          "Kaeuferanfragen brauchen Segmentierung, bevor Vertriebskapazitaet eingesetzt wird.",
-          "Ohne Follow-up-Infrastruktur geht ein schwaches Signal einfach verloren."
-        ]
-      },
-      {
-        title: "Das Prinzip eigener Pipeline",
-        body:
-          "Ein Makler-Lead-System sollte nicht nur Kontaktdaten abfragen. Es sollte einen Grund zur Kontaktaufnahme schaffen, den naechsten Schritt qualifizieren und die Beziehung halten, bis die Person bereit ist. Guter Immobilienvertrieb besteht aus Timing, Vertrauen und strukturiertem Follow-up.",
-        bullets: [
-          "Nutzen Sie lokale Expertise als Conversion-Asset.",
-          "Trennen Sie Verkaeufer- und Kaeufer-Leads und pflegen Sie beide unterschiedlich.",
-          "Erfassen Sie Motivation, Timing und Objektkontext frueh.",
-          "Folgen Sie mit nuetzlichen Assets nach, nicht mit zufaelligen Erinnerungen."
-        ]
-      },
-      {
-        title: "Verkaeufer-Lead-Generierung",
-        body:
-          "Verkaeufer-Leads brauchen oft Aufklaerung, bevor ein Gespraech sinnvoll ist. Ein starker Verkaeufer-Funnel gibt einen Grund, Informationen zu teilen: Preisumfeld, Marktbereitschaft, Verkaufszeitplan, Objektpotenzial, Vorbereitungsliste oder private Bewertung.",
-        bullets: [
-          "Lead Magnet: lokaler Verkaeufer-Guide, Preis-Checkliste, Marktbereitschafts-Audit.",
-          "Landingpage: die Verkaufsentscheidung adressieren, nicht nur die Bewertung.",
-          "Qualifizierung: Objektart, Lage, Verkaufszeitraum, Motivation und aktuelles Hindernis.",
-          "Follow-up: Markteinordnung, Vorbereitungsschritte und Einladung zur privaten Pruefung."
-        ]
-      },
-      {
-        title: "Kaeufer-Lead-Generierung",
-        body:
-          "Kaeufer-Leads brauchen Struktur, weil nicht jeder Kaeufer gleich weit ist. Ein Kaeufer-Funnel sollte Suchkriterien, Budgetkorridor, Finanzierungsstand, Lagepraeferenz und Dringlichkeit erfassen. Danach wird das Follow-up an die Phase angepasst.",
-        bullets: [
-          "Segmentieren Sie Erstkaeufer, Anleger, Umzieher und Premium-Kaeufer.",
-          "Erfassen Sie Wunschlage, Objektart, Budget und Finanzierungsstatus.",
-          "Bieten Sie Suchprofile, Kaeufer-Readiness-Guides oder eine private Suchpruefung an.",
-          "Nutzen Sie CRM-Stufen, damit ernsthafte Kaeufer nicht mit passiven Browsern vermischt werden."
-        ]
-      },
-      {
-        title: "Das lokale Funnel-System",
-        body:
-          "Immobilien sind lokal. Der Funnel sollte zeigen, dass Sie den Markt besser verstehen als eine generische Plattform. Nutzen Sie Gebietseiten, Marktnotizen, Verkaeuferfragen, Kaeufer-Guides und prozessbasiertes Vertrauen statt erfundener Belege.",
-        bullets: [
-          "Lokale Seiten: Gebiete, Objektarten, Kaeufer- und Verkaeufer-Szenarien.",
-          "Content Assets: Verkaeufer-Checkliste, Kaeufer-Readiness-Guide, Marktupdate.",
-          "Ads: lokale Absicht und Retargeting statt breiter Aufmerksamkeit.",
-          "CRM: Lifecycle-Stufen fuer Verkaeufer-Nurturing und Kaeufer-Nurturing."
-        ]
-      },
-      {
-        title: "Qualifizierung vor dem ersten Gespraech",
-        body:
-          "Das Erstgespraech sollte nicht mit Basisfragen beginnen, die vorher haetten erfasst werden koennen. Das CRM sollte bereits zeigen, warum die Person reagiert hat, was sie sucht, welches Timing genannt wurde und welcher naechste Schritt hilfreich ist.",
-        bullets: [
-          "Verkaeuferfelder: Objektart, Lage, Eigentumssituation, Zielzeitpunkt, Verkaufsgrund.",
-          "Kaeuferfelder: Nutzung, Wunschlage, Budget, Finanzierung, Kaufhorizont.",
-          "Quellenfelder: Kampagne, Asset, Landingpage und Conversion-Pfad.",
-          "Follow-up-Felder: Owner, naechster Schritt, letzter Kontakt, geplanter Kontakt."
-        ]
-      },
-      {
-        title: "Follow-up-Rhythmus",
-        body:
-          "Ein Lead-System wird wertvoll, wenn es nuetzlichen Kontakt haelt, ohne aufdringlich zu werden. Der Rhythmus sollte zu Lead-Typ und Bereitschaft passen. Verkaeufer-Nurturing ist vertrauensintensiv; Kaeufer-Nurturing ist timingintensiv.",
-        bullets: [
-          "Tag 0: Bestaetigungs-E-Mail und Klarheit ueber den naechsten Schritt.",
-          "Tag 1-2: nuetzlicher Kontext passend zur urspruenglichen Anfrage.",
-          "Woche 1: Einladung zur privaten Pruefung, wenn der Fit stark ist.",
-          "Monatlich: Marktimpuls oder Suchupdate fuer laengerfristige Leads.",
-          "Trigger-basiert: Reaktivierung bei erneutem Besuch, Klick oder Informationswunsch."
-        ]
-      },
-      {
-        title: "Operative Checkliste",
-        body:
-          "Bevor Kampagnen skaliert werden, sollte das Makler-System qualifizieren und nachfassen koennen. Sonst erzeugen mehr Leads vor allem mehr unbeantwortete Nachrichten, schwache Gespraeche und unklare Pipeline.",
-        bullets: [
-          "Verkaeufer- und Kaeufer-Funnels sind getrennt.",
-          "Jeder Funnel hat einen konkreten Lead Magnet oder ein klares Conversion-Angebot.",
-          "Qualifizierungsfelder passen zum echten Vertriebsprozess.",
-          "CRM-Stufen sind einfach genug fuer den taeglichen Gebrauch.",
-          "Follow-up-Vorlagen existieren vor Kampagnenstart.",
-          "Das woechentliche Review bewertet Leadqualitaet, nicht nur Kosten pro Lead.",
-          "Es werden keine Fake-Belege, Fake-Testimonials oder Fake-Zahlen genutzt."
-        ]
-      },
-      {
-        title: "Empfohlener naechster Schritt",
-        body:
-          "Pruefen Sie, woher Ihre aktuellen Anfragen kommen und wie viel Kontrolle Sie wirklich haben. Wenn Ihre Pipeline ueberwiegend von Portalen abhaengt, starten Sie mit einem eigenen Verkaeufer-Funnel und einem eigenen Kaeufer-Nurturing-Pfad, bevor weitere Kanaele skaliert werden.",
-        bullets: [
-          "Ein lokales Verkaeufersegment auswaehlen.",
-          "Ein nuetzliches Verkaeufer-Asset bauen.",
-          "Einen Kaeufer-Segmentierungsflow erstellen.",
-          "Beides mit CRM-Stufen und Follow-up verbinden."
-        ]
-      }
-    ]
+    sections: agentSectionsDe
   }
 ];
 
@@ -550,98 +574,17 @@ function esc(value) {
     .replaceAll('"', "&quot;");
 }
 
-function restoreGermanUmlauts(value) {
-  const protectedDataUrls = [];
-  const protectedValue = value.replace(/data:image\/png;base64,[^"]+/g, (match) => {
-    const token = `__NOVALURE_DATA_URL_${protectedDataUrls.length}__`;
-    protectedDataUrls.push(match);
-    return token;
-  });
-
-  const replacements = [
-    ["Bautraeger", "Bauträger"],
-    ["Kaeufer", "Käufer"],
-    ["Verkaeufer", "Verkäufer"],
-    ["Eigentuemer", "Eigentümer"],
-    ["fuer", "für"],
-    ["Fuer", "Für"],
-    ["waehrend", "während"],
-    ["laengeren", "längeren"],
-    ["Umsaetze", "Umsätze"],
-    ["Konformitaet", "Konformität"],
-    ["Luecken", "Lücken"],
-    ["naechsten", "nächsten"],
-    ["Naechster", "Nächster"],
-    ["Naechstes", "Nächstes"],
-    ["naechster", "nächster"],
-    ["Gespraeche", "Gespräche"],
-    ["Gespraech", "Gespräch"],
-    ["Uebergabe", "Übergabe"],
-    ["uebergeben", "übergeben"],
-    ["ueber", "über"],
-    ["zufaellige", "zufällige"],
-    ["ernsthaften Kaeufern", "ernsthaften Käufern"],
-    ["Vertriebsuebergabe", "Vertriebsübergabe"],
-    ["Erstgespraech", "Erstgespräch"],
-    ["Qualitaet", "Qualität"],
-    ["woechentlich", "wöchentlich"],
-    ["fuehren", "führen"],
-    ["gefuehrt", "geführt"],
-    ["Pruefen", "Prüfen"],
-    ["pruefen", "prüfen"],
-    ["Pruefung", "Prüfung"],
-    ["Suchpruefung", "Suchprüfung"],
-    ["moechten", "möchten"],
-    ["erhoehen", "erhöhen"],
-    ["hoert", "hört"],
-    ["frueh", "früh"],
-    ["Kaeufertyp", "Käufertyp"],
-    ["Bloecke", "Blöcke"],
-    ["Verfuegbarkeit", "Verfügbarkeit"],
-    ["uebertriebener", "übertriebener"],
-    ["schuetzen", "schützen"],
-    ["gewuenschter", "gewünschter"],
-    ["nuetzlich", "nützlich"],
-    ["Datensaetze", "Datensätze"],
-    ["Gruende", "Gründe"],
-    ["erklaert", "erklärt"],
-    ["unnoetige", "unnötige"],
-    ["Fuehrung", "Führung"],
-    ["Realitaet", "Realität"],
-    ["Kanaele", "Kanäle"],
-    ["Einwaende", "Einwände"],
-    ["auswaehlen", "auswählen"],
-    ["Verkaeuferabsicht", "Verkäuferabsicht"],
-    ["Portalabhaengigkeit", "Portalabhängigkeit"],
-    ["koennen", "können"],
-    ["koennte", "könnte"],
-    ["erhaelt", "erhält"],
-    ["Verkaeuferaufklaerung", "Verkäuferaufklärung"],
-    ["Selbststaendige", "Selbstständige"],
-    ["bestaetigungs", "bestätigungs"],
-    ["Bestaetigungs", "Bestätigungs"],
-    ["haetten", "hätten"],
-    ["haelt", "hält"],
-    ["taeglichen", "täglichen"],
-    ["abhaengt", "abhängt"],
-    ["ueberwiegend", "überwiegend"]
-  ];
-
-  const restored = replacements.reduce((text, [from, to]) => text.replaceAll(from, to), protectedValue);
-  return protectedDataUrls.reduce((text, dataUrl, index) => text.replaceAll(`__NOVALURE_DATA_URL_${index}__`, dataUrl), restored);
-}
-
 function pipelineSvg(lang, audience) {
   const labels =
     lang === "de"
       ? audience === "developer"
-        ? ["Nachfrage", "Projekt-Funnel", "Qualifizierung", "CRM", "Vertrieb"]
-        : ["Lokale Nachfrage", "Lead Magnet", "Segmentierung", "CRM", "Follow-up"]
+        ? ["Nachfrage", "Projekt-Fit", "Intent-Filter", "CRM", "Audit-Frage"]
+        : ["Lokale Nachfrage", "Segment", "Intent-Filter", "CRM", "Audit-Frage"]
       : audience === "developer"
-        ? ["Demand", "Project Funnel", "Qualification", "CRM", "Sales"]
-        : ["Local Demand", "Lead Magnet", "Segmentation", "CRM", "Follow-up"];
+        ? ["Demand", "Project Fit", "Intent Filter", "CRM", "Audit Question"]
+        : ["Local Demand", "Segment", "Intent Filter", "CRM", "Audit Question"];
   return `
-  <svg viewBox="0 0 920 260" role="img" aria-label="Pipeline diagram">
+  <svg viewBox="0 0 920 260" role="img" aria-label="Pipeline diagnosis diagram">
     <defs>
       <linearGradient id="g1" x1="0" x2="1"><stop stop-color="#fff4b8"/><stop offset="1" stop-color="#ffd43b"/></linearGradient>
       <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -655,42 +598,42 @@ function pipelineSvg(lang, audience) {
         return `<g filter="url(#glow)">
           <circle cx="${x}" cy="${y}" r="23" fill="url(#g1)"/>
           <circle cx="${x}" cy="${y}" r="8" fill="#111318"/>
-          <rect x="${x - 66}" y="${y + 38}" width="132" height="42" rx="14" fill="#1b1f27" stroke="#333a45"/>
-          <text x="${x}" y="${y + 64}" text-anchor="middle" fill="#ffffff" font-size="15" font-family="Arial" font-weight="700">${esc(label)}</text>
+          <rect x="${x - 70}" y="${y + 38}" width="140" height="42" rx="14" fill="#1b1f27" stroke="#333a45"/>
+          <text x="${x}" y="${y + 64}" text-anchor="middle" fill="#ffffff" font-size="14" font-family="Arial" font-weight="700">${esc(label)}</text>
         </g>`;
       })
       .join("")}
   </svg>`;
 }
 
-function matrixSvg(lang, audience) {
+function matrixSvg(lang) {
   const x = lang === "de" ? "Absicht" : "Intent";
-  const y = lang === "de" ? "Fit" : "Fit";
+  const y = lang === "de" ? "Kontext" : "Context";
   const cells =
     lang === "de"
-      ? ["Nurture", "Pruefen", "Disqualifizieren", "Sales-ready"]
-      : ["Nurture", "Review", "Disqualify", "Sales-ready"];
+      ? ["Nurture", "Prüfen", "No-Fit", "Audit-reif"]
+      : ["Nurture", "Review", "No-fit", "Audit-ready"];
   const label = (text, x, y, color, size = 25) => {
-    if (text.length > 13) {
-      const [first, second] = text.includes("-") ? text.split("-") : [text.slice(0, 8), text.slice(8)];
+    if (text.length > 12) {
+      const [first, second] = text.includes("-") ? text.split("-") : [text.slice(0, 7), text.slice(7)];
       return `<text x="${x}" y="${y - 11}" text-anchor="middle" fill="${color}" font-size="${size - 3}" font-family="Arial" font-weight="800"><tspan x="${x}">${esc(first)}${text.includes("-") ? "-" : ""}</tspan><tspan x="${x}" dy="28">${esc(second)}</tspan></text>`;
     }
     return `<text x="${x}" y="${y}" text-anchor="middle" fill="${color}" font-size="${size}" font-family="Arial" font-weight="800">${esc(text)}</text>`;
   };
   return `
-  <svg viewBox="0 0 920 520" role="img" aria-label="Qualification matrix">
+  <svg viewBox="0 0 920 520" role="img" aria-label="Audit readiness matrix">
     <rect width="920" height="520" rx="28" fill="#f7f4eb"/>
     <line x1="160" y1="420" x2="790" y2="420" stroke="#1b1f27" stroke-width="3"/>
     <line x1="160" y1="420" x2="160" y2="90" stroke="#1b1f27" stroke-width="3"/>
-    <text x="475" y="475" text-anchor="middle" fill="#111318" font-size="24" font-family="Arial" font-weight="700">${x}</text>
-    <text x="70" y="255" text-anchor="middle" fill="#111318" font-size="24" font-family="Arial" font-weight="700" transform="rotate(-90 70 255)">${y}</text>
+    <text x="475" y="475" text-anchor="middle" fill="#111318" font-size="24" font-family="Arial" font-weight="700">${esc(x)}</text>
+    <text x="70" y="255" text-anchor="middle" fill="#111318" font-size="24" font-family="Arial" font-weight="700" transform="rotate(-90 70 255)">${esc(y)}</text>
     <rect x="190" y="250" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
     <rect x="500" y="250" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
     <rect x="190" y="95" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
     <rect x="500" y="95" width="250" height="140" rx="20" fill="#111318"/>
     ${label(cells[0], 315, 325, "#111318")}
     ${label(cells[1], 625, 325, "#111318")}
-    ${label(cells[2], 315, 170, "#111318", 23)}
+    ${label(cells[2], 315, 170, "#111318")}
     ${label(cells[3], 625, 170, "#ffd43b")}
   </svg>`;
 }
@@ -698,10 +641,10 @@ function matrixSvg(lang, audience) {
 function systemSvg(lang) {
   const labels =
     lang === "de"
-      ? ["Funnel", "Demand", "Qualifizierung", "CRM"]
-      : ["Funnel", "Demand", "Qualification", "CRM"];
+      ? ["Signal", "Fit", "Handover", "Audit-Reife"]
+      : ["Signal", "Fit", "Handover", "Audit Readiness"];
   return `
-  <svg viewBox="0 0 920 340" role="img" aria-label="Four layer system">
+  <svg viewBox="0 0 920 340" role="img" aria-label="Four-layer diagnosis system">
     <rect width="920" height="340" rx="28" fill="#111318"/>
     ${labels
       .map((label, index) => {
@@ -712,14 +655,13 @@ function systemSvg(lang) {
         <text x="${x + 28}" y="${y + 31}" fill="${index === 3 ? "#111318" : "#ffffff"}" font-family="Arial" font-size="20" font-weight="800">${index + 1}. ${esc(label)}</text>`;
       })
       .join("")}
-    <text x="690" y="285" fill="#aeb6c3" font-family="Arial" font-size="17">${lang === "de" ? "Ein Ergebnis: sales-ready Pipeline" : "One outcome: sales-ready pipeline"}</text>
+    <text x="640" y="285" fill="#aeb6c3" font-family="Arial" font-size="17">${lang === "de" ? "Ziel: diagnosefähige Pipeline" : "Goal: diagnosable pipeline"}</text>
   </svg>`;
 }
 
 function renderHtml(book) {
   const ui = shared[book.lang];
   const title = esc(book.title);
-  const highlights = book.forWhom.map((item) => `<li>${esc(item)}</li>`).join("");
   const sections = book.sections
     .map(
       (section, index) => `
@@ -728,6 +670,7 @@ function renderHtml(book) {
           <h2>${esc(section.title)}</h2>
           <p class="body">${esc(section.body)}</p>
           <ul class="bullets">${section.bullets.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+          <p class="diagnostic-question">${esc(section.question)}</p>
         </section>`
     )
     .join("");
@@ -743,34 +686,43 @@ function renderHtml(book) {
   body { margin: 0; background: #d8d4c9; color: #111318; font-family: Arial, Helvetica, sans-serif; }
   .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 20mm; background: #fbfaf6; page-break-after: always; position: relative; overflow: hidden; }
   .cover { background: radial-gradient(circle at 70% 22%, rgba(255,212,59,.24), transparent 28%), linear-gradient(135deg, #08090c, #151923 58%, #08090c); color: #fff; }
-  .logo { width: 292px; height: auto; object-fit: contain; margin-bottom: 30mm; }
+  .logo { width: 292px; height: auto; object-fit: contain; margin-bottom: 28mm; }
   .eyebrow { color: #ffd43b; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 800; font-size: 12px; }
-  h1 { font-size: 56px; line-height: .98; letter-spacing: -1.8px; margin: 12px 0 18px; max-width: 690px; }
-  .subtitle { color: #d9dee8; font-size: 21px; line-height: 1.45; max-width: 620px; }
-  .promise { color: #fff1aa; font-size: 17px; line-height: 1.5; max-width: 620px; margin-top: 28px; }
-  .cover-card { position: absolute; left: 20mm; right: 20mm; bottom: 20mm; border: 1px solid rgba(255,255,255,.16); border-radius: 22px; padding: 18px; background: rgba(255,255,255,.06); }
+  h1 { font-size: 54px; line-height: 1; letter-spacing: -1px; margin: 12px 0 18px; max-width: 700px; }
+  .subtitle { color: #d9dee8; font-size: 21px; line-height: 1.45; max-width: 640px; }
+  .promise { color: #fff1aa; font-size: 17px; line-height: 1.5; max-width: 640px; margin-top: 26px; }
+  .cover-card { position: absolute; left: 20mm; right: 20mm; bottom: 20mm; border: 1px solid rgba(255,255,255,.16); border-radius: 8px; padding: 18px; background: rgba(255,255,255,.06); }
   .cover-card strong { color: #ffd43b; }
   .toc { background: #fbfaf6; }
-  h2 { font-size: 38px; line-height: 1.08; margin: 0 0 16px; letter-spacing: -1px; }
-  h3 { font-size: 24px; margin: 0 0 10px; }
+  h2 { font-size: 38px; line-height: 1.08; margin: 0 0 16px; letter-spacing: 0; }
+  h3 { font-size: 23px; margin: 0 0 10px; letter-spacing: 0; }
   .kicker { color: #666f7d; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; font-size: 12px; margin-bottom: 12px; }
   .body { font-size: 18px; line-height: 1.62; color: #303640; max-width: 710px; }
-  .bullets { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px; }
-  .bullets li { font-size: 16px; line-height: 1.45; padding: 15px 16px 15px 44px; border: 1px solid #e1ddd2; border-radius: 16px; background: #fff; position: relative; }
-  .bullets li:before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #ffd43b; position: absolute; left: 20px; top: 21px; box-shadow: 0 0 0 5px rgba(255,212,59,.18); }
+  .bullets { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 11px; }
+  .bullets li { font-size: 15.5px; line-height: 1.42; padding: 14px 16px 14px 42px; border: 1px solid #e1ddd2; border-radius: 8px; background: #fff; position: relative; }
+  .bullets li:before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #ffd43b; position: absolute; left: 19px; top: 21px; box-shadow: 0 0 0 5px rgba(255,212,59,.18); }
+  .diagnostic-question { margin-top: 28px; padding: 18px 20px; border-left: 5px solid #ffd43b; background: rgba(255,212,59,.14); font-size: 19px; line-height: 1.42; font-weight: 800; color: #151923; }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
-  .card { border: 1px solid #ded9ce; border-radius: 18px; padding: 18px; background: #fff; min-height: 132px; }
+  .card { border: 1px solid #ded9ce; border-radius: 8px; padding: 18px; background: #fff; min-height: 132px; }
   .card p { color: #3f4652; line-height: 1.5; }
   .visual { margin-top: 28px; }
   .visual svg { width: 100%; height: auto; display: block; }
+  .diagnosis-page { min-height: 297mm; height: 297mm; }
+  .diagnosis-page h2 { font-size: 35px; }
+  .diagnosis-page .body { font-size: 17px; line-height: 1.5; }
+  .system-visual-grid { display: block; margin-top: 22px; }
+  .system-visual-grid .visual { margin-top: 0; }
+  .system-visual-grid .visual + .visual { margin-top: 16px; }
+  .diagnosis-page .diagnostic-question { margin-top: 20px; padding: 16px 18px; font-size: 17px; }
   .section-number { color: #ffd43b; font-weight: 900; font-size: 16px; margin-bottom: 18px; }
   .section:nth-child(odd) { background: #101217; color: #fff; }
   .section:nth-child(odd) .body { color: #d0d7e2; }
   .section:nth-child(odd) .bullets li { background: #191e27; border-color: #303846; color: #fff; }
+  .section:nth-child(odd) .diagnostic-question { color: #fff7c7; background: rgba(255,212,59,.1); }
   .summary { background: #111318; color: #fff; }
-  .summary .body { color: #d7deea; max-width: 690px; margin-bottom: 26px; }
+  .summary .body { color: #d7deea; max-width: 700px; margin-bottom: 26px; }
   .summary .logo { margin-bottom: 34mm; }
-  .cta { display: inline-block; margin-top: 16px; padding: 15px 22px; border-radius: 999px; background: #ffd43b; color: #171000; font-weight: 900; text-decoration: none; }
+  .cta { display: inline-block; margin-top: 16px; padding: 15px 22px; border-radius: 8px; background: #ffd43b; color: #171000; font-weight: 900; text-decoration: none; }
   .footer { position: absolute; left: 20mm; right: 20mm; bottom: 11mm; display: flex; justify-content: space-between; color: #8b93a0; font-size: 10px; }
   .page:after { content: ""; position: absolute; right: -60px; bottom: -60px; width: 190px; height: 190px; border-radius: 50%; background: rgba(255,212,59,.12); }
   .note { font-size: 13px; color: #606977; line-height: 1.5; margin-top: 24px; }
@@ -779,36 +731,40 @@ function renderHtml(book) {
 <body>
   <main>
     <section class="page cover">
-      <img class="logo" src="${whiteLogoData}" alt="Novalure">
+      <img class="logo" src="${whiteLogoData}" alt="NovaLure">
       <div class="eyebrow">${esc(book.eyebrow)} | ${esc(ui.label)}</div>
       <h1>${title}</h1>
       <p class="subtitle">${esc(book.subtitle)}</p>
       <p class="promise">${esc(book.promise)}</p>
       <div class="visual">${pipelineSvg(book.lang, book.audience)}</div>
-      <div class="cover-card"><strong>Novalure</strong> ${esc(ui.footer)}</div>
+      <div class="cover-card"><strong>NovaLure</strong> | ${esc(ui.footer.replace(/^NovaLure\s*\|\s*/, ""))}</div>
     </section>
     <section class="page toc">
-      <div class="kicker">${book.lang === "de" ? "Fuer wen dieses Playbook ist" : "Who this playbook is for"}</div>
-      <h2>${book.lang === "de" ? "Ein System, kein weiterer Marketing-Ordner." : "A system, not another marketing folder."}</h2>
-      <p class="body">${book.lang === "de" ? "Dieses Dokument ist als Arbeitsgrundlage gedacht. Es hilft Ihnen, Ihr aktuelles Setup zu pruefen, Luecken sichtbar zu machen und die naechsten operativen Schritte sauber zu priorisieren." : "This document is designed as a working guide. Use it to inspect your current setup, reveal gaps and prioritize the next operating steps with more clarity."}</p>
-      <div class="grid">${book.forWhom.map((item) => `<div class="card"><h3>${esc(item)}</h3><p>${book.lang === "de" ? "Relevant, wenn Pipeline-Qualitaet wichtiger ist als reines Lead-Volumen." : "Relevant when pipeline quality matters more than raw lead volume."}</p></div>`).join("")}</div>
+      <div class="kicker">${esc(ui.introEyebrow)}</div>
+      <h2>${esc(ui.introTitle)}</h2>
+      <p class="body">${esc(ui.introBody)}</p>
+      <div class="grid">${book.forWhom.map((item) => `<div class="card"><h3>${esc(item)}</h3><p>${esc(ui.introCardBody)}</p></div>`).join("")}</div>
+      <p class="diagnostic-question">${book.lang === "de" ? "Wenn diese Ausgangslage konkret ist, ist ein Pipeline-Audit sinnvoller als weitere allgemeine Marketingideen." : "If this situation is concrete, a Pipeline Audit is more useful than another set of general marketing ideas."}</p>
       <p class="note">${esc(ui.note)}</p>
       <div class="footer"><span>${esc(ui.footer)}</span><span>02</span></div>
     </section>
-    <section class="page">
-      <div class="kicker">${book.lang === "de" ? "Systemkarte" : "System map"}</div>
-      <h2>${book.lang === "de" ? "Vier Schichten. Ein Ergebnis." : "Four layers. One outcome."}</h2>
-      <p class="body">${book.lang === "de" ? "Die folgenden Grafiken zeigen das Betriebssystem hinter qualifizierter Immobilien-Pipeline: Nachfrage wird nicht nur erzeugt, sondern gefuehrt, gefiltert und mit Kontext an den Vertrieb uebergeben." : "The following visuals show the operating system behind qualified real estate pipeline: demand is not only generated, it is guided, filtered and handed to sales with context."}</p>
-      <div class="visual">${systemSvg(book.lang)}</div>
-      <div class="visual">${matrixSvg(book.lang, book.audience)}</div>
+    <section class="page diagnosis-page">
+      <div class="kicker">${esc(ui.systemEyebrow)}</div>
+      <h2>${esc(ui.systemTitle)}</h2>
+      <p class="body">${esc(ui.systemBody)}</p>
+      <div class="system-visual-grid">
+        <div class="visual">${systemSvg(book.lang)}</div>
+        <div class="visual">${matrixSvg(book.lang)}</div>
+      </div>
+      <p class="diagnostic-question">${book.lang === "de" ? "Wenn ein Feld in dieser Logik unklar bleibt, sollte es im Audit geprüft werden, bevor mehr Budget in Reichweite fließt." : "If one part of this logic is unclear, it should be reviewed in the audit before more budget is pushed into reach."}</p>
       <div class="footer"><span>${esc(ui.footer)}</span><span>03</span></div>
     </section>
     ${sections}
     <section class="page summary">
-      <img class="logo" src="${whiteLogoData}" alt="Novalure">
-      <div class="kicker">${book.lang === "de" ? "Naechster Schritt" : "Next step"}</div>
-      <h2>${book.lang === "de" ? "Lassen Sie Ihr aktuelles Lead-System pruefen." : "Have your current lead system reviewed."}</h2>
-      <p class="body">${book.lang === "de" ? "Wenn Sie sehen moechten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein Pipeline-Audit. Wir pruefen Funnel, Lead-Qualifizierung, CRM-Uebergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen." : "If you want to see which layers are missing in your current setup, book a Pipeline Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without fake promises."}</p>
+      <img class="logo" src="${whiteLogoData}" alt="NovaLure">
+      <div class="kicker">${esc(ui.summaryEyebrow)}</div>
+      <h2>${esc(ui.summaryTitle)}</h2>
+      <p class="body">${esc(ui.summaryBody)}</p>
       <a class="cta" href="${esc(ui.primaryUrl)}">${esc(ui.primaryCta)}</a>
       <p class="note">${esc(ui.note)}</p>
       <div class="footer"><span>${esc(ui.footer)}</span><span>${book.lang === "de" ? "Ende" : "End"}</span></div>
@@ -820,7 +776,7 @@ function renderHtml(book) {
 
 async function main() {
   const rendered = playbooks.map((book) => {
-    const html = book.lang === "de" ? restoreGermanUmlauts(renderHtml(book)) : renderHtml(book);
+    const html = renderHtml(book);
     const htmlPath = path.join(outDir, `${book.slug}.html`);
     fs.writeFileSync(htmlPath, html, "utf8");
     console.log(`Created ${path.relative(root, htmlPath)}`);

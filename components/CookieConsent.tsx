@@ -20,14 +20,15 @@ const copy = {
     reject: "Necessary only",
     save: "Save choices",
     manage: "Cookie settings",
+    alwaysActive: "Always active",
     necessary: "Necessary",
     necessaryBody: "Required for website operation, security, form delivery and saving your consent choice. Always active.",
     analytics: "Analytics",
     analyticsBody: "Helps us understand website performance, for example through Google Analytics and Hotjar.",
     marketing: "Marketing",
-    marketingBody: "Helps measure campaigns and build audiences, for example through Meta Pixel, LinkedIn Insight Tag and HubSpot tracking.",
+    marketingBody: "Helps measure campaigns and build audiences, for example through Meta Pixel and LinkedIn Insight Tag.",
     external: "External media and embeds",
-    externalBody: "Allows third-party embeds such as HubSpot meeting scheduling or other external content."
+    externalBody: "Allows third-party embeds such as booking calendars or other external content."
   },
   de: {
     title: "Cookie-Einstellungen",
@@ -37,14 +38,15 @@ const copy = {
     reject: "Nur notwendige",
     save: "Auswahl speichern",
     manage: "Cookie-Einstellungen",
+    alwaysActive: "Immer aktiv",
     necessary: "Notwendig",
     necessaryBody: "Erforderlich für Website-Betrieb, Sicherheit, Formulare und das Speichern Ihrer Cookie-Auswahl. Immer aktiv.",
     analytics: "Analytics",
     analyticsBody: "Hilft uns, die Website-Leistung zu verstehen, zum Beispiel mit Google Analytics und Hotjar.",
     marketing: "Marketing",
-    marketingBody: "Hilft bei Kampagnenmessung und Zielgruppenbildung, zum Beispiel mit Meta Pixel, LinkedIn Insight Tag und HubSpot Tracking.",
+    marketingBody: "Hilft bei Kampagnenmessung und Zielgruppenbildung, zum Beispiel mit Meta Pixel und LinkedIn Insight Tag.",
     external: "Externe Medien und Einbindungen",
-    externalBody: "Erlaubt Drittanbieter-Einbindungen wie HubSpot Meeting Scheduling oder andere externe Inhalte."
+    externalBody: "Erlaubt Drittanbieter-Einbindungen wie Buchungskalender oder andere externe Inhalte."
   }
 };
 
@@ -112,7 +114,7 @@ export function CookieConsent({ locale }: { locale: Locale }) {
               <strong>{text.necessary}</strong>
               <p>{text.necessaryBody}</p>
             </div>
-            <span className="cookie-required">Always active</span>
+            <span className="cookie-required">{text.alwaysActive}</span>
           </div>
           <label className="cookie-option">
             <span>

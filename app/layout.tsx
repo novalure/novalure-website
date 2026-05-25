@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.novalure.eu";
+const siteUrl = getSiteUrl();
 const googleAnalyticsId = "G-0LV11ZNV38";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  applicationName: "Novalure",
-  creator: "Novalure",
-  publisher: "Novalure",
+  applicationName: "NovaLure",
+  creator: "NovaLure",
+  publisher: "NovaLure",
   title: {
-    default: "Novalure",
+    default: "NovaLure",
     template: "%s"
   },
   description: "PropTech Sales System for real estate developers and agents.",
@@ -25,8 +26,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Novalure",
-    images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: "Novalure property marketing systems" }]
+    siteName: "NovaLure",
+    images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: "NovaLure CRM-ready real estate lead systems" }]
   },
   twitter: {
     card: "summary_large_image"
@@ -44,8 +45,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
-gtag('config', '${googleAnalyticsId}');
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied'
+});
+gtag('config', '${googleAnalyticsId}', { send_page_view: false });
             `.trim()
           }}
         />
