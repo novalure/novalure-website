@@ -7,8 +7,8 @@ import { anchorLabels, getPath, getPlaybookFormPath, navLabels, navigationItems,
 import { Logo } from "@/components/Logo";
 
 const ctaLabels = {
-  en: { primary: "Pipeline Audit", secondary: "Playbook", menu: "Menu", close: "Close menu" },
-  de: { primary: "Pipeline-Audit", secondary: "Playbook", menu: "Menü", close: "Menü schließen" }
+  en: { primary: "Pipeline Audit", secondary: "Playbook", crm: "CRM Handover", menu: "Menu", close: "Close menu" },
+  de: { primary: "Pipeline-Audit", secondary: "Playbook", crm: "CRM-Handover", menu: "Menü", close: "Menü schließen" }
 };
 
 const headerNavigationItems = navigationItems.filter(
@@ -27,6 +27,7 @@ export function Header({ locale }: { locale: Locale }) {
   const switchHref = activeKey ? routeMap[activeKey][switchLocale] : getPath(switchLocale, "home");
   const playbookHref = getPlaybookFormPath(locale);
   const auditHref = `${getPath(locale, "contact")}#book-audit`;
+  const crmHref = getPath(locale, "handover");
 
   return (
     <header className={`site-header ${open ? "menu-open" : ""}`}>
@@ -83,6 +84,9 @@ export function Header({ locale }: { locale: Locale }) {
         ))}
         <Link className="button button-secondary" href={playbookHref} onClick={() => setOpen(false)}>
           {labels.secondary}
+        </Link>
+        <Link className="button button-secondary" href={crmHref} onClick={() => setOpen(false)}>
+          {labels.crm}
         </Link>
         <Link className="button button-primary" href={auditHref} onClick={() => setOpen(false)}>
           {labels.primary}
