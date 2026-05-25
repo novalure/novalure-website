@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Locale } from "@/lib/i18n";
 
 export function FunnelHeroVisual({ locale }: { locale: Locale }) {
@@ -30,16 +29,6 @@ export function FunnelHeroVisual({ locale }: { locale: Locale }) {
       >
         <source src="/videos/novalure-hero-transparent-mobile.webm" type="video/webm" />
       </video>
-      <Image
-        className="hero-loop-poster hero-loop-poster-mobile"
-        src="/images/novalure-hero-mobile-poster.png"
-        alt=""
-        width={1080}
-        height={1350}
-        aria-hidden="true"
-        loading="eager"
-        unoptimized
-      />
       <div className="hero-video-fallback" aria-hidden="true">
         <span>NovaLure CRM</span>
         <strong>{locale === "de" ? "Lead-Kontext vor dem ersten Call" : "Lead context before the first call"}</strong>

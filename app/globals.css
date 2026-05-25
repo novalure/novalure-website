@@ -527,16 +527,7 @@ h3 {
   background: transparent;
 }
 
-.hero-loop-poster {
-  display: none;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: transparent;
-}
-
 .hero-loop-video-mobile,
-.hero-loop-poster-mobile,
 .hero-video-fallback {
   display: none;
 }
@@ -3217,11 +3208,7 @@ code {
     display: block;
     transform: translateY(-34%) scale(1.08);
     transform-origin: top center;
-  }
-
-  .hero-loop-poster-mobile {
-    transform: translateY(-34%) scale(1.08);
-    transform-origin: top center;
+    mix-blend-mode: screen;
   }
 
   .funnel-hero-image,
@@ -3374,18 +3361,6 @@ code {
 @media (min-width: 341px) and (max-width: 380px) {
   .pipeline-pulse {
     offset-path: path("M 43 322 C 101 196, 171 291, 211 169 S 278 79, 318 130");
-  }
-}
-
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 560px) {
-    .hero-loop-video-mobile {
-      display: none;
-    }
-
-    .hero-loop-poster-mobile {
-      display: block;
-    }
   }
 }
 
