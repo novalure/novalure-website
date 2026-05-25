@@ -38,7 +38,7 @@ function Hero({ content, visual = false }: { content: PageContent; visual?: bool
           {content.heroBullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
         </ul>
       </div>
-      {visual ? <FunnelHeroVisual /> : <SystemMiniCard bullets={content.heroBullets} />}
+      {visual ? <FunnelHeroVisual locale={content.locale} /> : <SystemMiniCard bullets={content.heroBullets} />}
     </section>
   );
 }

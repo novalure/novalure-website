@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { Locale } from "@/lib/i18n";
 
 const routes = [
   ["funnel-route-paid", 0],
@@ -7,7 +8,19 @@ const routes = [
   ["funnel-route-referral", 0.3]
 ] as const;
 
-export function FunnelHeroVisual() {
+export function FunnelHeroVisual({ locale }: { locale: Locale }) {
+  const crmCopy = locale === "de"
+    ? {
+        title: "NovaLure CRM",
+        body: "Übergabe mit Kontext",
+        fields: ["Quelle", "Motiv", "Timing", "Nächster Schritt"]
+      }
+    : {
+        title: "NovaLure CRM",
+        body: "Handover with context",
+        fields: ["Source", "Intent", "Timing", "Next step"]
+      };
+
   return (
     <div className="funnel-hero-visual" aria-label="Animated qualified demand funnel">
       <Image
@@ -95,6 +108,13 @@ export function FunnelHeroVisual() {
           <use href="#funnel-drop" className="funnel-drop funnel-drop-3" />
         </g>
       </svg>
+      <div className="funnel-crm-card" aria-hidden="true">
+        <span>{crmCopy.title}</span>
+        <strong>{crmCopy.body}</strong>
+        <ul>
+          {crmCopy.fields.map((field) => <li key={field}>{field}</li>)}
+        </ul>
+      </div>
     </div>
   );
 }

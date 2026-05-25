@@ -287,19 +287,19 @@ const homeContent: Record<Locale, HomeContent> = {
     key: "home",
     locale: "de",
     template: "home",
-    eyebrow: "Lead-Systeme für den Immobilienvertrieb",
-    title: "CRM-fähige Lead-Systeme für Immobilienvertrieb.",
-    seoTitle: "NovaLure | CRM-fähige Lead-Systeme für den Immobilienvertrieb",
+    eyebrow: "Problemlöser für Immobilienvertrieb",
+    title: "Ihr Vertrieb soll verkaufen, nicht Leads sortieren.",
+    seoTitle: "NovaLure | Vertriebsprobleme im Immobilienvertrieb lösen",
     description:
-      "NovaLure baut Funnel, Qualifizierung und CRM-Handover so, dass Ihr Vertrieb weniger unklare Anfragen sortiert und mehr passende Gespräche führt. Keine Show, kein Leadzahlen-Versprechen, kein Fake-Proof - nur ein sichtbares System vom Klick bis zur priorisierten Verkaufschance.",
+      "NovaLure löst das Problem zwischen Anfrage und Verkaufsgespräch: Wir qualifizieren Immobilien-Leads, übergeben sie mit Kontext in unser eigenes CRM und zeigen Quelle, Motivation, Timing, Budgetnähe und nächsten Schritt, bevor Ihr Team anruft.",
     metaDescription:
-      "NovaLure baut Funnel, Qualifizierung und CRM-Handover für Bauträger, Projektvertriebe und Maklerteams. Weniger unklare Anfragen, mehr passende Gespräche.",
-    primaryCta: { label: labels.de.audit, target: "contact", anchor: "book-audit" },
-    secondaryCta: { label: labels.de.handover, target: "home", anchor: "proof" },
+      "NovaLure löst Vertriebsprobleme im Immobilienvertrieb: Lead-Qualifizierung, eigenes CRM, Handover-Kontext und klare Priorität für Bauträger, Projektvertriebe und Maklerteams.",
+    primaryCta: { label: "Vertriebsproblem prüfen", target: "contact", anchor: "book-audit" },
+    secondaryCta: { label: "CRM-Handover ansehen", target: "home", anchor: "proof" },
     heroBullets: [
-      "Audit vor Angebot - keine Standardpakete",
-      "CRM-fähige Übergabe statt bloßer Formularleads",
-      "Ruhige Systemgrafiken statt lauter Kampagneninszenierung"
+      "Eigenes CRM mit Handover-Kontext",
+      "Qualifizierung vor dem ersten Sales-Call",
+      "Audit zeigt, wo Ihr Vertrieb Zeit verliert"
     ],
     audience: {
       title: "Gebaut für Immobilienanbieter, deren Vertrieb mehr Kontext vor dem ersten Call braucht.",
@@ -394,19 +394,19 @@ const homeContent: Record<Locale, HomeContent> = {
     key: "home",
     locale: "en",
     template: "home",
-    eyebrow: "Lead systems for real estate sales",
-    title: "CRM-ready lead systems for real estate sales.",
-    seoTitle: "NovaLure | CRM-ready lead systems for real estate sales",
+    eyebrow: "Sales problem solving for real estate teams",
+    title: "Sales should sell, not sort raw leads.",
+    seoTitle: "NovaLure | Solving real estate sales problems with CRM-ready leads",
     description:
-      "NovaLure builds funnels, qualification and CRM handover so sales teams spend less time sorting unclear enquiries and more time in relevant conversations. No presentation theatre, no lead-volume promises, no fake proof - one visible system from first click to prioritised sales opportunity.",
+      "NovaLure fixes the gap between enquiry and sales conversation: we qualify real estate leads, hand them over with context in our own CRM, and show source, motivation, timing, budget proximity and next step before the first call.",
     metaDescription:
-      "NovaLure builds funnels, qualification and CRM handover for developers, project sales teams and agents. Fewer unclear enquiries, cleaner sales priority.",
-    primaryCta: { label: "Request pipeline audit", target: "contact", anchor: "book-audit" },
-    secondaryCta: { label: "See sample handover", target: "home", anchor: "proof" },
+      "NovaLure solves real estate sales problems with lead qualification, its own CRM, handover context and clearer sales priority for developers and agent teams.",
+    primaryCta: { label: "Review sales problem", target: "contact", anchor: "book-audit" },
+    secondaryCta: { label: "See CRM handover", target: "home", anchor: "proof" },
     heroBullets: [
-      "Audit before proposal - no standard packages",
-      "CRM-ready handover instead of raw form leads",
-      "Calm system graphics instead of generic promo material"
+      "Own CRM with handover context",
+      "Qualification before the first sales call",
+      "Audit shows where sales time is lost"
     ],
     audience: {
       title: "Built for real estate teams that need more sales context before the first call.",
