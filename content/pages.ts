@@ -837,13 +837,15 @@ function imprintSections(locale: Locale): PageSection[] {
     return [
       {
         title: "1. Anbieter und Website-Betreiber",
-        body: "Website-Betreiber und Diensteanbieter dieser Website ist NovaLure CLG, eine company limited by guarantee nach irischem Recht.",
+        body: "Website-Betreiber, Diensteanbieter und Verantwortlicher für die Unternehmensangaben dieser Website ist NovaLure CLG, eine company limited by guarantee nach irischem Recht.",
         items: [
           "Name und Rechtsform: NovaLure CLG.",
           "Eingetragen in Irland beim Companies Registration Office (CRO).",
           "Company registration number: 796735.",
           "Irische Umsatzsteuer-Identifikationsnummer (VAT): IE451718HH.",
           "Registered office: 20 Harcourt Street, Dublin 2, D02 H364, Ireland.",
+          "E-Mail: hello@novalure.eu.",
+          "Telefon: +353 (0)89 269 5248.",
           "Website: www.novalure.eu."
         ]
       },
@@ -868,10 +870,11 @@ function imprintSections(locale: Locale): PageSection[] {
         ]
       },
       {
-        title: "4. Tätigkeit von NovaLure",
-        body: "NovaLure baut CRM-fähige Lead-Systeme für den Immobilienvertrieb. Der Fokus liegt auf Funnel-Architektur, Lead-Qualifizierung, CRM-Handover, Follow-up-Struktur, Tracking, Reporting und laufender Optimierung.",
+        title: "4. Tätigkeit von NovaLure: PropTech Sales System",
+        body: "NovaLure baut PropTech Sales Systeme und CRM-fähige Lead-Systeme für den Immobilienvertrieb. Der Fokus liegt auf Funnel-Architektur, Lead-Qualifizierung, CRM-Handover, Follow-up-Struktur, Tracking, Reporting und laufender Optimierung.",
         items: [
-          "NovaLure arbeitet insbesondere mit Immobilienentwicklern, Projektvertrieben, Maklerteams und weiteren B2B-Ansprechpartnern.",
+          "NovaLure arbeitet insbesondere mit Bauträgern, Immobilienentwicklern, Projektvertrieben, Maklerteams und weiteren B2B-Ansprechpartnern im Immobilienvertrieb.",
+          "NovaLure ist kein klassischer Online-Shop und kein Immobilienportal, sondern ein B2B-Anbieter für Lead-Systeme, CRM-Handover und Pipeline-Sichtbarkeit.",
           "Die Website richtet sich primär an geschäftliche Nutzer und Entscheidungsträger, nicht an Verbraucherangebote im klassischen Online-Shop-Sinn.",
           "Konkrete Leistungen, Umfang, Preise, Laufzeiten und Verantwortlichkeiten werden individuell im Angebot oder Vertrag geregelt."
         ]
@@ -974,13 +977,15 @@ function imprintSections(locale: Locale): PageSection[] {
   return [
     {
       title: "1. Provider and website operator",
-      body: "The website operator and service provider for this website is NovaLure CLG, a company limited by guarantee incorporated under the laws of Ireland.",
+      body: "The website operator, service provider and company-information owner for this website is NovaLure CLG, a company limited by guarantee incorporated under the laws of Ireland.",
       items: [
         "Name and legal form: NovaLure CLG.",
         "Registered in Ireland with the Companies Registration Office (CRO).",
         "Company registration number: 796735.",
         "Irish VAT number: IE451718HH.",
         "Registered office: 20 Harcourt Street, Dublin 2, D02 H364, Ireland.",
+        "Email: hello@novalure.eu.",
+        "Phone: +353 (0)89 269 5248.",
         "Website: www.novalure.eu."
       ]
     },
@@ -1005,10 +1010,11 @@ function imprintSections(locale: Locale): PageSection[] {
       ]
     },
     {
-      title: "4. Business activity",
-      body: "NovaLure builds CRM-ready lead systems for real estate sales. The focus is funnel architecture, lead qualification, CRM handover, follow-up structure, tracking, reporting and ongoing optimisation.",
+      title: "4. Business activity: PropTech Sales System",
+      body: "NovaLure builds PropTech Sales Systems and CRM-ready lead systems for real estate sales. The focus is funnel architecture, lead qualification, CRM handover, follow-up structure, tracking, reporting and ongoing optimisation.",
       items: [
-        "NovaLure works in particular with real estate developers, project sales teams, broker teams and other B2B contacts.",
+        "NovaLure works in particular with property developers, real estate developers, project sales teams, broker teams and other B2B contacts in real estate sales.",
+        "NovaLure is not a conventional online shop or property portal; it is a B2B provider for lead systems, CRM handover and pipeline visibility.",
         "The website is primarily directed at business users and decision-makers, not at consumer offers in the classic online-shop sense.",
         "Concrete services, scope, pricing, term and responsibilities are agreed individually in the relevant proposal or contract."
       ]
@@ -1123,9 +1129,10 @@ function privacySections(locale: Locale): PageSection[] {
       },
       {
         title: "2. Verantwortlicher",
-        body: "Verantwortlicher im Sinne der Datenschutz-Grundverordnung ist NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, Registration number: 796735. Kontakt für Datenschutzanfragen: hello@novalure.eu.",
+        body: "Verantwortlicher im Sinne der Datenschutz-Grundverordnung ist NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, Registration number: 796735, Irish VAT number: IE451718HH. Kontakt für Datenschutzanfragen: hello@novalure.eu.",
         items: [
           "NovaLure CLG ist in Irland ansässig. Maßgeblich sind insbesondere die DSGVO, der Irish Data Protection Act 2018 und die irischen ePrivacy-Regeln.",
+          "Website: www.novalure.eu.",
           "Ein Datenschutzbeauftragter ist derzeit nicht bestellt. Datenschutzanfragen können direkt an hello@novalure.eu gesendet werden."
         ]
       },
@@ -1302,9 +1309,10 @@ function privacySections(locale: Locale): PageSection[] {
     },
     {
       title: "2. Controller",
-      body: "The controller is NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, registration number: 796735. Privacy contact: hello@novalure.eu.",
+      body: "The controller is NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, registration number: 796735, Irish VAT number: IE451718HH. Privacy contact: hello@novalure.eu.",
       items: [
         "NovaLure CLG is established in Ireland. The GDPR, the Irish Data Protection Act 2018 and Irish ePrivacy rules are particularly relevant to our processing.",
+        "Website: www.novalure.eu.",
         "We have not appointed a Data Protection Officer at this time. Privacy requests can be sent directly to hello@novalure.eu."
       ]
     },
@@ -1521,6 +1529,12 @@ function legal(locale: Locale, key: "imprint" | "privacy" | "cookies"): PageCont
     ...common,
     description: de ? "Hinweise zu Cookies, Tracking und externen Diensten auf der NovaLure-Website." : "Information about cookies, tracking and external services on the NovaLure website.",
     sections: [
+      {
+        title: de ? "Anbieter dieser Website" : "Website provider",
+        body: de
+          ? "Anbieter dieser Website ist NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, Registration number: 796735, Irish VAT number: IE451718HH. Kontakt: hello@novalure.eu."
+          : "The provider of this website is NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, registration number: 796735, Irish VAT number: IE451718HH. Contact: hello@novalure.eu."
+      },
       {
         title: de ? "Cookie-Kategorien" : "Cookie categories",
         body: de

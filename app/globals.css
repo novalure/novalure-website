@@ -2954,6 +2954,16 @@ code {
   }
 }
 
+@media (max-width: 1024px) {
+  .hero-loop-video-desktop {
+    display: none;
+  }
+
+  .hero-loop-video-mobile {
+    display: block;
+  }
+}
+
 @media (max-width: 900px) {
   .site-header {
     grid-template-columns: auto 1fr auto;
