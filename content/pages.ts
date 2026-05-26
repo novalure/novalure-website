@@ -349,16 +349,10 @@ const homeContent: Record<Locale, HomeContent> = {
     modules: {
       title: "Was NovaLure konkret liefert",
       items: [
-        { title: "Landingpage oder Projekt-Funnel", audience: "Lieferung", body: "Ein klarer Weg vom ersten Klick bis zur qualifizierten Anfrage, passend zu Projekt, Marktgebiet oder Zielgruppe." },
-        { title: "Vorqualifizierende Fragen", audience: "Lieferung", body: "Fragen, die echte Kauf- oder Verkaufsabsicht erkennen: Timing, Budgetnähe, Motivation, Objektart und nächster Schritt." },
-        { title: "Lead-Magnet oder Sales Asset", audience: "Lieferung", body: "Ein Projektguide, Verkäufer-Check, Bewertungslogik oder Käuferprofil, das Anfragen konkreter macht." },
-        { title: "CRM-fähige Übergabe", audience: "Lieferung", body: "Ihr Team sieht Quelle, Motivation, Timing, Budgetnähe und nächsten Schritt vor dem ersten Gespräch." },
-        { title: "Priorisierung", audience: "Lieferung", body: "Anfragen werden nach Fit, Timing und Budgetnähe sortiert, damit die besten Chancen zuerst bearbeitet werden." },
-        { title: "Follow-up-Struktur", audience: "Lieferung", body: "Segmentierte Nachverfolgung für Käufer, Eigentümer oder Projektinteressenten, damit keine ernsthafte Anfrage liegen bleibt." },
-        { title: "Reporting nach Leadqualität", audience: "Lieferung", body: "Reporting zeigt nicht nur Klicks und CPL, sondern welche Quellen qualifizierte Gespräche erzeugen." },
-        { title: "Operativer Aufbau", audience: "Lieferung", body: "Ob mit bestehendem Vertriebsteam oder ohne: NovaLure baut die Struktur, die aus Immobilienanfragen qualifizierte Gespräche macht." },
-        { title: "Laufende Optimierung", audience: "Lieferung", body: "Aufbau plus laufende Verbesserung anhand von Leadqualität, Vertriebsecho und Pipeline-Sichtbarkeit." },
-        { title: "Audit-Einstieg", audience: "Lieferung", body: "Vor dem Angebot wird geprüft, wo Ihr Lead-System Vertriebszeit verliert und ob Build+Run wirtschaftlich sinnvoll ist." }
+        { title: "Qualifizieren", audience: "Kernblock", body: "Wir stellen die Fragen, die echte Kauf- oder Verkaufsabsicht sichtbar machen." },
+        { title: "Übergeben", audience: "Kernblock", body: "Ihr Team bekommt nicht nur Kontaktdaten, sondern Quelle, Motivation, Timing, Budgetnähe und nächsten Schritt." },
+        { title: "Priorisieren", audience: "Kernblock", body: "Anfragen werden nach Fit, Timing und Budgetnähe sortiert, damit Vertrieb zuerst die richtigen Gespräche führt." },
+        { title: "Optimieren", audience: "Kernblock", body: "Leadqualität wird laufend anhand von Feedback, Gesprächen und Reporting verbessert." }
       ]
     },
     playbookSection: {
@@ -457,16 +451,10 @@ const homeContent: Record<Locale, HomeContent> = {
     modules: {
       title: "What NovaLure actually delivers",
       items: [
-        { title: "Landing page or project funnel", audience: "Delivery", body: "A clear path from first click to qualified enquiry, matched to project, market area or target group." },
-        { title: "Pre-qualification questions", audience: "Delivery", body: "Questions that identify real buying or selling intent: timing, budget proximity, motivation, property type and next step." },
-        { title: "Lead magnet or sales asset", audience: "Delivery", body: "A project guide, seller check, valuation logic or buyer profile that makes enquiries more concrete." },
-        { title: "CRM-ready handover", audience: "Delivery", body: "Your team sees source, motivation, timing, budget proximity and next step before the first call." },
-        { title: "Prioritisation", audience: "Delivery", body: "Enquiries are sorted by fit, timing and budget proximity so the best opportunities are handled first." },
-        { title: "Follow-up structure", audience: "Delivery", body: "Segmented follow-up for buyers, sellers or project enquiries so serious opportunities do not sit idle." },
-        { title: "Reporting by lead quality", audience: "Delivery", body: "Reporting shows not only clicks and CPL, but which sources create qualified conversations." },
-        { title: "Operational build", audience: "Delivery", body: "With or without an existing sales team: NovaLure builds the structure that turns real estate enquiries into qualified conversations." },
-        { title: "Ongoing optimisation", audience: "Delivery", body: "Build plus ongoing improvement based on lead quality, sales feedback and pipeline visibility." },
-        { title: "Audit entry", audience: "Delivery", body: "Before a proposal, we check where your lead system wastes sales time and whether Build+Run makes commercial sense." }
+        { title: "Qualify", audience: "Core block", body: "We ask the questions that make real buyer or seller intent visible." },
+        { title: "Handover", audience: "Core block", body: "Your team receives more than contact data: source, motivation, timing, budget proximity and next step." },
+        { title: "Prioritise", audience: "Core block", body: "Enquiries are sorted by fit, timing and budget proximity so sales starts with the right conversations." },
+        { title: "Optimise", audience: "Core block", body: "Lead quality improves continuously through feedback, conversations and reporting." }
       ]
     },
     playbookSection: {

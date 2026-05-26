@@ -33,9 +33,37 @@ function Hero({ content, visual = false }: { content: PageContent; visual?: bool
         <ul className="hero-bullets">
           {content.heroBullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
         </ul>
+        {content.template === "home" && <HeroLeadPreview locale={content.locale} />}
       </div>
       {visual ? <FunnelHeroVisual locale={content.locale} /> : <SystemMiniCard bullets={content.heroBullets} />}
     </section>
+  );
+}
+
+function HeroLeadPreview({ locale }: { locale: Locale }) {
+  const de = locale === "de";
+  const rows = de
+    ? [
+        ["Anfrage", "Eigentümer möchte Verkaufsoptionen prüfen"],
+        ["Kontext", "Motivation, Timing und Objektart bekannt"],
+        ["Nächster Schritt", "Priorisierter Rückruf statt Rohlead im Postfach"]
+      ]
+    : [
+        ["Enquiry", "Seller wants to review selling options"],
+        ["Context", "Motivation, timing and property type known"],
+        ["Next step", "Prioritised callback instead of a raw inbox lead"]
+      ];
+
+  return (
+    <div className="hero-lead-preview" aria-label={de ? "Mini-Handover Beispiel" : "Mini handover example"}>
+      <span>{de ? "Mini-Handover" : "Mini handover"}</span>
+      {rows.map(([label, value]) => (
+        <div key={label}>
+          <small>{label}</small>
+          <strong>{value}</strong>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -59,18 +87,15 @@ function HomePage({ content }: { content: HomeContent }) {
     <main>
       <Hero content={content} visual />
       <TrustSnapshot locale={locale} />
+      <CaseProofSection locale={locale} />
       <ProblemSection content={content} />
+      <MarketComparisonSection locale={locale} />
       <AudienceOverview content={content} />
-      <SystemSection content={content} />
       <DeliverablesSection content={content} />
       <ProofSection locale={locale} />
       <PipelineAuditSection locale={locale} />
       <TestimonialsSection locale={locale} />
-      <BeforeAfter content={content} />
-      <MarketComparisonSection locale={locale} />
-      <TeamBlock content={content} />
       <ProcessBlock content={content} />
-      <PlaybookConversion locale={locale} title={content.playbookSection.title} body={content.playbookSection.body} />
       <FaqSection locale={locale} items={content.faq || []} />
       <FinalCta content={content} title={content.finalCtaTitle} />
     </main>
@@ -156,6 +181,85 @@ function TrustSnapshot({ locale }: { locale: Locale }) {
   );
 }
 
+function CaseProofSection({ locale }: { locale: Locale }) {
+  const de = locale === "de";
+  const copy = de
+    ? {
+        eyebrow: "Reales Beispiel",
+        headline: "Ein reales Beispiel: weniger Rohkontakte, mehr qualifizierte Gespräche.",
+        body: "Bei GRASL Immobilien wurde aus ungefilterter Verkäuferakquise eine planbarere Pipeline mit qualifizierten Anfragen.",
+        quote: "Wir bekommen kontinuierlich qualifizierte Anfragen statt ungefilterter Kontakte - das macht unsere Pipeline planbar.",
+        name: "SV Thomas Grasl",
+        role: "Inhaber GRASL Immobilien, Schwaz",
+        firstMetric: "15-20",
+        firstLabel: "qualifizierte Anfragen pro Monat",
+        secondMetric: "EUR 110k+",
+        secondLabel: "Provisionsvolumen aus aktiven Mandaten",
+        cta: "Beispiel-Handover ansehen"
+      }
+    : {
+        eyebrow: "Real example",
+        headline: "A real example: fewer raw contacts, more qualified conversations.",
+        body: "For GRASL Immobilien, unfiltered seller acquisition turned into a more predictable pipeline with qualified enquiries.",
+        quote: "We now receive a steady flow of qualified enquiries instead of unfiltered contacts - that makes our pipeline predictable.",
+        name: "SV Thomas Grasl",
+        role: "Owner, GRASL Immobilien, Schwaz",
+        firstMetric: "15-20",
+        firstLabel: "qualified enquiries per month",
+        secondMetric: "EUR 110k+",
+        secondLabel: "commission volume from active mandates",
+        cta: "See sample handover"
+      };
+
+  return (
+    <section className="case-proof-section" id="case-proof" aria-label={de ? "Grasl Immobilien Beispiel" : "GRASL Immobilien example"}>
+      <div className="case-proof-copy">
+        <p className="eyebrow">{copy.eyebrow}</p>
+        <h2>{copy.headline}</h2>
+        <p>{copy.body}</p>
+        <Link className="hero-subtle-link case-proof-link" href={`${getPath(locale, "home")}#proof`} data-track="case_handover">
+          {copy.cta}
+        </Link>
+      </div>
+      <article className="case-proof-card">
+        <div className="case-proof-person">
+          <Image
+            className="testimonial-avatar"
+            src="/images/thomas-grasl-portrait.jpg"
+            alt="SV Thomas Grasl"
+            width={84}
+            height={84}
+            sizes="84px"
+          />
+          <div>
+            <strong>{copy.name}</strong>
+            <span>{copy.role}</span>
+          </div>
+          <Image
+            className="testimonial-logo"
+            src="/images/grasl-immobilien-logo.png"
+            alt="GRASL Immobilien Logo"
+            width={71}
+            height={52}
+            sizes="120px"
+          />
+        </div>
+        <p className="case-proof-quote">&ldquo;{copy.quote}&rdquo;</p>
+        <dl className="case-proof-metrics">
+          <div>
+            <dt>{copy.firstMetric}</dt>
+            <dd>{copy.firstLabel}</dd>
+          </div>
+          <div>
+            <dt>{copy.secondMetric}</dt>
+            <dd>{copy.secondLabel}</dd>
+          </div>
+        </dl>
+      </article>
+    </section>
+  );
+}
+
 function TestimonialsSection({ locale }: { locale: Locale }) {
   const de = locale === "de";
   const copy = de
@@ -221,18 +325,6 @@ function TestimonialsSection({ locale }: { locale: Locale }) {
             </footer>
           </div>
         </blockquote>
-
-        <div className="testimonial-divider" aria-hidden="true" />
-        <dl className="testimonial-metrics">
-          <div className="testimonial-metric">
-            <dt>{copy.firstMetric}</dt>
-            <dd>{copy.firstMetricLabel}</dd>
-          </div>
-          <div className="testimonial-metric">
-            <dt>{copy.secondMetric}</dt>
-            <dd>{copy.secondMetricLabel}</dd>
-          </div>
-        </dl>
       </article>
     </section>
   );
@@ -251,25 +343,20 @@ function ProofSection({ locale }: { locale: Locale }) {
             : "The value is not the name and phone number. The value appears when source, motivation, timing, budget proximity and next step are visible."}
         </p>
       </div>
-      <div className="proof-grid">
-        <ProofCard title={de ? "Was Ihr Vertrieb vor dem ersten Call sehen sollte" : "What sales should see before the first call"} label={de ? "Demo - keine echten Kundendaten" : "Demo - no real client data"}>
+      <div className="proof-feature-grid">
+        <article className="proof-card proof-card-feature">
+          <span className="proof-label">{de ? "Immobilien-Handover" : "Real estate handover"}</span>
+          <h3>{de ? "Eine Anfrage wird erst wertvoll, wenn Vertrieb den Kontext sieht." : "An enquiry becomes valuable when sales can see the context."}</h3>
           <MockHandover locale={locale} compact />
-        </ProofCard>
+        </article>
+        <div className="proof-support-grid">
         <ProofCard title={de ? "Was im Audit geprüft wird" : "What the audit reviews"} label={de ? "Beispiel-Auszug" : "Example excerpt"}>
           <Scorecard locale={locale} />
         </ProofCard>
         <ProofCard title={de ? "So trennen wir Neugier von Verkaufschance" : "How curiosity is separated from sales opportunity"} label={de ? "Lead-Scoring-Matrix" : "Lead scoring matrix"}>
           <ScoringMatrix locale={locale} />
         </ProofCard>
-        <ProofCard title={de ? "Demo-Funnel für ein fiktives Neubauprojekt" : "Demo funnel for a fictional new-build project"} label={de ? "Fiktiver Demo-Funnel" : "Fictional demo funnel"}>
-          <FlowMock locale={locale} />
-        </ProofCard>
-        <ProofCard title={de ? "Kein Launch ohne Handover-Check" : "No launch without handover check"} label={de ? "QA-Launch-Checkliste" : "QA launch checklist"}>
-          <Checklist locale={locale} />
-        </ProofCard>
-        <ProofCard title={de ? "Was nach 10, 15 und 21 Tagen stehen kann" : "What can be ready after 10, 15 and 21 days"} label={de ? "Typischer Lieferplan" : "Typical delivery plan"}>
-          <Timeline locale={locale} />
-        </ProofCard>
+        </div>
       </div>
     </section>
   );
@@ -419,10 +506,10 @@ function DeliverablesSection({ content }: { content: HomeContent }) {
             : "NovaLure liefert die Struktur zwischen erstem Klick und qualifiziertem Gespräch: Funnel, Fragen, CRM-Übergabe, Follow-up und Reporting."}
         </p>
       </div>
-      <div className="module-grid module-grid-wide">
+      <div className="module-grid deliverables-focus-grid">
         {content.modules.items.map((item, index) => (
           <article className="module-card" key={item.title}>
-            <span>{String(index + 1).padStart(2, "0")} · {item.audience}</span>
+            <span>{String(index + 1).padStart(2, "0")}</span>
             <h3>{item.title}</h3>
             <p>{item.body}</p>
           </article>
@@ -961,6 +1048,7 @@ function LegalPage({ content }: { content: PageContent }) {
 
 function FaqSection({ locale, items }: { locale: Locale; items: { question: string; answer: string }[] }) {
   if (!items.length) return null;
+  const groups = groupFaqItems(locale, items);
 
   return (
     <section className="faq-section">
@@ -968,16 +1056,37 @@ function FaqSection({ locale, items }: { locale: Locale; items: { question: stri
         <p className="eyebrow">FAQ</p>
         <h2>{locale === "en" ? "Hard questions before we talk." : "Harte Fragen vor dem Gespräch."}</h2>
       </div>
-      <div className="faq-list">
-        {items.map((item) => (
-          <details key={item.question}>
-            <summary>{item.question}</summary>
-            <p>{item.answer}</p>
-          </details>
+      <div className="faq-group-grid">
+        {groups.map((group) => (
+          <article className="faq-group" key={group.title}>
+            <h3>{group.title}</h3>
+            <div className="faq-list">
+              {group.items.map((item) => (
+                <details key={item.question}>
+                  <summary>{item.question}</summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </article>
         ))}
       </div>
     </section>
   );
+}
+
+function groupFaqItems(locale: Locale, items: { question: string; answer: string }[]) {
+  const de = locale === "de";
+  const labels = de
+    ? ["Vertrauen", "Angebot", "Zusammenarbeit", "Grenzen"]
+    : ["Trust", "Offer", "Working together", "Boundaries"];
+
+  return [
+    { title: labels[0], items: items.slice(0, 3) },
+    { title: labels[1], items: items.slice(3, 8) },
+    { title: labels[2], items: items.slice(8, 13) },
+    { title: labels[3], items: items.slice(13) }
+  ].filter((group) => group.items.length);
 }
 
 function FinalCta({ content, title }: { content: PageContent; title?: string }) {

@@ -50,7 +50,7 @@ export function Header({ locale }: { locale: Locale }) {
       </nav>
 
       <div className="header-actions desktop-actions">
-        <Link className="button button-secondary" href={playbookHref} data-track="nav_playbook">{labels.secondary}</Link>
+        <Link className="header-secondary-link" href={playbookHref} data-track="nav_playbook">{labels.secondary}</Link>
         <Link className="button button-primary" href={auditHref} data-track="nav_audit">{labels.primary}</Link>
         <a className="crm-login-link" href={crmHref} data-track="nav_crm_login">
           {labels.crm}
@@ -85,7 +85,7 @@ export function Header({ locale }: { locale: Locale }) {
             {item.type === "route" ? navLabels[locale][item.key] : anchorLabels[locale][item.key]}
           </Link>
         ))}
-        <Link className="button button-secondary" href={playbookHref} onClick={() => setOpen(false)}>
+        <Link className="header-secondary-link mobile-playbook-link" href={playbookHref} onClick={() => setOpen(false)}>
           {labels.secondary}
         </Link>
         <a className="crm-login-link" href={crmHref} data-track="mobile_nav_crm_login" onClick={() => setOpen(false)}>
