@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getPath, getPlaybookFormPath } from "@/lib/i18n";
-import { playbooks, type HomeContent, type PageContent } from "@/content/pages";
+import { playbooks, type Cta, type HomeContent, type PageContent } from "@/content/pages";
 import { ContactInquiryForm } from "@/components/ContactInquiryForm";
 import { FunnelHeroVisual } from "@/components/FunnelHeroVisual";
 import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholders";
@@ -27,12 +27,8 @@ function Hero({ content, visual = false }: { content: PageContent; visual?: bool
         <h1>{content.title}</h1>
         <p className="hero-description">{content.description}</p>
         <div className="hero-actions">
-          <Link className="button button-primary" href={getCtaHref(content.locale, content.primaryCta)} data-track="cta_primary">
-            {content.primaryCta.label}
-          </Link>
-          <Link className="button button-secondary" href={getCtaHref(content.locale, content.secondaryCta)} data-track="cta_secondary">
-            {content.secondaryCta.label}
-          </Link>
+          <CtaLink className="button button-primary" locale={content.locale} cta={content.primaryCta} track="cta_primary" />
+          <CtaLink className={getSecondaryCtaClass(content.secondaryCta)} locale={content.locale} cta={content.secondaryCta} track="cta_secondary" />
         </div>
         <ul className="hero-bullets">
           {content.heroBullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
@@ -827,7 +823,33 @@ function FinalCta({ content, title }: { content: PageContent; title?: string }) 
   );
 }
 
-function getCtaHref(locale: Locale, cta: PageContent["primaryCta"]) {
+function CtaLink({ className, locale, cta, track }: { className: string; locale: Locale; cta: Cta; track: string }) {
+  const href = getCtaHref(locale, cta);
+
+  if ("href" in cta) {
+    return (
+      <a className={className} href={href} data-track={track}>
+        {cta.label}
+      </a>
+    );
+  }
+
+  return (
+    <Link className={className} href={href} data-track={track}>
+      {cta.label}
+    </Link>
+  );
+}
+
+function getSecondaryCtaClass(cta: Cta) {
+  return cta.variant === "subtle" ? "hero-subtle-link" : "button button-secondary";
+}
+
+function getCtaHref(locale: Locale, cta: Cta) {
+  if ("href" in cta) {
+    return cta.href;
+  }
+
   if (cta.target === "playbooks" && !cta.anchor) {
     return getPlaybookFormPath(locale);
   }

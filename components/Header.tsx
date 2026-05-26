@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { anchorLabels, getPath, getPlaybookFormPath, navLabels, navigationItems, routeMap, type Locale } from "@/lib/i18n";
+import { anchorLabels, getCrmAppUrl, getPath, getPlaybookFormPath, navLabels, navigationItems, routeMap, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
 
 const ctaLabels = {
-  en: { primary: "Pipeline Audit", secondary: "Playbook", crm: "CRM Handover", menu: "Menu", close: "Close menu" },
-  de: { primary: "Pipeline-Audit", secondary: "Playbook", crm: "CRM-Handover", menu: "Menü", close: "Menü schließen" }
+  en: { primary: "Pipeline Audit", secondary: "Playbook", crm: "CRM login", menu: "Menu", close: "Close menu" },
+  de: { primary: "Pipeline-Audit", secondary: "Playbook", crm: "Zum CRM", menu: "Menü", close: "Menü schließen" }
 };
 
 const headerNavigationItems = navigationItems.filter(
@@ -27,7 +27,7 @@ export function Header({ locale }: { locale: Locale }) {
   const switchHref = activeKey ? routeMap[activeKey][switchLocale] : getPath(switchLocale, "home");
   const playbookHref = getPlaybookFormPath(locale);
   const auditHref = `${getPath(locale, "contact")}#book-audit`;
-  const crmHref = getPath(locale, "handover");
+  const crmHref = getCrmAppUrl(locale);
 
   return (
     <header className={`site-header ${open ? "menu-open" : ""}`}>
@@ -52,6 +52,9 @@ export function Header({ locale }: { locale: Locale }) {
       <div className="header-actions desktop-actions">
         <Link className="button button-secondary" href={playbookHref} data-track="nav_playbook">{labels.secondary}</Link>
         <Link className="button button-primary" href={auditHref} data-track="nav_audit">{labels.primary}</Link>
+        <a className="crm-login-link" href={crmHref} data-track="nav_crm_login">
+          {labels.crm}
+        </a>
         <Link className="locale-switch" href={switchHref} hrefLang={switchLocale}>{switchLocale.toUpperCase()}</Link>
       </div>
 
@@ -85,9 +88,9 @@ export function Header({ locale }: { locale: Locale }) {
         <Link className="button button-secondary" href={playbookHref} onClick={() => setOpen(false)}>
           {labels.secondary}
         </Link>
-        <Link className="button button-secondary" href={crmHref} onClick={() => setOpen(false)}>
+        <a className="crm-login-link" href={crmHref} data-track="mobile_nav_crm_login" onClick={() => setOpen(false)}>
           {labels.crm}
-        </Link>
+        </a>
         <Link className="button button-primary" href={auditHref} onClick={() => setOpen(false)}>
           {labels.primary}
         </Link>

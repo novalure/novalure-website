@@ -224,6 +224,25 @@ button:disabled {
   color: #ffffff;
 }
 
+.hero-subtle-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px;
+  color: rgba(248, 250, 252, 0.64);
+  border-bottom: 1px solid rgba(248, 250, 252, 0.2);
+  font-size: 0.93rem;
+  font-weight: 760;
+  line-height: 1;
+  white-space: nowrap;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.hero-subtle-link:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.48);
+}
+
 .locale-switch {
   display: inline-flex;
   align-items: center;
@@ -3305,6 +3324,7 @@ code {
   }
 
   .hero-actions .button,
+  .hero-actions .hero-subtle-link,
   .cta-band .button,
   .contact-form-actions,
   .contact-form-actions .button,

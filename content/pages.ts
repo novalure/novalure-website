@@ -1,10 +1,17 @@
-import type { Locale, PageKey } from "@/lib/i18n";
+import { crmAppUrls, type Locale, type PageKey } from "@/lib/i18n";
 
-export type Cta = {
-  label: string;
-  target: PageKey;
-  anchor?: string;
-};
+export type Cta =
+  | {
+      label: string;
+      target: PageKey;
+      anchor?: string;
+      variant?: "button" | "subtle";
+    }
+  | {
+      label: string;
+      href: string;
+      variant?: "button" | "subtle";
+    };
 
 export type FaqItem = {
   question: string;
@@ -295,7 +302,7 @@ const homeContent: Record<Locale, HomeContent> = {
     metaDescription:
       "NovaLure löst Vertriebsprobleme im Immobilienvertrieb: Lead-Qualifizierung, eigenes CRM, Handover-Kontext und klare Priorität für Bauträger, Projektvertriebe und Maklerteams.",
     primaryCta: { label: "Vertriebsproblem prüfen", target: "contact", anchor: "book-audit" },
-    secondaryCta: { label: "CRM-Handover ansehen", target: "handover" },
+    secondaryCta: { label: "Zum CRM", href: crmAppUrls.de, variant: "subtle" },
     heroBullets: [
       "Eigenes CRM mit Handover-Kontext",
       "Qualifizierung vor dem ersten Sales-Call",
@@ -402,7 +409,7 @@ const homeContent: Record<Locale, HomeContent> = {
     metaDescription:
       "NovaLure solves real estate sales problems with lead qualification, its own CRM, handover context and clearer sales priority for developers and agent teams.",
     primaryCta: { label: "Review sales problem", target: "contact", anchor: "book-audit" },
-    secondaryCta: { label: "See CRM handover", target: "handover" },
+    secondaryCta: { label: "CRM login", href: crmAppUrls.en, variant: "subtle" },
     heroBullets: [
       "Own CRM with handover context",
       "Qualification before the first sales call",
