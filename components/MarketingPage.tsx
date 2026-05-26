@@ -94,7 +94,6 @@ function HomePage({ content }: { content: HomeContent }) {
       <DeliverablesSection content={content} />
       <ProofSection locale={locale} />
       <PipelineAuditSection locale={locale} />
-      <TestimonialsSection locale={locale} />
       <ProcessBlock content={content} />
       <FaqSection locale={locale} items={content.faq || []} />
       <FinalCta content={content} title={content.finalCtaTitle} />
@@ -255,76 +254,6 @@ function CaseProofSection({ locale }: { locale: Locale }) {
             <dd>{copy.secondLabel}</dd>
           </div>
         </dl>
-      </article>
-    </section>
-  );
-}
-
-function TestimonialsSection({ locale }: { locale: Locale }) {
-  const de = locale === "de";
-  const copy = de
-    ? {
-        eyebrow: "KUNDENSTIMMEN",
-        headline: "Qualifizierte Anfragen sind messbar besser als Rohleads.",
-        intro: "Ein Beispiel aus der DACH-Immobilienbranche: weniger ungefilterte Kontakte, mehr planbare Pipeline und klarere Gespräche.",
-        quote: "Die Zusammenarbeit mit NovaLure hat unsere Verkäuferakquise messbar verändert. Wir bekommen kontinuierlich qualifizierte Anfragen statt ungefilterter Kontakte — das macht unsere Pipeline planbar.",
-        name: "SV Thomas Grasl",
-        subline: "Inhaber GRASL Immobilien, Schwaz",
-        firstMetric: "15–20",
-        firstMetricLabel: "Qualifizierte Anfragen pro Monat",
-        secondMetric: "EUR 110k+",
-        secondMetricLabel: "Provisionsvolumen aus aktiven Mandaten"
-      }
-    : {
-        eyebrow: "CLIENT TESTIMONIALS",
-        headline: "Qualified enquiries beat raw leads.",
-        intro: "An example from the DACH real estate market: fewer unfiltered contacts, more predictable pipeline and clearer conversations.",
-        quote: "Working with NovaLure has measurably changed how we acquire seller leads. We now receive a steady flow of qualified inquiries instead of unfiltered contacts — that makes our pipeline predictable.",
-        name: "SV Thomas Grasl",
-        subline: "Owner, GRASL Immobilien, Schwaz",
-        firstMetric: "15–20",
-        firstMetricLabel: "Qualified inquiries per month",
-        secondMetric: "EUR 110k+",
-        secondMetricLabel: "Commission volume from active mandates"
-      };
-
-  return (
-    <section className="testimonials-section" id="kundenstimmen" aria-labelledby="kundenstimmen-title">
-      <div className="testimonials-heading">
-        <p className="testimonials-eyebrow">{copy.eyebrow}</p>
-        <h2 id="kundenstimmen-title">{copy.headline}</h2>
-        <p>{copy.intro}</p>
-      </div>
-
-      <article className="testimonial-card">
-        <span className="testimonial-quote-mark" aria-hidden="true">&ldquo;</span>
-        <blockquote className="testimonial-body">
-          <Image
-            className="testimonial-avatar"
-            src="/images/thomas-grasl-portrait.jpg"
-            alt="SV Thomas Grasl"
-            width={96}
-            height={96}
-            sizes="96px"
-          />
-          <div className="testimonial-content">
-            <p className="testimonial-quote">{copy.quote}</p>
-            <footer className="testimonial-person-row">
-              <div className="testimonial-person">
-                <strong>{copy.name}</strong>
-                <span>{copy.subline}</span>
-              </div>
-              <Image
-                className="testimonial-logo"
-                src="/images/grasl-immobilien-logo.png"
-                alt="GRASL Immobilien Logo"
-                width={71}
-                height={52}
-                sizes="(max-width: 700px) 150px, 180px"
-              />
-            </footer>
-          </div>
-        </blockquote>
       </article>
     </section>
   );
