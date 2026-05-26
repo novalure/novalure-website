@@ -1297,7 +1297,8 @@ h3 {
   font-size: clamp(1.5rem, 2.35vw, 2.35rem);
   line-height: 1;
   overflow-wrap: normal;
-  white-space: nowrap;
+  text-wrap: balance;
+  white-space: normal;
 }
 
 .trust-card small {

@@ -82,14 +82,14 @@ function TrustSnapshot({ locale }: { locale: Locale }) {
   const cards = de
     ? [
         {
-          label: "Kundenbeispiel",
-          metric: "15-20",
-          body: "qualifizierte Anfragen pro Monat: Kontakte mit erkennbarer Absicht, nicht jede rohe Formularanfrage."
+          label: "Leadqualität",
+          metric: "Bessere Anfragen",
+          body: "Der Fokus liegt auf echter Kauf- oder Verkaufsabsicht statt auf möglichst vielen Rohkontakten."
         },
         {
-          label: "Aktive Mandate",
-          metric: "EUR 110k+",
-          body: "Provisionsvolumen aus aktiven Mandaten in diesem Beispiel. Ein Proof-Punkt, keine Garantie."
+          label: "Vertriebszeit",
+          metric: "Weniger Sortierarbeit",
+          body: "Ihr Team erkennt früher, welche Anfragen passen und welche erst später relevant sind."
         },
         {
           label: "CRM-Übergabe",
@@ -104,14 +104,14 @@ function TrustSnapshot({ locale }: { locale: Locale }) {
       ]
     : [
         {
-          label: "Client example",
-          metric: "15-20",
-          body: "qualified enquiries per month: contacts with visible intent, not every raw form submission."
+          label: "Lead quality",
+          metric: "Better enquiries",
+          body: "The focus is real buyer or seller intent, not the highest possible volume of raw contacts."
         },
         {
-          label: "Active mandates",
-          metric: "EUR 110k+",
-          body: "commission volume from active mandates in this setup. A proof point, not a guarantee."
+          label: "Sales time",
+          metric: "Less sorting work",
+          body: "Your team sees earlier which enquiries fit and which ones should be followed later."
         },
         {
           label: "CRM handover",
@@ -148,8 +148,8 @@ function TrustSnapshot({ locale }: { locale: Locale }) {
         </div>
         <p className="trust-note">
           {de
-            ? "Die Zahlen sind ein reales Kundenbeispiel und erklären die Qualität des Systems. Sie sind keine pauschale Lead- oder Umsatzgarantie."
-            : "The numbers are a real client example and show the quality of the system. They are not a blanket lead or revenue guarantee."}
+            ? "Konkrete Kundenergebnisse bleiben im Testimonial. Dieser Abschnitt erklärt, worauf NovaLure optimiert: Qualität, Kontext und weniger Vertriebszeitverlust."
+            : "Concrete client outcomes stay in the testimonial. This section explains what NovaLure optimises for: quality, context and less wasted sales time."}
         </p>
       </div>
     </section>
