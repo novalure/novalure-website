@@ -1218,9 +1218,8 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.trust-grid,
-.market-comparison-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.trust-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .market-comparison-grid {
@@ -1264,6 +1263,11 @@ h3 {
   max-width: 760px;
 }
 
+.trust-proof {
+  display: grid;
+  gap: 14px;
+}
+
 .trust-copy h2 {
   margin-bottom: 14px;
   font-size: clamp(2rem, 3.5vw, 3.8rem);
@@ -1290,14 +1294,31 @@ h3 {
 
 .trust-card strong {
   color: var(--ink);
-  font-size: clamp(1.55rem, 3vw, 2.7rem);
+  font-size: clamp(1.5rem, 2.35vw, 2.35rem);
   line-height: 1;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
+.trust-card small {
+  color: var(--gold-strong);
+  font-size: 0.74rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .trust-card span,
 .market-comparison-card p,
 .market-comparison-card li {
   color: var(--muted);
+  line-height: 1.55;
+}
+
+.trust-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
   line-height: 1.55;
 }
 
@@ -2316,6 +2337,22 @@ code {
 
 .home-audit-section .section-heading p {
   color: rgba(248, 250, 252, 0.72);
+}
+
+.home-audit-section .content-section {
+  min-height: auto;
+  color: var(--ink);
+}
+
+.home-audit-section .content-section h2 {
+  color: var(--ink);
+  font-size: clamp(1.75rem, 2.35vw, 2.85rem);
+}
+
+.home-audit-section .content-section .check-list li {
+  color: #233044;
+  background: #f4f7fb;
+  border-color: #d9e2ef;
 }
 
 .mandates-section {

@@ -81,16 +81,48 @@ function TrustSnapshot({ locale }: { locale: Locale }) {
   const de = locale === "de";
   const cards = de
     ? [
-        ["15-20", "qualifizierte Anfragen pro Monat aus einem realen Kunden-Setup"],
-        ["EUR 110k+", "Provisionsvolumen aus aktiven Mandaten"],
-        ["CRM-ready", "Quelle, Motivation, Timing, Budgetnähe und nächster Schritt vor dem ersten Gespräch"],
-        ["EU-basiert", "NovaLure CLG in Irland, spezialisiert auf Immobilienvertrieb"]
+        {
+          label: "Kundenbeispiel",
+          metric: "15-20",
+          body: "qualifizierte Anfragen pro Monat: Kontakte mit erkennbarer Absicht, nicht jede rohe Formularanfrage."
+        },
+        {
+          label: "Aktive Mandate",
+          metric: "EUR 110k+",
+          body: "Provisionsvolumen aus aktiven Mandaten in diesem Beispiel. Ein Proof-Punkt, keine Garantie."
+        },
+        {
+          label: "CRM-Übergabe",
+          metric: "CRM-ready",
+          body: "Quelle, Motivation, Timing, Budgetnähe und nächster Schritt sind vor dem ersten Gespräch sichtbar."
+        },
+        {
+          label: "Unternehmen",
+          metric: "EU-basiert",
+          body: "NovaLure CLG in Irland, spezialisiert auf Immobilienvertrieb in DACH, UK und international."
+        }
       ]
     : [
-        ["15-20", "qualified enquiries per month from a real client setup"],
-        ["EUR 110k+", "commission volume from active mandates"],
-        ["CRM-ready", "source, motivation, timing, budget proximity and next step before the first call"],
-        ["EU-based", "NovaLure CLG in Ireland, specialised in real estate sales"]
+        {
+          label: "Client example",
+          metric: "15-20",
+          body: "qualified enquiries per month: contacts with visible intent, not every raw form submission."
+        },
+        {
+          label: "Active mandates",
+          metric: "EUR 110k+",
+          body: "commission volume from active mandates in this setup. A proof point, not a guarantee."
+        },
+        {
+          label: "CRM handover",
+          metric: "CRM-ready",
+          body: "source, motivation, timing, budget proximity and next step are visible before the first call."
+        },
+        {
+          label: "Company",
+          metric: "EU-based",
+          body: "NovaLure CLG in Ireland, specialised in real estate sales across DACH, UK and international markets."
+        }
       ];
 
   return (
@@ -104,13 +136,21 @@ function TrustSnapshot({ locale }: { locale: Locale }) {
             : "NovaLure is specialised in real estate sales: less manual sorting, more context and a clear next step for buyers, sellers or project enquiries."}
         </p>
       </div>
-      <div className="trust-grid">
-        {cards.map(([metric, label]) => (
-          <article className="trust-card" key={metric}>
-            <strong>{metric}</strong>
-            <span>{label}</span>
-          </article>
-        ))}
+      <div className="trust-proof">
+        <div className="trust-grid">
+          {cards.map((card) => (
+            <article className="trust-card" key={card.metric}>
+              <small>{card.label}</small>
+              <strong>{card.metric}</strong>
+              <span>{card.body}</span>
+            </article>
+          ))}
+        </div>
+        <p className="trust-note">
+          {de
+            ? "Die Zahlen sind ein reales Kundenbeispiel und erklären die Qualität des Systems. Sie sind keine pauschale Lead- oder Umsatzgarantie."
+            : "The numbers are a real client example and show the quality of the system. They are not a blanket lead or revenue guarantee."}
+        </p>
       </div>
     </section>
   );
@@ -462,8 +502,8 @@ function PipelineAuditSection({ locale }: { locale: Locale }) {
     ? ["Anzeige und Quelle", "Landingpage und Formular", "Qualifizierende Fragen", "CRM-Übergabe", "Follow-up", "Reporting nach Leadqualität"]
     : ["Ad and source", "Landing page and form", "Qualification questions", "CRM handover", "Follow-up", "Reporting by lead quality"];
   const outcomes = de
-    ? ["Einschätzung des aktuellen Lead-Systems", "Identifizierte Schwachstellen", "Empfehlung, ob Build+Run sinnvoll ist", "Klarheit über den nächsten Schritt"]
-    : ["Assessment of the current lead system", "Identified weak points", "Recommendation whether Build+Run makes sense", "Clarity on the next step"];
+    ? ["Einschätzung des aktuellen Lead-Systems", "Identifizierte Schwachstellen", "Empfehlung, ob Aufbau plus laufende Optimierung sinnvoll ist", "Klarheit über den nächsten Schritt"]
+    : ["Assessment of the current lead system", "Identified weak points", "Recommendation whether setup plus ongoing optimisation makes sense", "Clarity on the next step"];
 
   return (
     <section className="audit-section home-audit-section" id="pipeline-audit">
