@@ -58,20 +58,61 @@ function HomePage({ content }: { content: HomeContent }) {
   return (
     <main>
       <Hero content={content} visual />
-      <ProofSection locale={locale} />
-      <TestimonialsSection locale={locale} />
-      <DeliverablesSection content={content} />
-      <AudienceOverview content={content} />
+      <TrustSnapshot locale={locale} />
       <ProblemSection content={content} />
+      <AudienceOverview content={content} />
       <SystemSection content={content} />
-      <TeamBlock content={content} />
-      <PlaybookConversion locale={locale} title={content.playbookSection.title} body={content.playbookSection.body} />
+      <DeliverablesSection content={content} />
+      <ProofSection locale={locale} />
+      <PipelineAuditSection locale={locale} />
+      <TestimonialsSection locale={locale} />
       <BeforeAfter content={content} />
-      <AntiPromisesSection locale={locale} />
+      <MarketComparisonSection locale={locale} />
+      <TeamBlock content={content} />
       <ProcessBlock content={content} />
+      <PlaybookConversion locale={locale} title={content.playbookSection.title} body={content.playbookSection.body} />
       <FaqSection locale={locale} items={content.faq || []} />
       <FinalCta content={content} title={content.finalCtaTitle} />
     </main>
+  );
+}
+
+function TrustSnapshot({ locale }: { locale: Locale }) {
+  const de = locale === "de";
+  const cards = de
+    ? [
+        ["15-20", "qualifizierte Anfragen pro Monat aus einem realen Kunden-Setup"],
+        ["EUR 110k+", "Provisionsvolumen aus aktiven Mandaten"],
+        ["CRM-ready", "Quelle, Motivation, Timing, Budgetnähe und nächster Schritt vor dem ersten Gespräch"],
+        ["EU-basiert", "NovaLure CLG in Irland, spezialisiert auf Immobilienvertrieb"]
+      ]
+    : [
+        ["15-20", "qualified enquiries per month from a real client setup"],
+        ["EUR 110k+", "commission volume from active mandates"],
+        ["CRM-ready", "source, motivation, timing, budget proximity and next step before the first call"],
+        ["EU-based", "NovaLure CLG in Ireland, specialised in real estate sales"]
+      ];
+
+  return (
+    <section className="trust-snapshot" aria-label={de ? "Vertrauenssignale" : "Trust signals"}>
+      <div className="trust-copy">
+        <p className="eyebrow">{de ? "Sofort klar" : "Immediate proof"}</p>
+        <h2>{de ? "Es geht nicht um mehr Rohleads. Es geht um bessere Gespräche." : "This is not about more raw leads. It is about better conversations."}</h2>
+        <p>
+          {de
+            ? "NovaLure ist auf Immobilienvertrieb spezialisiert: weniger Sortierarbeit, mehr Kontext und ein klarer nächster Schritt für Käufer, Eigentümer oder Projektinteressenten."
+            : "NovaLure is specialised in real estate sales: less manual sorting, more context and a clear next step for buyers, sellers or project enquiries."}
+        </p>
+      </div>
+      <div className="trust-grid">
+        {cards.map(([metric, label]) => (
+          <article className="trust-card" key={metric}>
+            <strong>{metric}</strong>
+            <span>{label}</span>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -80,26 +121,26 @@ function TestimonialsSection({ locale }: { locale: Locale }) {
   const copy = de
     ? {
         eyebrow: "KUNDENSTIMMEN",
-        headline: "Vertrauen aus der Praxis.",
-        intro: "Echte Stimmen aus der DACH-Immobilienbranche. Keine erfundenen Cases, keine gemieteten Logos — nur Kunden, die mit NovaLure arbeiten.",
+        headline: "Qualifizierte Anfragen sind messbar besser als Rohleads.",
+        intro: "Ein Beispiel aus der DACH-Immobilienbranche: weniger ungefilterte Kontakte, mehr planbare Pipeline und klarere Gespräche.",
         quote: "Die Zusammenarbeit mit NovaLure hat unsere Verkäuferakquise messbar verändert. Wir bekommen kontinuierlich qualifizierte Anfragen statt ungefilterter Kontakte — das macht unsere Pipeline planbar.",
         name: "SV Thomas Grasl",
         subline: "Inhaber GRASL Immobilien, Schwaz",
         firstMetric: "15–20",
         firstMetricLabel: "Qualifizierte Anfragen pro Monat",
-        secondMetric: "€110k+",
+        secondMetric: "EUR 110k+",
         secondMetricLabel: "Provisionsvolumen aus aktiven Mandaten"
       }
     : {
         eyebrow: "CLIENT TESTIMONIALS",
-        headline: "Trusted in practice.",
-        intro: "Real voices from the DACH real estate industry. No invented case studies, no rented logos — only clients who work with NovaLure.",
+        headline: "Qualified enquiries beat raw leads.",
+        intro: "An example from the DACH real estate market: fewer unfiltered contacts, more predictable pipeline and clearer conversations.",
         quote: "Working with NovaLure has measurably changed how we acquire seller leads. We now receive a steady flow of qualified inquiries instead of unfiltered contacts — that makes our pipeline predictable.",
         name: "SV Thomas Grasl",
         subline: "Owner, GRASL Immobilien, Schwaz",
         firstMetric: "15–20",
         firstMetricLabel: "Qualified inquiries per month",
-        secondMetric: "€110k+",
+        secondMetric: "EUR 110k+",
         secondMetricLabel: "Commission volume from active mandates"
       };
 
@@ -162,12 +203,12 @@ function ProofSection({ locale }: { locale: Locale }) {
   return (
     <section className="proof-section" id="proof" data-track-section="proof">
       <div className="section-heading">
-        <p className="eyebrow">{de ? "Proof ohne Fake-Referenzen" : "Proof without invented references"}</p>
-        <h2>{de ? "Proof ohne Logo-Wand: So sieht das System aus" : "Proof without a logo wall: what the system looks like"}</h2>
+        <p className="eyebrow">{de ? "Beispiel-Handover" : "Sample handover"}</p>
+        <h2>{de ? "Was ein qualifizierter Lead vor dem ersten Gespräch enthalten sollte" : "What a qualified lead should contain before the first call"}</h2>
         <p>
           {de
-            ? "NovaLure zeigt keine erfundenen Kundenlogos, keine Fake-Testimonials und keine Show-Inszenierung. Stattdessen sehen Sie ruhige Systemgrafiken und konkrete Beispiel-Artefakte: Demo-Funnel, CRM-Handover, Audit-Auswertung, Lead-Scoring und QA-Checkliste. Alles klar als Beispiel markiert."
-            : "NovaLure shows no invented client logos, no fabricated testimonials and no presentation theatre. Instead, you see calm system graphics and concrete example artefacts: demo funnel, CRM handover, audit output, lead scoring and QA checklist. Everything is clearly marked as an example."}
+            ? "Der Wert entsteht nicht durch Name und Telefonnummer. Der Wert entsteht, wenn Quelle, Motivation, Timing, Budgetnähe und nächster Schritt sichtbar sind."
+            : "The value is not the name and phone number. The value appears when source, motivation, timing, budget proximity and next step are visible."}
         </p>
       </div>
       <div className="proof-grid">
@@ -207,20 +248,20 @@ function ProofCard({ title, label, children }: { title: string; label: string; c
 function MockHandover({ locale, compact = false }: { locale: Locale; compact?: boolean }) {
   const rows = locale === "de"
     ? [
-        ["Signal", "Projekt- oder Verkaufsinteresse"],
-        ["Quelle", "Asset, Kampagne oder Empfehlung"],
-        ["Kontextlücke", "Timing oder Motiv unklar"],
-        ["CRM-Sichtbarkeit", "Anfrage ohne klaren nächsten Schritt"],
-        ["Vertriebsfrage", "Was muss zuerst geklärt werden?"],
-        ["Audit-Hinweis", "Handover prüfen, bevor Budget steigt"]
+        ["Segment", "Käufer, Eigentümer oder Projektinteressent"],
+        ["Quelle", "Asset, Kampagne, Portal oder Empfehlung"],
+        ["Motivation", "Kaufen, verkaufen, investieren oder informieren"],
+        ["Timing", "0-3 Monate, 3-6 Monate oder später"],
+        ["Budgetnähe", "passt / offen / nicht passend"],
+        ["Nächster Schritt", "Rückruf, Suchprofil, Bewertung oder Projektgespräch"]
       ]
     : [
-        ["Signal", "Project or seller/buyer enquiry"],
-        ["Source", "Asset, campaign or referral path"],
-        ["Context gap", "Timing or motivation unclear"],
-        ["CRM visibility", "Enquiry without a clear next step"],
-        ["Sales question", "What must be clarified first?"],
-        ["Audit prompt", "Check handover before more spend"]
+        ["Segment", "Buyer, seller or project enquiry"],
+        ["Source", "Asset, campaign, portal or referral"],
+        ["Motivation", "Buy, sell, invest or research"],
+        ["Timing", "0-3 months, 3-6 months or later"],
+        ["Budget proximity", "fit / open / not a fit"],
+        ["Next step", "Callback, search profile, valuation or project call"]
       ];
 
   return (
@@ -334,8 +375,8 @@ function DeliverablesSection({ content }: { content: HomeContent }) {
         <h2>{content.modules.title}</h2>
         <p>
           {content.locale === "en"
-            ? "NovaLure does not sell a loose marketing package. The delivery is a Build+Run system that connects demand, qualification, CRM handover and follow-up."
-            : "NovaLure verkauft kein loses Marketingpaket. Geliefert wird ein Build+Run-System, das Nachfrage, Qualifizierung, CRM-Handover und Follow-up verbindet."}
+            ? "NovaLure delivers the structure between first click and qualified conversation: funnel, questions, CRM handover, follow-up and reporting."
+            : "NovaLure liefert die Struktur zwischen erstem Klick und qualifiziertem Gespräch: Funnel, Fragen, CRM-Übergabe, Follow-up und Reporting."}
         </p>
       </div>
       <div className="module-grid module-grid-wide">
@@ -415,6 +456,52 @@ function SystemSection({ content }: { content: HomeContent }) {
   );
 }
 
+function PipelineAuditSection({ locale }: { locale: Locale }) {
+  const de = locale === "de";
+  const checks = de
+    ? ["Anzeige und Quelle", "Landingpage und Formular", "Qualifizierende Fragen", "CRM-Übergabe", "Follow-up", "Reporting nach Leadqualität"]
+    : ["Ad and source", "Landing page and form", "Qualification questions", "CRM handover", "Follow-up", "Reporting by lead quality"];
+  const outcomes = de
+    ? ["Einschätzung des aktuellen Lead-Systems", "Identifizierte Schwachstellen", "Empfehlung, ob Build+Run sinnvoll ist", "Klarheit über den nächsten Schritt"]
+    : ["Assessment of the current lead system", "Identified weak points", "Recommendation whether Build+Run makes sense", "Clarity on the next step"];
+
+  return (
+    <section className="audit-section home-audit-section" id="pipeline-audit">
+      <div className="section-heading narrow">
+        <p className="eyebrow">{de ? "Pipeline-Audit" : "Pipeline Audit"}</p>
+        <h2>
+          {de
+            ? "Finden Sie heraus, wo Ihr Lead-System Vertriebszeit verliert."
+            : "Find out where your lead system is wasting sales time."}
+        </h2>
+        <p>
+          {de
+            ? "Das Pipeline-Audit prüft, ob Ihr aktueller Weg von Anzeige bis CRM qualifizierte Gespräche erzeugt oder nur neue Sortierarbeit."
+            : "The Pipeline Audit checks whether your current path from ad to CRM creates qualified conversations or just more sorting work."}
+        </p>
+      </div>
+      <div className="audit-grid">
+        <article className="content-section">
+          <h2>{de ? "Was geprüft wird" : "What gets reviewed"}</h2>
+          <ul className="check-list">{checks.map((item) => <li key={item}>{item}</li>)}</ul>
+        </article>
+        <article className="content-section">
+          <h2>{de ? "Was Sie danach wissen" : "What you know afterwards"}</h2>
+          <ul className="check-list">{outcomes.map((item) => <li key={item}>{item}</li>)}</ul>
+        </article>
+      </div>
+      <div className="section-actions">
+        <Link className="button button-primary" href={`${getPath(locale, "contact")}#book-audit`} data-track="home_audit">
+          {de ? "Pipeline-Audit buchen" : "Book a Pipeline Audit"}
+        </Link>
+        <Link className="button button-secondary dark" href={getPlaybookFormPath(locale)} data-track="home_playbook_secondary">
+          {de ? "Playbook herunterladen" : "Download playbook"}
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 function PlaybookConversion({ locale, title, body }: { locale: Locale; title: string; body: string }) {
   return <PlaybookHub locale={locale} title={title} body={body} eyebrow={locale === "en" ? "Secondary funnel" : "Secondary Funnel"} />;
 }
@@ -454,6 +541,63 @@ function BeforeAfter({ content }: { content: HomeContent }) {
       <div className="comparison-card after">
         <h2>{content.beforeAfter.afterTitle}</h2>
         {content.beforeAfter.after.map((item) => <p key={item}>{item}</p>)}
+      </div>
+    </section>
+  );
+}
+
+function MarketComparisonSection({ locale }: { locale: Locale }) {
+  const de = locale === "de";
+  const columns = de
+    ? [
+        {
+          title: "Klassische Agentur",
+          points: ["Fokus auf Kampagnen, Klicks und Creatives", "CRM-Kontext oft nachgelagert", "Erfolg häufig über CPL gemessen"]
+        },
+        {
+          title: "Lead-Portal",
+          points: ["Reichweite, aber keine eigene Pipeline", "Leads oft geteilt oder austauschbar", "Wenig Kontrolle über Funnel und Daten"]
+        },
+        {
+          title: "NovaLure",
+          points: ["Eigener Lead-Weg mit Vorqualifizierung", "CRM-fähige Übergabe mit nächstem Schritt", "Reporting nach Leadqualität und Fokus auf qualifizierte Gespräche"]
+        }
+      ]
+    : [
+        {
+          title: "Classic agency",
+          points: ["Focus on campaigns, clicks and creatives", "CRM context often comes too late", "Success often measured by CPL"]
+        },
+        {
+          title: "Lead portal",
+          points: ["Reach, but no owned pipeline", "Leads are often shared or interchangeable", "Limited control over funnel and data"]
+        },
+        {
+          title: "NovaLure",
+          points: ["Owned lead path with pre-qualification", "CRM-ready handover with next step", "Reporting by lead quality and focus on qualified conversations"]
+        }
+      ];
+
+  return (
+    <section className="market-comparison-section">
+      <div className="section-heading narrow">
+        <p className="eyebrow">{de ? "Vergleich" : "Comparison"}</p>
+        <h2>{de ? "NovaLure vs. klassische Agentur vs. Lead-Portal" : "NovaLure vs. classic agency vs. lead portal"}</h2>
+        <p>
+          {de
+            ? "NovaLure konkurriert nicht über lautere Versprechen. Der Unterschied liegt darin, ob Anfragen mit Kontext, Priorität und nächstem Schritt im Vertrieb ankommen."
+            : "NovaLure does not compete through louder promises. The difference is whether enquiries reach sales with context, priority and a next step."}
+        </p>
+      </div>
+      <div className="market-comparison-grid">
+        {columns.map((column) => (
+          <article className="market-comparison-card" key={column.title}>
+            <h3>{column.title}</h3>
+            <ul className="check-list">
+              {column.points.map((point) => <li key={point}>{point}</li>)}
+            </ul>
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -702,17 +846,17 @@ function ContactPage({ content }: { content: PageContent }) {
 function AuditExplainer({ locale }: { locale: Locale }) {
   const de = locale === "de";
   const fit = de
-    ? ["Sie sind Bauträger, Projektentwickler, Projektvertrieb, Maklerteam oder professioneller Makler.", "Sie haben bereits Leads, Kampagnen, Portale oder Projektanfragen.", "Ihr Vertrieb verliert Zeit durch unqualifizierte Anfragen.", "Sie sind bereit, ein System zu bauen und mindestens 3 Monate zu betreiben.", "Sie können Budget und Entscheidungskompetenz realistisch klären."]
-    : ["You are a developer, project sales team, broker team or professional real estate agent.", "You already have leads, campaigns, portals or project enquiries.", "Your sales team loses time through unqualified enquiries.", "You are ready to build a system and operate it for at least 3 months.", "You can realistically clarify budget and decision authority."];
+    ? ["Sie sind Bauträger, Projektentwickler, Projektvertrieb, Maklerteam oder professioneller Makler.", "Sie haben bereits Leads, Kampagnen, Portale oder Projektanfragen.", "Sie verlieren Zeit durch unqualifizierte Anfragen oder fehlenden CRM-Kontext.", "Sie wollen aus Anfragen qualifizierte Gespräche machen.", "Sie können Budget und Entscheidungskompetenz realistisch klären."]
+    : ["You are a developer, project sales team, broker team or professional real estate agent.", "You already have leads, campaigns, portals or project enquiries.", "You lose time through unqualified enquiries or missing CRM context.", "You want enquiries to become qualified conversations.", "You can realistically clarify budget and decision authority."];
   const noFit = de
-    ? ["Sie sammeln nur kostenlose Marketingideen.", "Sie erwarten eine Lead-Garantie.", "Sie suchen Build-only oder Run-only.", "Sie wollen keine CRM- oder Vertriebsdisziplin aufbauen.", "Sie können aktuell kein Projekt, Marktgebiet oder Leadproblem benennen."]
-    : ["You only want free marketing ideas.", "You expect a lead guarantee.", "You want Build-only or Run-only.", "You do not want CRM or sales discipline.", "You cannot name a project, market area or lead-quality problem."];
+    ? ["Sie sammeln nur kostenlose Marketingideen.", "Sie erwarten eine feste Lead-Zahl unabhängig von Markt und Angebot.", "Sie wollen keine CRM- oder Follow-up-Struktur aufbauen.", "Sie können aktuell kein Projekt, Marktgebiet oder Leadproblem benennen."]
+    : ["You only want free marketing ideas.", "You expect a fixed lead number regardless of market and offer.", "You do not want CRM or follow-up structure.", "You cannot name a project, market area or lead-quality problem."];
   const checks = de
     ? ["Zielgruppe und Projekt-/Marktlogik", "bestehende Leadquellen", "Landingpage- und Formularlogik", "Qualifizierungsfragen", "CRM-Handover", "Follow-up-Disziplin", "Engpass zwischen Marketing und Vertrieb", "ob ein Build+Run wirtschaftlich sinnvoll ist"]
     : ["target group and project/market logic", "existing lead sources", "landing page and form logic", "qualification questions", "CRM handover", "follow-up discipline", "bottleneck between marketing and sales", "whether Build+Run is commercially sensible"];
   const after = de
-    ? ["Klare Einschätzung: geeignet / nicht geeignet / noch nicht bereit", "3-5 identifizierte Pipeline-Leaks", "Empfehlung, ob Build+Run sinnvoll ist", "Nächster Schritt: Angebot, zweites Diagnosegespräch oder Absage"]
-    : ["clear assessment: fit / no fit / not ready yet", "3-5 identified pipeline leaks", "recommendation on whether Build+Run makes sense", "next step: proposal, second diagnosis call or refusal"];
+    ? ["Einschätzung des aktuellen Lead-Systems", "3-5 identifizierte Schwachstellen", "Empfehlung, ob Aufbau plus laufende Optimierung sinnvoll ist", "Nächster Schritt: Angebot, zweites Diagnosegespräch oder klare Absage"]
+    : ["assessment of the current lead system", "3-5 identified weak points", "recommendation on whether build plus ongoing optimisation makes sense", "next step: proposal, second diagnosis call or clear refusal"];
   const notIncluded = de
     ? ["keine vollständige Funnel-Strategie gratis", "keine Media-Planung gratis", "keine Lead-Garantie", "keine rechtliche oder finanzielle Beratung", "keine Zusage ohne Scope-Prüfung"]
     : ["no full funnel strategy for free", "no free media planning", "no lead guarantee", "no legal or financial advice", "no commitment without scope review"];
@@ -802,17 +946,17 @@ function FinalCta({ content, title }: { content: PageContent; title?: string }) 
       <div>
         <p className="eyebrow">{content.locale === "en" ? "Next step" : "Nächster Schritt"}</p>
         <h2>{title || (content.locale === "en" ? "Review whether your funnel needs a Build+Run system." : "Prüfen Sie in 30 Minuten, ob Ihr Funnel ein Build+Run-System braucht.")}</h2>
-        <p>{content.locale === "en" ? "No free consulting report is included. No lead guarantee. Clear diagnosis before proposal." : "Kein kostenloses Gutachten. Keine Lead-Garantie. Klare Diagnose vor Angebot."}</p>
+        <p>{content.locale === "en" ? "See whether your current funnel creates qualified conversations or only more sorting work." : "Sehen Sie, ob Ihr aktueller Funnel qualifizierte Gespräche erzeugt oder nur neue Sortierarbeit."}</p>
       </div>
       <div className="hero-actions">
         <div className="cta-primary-group">
           <Link className="button button-primary" href={`${getPath(content.locale, "contact")}#book-audit`} data-track="cta_audit">
-            {content.locale === "en" ? "Request a Pipeline Audit" : "Pipeline-Audit anfragen"}
+            {content.locale === "en" ? "Book a Pipeline Audit" : "Pipeline-Audit buchen"}
           </Link>
           <p className="cta-microcopy">
             {content.locale === "en"
-              ? "30 min diagnosis. No sales pitch. No free funnel plans."
-              : "30 Min. Diagnose. Kein Verkaufsgespräch. Keine kostenlosen Funnel-Pläne."}
+              ? "30 min diagnosis. Clear bottleneck. Clear next step."
+              : "30 Min. Diagnose. Klarer Engpass. Klarer nächster Schritt."}
           </p>
         </div>
         <Link className="button button-secondary dark" href={getPlaybookFormPath(content.locale)} data-track="cta_playbook">

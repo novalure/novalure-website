@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     default: "NovaLure",
     template: "%s"
   },
-  description: "PropTech Sales System for real estate developers and agents.",
+  description: "CRM-ready lead systems that turn real estate enquiries into qualified conversations.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "NovaLure",
-    images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: "NovaLure CRM-ready real estate lead systems" }]
+    images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: "NovaLure turns real estate enquiries into qualified conversations" }]
   },
   twitter: {
     card: "summary_large_image"

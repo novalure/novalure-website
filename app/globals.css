@@ -327,6 +327,23 @@ h1 {
   hyphens: auto;
 }
 
+.hero-home {
+  grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+  gap: clamp(24px, 4vw, 58px);
+  min-height: calc(92svh - 76px);
+  padding-top: clamp(58px, 7vw, 104px);
+  padding-bottom: clamp(46px, 6vw, 88px);
+}
+
+.hero-home h1 {
+  font-size: clamp(2.45rem, 3.9vw, 3.8rem);
+  line-height: 1;
+}
+
+.hero-home .funnel-hero-visual {
+  width: min(46vw, 720px);
+}
+
 h2 {
   margin-bottom: 14px;
   font-size: clamp(2rem, 4.3vw, 4.5rem);
@@ -1113,8 +1130,10 @@ h3 {
 }
 
 .audience-section,
+.trust-snapshot,
 .problem-section,
 .module-section,
+.market-comparison-section,
 .playbook-section,
 .process-section,
 .team-section,
@@ -1126,6 +1145,7 @@ h3 {
 }
 
 .audience-section,
+.trust-snapshot,
 .playbook-section,
 .team-section {
   background: var(--mist);
@@ -1140,8 +1160,10 @@ h3 {
 
 .system-section,
 .module-section,
+.home-audit-section,
 .before-after,
 .anti-promises-section,
+.market-comparison-section,
 .process-section,
 .faq-section {
   color: #ffffff;
@@ -1158,6 +1180,7 @@ h3 {
 #playbook-download,
 #book-audit,
 #audit-form,
+#pipeline-audit,
 #kundenstimmen,
 #proof {
   scroll-margin-top: 120px;
@@ -1172,9 +1195,11 @@ h3 {
 }
 
 .audience-grid,
+.trust-grid,
 .problem-grid,
 .layer-grid,
 .module-grid,
+.market-comparison-grid,
 .playbook-grid,
 .team-grid {
   display: grid;
@@ -1190,6 +1215,15 @@ h3 {
 }
 
 .problem-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.trust-grid,
+.market-comparison-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.market-comparison-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
@@ -1217,6 +1251,77 @@ h3 {
   background: #ffffff;
   border: 1px solid var(--line);
   box-shadow: 0 18px 60px rgba(8, 13, 24, 0.08);
+}
+
+.trust-snapshot {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: start;
+}
+
+.trust-copy {
+  max-width: 760px;
+}
+
+.trust-copy h2 {
+  margin-bottom: 14px;
+  font-size: clamp(2rem, 3.5vw, 3.8rem);
+  line-height: 1.02;
+}
+
+.trust-copy p:last-child {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.trust-card,
+.market-comparison-card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+  padding: clamp(22px, 3vw, 34px);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 18px 60px rgba(8, 13, 24, 0.08);
+}
+
+.trust-card strong {
+  color: var(--ink);
+  font-size: clamp(1.55rem, 3vw, 2.7rem);
+  line-height: 1;
+}
+
+.trust-card span,
+.market-comparison-card p,
+.market-comparison-card li {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.market-comparison-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+
+.market-comparison-card h3 {
+  color: #ffffff;
+}
+
+.market-comparison-card .check-list li {
+  color: rgba(248, 250, 252, 0.76);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
 }
 
 .audience-card {
@@ -2202,6 +2307,17 @@ code {
   background: var(--mist);
 }
 
+.home-audit-section {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 212, 59, 0.12), transparent 32%),
+    linear-gradient(135deg, #07080b, #111722);
+}
+
+.home-audit-section .section-heading p {
+  color: rgba(248, 250, 252, 0.72);
+}
+
 .mandates-section {
   background: var(--mist);
 }
@@ -3069,12 +3185,19 @@ code {
     overflow: hidden;
   }
 
+  .hero-home .funnel-hero-visual {
+    width: 100%;
+  }
+
   .pipeline-card {
     width: 132px;
   }
 
   .audience-grid,
+  .trust-snapshot,
+  .trust-grid,
   .problem-grid,
+  .market-comparison-grid,
   .playbook-grid,
   .playbook-hub-grid,
   .team-grid,
@@ -3168,8 +3291,17 @@ code {
 }
 
 @media (max-width: 560px) {
+  .hero-home {
+    padding-top: 38px;
+    padding-bottom: 16px;
+  }
+
   .hero {
     padding-bottom: 24px;
+  }
+
+  .hero-home {
+    padding-bottom: 16px;
   }
 
   .mobile-menu {
@@ -3195,6 +3327,10 @@ code {
   h1 {
     font-size: clamp(2.35rem, 10.4vw, 3.2rem);
     line-height: 1.02;
+  }
+
+  .hero-home h1 {
+    font-size: clamp(2.05rem, 8.8vw, 2.65rem);
   }
 
   .hero-description {
@@ -3227,6 +3363,11 @@ code {
     transform: none;
     pointer-events: none;
     isolation: isolate;
+  }
+
+  .hero-home .funnel-hero-visual {
+    width: min(58vw, 220px);
+    margin-top: 0;
   }
 
   .hero-loop-video-desktop {
