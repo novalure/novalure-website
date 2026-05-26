@@ -3159,7 +3159,7 @@ code {
 
 @media (max-width: 560px) {
   .hero {
-    padding-bottom: 64px;
+    padding-bottom: 24px;
   }
 
   .mobile-menu {
