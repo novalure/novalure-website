@@ -16,7 +16,7 @@ export function FunnelHeroVisual({ locale }: { locale: Locale }) {
         preload="auto"
         aria-hidden="true"
       >
-        <source src="/videos/novalure-hero-transparent-desktop.webm" type="video/webm" />
+        <source src="/videos/novalure-hero-transparent-desktop.webm?v=20260526-desktop" type="video/webm" />
       </video>
       <video
         className="hero-loop-video hero-loop-video-mobile"
