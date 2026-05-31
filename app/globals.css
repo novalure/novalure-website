@@ -4098,9 +4098,7 @@ code {
 
 .landing-reference {
   color: var(--graphite);
-  background:
-    linear-gradient(90deg, rgba(255, 212, 59, 0.1), transparent 38%),
-    #ffffff;
+  background: #f7f9fc;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -4153,12 +4151,43 @@ code {
   place-items: center;
   min-height: 180px;
   padding: 28px;
+  background:
+    linear-gradient(135deg, rgba(255, 212, 59, 0.18), rgba(66, 211, 155, 0.1)),
+    #ffffff;
 }
 
-.landing-reference .testimonial-logo {
-  width: min(100%, 248px);
-  height: auto;
-  max-width: 248px;
+.reference-brand-mark {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  color: #17202f;
+  text-align: center;
+}
+
+.reference-brand-mark span {
+  color: var(--gold-strong);
+  font-size: 0.82rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reference-brand-mark strong {
+  font-size: clamp(2.15rem, 4vw, 3.4rem);
+  font-weight: 950;
+  line-height: 1;
+}
+
+.reference-brand-mark em {
+  margin-top: 8px;
+  padding: 8px 12px;
+  color: var(--graphite);
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(12, 19, 32, 0.08);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 850;
 }
 
 .reference-person-card {

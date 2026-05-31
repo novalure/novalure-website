@@ -361,14 +361,11 @@ function DeveloperLandingPage({ locale }: { locale: Locale }) {
         </div>
         <div className="reference-assets">
           <div className="reference-logo-card">
-            <Image
-              className="testimonial-logo"
-              src="/images/grasl-immobilien-logo.png"
-              alt="GRASL Immobilien Logo"
-              width={142}
-              height={104}
-              sizes="240px"
-            />
+            <div className="reference-brand-mark" aria-label="GRASL Immobilien">
+              <span>GRASL</span>
+              <strong>Immobilien</strong>
+              <em>{de ? "Referenzpartner" : "Reference partner"}</em>
+            </div>
           </div>
           <div className="reference-person-card">
             <Image
