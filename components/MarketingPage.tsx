@@ -355,7 +355,7 @@ function DeveloperLandingPage({ locale }: { locale: Locale }) {
       <section className="landing-section landing-reference" id="reference">
         <div>
           <LandingSectionHeading label={copy.reference.label} headline={copy.reference.headline} />
-          <blockquote>"{copy.reference.quote}"</blockquote>
+          <blockquote>&ldquo;{copy.reference.quote}&rdquo;</blockquote>
           <p className="reference-person">{copy.reference.person}</p>
           <p className="reference-metrics">{copy.reference.metrics}</p>
         </div>
