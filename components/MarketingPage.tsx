@@ -81,23 +81,398 @@ function SystemMiniCard({ bullets }: { bullets: string[] }) {
 }
 
 function HomePage({ content }: { content: HomeContent }) {
-  const locale = content.locale;
+  return <DeveloperLandingPage locale={content.locale} />;
+}
+
+const landingCtaLabels = {
+  de: { primary: "Projekt-Check buchen", secondary: "Playbook herunterladen" },
+  en: { primary: "Book a Project Check", secondary: "Download playbook" }
+} as const;
+
+const developerLandingCopy = {
+  de: {
+    hero: {
+      label: "Projektvermarktung für Bauträger",
+      headline: "Vom ersten Bild bis zum qualifizierten Käufergespräch.",
+      subline:
+        "Wir entwickeln Storytelling, Visualisierung und Exposé für Ihr Projekt – und führen Interessenten so weit, dass Ihr Vertrieb echte Gespräche führt statt Kontakte zu sortieren."
+    },
+    trustBar: "Spezialisiert auf Immobilienvertrieb · EU-Unternehmen (Irland) · Aktiv in DACH, UK & international",
+    visible: {
+      label: "Was wir für Ihr Projekt erstellen",
+      headline: "Material, das die richtigen Käufer anzieht.",
+      text:
+        "Visualisierung und Exposé sind bei uns kein Selbstzweck. Sie setzen die richtige Erwartung – damit Anfragen schon passen, bevor das erste Gespräch beginnt.",
+      captions: ["Außenvisualisierung – Beispiel", "Innenvisualisierung – Beispiel", "Exposé-Auszug – Beispiel"]
+    },
+    journey: {
+      label: "Wie aus einem Projekt qualifizierte Gespräche werden",
+      headline: "Wir begleiten den Interessenten – bis ein echter Mensch anruft.",
+      text:
+        "Die meisten Anfragen versanden, weil niemand konsequent nachfasst. Wir bauen den ganzen Weg: vom ersten Bild bis zum Anruf durch unser Team.",
+      steps: [
+        ["01", "Storytelling", "Eine Positionierung, die echtes Kaufinteresse anspricht."],
+        ["02", "Visualisierung", "Bilder, die zeigen, was wirklich entsteht."],
+        ["03", "Exposé", "Unterlagen, die informieren und gleichzeitig qualifizieren."],
+        ["04", "Kampagne", "Reichweite bei genau der richtigen Zielgruppe."],
+        ["05", "Nachfassen", "Automatisiert und persönlich, damit kein Interessent verloren geht."],
+        ["06", "Echter Anruf", "Unser Team kontaktiert die Interessenten persönlich und prüft echtes Interesse."]
+      ],
+      closing: "Am Ende erhält Ihr Vertrieb keine Rohleads, sondern vorbereitete Gespräche."
+    },
+    system: {
+      label: "Unser eigenes System",
+      headline: "Alles läuft in einem System zusammen, das wir selbst entwickelt haben.",
+      text:
+        "Material, Anfragen und Nachfassen greifen bei uns nicht zufällig ineinander. Wir haben dafür ein eigenes System gebaut – damit jede Anfrage an einem Ort zusammenläuft und Ihr Vertrieb auf einen Blick sieht, mit wem sich das Gespräch lohnt.",
+      points: [
+        "Alles an einem Ort. Jede Anfrage, ihr Verlauf und der nächste Schritt – übersichtlich statt verstreut.",
+        "Sie sehen, was zählt. Herkunft, Interesse, Zeitpunkt und Budget auf einen Blick.",
+        "Von uns betreut. Sie müssen nichts einrichten oder pflegen – wir kümmern uns um das System, Sie führen die Gespräche."
+      ],
+      closing:
+        "Das System ist kein Zusatzprodukt, sondern das Rückgrat, das Marketing, Nachfassen und Vertrieb verbindet."
+    },
+    outcome: {
+      label: "Was bei Ihrem Vertrieb ankommt",
+      headline: "Vorqualifizierte Gespräche statt Kontakte zum Sortieren.",
+      text:
+        "Jede Anfrage erreicht Ihren Vertrieb mit Kontext: woher sie kommt, was der Interessent will, wann er kaufen möchte und ob das Budget passt. Ihr Team startet das Gespräch dort, wo es sich lohnt."
+    },
+    reference: {
+      label: "Ein echtes Beispiel",
+      headline: "Aus ungefilterten Kontakten wurde eine planbare Pipeline.",
+      quote:
+        "Wir bekommen jetzt einen steten Fluss qualifizierter Anfragen statt ungefilterter Kontakte – das macht unsere Pipeline planbar.",
+      person: "SV Thomas Grasl, Inhaber, GRASL Immobilien, Schwaz",
+      metrics: "15–20 qualifizierte Anfragen pro Monat · über 110.000 EUR Provisionsvolumen aus aktiven Mandaten"
+    },
+    team: {
+      label: "Wer dahintersteht",
+      headline: "Ein fester Ansprechpartner. Ein Team, das liefert.",
+      text:
+        "Bei NovaLure werden Sie nicht durch wechselnde Kontakte gereicht. Franz Romih ist Ihr direkter Ansprechpartner – er analysiert Ihr Projekt, führt durch den Prozess und sorgt dafür, dass alle Teile ineinandergreifen. Dahinter arbeitet ein eingespieltes Team aus festen Mitstreitern und ausgewählten Spezialisten für Visualisierung, Exposé, Performance-Marketing und die Entwicklung unseres eigenen CRM-Systems. Sie sprechen mit einer Person, die Ihr Projekt kennt – und bekommen die Fachtiefe eines ganzen Teams."
+    },
+    playbook: {
+      label: "Playbook",
+      headline: "Bevor wir sprechen: Sehen Sie, wie wir denken.",
+      text:
+        "Unser Playbook zeigt, wie aus einem Projekt qualifizierte Käufergespräche werden – konkret, ohne Floskeln. Sie fordern es in 30 Sekunden an und erleben dabei gleich, wie unser System Anfragen aufnimmt und beantwortet."
+    },
+    audience: {
+      label: "Für wen wir arbeiten",
+      headline: "Für Bauträger, die ihr Projekt planbar verkaufen wollen.",
+      text:
+        "Wenn ein Projekt verkauft werden muss, reichen Klicks nicht. Ihr Vertrieb braucht Käufer, die zu Projekt, Budget und Zeitplan passen. Genau dafür bauen wir den Weg vom ersten Bild bis zum qualifizierten Gespräch.",
+      link: "Für Makler & Maklerteams"
+    },
+    trust: {
+      label: "Warum Sie uns vertrauen können",
+      headline: "Keine erfundenen Zahlen. Echtes Material.",
+      points: [
+        "Sie sehen, was Sie bekommen. Visualisierungen und Exposé-Beispiele liegen offen – beurteilen Sie die Qualität selbst.",
+        "Kein Lead-Versprechen aus der Luft. Anfragenzahlen hängen von Projekt, Markt und Budget ab. Wir nennen keine Fantasiewerte.",
+        "Ein echtes Team, kein anonymer Funnel. Ihre Interessenten werden persönlich kontaktiert."
+      ]
+    },
+    closing: {
+      headline: "Lassen Sie uns über Ihr Projekt sprechen.",
+      subline:
+        "30 Minuten. Wir schauen uns Ihr Projekt an und zeigen, wie der Weg vom Bild bis zum Käufergespräch für Sie aussehen würde."
+    }
+  },
+  en: {
+    hero: {
+      label: "Project marketing for developers",
+      headline: "From the first visual to a qualified buyer conversation.",
+      subline:
+        "We create the storytelling, visuals and expose for your project — and guide enquiries far enough that your sales team has real conversations instead of sorting contacts."
+    },
+    trustBar: "Specialised in real estate sales · EU company (Ireland) · Active in DACH, UK & international",
+    visible: {
+      label: "What we create for your project",
+      headline: "Material that attracts the right buyers.",
+      text:
+        "Visuals and exposes are not decoration. They set the right expectation — so enquiries already fit before the first conversation begins.",
+      captions: ["Exterior visual – example", "Interior visual – example", "Expose excerpt – example"]
+    },
+    journey: {
+      label: "How a project becomes qualified conversations",
+      headline: "We guide the enquiry — until a real person calls.",
+      text:
+        "Most enquiries fade because no one follows up properly. We build the whole path: from the first visual to a call from our team.",
+      steps: [
+        ["01", "Storytelling", "Positioning that speaks to real buying intent."],
+        ["02", "Visualisation", "Visuals that show what is actually being built."],
+        ["03", "Expose", "Documents that inform and qualify at the same time."],
+        ["04", "Campaign", "Reach aimed at exactly the right audience."],
+        ["05", "Follow-up", "Automated and personal, so no enquiry is lost."],
+        ["06", "A real call", "Our team contacts enquiries personally and checks genuine intent."]
+      ],
+      closing: "Your sales team receives prepared conversations, not raw leads."
+    },
+    system: {
+      label: "Our own system",
+      headline: "Everything comes together in a system we built ourselves.",
+      text:
+        "Material, enquiries and follow-up do not connect by chance. We built our own system for it — so every enquiry lands in one place and your sales team can see at a glance who is worth a conversation.",
+      points: [
+        "Everything in one place. Every enquiry, its history and the next step — clear instead of scattered.",
+        "You see what matters. Source, intent, timing and budget at a glance.",
+        "Managed by us. Nothing to set up or maintain — we run the system, you have the conversations."
+      ],
+      closing:
+        "The system is not an add-on. It is the backbone that connects marketing, follow-up and sales."
+    },
+    outcome: {
+      label: "What reaches your sales team",
+      headline: "Pre-qualified conversations instead of contacts to sort.",
+      text:
+        "Every enquiry reaches your team with context: where it came from, what the buyer wants, when they intend to buy and whether the budget fits. Your team starts where it is worth it."
+    },
+    reference: {
+      label: "A real example",
+      headline: "Unfiltered contacts became a predictable pipeline.",
+      quote:
+        "We now receive a steady flow of qualified enquiries instead of unfiltered contacts — that makes our pipeline predictable.",
+      person: "SV Thomas Grasl, Owner, GRASL Immobilien, Schwaz",
+      metrics: "15–20 qualified enquiries per month · EUR 110k+ commission volume from active mandates"
+    },
+    team: {
+      label: "The people behind NovaLure",
+      headline: "One consistent contact. A team that delivers.",
+      text:
+        "At NovaLure you are not passed between changing contacts. Franz Romih is your direct point of contact — he analyses your project, guides the process and makes sure every part fits together. Behind him works an established team of core people and selected specialists for visualisation, exposes, performance marketing and the development of our own CRM system. You speak with one person who knows your project — and get the depth of a whole team."
+    },
+    playbook: {
+      label: "Playbook",
+      headline: "Before we talk: see how we think.",
+      text:
+        "Our playbook shows how a project turns into qualified buyer conversations — concrete, no fluff. It takes 30 seconds to request, and you will experience first-hand how our system receives and responds to an enquiry."
+    },
+    audience: {
+      label: "Who we work for",
+      headline: "For developers who want to sell their project predictably.",
+      text:
+        "When a project needs to sell, clicks are not enough. Your sales team needs buyers who match the project, budget and timing. That is exactly what we build — the path from the first visual to a qualified conversation.",
+      link: "For agents & broker teams"
+    },
+    trust: {
+      label: "Why you can trust us",
+      headline: "No invented numbers. Real material.",
+      points: [
+        "You see what you get. Visuals and expose examples are open — judge the quality yourself.",
+        "No lead promises out of thin air. Enquiry numbers depend on project, market and budget. We do not quote fantasy figures.",
+        "A real team, not an anonymous funnel. Your enquiries are contacted personally."
+      ]
+    },
+    closing: {
+      headline: "Let us talk about your project.",
+      subline:
+        "30 minutes. We look at your project and show you what the path from visual to buyer conversation would look like."
+    }
+  }
+} as const;
+
+function DeveloperLandingPage({ locale }: { locale: Locale }) {
+  const copy = developerLandingCopy[locale];
+  const de = locale === "de";
 
   return (
-    <main>
-      <Hero content={content} visual />
-      <TrustSnapshot locale={locale} />
-      <CaseProofSection locale={locale} />
-      <ProblemSection content={content} />
-      <MarketComparisonSection locale={locale} />
-      <AudienceOverview content={content} />
-      <DeliverablesSection content={content} />
-      <ProofSection locale={locale} />
-      <PipelineAuditSection locale={locale} />
-      <ProcessBlock content={content} />
-      <FaqSection locale={locale} items={content.faq || []} />
-      <FinalCta content={content} title={content.finalCtaTitle} />
+    <main className="developer-landing">
+      <section className="developer-hero">
+        <div className="developer-hero-copy">
+          <p className="eyebrow">{copy.hero.label}</p>
+          <h1>{copy.hero.headline}</h1>
+          <p className="developer-hero-subline">{copy.hero.subline}</p>
+          <LandingCtaPair locale={locale} />
+        </div>
+        <div className="developer-hero-media" aria-label={de ? "Hero-Video Projektvisualisierung" : "Hero visualisation video"}>
+          <video
+            className="developer-hero-video"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster="/images/hero-visualisation-fallback.png"
+          >
+            <source src="/videos/hero-visualisation-video.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </section>
+
+      <section className="landing-trust-bar" aria-label={de ? "Vertrauenssignale" : "Trust signals"}>
+        <p>{copy.trustBar}</p>
+      </section>
+
+      <section className="landing-section landing-visible-work" id="visible-work">
+        <LandingSectionHeading label={copy.visible.label} headline={copy.visible.headline} />
+        <div className="visual-placeholder-grid">
+          <PlaceholderVisual name="visual-exterior-01" ratio="landscape" caption={copy.visible.captions[0]} />
+          <PlaceholderVisual name="visual-interior-01" ratio="landscape" caption={copy.visible.captions[1]} />
+          <PlaceholderVisual name="expose-excerpt-01" ratio="portrait" caption={copy.visible.captions[2]} />
+        </div>
+        <p className="landing-section-text">{copy.visible.text}</p>
+      </section>
+
+      <section className="landing-section landing-journey" id="project-path">
+        <LandingSectionHeading label={copy.journey.label} headline={copy.journey.headline} body={copy.journey.text} />
+        <ol className="journey-list">
+          {copy.journey.steps.map(([number, title, body]) => (
+            <li key={number}>
+              <span>{number}</span>
+              <div>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p className="landing-closing-line">{copy.journey.closing}</p>
+      </section>
+
+      <section className="landing-section landing-system" id="system">
+        <div>
+          <LandingSectionHeading label={copy.system.label} headline={copy.system.headline} body={copy.system.text} />
+          <ul className="system-point-list">
+            {copy.system.points.map((point) => <li key={point}>{point}</li>)}
+          </ul>
+          <p className="landing-closing-line">{copy.system.closing}</p>
+        </div>
+        <Image
+          className="system-support-image"
+          src="/images/system-franz-laptop.png"
+          alt={de ? "Franz Romih am Laptop" : "Franz Romih at a laptop"}
+          width={517}
+          height={530}
+          sizes="(min-width: 900px) 34vw, 86vw"
+        />
+      </section>
+
+      <section className="landing-section landing-outcome" id="proof">
+        <div>
+          <LandingSectionHeading label={copy.outcome.label} headline={copy.outcome.headline} body={copy.outcome.text} />
+        </div>
+        <MockHandover locale={locale} compact />
+      </section>
+
+      <LandingCtaBand locale={locale} />
+
+      <section className="landing-section landing-reference" id="reference">
+        <div>
+          <LandingSectionHeading label={copy.reference.label} headline={copy.reference.headline} />
+          <blockquote>
+            {de ? `„${copy.reference.quote}“` : `“${copy.reference.quote}”`}
+          </blockquote>
+          <p className="reference-person">{copy.reference.person}</p>
+          <p className="reference-metrics">{copy.reference.metrics}</p>
+        </div>
+        <div className="reference-assets">
+          <Image
+            className="testimonial-avatar"
+            src="/images/thomas-grasl-portrait.jpg"
+            alt="SV Thomas Grasl"
+            width={96}
+            height={96}
+            sizes="96px"
+          />
+          <Image
+            className="testimonial-logo"
+            src="/images/grasl-immobilien-logo.png"
+            alt="GRASL Immobilien Logo"
+            width={142}
+            height={104}
+            sizes="160px"
+          />
+        </div>
+      </section>
+
+      <section className="landing-section landing-team" id="team">
+        <div className="team-photo-frame">
+          <Image
+            src="/images/team-franz-romih.png"
+            alt="Franz Romih, NovaLure"
+            width={1448}
+            height={1086}
+            sizes="(min-width: 900px) 46vw, 92vw"
+          />
+        </div>
+        <div>
+          <LandingSectionHeading label={copy.team.label} headline={copy.team.headline} />
+          <p className="landing-section-text">{copy.team.text}</p>
+        </div>
+      </section>
+
+      <section className="landing-section landing-playbook" id="playbook">
+        <div>
+          <LandingSectionHeading label={copy.playbook.label} headline={copy.playbook.headline} body={copy.playbook.text} />
+          <Link className="button button-primary" href={getPlaybookFormPath(locale)} data-track="home_playbook_primary">
+            {landingCtaLabels[locale].secondary}
+          </Link>
+        </div>
+      </section>
+
+      <section className="landing-section landing-audience" id="audience">
+        <LandingSectionHeading label={copy.audience.label} headline={copy.audience.headline} body={copy.audience.text} />
+        <Link className="landing-text-link landing-text-link-dark" href={getPath(locale, "agents")}>
+          {copy.audience.link}
+        </Link>
+      </section>
+
+      <section className="landing-section landing-trust" id="trust">
+        <LandingSectionHeading label={copy.trust.label} headline={copy.trust.headline} />
+        <ul className="trust-point-list">
+          {copy.trust.points.map((point) => <li key={point}>{point}</li>)}
+        </ul>
+      </section>
+
+      <section className="landing-closing-cta" id="project-check">
+        <h2>{copy.closing.headline}</h2>
+        <p>{copy.closing.subline}</p>
+        <LandingCtaPair locale={locale} />
+      </section>
     </main>
+  );
+}
+
+function LandingSectionHeading({ label, headline, body }: { label: string; headline: string; body?: string }) {
+  return (
+    <div className="landing-section-heading">
+      <p className="eyebrow">{label}</p>
+      <h2>{headline}</h2>
+      {body && <p>{body}</p>}
+    </div>
+  );
+}
+
+function LandingCtaPair({ locale }: { locale: Locale }) {
+  return (
+    <div className="landing-cta-row">
+      <Link className="button button-primary" href={`${getPath(locale, "contact")}#book-audit`} data-track="project_check_cta">
+        {landingCtaLabels[locale].primary}
+      </Link>
+      <Link className="landing-text-link" href={getPlaybookFormPath(locale)} data-track="playbook_text_cta">
+        {landingCtaLabels[locale].secondary}
+      </Link>
+    </div>
+  );
+}
+
+function LandingCtaBand({ locale }: { locale: Locale }) {
+  return (
+    <section className="landing-mid-cta">
+      <LandingCtaPair locale={locale} />
+    </section>
+  );
+}
+
+function PlaceholderVisual({ name, ratio, caption }: { name: string; ratio: "landscape" | "portrait"; caption: string }) {
+  return (
+    <figure className={`visual-placeholder visual-placeholder-${ratio}`}>
+      <div>PLATZHALTER: {name}</div>
+      <figcaption>{caption}</figcaption>
+    </figure>
   );
 }
 
@@ -322,7 +697,7 @@ function MockHandover({ locale, compact = false }: { locale: Locale; compact?: b
 
   return (
     <div className={`mock-table ${compact ? "mock-table-compact" : ""}`}>
-      <span className="mock-badge">{locale === "de" ? "Demo - keine echten Kundendaten" : "Demo - no real client data"}</span>
+      <span className="mock-badge">{locale === "de" ? "Demo – keine echten Kundendaten" : "Demo – no real client data"}</span>
       {rows.map(([label, value]) => (
         <div key={label}>
           <span>{label}</span>

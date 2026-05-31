@@ -3,17 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { anchorLabels, getCrmAppUrl, getPath, getPlaybookFormPath, navLabels, navigationItems, routeMap, type Locale } from "@/lib/i18n";
+import { getCrmAppUrl, getPath, getPlaybookFormPath, navLabels, routeMap, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
 
 const ctaLabels = {
-  en: { primary: "Pipeline Audit", secondary: "Playbook", crm: "CRM login", menu: "Menu", close: "Close menu" },
-  de: { primary: "Pipeline-Audit", secondary: "Playbook", crm: "Zum CRM", menu: "Menü", close: "Menü schließen" }
+  en: { primary: "Book a Project Check", crm: "CRM login", menu: "Menu", close: "Close menu" },
+  de: { primary: "Projekt-Check buchen", crm: "CRM-Login", menu: "Menü", close: "Menü schließen" }
 };
 
-const headerNavigationItems = navigationItems.filter(
-  (item) => item.type !== "route" || (item.key !== "playbooks" && item.key !== "contact")
-);
+const headerRouteItems = ["developers", "agents", "playbooks"] as const;
 
 export function Header({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
@@ -39,22 +37,19 @@ export function Header({ locale }: { locale: Locale }) {
       </div>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
-        {headerNavigationItems.map((item) => (
+        {headerRouteItems.map((key) => (
           <Link
-            key={item.type === "route" ? item.key : item.key}
-            href={item.type === "route" ? item.key === "playbooks" ? playbookHref : getPath(locale, item.key) : item.href[locale]}
+            key={key}
+            href={key === "playbooks" ? playbookHref : getPath(locale, key)}
           >
-            {item.type === "route" ? navLabels[locale][item.key] : anchorLabels[locale][item.key]}
+            {navLabels[locale][key]}
           </Link>
         ))}
+        <a href={crmHref} data-track="nav_crm_login">{labels.crm}</a>
       </nav>
 
       <div className="header-actions desktop-actions">
-        <Link className="header-secondary-link" href={playbookHref} data-track="nav_playbook">{labels.secondary}</Link>
         <Link className="button button-primary" href={auditHref} data-track="nav_audit">{labels.primary}</Link>
-        <a className="crm-login-link" href={crmHref} data-track="nav_crm_login">
-          {labels.crm}
-        </a>
         <Link className="locale-switch" href={switchHref} hrefLang={switchLocale}>{switchLocale.toUpperCase()}</Link>
       </div>
 
@@ -76,18 +71,15 @@ export function Header({ locale }: { locale: Locale }) {
       </button>
 
       <nav className="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-        {headerNavigationItems.map((item) => (
+        {headerRouteItems.map((key) => (
           <Link
-            key={item.type === "route" ? item.key : item.key}
-            href={item.type === "route" ? item.key === "playbooks" ? playbookHref : getPath(locale, item.key) : item.href[locale]}
+            key={key}
+            href={key === "playbooks" ? playbookHref : getPath(locale, key)}
             onClick={() => setOpen(false)}
           >
-            {item.type === "route" ? navLabels[locale][item.key] : anchorLabels[locale][item.key]}
+            {navLabels[locale][key]}
           </Link>
         ))}
-        <Link className="header-secondary-link mobile-playbook-link" href={playbookHref} onClick={() => setOpen(false)}>
-          {labels.secondary}
-        </Link>
         <a className="crm-login-link" href={crmHref} data-track="mobile_nav_crm_login" onClick={() => setOpen(false)}>
           {labels.crm}
         </a>
