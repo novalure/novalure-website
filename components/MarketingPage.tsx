@@ -340,14 +340,7 @@ function DeveloperLandingPage({ locale }: { locale: Locale }) {
           </ul>
           <p className="landing-closing-line">{copy.system.closing}</p>
         </div>
-        <Image
-          className="system-support-image"
-          src="/images/system-franz-laptop.png"
-          alt={de ? "Franz Romih am Laptop" : "Franz Romih at a laptop"}
-          width={517}
-          height={530}
-          sizes="(min-width: 900px) 34vw, 86vw"
-        />
+        <SystemDashboardMock locale={locale} />
       </section>
 
       <section className="landing-section landing-outcome" id="proof">
@@ -473,6 +466,73 @@ function PlaceholderVisual({ name, ratio, caption }: { name: string; ratio: "lan
       <div>PLATZHALTER: {name}</div>
       <figcaption>{caption}</figcaption>
     </figure>
+  );
+}
+
+function SystemDashboardMock({ locale }: { locale: Locale }) {
+  const de = locale === "de";
+  const stats = de
+    ? [
+        ["Projekt", "Pre-Launch"],
+        ["Visuals", "6 Szenen"],
+        ["Leads", "CRM-ready"]
+      ]
+    : [
+        ["Project", "Pre-launch"],
+        ["Visuals", "6 scenes"],
+        ["Leads", "CRM-ready"]
+      ];
+  const rows = de
+    ? [
+        ["Penthouse A3", "Besichtigung", "87"],
+        ["Gartenhaus B1", "Finanzierung", "74"],
+        ["Loft C2", "Kontakt", "68"]
+      ]
+    : [
+        ["Penthouse A3", "Viewing", "87"],
+        ["Garden Home B1", "Funding", "74"],
+        ["Loft C2", "Callback", "68"]
+      ];
+
+  return (
+    <div className="system-dashboard-mock" aria-label={de ? "NovaLure CRM Systemansicht" : "NovaLure CRM system view"}>
+      <div className="system-dashboard-top">
+        <span aria-hidden="true" />
+        <strong>NovaLure CRM</strong>
+        <em>{de ? "Live Vorschau" : "Live preview"}</em>
+      </div>
+      <div className="system-dashboard-stats">
+        {stats.map(([label, value]) => (
+          <div key={label}>
+            <small>{label}</small>
+            <strong>{value}</strong>
+          </div>
+        ))}
+      </div>
+      <div className="system-dashboard-main">
+        <div className="system-dashboard-bars" aria-hidden="true">
+          <span style={{ height: "54%" }} />
+          <span style={{ height: "76%" }} />
+          <span style={{ height: "63%" }} />
+          <span style={{ height: "88%" }} />
+          <span style={{ height: "70%" }} />
+        </div>
+        <div className="system-dashboard-pipeline">
+          <p>{de ? "Pipeline Handover" : "Pipeline handover"}</p>
+          {rows.map(([project, status, score]) => (
+            <div key={project}>
+              <span>{project}</span>
+              <strong>{status}</strong>
+              <em>{score}</em>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="system-dashboard-footer">
+        <span>{de ? "Quelle" : "Source"}</span>
+        <strong>{de ? "Kampagne, Visualisierung, Expose und CRM verbunden" : "Campaign, visualisation, expose and CRM connected"}</strong>
+      </div>
+    </div>
   );
 }
 
