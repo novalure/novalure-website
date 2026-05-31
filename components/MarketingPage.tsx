@@ -394,7 +394,7 @@ function DeveloperLandingPage({ locale }: { locale: Locale }) {
             sizes="(min-width: 900px) 46vw, 92vw"
           />
         </div>
-        <div>
+        <div className="team-copy">
           <LandingSectionHeading label={copy.team.label} headline={copy.team.headline} />
           <p className="landing-section-text">{copy.team.text}</p>
         </div>

@@ -4427,6 +4427,14 @@ code {
     justify-content: flex-start;
   }
 
+  .landing-team .team-copy {
+    order: 1;
+  }
+
+  .landing-team .team-photo-frame {
+    order: 2;
+  }
+
   .footer-bottom-redesign {
     align-items: flex-start;
   }
