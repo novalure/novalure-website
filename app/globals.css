@@ -4097,21 +4097,28 @@ code {
 }
 
 .landing-reference {
-  color: #ffffff;
-  background: #0f131a;
+  color: var(--graphite);
+  background:
+    linear-gradient(90deg, rgba(255, 212, 59, 0.1), transparent 38%),
+    #ffffff;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .landing-reference .landing-section-heading p:not(.eyebrow),
 .landing-reference .reference-person {
-  color: rgba(248, 250, 252, 0.72);
+  color: var(--muted);
 }
 
 .landing-reference blockquote {
   max-width: 820px;
-  margin: 12px 0 18px;
-  font-size: 1.62rem;
+  margin: 16px 0 18px;
+  padding-left: 24px;
+  color: #111827;
+  border-left: 4px solid var(--gold);
+  font-size: 1.48rem;
   font-weight: 820;
-  line-height: 1.35;
+  line-height: 1.42;
 }
 
 .reference-person,
@@ -4122,19 +4129,67 @@ code {
 
 .reference-metrics {
   margin-top: 10px;
-  color: var(--gold);
+  color: var(--gold-strong);
   font-weight: 850;
 }
 
 .reference-assets {
-  display: flex;
-  gap: 18px;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: grid;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.reference-logo-card,
+.reference-person-card {
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid rgba(12, 19, 32, 0.1);
   border-radius: 8px;
+  box-shadow: 0 18px 46px rgba(8, 13, 24, 0.08);
+}
+
+.reference-logo-card {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  padding: 28px;
+}
+
+.landing-reference .testimonial-logo {
+  width: min(100%, 248px);
+  height: auto;
+  max-width: 248px;
+}
+
+.reference-person-card {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+}
+
+.reference-person-card .testimonial-avatar {
+  width: 82px;
+  height: 82px;
+}
+
+.reference-person-card strong,
+.reference-person-card span {
+  display: block;
+  min-width: 0;
+}
+
+.reference-person-card strong {
+  color: var(--graphite);
+  font-weight: 920;
+}
+
+.reference-person-card span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 780;
 }
 
 .landing-team {
