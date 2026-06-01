@@ -78,8 +78,8 @@ const labels = {
     audit: "Pipeline-Audit buchen",
     handover: "Beispiel-Handover ansehen",
     playbook: "Playbook herunterladen",
-    developerPlaybook: "Bauträger-Pipeline-Leitfaden",
-    agentPlaybook: "Makler-Lead-Leitfaden"
+    developerPlaybook: "Bauträger-Pipeline-Playbook",
+    agentPlaybook: "Makler-Lead-Playbook"
   }
 };
 
@@ -88,21 +88,21 @@ export const playbooks: Record<Locale, Playbook[]> = {
     {
       key: "developer",
       title: labels.en.developerPlaybook,
-      subtitle: "A diagnostic guide for checking whether project enquiries are sales-ready or only contact details.",
+      subtitle: "A practical system map for turning project demand into qualified buyer conversations.",
       learns: [
-        "Where project demand loses context before sales can act",
-        "Which handover gaps make buyer leads expensive to sort",
-        "Whether your project is concrete enough for a Pipeline Audit"
+        "How to structure a project funnel before media spend scales",
+        "Where buyer intent should be filtered before sales handover",
+        "Which CRM context your sales team needs before the first call"
       ]
     },
     {
       key: "agent",
       title: labels.en.agentPlaybook,
-      subtitle: "A diagnostic guide for checking whether seller and buyer leads create conversations or only follow-up work.",
+      subtitle: "A field guide for agents who want owned seller and buyer demand beyond portals.",
       learns: [
-        "Where seller and buyer enquiries lose intent before follow-up",
-        "Which CRM context separates curiosity from sales readiness",
-        "Whether your local lead system is ready for a Pipeline Audit"
+        "How to separate portal dependency from owned pipeline",
+        "What seller and buyer lead flows need to qualify intent",
+        "How follow-up structure protects serious opportunities"
       ]
     }
   ],
@@ -110,21 +110,21 @@ export const playbooks: Record<Locale, Playbook[]> = {
     {
       key: "developer",
       title: labels.de.developerPlaybook,
-      subtitle: "Ein Diagnose-Leitfaden, um zu prüfen, ob Projektanfragen sales-ready sind oder nur Kontaktdaten.",
+      subtitle: "Eine praktische Systemkarte, um Projektnachfrage in qualifizierte Käufergespräche zu verwandeln.",
       learns: [
-        "Wo Projektnachfrage vor dem Vertrieb Kontext verliert",
-        "Welche Handover-Lücken Käuferleads teuer zu sortieren machen",
-        "Ob Ihr Projekt konkret genug für ein Pipeline-Audit ist"
+        "Wie ein Projekt-Funnel aufgebaut wird, bevor Media-Budget skaliert",
+        "Wo Kaufabsicht vor der Vertriebsübergabe gefiltert werden sollte",
+        "Welchen CRM-Kontext Ihr Vertrieb vor dem ersten Gespräch braucht"
       ]
     },
     {
       key: "agent",
       title: labels.de.agentPlaybook,
-      subtitle: "Ein Diagnose-Leitfaden, um zu prüfen, ob Verkäufer- und Käuferleads Gespräche erzeugen oder nur Follow-up-Arbeit.",
+      subtitle: "Ein Leitfaden für Makler, die eigene Verkäufer- und Käufernachfrage jenseits von Portalen aufbauen wollen.",
       learns: [
-        "Wo Verkäufer- und Käuferanfragen vor dem Follow-up Absicht verlieren",
-        "Welcher CRM-Kontext Neugier von Sales-Reife trennt",
-        "Ob Ihr lokales Lead-System bereit für ein Pipeline-Audit ist"
+        "Wie Sie Portalabhängigkeit von eigener Pipeline trennen",
+        "Welche Filter Verkäufer- und Käufer-Leads wirklich brauchen",
+        "Wie strukturierte Nachverfolgung ernsthafte Chancen schützt"
       ]
     }
   ]

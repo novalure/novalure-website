@@ -48,7 +48,7 @@ export const playbookFormCopy: Record<Locale, {
     },
     selectorLabel: "Choose your playbook",
     insideTitle: "What's inside",
-    submit: "Send me the playbook",
+    submit: "Send me the Playbook",
     loading: "Sending...",
     trust: "No spam · unsubscribe anytime · GDPR-compliant",
     previewAlt: "Playbook cover preview",
@@ -79,7 +79,7 @@ export const playbookFormCopy: Record<Locale, {
       developer: {
         eyebrow: "Playbook delivery",
         title: "Developer Pipeline Playbook",
-        headline: "Get your Pipeline Playbook",
+        headline: "Developer Pipeline Playbook",
         subline: "{pages}-page diagnostic guide · PDF · delivered in 2 minutes",
         inside: [
           "Where project enquiries lose context before sales can act",
@@ -90,7 +90,7 @@ export const playbookFormCopy: Record<Locale, {
       agent: {
         eyebrow: "Playbook delivery",
         title: "Real Estate Agent Lead Playbook",
-        headline: "Get your Lead Playbook",
+        headline: "Real Estate Agent Lead Playbook",
         subline: "{pages}-page diagnostic guide · PDF · delivered in 2 minutes",
         inside: [
           "Where seller and buyer enquiries lose intent before follow-up",
@@ -110,7 +110,7 @@ export const playbookFormCopy: Record<Locale, {
     },
     selectorLabel: "Wählen Sie Ihr Playbook",
     insideTitle: "Was drin ist",
-    submit: "Schick mir den Leitfaden",
+    submit: "Playbook anfordern",
     loading: "Wird gesendet...",
     trust: "Kein Spam · jederzeit abbestellbar · DSGVO-konform",
     previewAlt: "Playbook-Cover-Vorschau",
@@ -140,9 +140,9 @@ export const playbookFormCopy: Record<Locale, {
     variants: {
       developer: {
         eyebrow: "Playbook-Versand",
-        title: "Bauträger-Pipeline-Leitfaden",
-        headline: "Holen Sie sich Ihren Pipeline-Leitfaden",
-        subline: "{pages}-seitiger Diagnose-Leitfaden · PDF · in 2 Minuten im Postfach",
+        title: "Bauträger-Pipeline-Playbook",
+        headline: "Bauträger-Pipeline-Playbook",
+        subline: "{pages}-seitiges Diagnose-Playbook · PDF · in 2 Minuten im Postfach",
         inside: [
           "Wo Projekt-Anfragen Kontext verlieren, bevor der Vertrieb übernimmt",
           "Welche Übergabe-Lücken Käufer-Leads teuer machen",
@@ -151,9 +151,9 @@ export const playbookFormCopy: Record<Locale, {
       },
       agent: {
         eyebrow: "Playbook-Versand",
-        title: "Makler-Lead-Leitfaden",
-        headline: "Holen Sie sich Ihren Lead-Leitfaden",
-        subline: "{pages}-seitiger Diagnose-Leitfaden · PDF · in 2 Minuten im Postfach",
+        title: "Makler-Lead-Playbook",
+        headline: "Makler-Lead-Playbook",
+        subline: "{pages}-seitiges Diagnose-Playbook · PDF · in 2 Minuten im Postfach",
         inside: [
           "Wo Verkäufer- und Käufer-Anfragen Intent verlieren",
           "Welcher CRM-Kontext Neugier von Verkaufsbereitschaft trennt",
