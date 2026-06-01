@@ -16,18 +16,18 @@ const playbookCopy: Record<Locale, Record<PlaybookType, {
 }> & { audit: string; doiSubject: string; doiHeadline: string; doiIntro: string; doiCta: string }> = {
   en: {
     developer: {
-      subject: "Your Developer Pipeline Playbook",
-      headline: "Your Developer Pipeline Playbook is ready",
-      intro: "Here is the diagnostic guide. Read the CRM handover and intent-filter sections first. That is where many project funnels lose their commercial effect.",
+      subject: "Your Developer Project Playbook",
+      headline: "Your Developer Project Playbook is ready",
+      intro: "Here is the diagnostic guide. Read the handover and intent-filter sections first. That is where many project paths lose their commercial effect.",
       cta: "Open the playbook"
     },
     agent: {
       subject: "Your Real Estate Agent Lead Playbook",
       headline: "Your Real Estate Agent Lead Playbook is ready",
-      intro: "Here is the diagnostic guide. Read the CRM handover and intent-filter sections first. That is where many local lead systems lose their commercial effect.",
+      intro: "Here is the diagnostic guide. Read the handover and intent-filter sections first. That is where many local lead paths lose their commercial effect.",
       cta: "Open the playbook"
     },
-    audit: "If you have a concrete project, market area or lead-quality problem, the next step is a Pipeline Audit:",
+    audit: "If you have a concrete project, market area or lead-quality problem, the next step is a Project Check:",
     doiSubject: "Confirm NovaLure email updates",
     doiHeadline: "Please confirm your email updates",
     doiIntro: "You asked to receive relevant content, updates and offers from NovaLure. Confirm this once so we can record the marketing consent correctly.",
@@ -35,18 +35,18 @@ const playbookCopy: Record<Locale, Record<PlaybookType, {
   },
   de: {
     developer: {
-      subject: "Ihr Bauträger-Pipeline-Leitfaden",
-      headline: "Ihr Bauträger-Pipeline-Leitfaden ist bereit",
-      intro: "Hier ist der Diagnose-Leitfaden. Lesen Sie zuerst die Seiten zu CRM-Handover und Intent-Filter. Genau dort verlieren viele Projekt-Funnels ihre wirtschaftliche Wirkung.",
+      subject: "Ihr Bauträger-Projekt-Leitfaden",
+      headline: "Ihr Bauträger-Projekt-Leitfaden ist bereit",
+      intro: "Hier ist der Diagnose-Leitfaden. Lesen Sie zuerst die Seiten zu Übergabe und Intent-Filter. Genau dort verlieren viele Projektwege ihre wirtschaftliche Wirkung.",
       cta: "Leitfaden öffnen"
     },
     agent: {
       subject: "Ihr Makler-Lead-Leitfaden",
       headline: "Ihr Makler-Lead-Leitfaden ist bereit",
-      intro: "Hier ist der Diagnose-Leitfaden. Lesen Sie zuerst die Seiten zu CRM-Handover und Intent-Filter. Genau dort verlieren viele lokale Lead-Systeme ihre wirtschaftliche Wirkung.",
+      intro: "Hier ist der Diagnose-Leitfaden. Lesen Sie zuerst die Seiten zu Übergabe und Intent-Filter. Genau dort verlieren viele lokale Lead-Wege ihre wirtschaftliche Wirkung.",
       cta: "Leitfaden öffnen"
     },
-    audit: "Wenn Sie ein konkretes Projekt, Marktgebiet oder Leadproblem haben, ist ein Pipeline-Audit der nächste Schritt:",
+    audit: "Wenn Sie ein konkretes Projekt, Marktgebiet oder Leadproblem haben, ist ein Projekt-Check der nächste Schritt:",
     doiSubject: "NovaLure E-Mail-Updates bestätigen",
     doiHeadline: "Bitte bestätigen Sie Ihre E-Mail-Updates",
     doiIntro: "Sie haben angefragt, relevante Inhalte, Updates und Angebote von NovaLure zu erhalten. Bestätigen Sie das einmalig, damit wir die Marketing-Zustimmung korrekt dokumentieren können.",
@@ -270,7 +270,7 @@ async function sendPlaybookEmail({
   const item = playbookCopy[locale][type];
   const auditUrl = `${siteUrl}${locale === "de" ? "/de/kontakt" : "/en/contact"}#book-audit`;
   const greeting = locale === "de" ? `Hallo ${name},` : `Hi ${name},`;
-  const auditCta = locale === "de" ? "Pipeline-Audit anfragen" : "Request a Pipeline Audit";
+  const auditCta = locale === "de" ? "Projekt-Check anfragen" : "Request Project Check";
 
   await resend.emails.send({
     from,
@@ -284,7 +284,7 @@ async function sendPlaybookEmail({
         ${renderEmailButton(playbookUrl, item.cta)}
         <p style="margin-top:28px;">${escapeHtml(playbookCopy[locale].audit)}</p>
         ${renderEmailButton(auditUrl, auditCta, "secondary")}
-        <p style="color:#667085;font-size:13px;margin-top:32px">NovaLure · CRM-ready lead systems</p>
+        <p style="color:#667085;font-size:13px;margin-top:32px">NovaLure · Project marketing with prepared handover</p>
       </div>
     `,
     text: `${greeting}\n\n${item.intro}\n\n${item.cta}: ${playbookUrl}\n\n${playbookCopy[locale].audit}\n${auditUrl}`

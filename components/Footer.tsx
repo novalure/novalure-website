@@ -1,27 +1,25 @@
 import Link from "next/link";
-import { getCrmAppUrl, getPath, getPlaybookFormPath, legalKeys, navLabels, type Locale } from "@/lib/i18n";
+import { getPath, getPlaybookFormPath, legalKeys, navLabels, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
 
 const footerCopy = {
   en: {
-    intro: "CRM-supported lead systems for real estate teams that need clearer enquiries, cleaner handovers and better sales priority.",
+    intro: "Project marketing, follow-up and system-supported handover for real estate teams that want enquiries to become qualified conversations.",
     contact: "Contact",
     pages: "Pages",
     newsletter: "Newsletter",
-    newsletterText: "Practical marketing insights for developers – no spam, unsubscribe anytime.",
+    newsletterText: "Practical project marketing and lead-path insights - no spam, unsubscribe anytime.",
     newsletterCta: "Download playbook",
-    projectCheck: "Project Check",
-    crmLogin: "CRM login"
+    projectCheck: "Project Check"
   },
   de: {
-    intro: "CRM-gestützte Lead-Systeme für Immobilienteams, die klarere Anfragen, sauberere Übergaben und bessere Vertriebspriorität brauchen.",
+    intro: "Projektvermarktung, Nachfassen und systemgestützte Übergabe für Immobilienteams, die aus Anfragen qualifizierte Gespräche machen wollen.",
     contact: "Kontakt",
     pages: "Seiten",
     newsletter: "Newsletter",
-    newsletterText: "Konkrete Vermarktungs-Impulse für Bauträger – kein Spam, jederzeit abbestellbar.",
+    newsletterText: "Konkrete Impulse zu Projektvermarktung und Lead-Wegen - kein Spam, jederzeit abbestellbar.",
     newsletterCta: "Playbook herunterladen",
-    projectCheck: "Projekt-Check",
-    crmLogin: "CRM-Login"
+    projectCheck: "Projekt-Check"
   }
 } as const;
 
@@ -50,7 +48,6 @@ export function Footer({ locale }: { locale: Locale }) {
           <Link href={getPlaybookFormPath(locale)}>{navLabels[locale].playbooks}</Link>
           <Link href={`${getPath(locale, "contact")}#book-audit`}>{copy.projectCheck}</Link>
           <Link href={getPath(locale, "handover")}>{navLabels[locale].handover}</Link>
-          <a href={getCrmAppUrl(locale)}>{copy.crmLogin}</a>
         </nav>
 
         <div className="footer-newsletter">

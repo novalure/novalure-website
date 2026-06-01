@@ -13,8 +13,8 @@ export function organizationSchema(locale: Locale) {
     url: `${siteUrl}${routeMap.home[locale]}`,
     description:
       locale === "en"
-        ? "CRM-ready lead systems for real estate sales."
-        : "CRM-fähige Lead-Systeme für den Immobilienvertrieb.",
+        ? "Project marketing, follow-up and prepared handover for real estate sales."
+        : "Projektvermarktung, Nachfassen und vorbereitete Übergabe für den Immobilienvertrieb.",
     logo: `${siteUrl}/novalure-logo.png`,
     areaServed: ["AT", "DE", "CH", "LI", "IE", "EU"],
     founder: {

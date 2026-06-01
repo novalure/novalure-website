@@ -90,9 +90,9 @@ def background(c, dark=False):
 
 def footer(c, page, lang, dark=False):
     footer_text = (
-        "Novalure | PropTech Sales System für Bauträger und Immobilienmakler"
+        "Novalure | Projektvermarktung mit vorbereiteter Übergabe"
         if lang == "de"
-        else "Novalure | PropTech Sales System for real estate developers and agents"
+        else "Novalure | Project marketing with prepared handover"
     )
     c.setFillColor(colors.HexColor("#8b93a0" if not dark else "#b8c0cc"))
     c.setFont("Helvetica", 8)
@@ -112,13 +112,13 @@ def draw_logo(c, x, y, width, dark=False):
 
 def pipeline(c, x, y, width, height, lang, audience):
     labels = (
-        ["Nachfrage", "Projekt-Funnel", "Qualifizierung", "CRM", "Vertrieb"]
+        ["Nachfrage", "Projekt-Fit", "Qualifizierung", "Übergabe", "Vertrieb"]
         if lang == "de" and audience == "developer"
-        else ["Lokale Nachfrage", "Lead Magnet", "Segmentierung", "CRM", "Follow-up"]
+        else ["Lokale Nachfrage", "Lead Magnet", "Segmentierung", "Übergabe", "Follow-up"]
         if lang == "de"
-        else ["Demand", "Project Funnel", "Qualification", "CRM", "Sales"]
+        else ["Demand", "Project Fit", "Qualification", "Handover", "Sales"]
         if audience == "developer"
-        else ["Local Demand", "Lead Magnet", "Segmentation", "CRM", "Follow-up"]
+        else ["Local Demand", "Lead Magnet", "Segmentation", "Handover", "Follow-up"]
     )
     c.setFillColor(colors.HexColor("#111318"))
     c.roundRect(x, y, width, height, 14, stroke=0, fill=1)
@@ -142,7 +142,7 @@ def pipeline(c, x, y, width, height, lang, audience):
 
 
 def system_layers(c, x, y, width, height, lang):
-    labels = ["Funnel", "Demand", "Qualifizierung", "CRM"] if lang == "de" else ["Funnel", "Demand", "Qualification", "CRM"]
+    labels = ["Auftritt", "Nachfrage", "Qualifizierung", "Übergabe"] if lang == "de" else ["Presence", "Demand", "Qualification", "Handover"]
     c.setFillColor(colors.HexColor("#111318"))
     c.roundRect(x, y, width, height, 14, stroke=0, fill=1)
     for i, label in enumerate(labels):
@@ -280,11 +280,11 @@ def render(book):
 
     background(c, dark=True)
     draw_logo(c, M, H - 34 * mm, 78 * mm, dark=True)
-    final_title = "Lassen Sie Ihr aktuelles Lead-System prüfen." if book["lang"] == "de" else "Have your current lead system reviewed."
+    final_title = "Lassen Sie Ihren aktuellen Projektweg prüfen." if book["lang"] == "de" else "Have your current project path reviewed."
     final_body = (
-        "Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie ein Pipeline-Audit. Wir prüfen Funnel, Lead-Qualifizierung, CRM-Übergabe und Reporting-Logik ohne Druck und ohne falsche Versprechen."
+        "Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie einen Projekt-Check. Wir prüfen Projektauftritt, Lead-Qualifizierung, Übergabe und Nachfass-Logik ohne Druck und ohne falsche Versprechen."
         if book["lang"] == "de"
-        else "If you want to see which layers are missing in your current setup, book a Pipeline Audit. We review funnel logic, lead qualification, CRM handover and reporting without pressure and without false promises."
+        else "If you want to see which layers are missing in your current setup, book a Project Check. We review project presence, lead qualification, handover and follow-up logic without pressure and without false promises."
     )
     y = para(c, final_title, M, H - 82 * mm, W - 2 * M, style(26, 30, colors.white, True))
     y = para(c, final_body, M, y - 14, W - 2 * M - 10 * mm, style(12, 18, colors.HexColor("#d7deea")))

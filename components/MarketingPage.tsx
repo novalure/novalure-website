@@ -85,59 +85,59 @@ function HomePage({ content }: { content: HomeContent }) {
 }
 
 const landingCtaLabels = {
-  de: { primary: "Projekt-Check buchen", secondary: "Playbook herunterladen" },
-  en: { primary: "Book a Project Check", secondary: "Download playbook" }
+  de: { primary: "Projekt-Check anfragen", secondary: "Playbook herunterladen" },
+  en: { primary: "Request Project Check", secondary: "Download playbook" }
 } as const;
 
 const developerLandingCopy = {
   de: {
     hero: {
-      label: "Projektvermarktung für Bauträger",
-      headline: "Vom ersten Bild bis zum qualifizierten Käufergespräch.",
+      label: "Projektvermarktung mit Vertriebsstruktur",
+      headline: "Vom Projektauftritt bis zum qualifizierten Käufergespräch.",
       subline:
-        "Wir entwickeln Storytelling, Visualisierung und Exposé für Ihr Projekt – und führen Interessenten so weit, dass Ihr Vertrieb echte Gespräche führt statt Kontakte zu sortieren."
+        "Wir entwickeln Storytelling, Visualisierung, Exposé, Kampagne, Nachfassen und systemgestützte Übergabe so, dass Interessenten nicht nur anfragen, sondern vorbereitet beim Vertrieb ankommen."
     },
-    trustBar: "Spezialisiert auf Immobilienvertrieb · EU-Unternehmen (Irland) · Aktiv in DACH, UK & international",
+    trustBar: "Projektauftritt · Nachfrage · Nachfassen · vorbereitete Übergabe · EU-Unternehmen (Irland)",
     visible: {
-      label: "Was wir für Ihr Projekt erstellen",
-      headline: "Material, das die richtigen Käufer anzieht.",
+      label: "Was wir sichtbar machen",
+      headline: "Material, das Interesse weckt und die richtige Erwartung setzt.",
       text:
-        "Visualisierung und Exposé sind bei uns kein Selbstzweck. Sie setzen die richtige Erwartung – damit Anfragen schon passen, bevor das erste Gespräch beginnt.",
+        "Visualisierung, Exposé und Projektstory sind der sichtbare Teil. Sie sollen nicht nur gut aussehen, sondern die passenden Käufer anziehen und die spätere Qualifizierung vorbereiten.",
       captions: ["Außenvisualisierung – Beispiel", "Innenvisualisierung – Beispiel", "Exposé-Auszug – Beispiel"]
     },
     journey: {
-      label: "Wie aus einem Projekt qualifizierte Gespräche werden",
-      headline: "Wir begleiten den Interessenten – bis ein echter Mensch anruft.",
+      label: "Wie aus Projektinteresse ein Gespräch wird",
+      headline: "Wir bauen den Weg, nicht nur einzelne Marketingteile.",
       text:
-        "Die meisten Anfragen versanden, weil niemand konsequent nachfasst. Wir bauen den ganzen Weg: vom ersten Bild bis zum Anruf durch unser Team.",
+        "Ein gutes Projekt braucht einen sauberen Ablauf: Aufmerksamkeit, Information, Anfrage, Nachfassen, Qualifizierung und eine klare Übergabe an den Vertrieb.",
       steps: [
         ["01", "Storytelling", "Eine Positionierung, die echtes Kaufinteresse anspricht."],
         ["02", "Visualisierung", "Bilder, die zeigen, was wirklich entsteht."],
         ["03", "Exposé", "Unterlagen, die informieren und gleichzeitig qualifizieren."],
         ["04", "Kampagne", "Reichweite bei genau der richtigen Zielgruppe."],
-        ["05", "Nachfassen", "Automatisiert und persönlich, damit kein Interessent verloren geht."],
-        ["06", "Echter Anruf", "Unser Team kontaktiert die Interessenten persönlich und prüft echtes Interesse."]
+        ["05", "Nachfassen", "Strukturiert und persönlich dort, wo es sinnvoll ist."],
+        ["06", "Übergabe", "Der Vertrieb sieht Kontext, Priorität und den nächsten Schritt."]
       ],
-      closing: "Am Ende erhält Ihr Vertrieb keine Rohleads, sondern vorbereitete Gespräche."
+      closing: "Am Ende steht keine lose Anfrage, sondern ein vorbereiteter Gesprächsanlass."
     },
     system: {
-      label: "Unser eigenes System",
-      headline: "Alles läuft in einem System zusammen, das wir selbst entwickelt haben.",
+      label: "Das System im Hintergrund",
+      headline: "Unser eigenes CRM-System hält den Prozess zusammen.",
       text:
-        "Material, Anfragen und Nachfassen greifen bei uns nicht zufällig ineinander. Wir haben dafür ein eigenes System gebaut – damit jede Anfrage an einem Ort zusammenläuft und Ihr Vertrieb auf einen Blick sieht, mit wem sich das Gespräch lohnt.",
+        "Material, Anfragen und Nachfassen dürfen nicht verstreut bleiben. Dafür nutzen wir ein eigenes System, in dem Anfrage, Verlauf, Zuständigkeit und nächster Schritt zusammenlaufen.",
       points: [
-        "Alles an einem Ort. Jede Anfrage, ihr Verlauf und der nächste Schritt – übersichtlich statt verstreut.",
-        "Sie sehen, was zählt. Herkunft, Interesse, Zeitpunkt und Budget auf einen Blick.",
-        "Von uns betreut. Sie müssen nichts einrichten oder pflegen – wir kümmern uns um das System, Sie führen die Gespräche."
+        "Jede Anfrage bekommt Kontext: Herkunft, Interesse, Timing und Budgetnähe.",
+        "Jeder Lead braucht Zuständigkeit, Status und eine nächste Aktion.",
+        "Das System bleibt im Hintergrund. Für Sie zählt, dass der Vertrieb vorbereitet arbeiten kann."
       ],
       closing:
-        "Das System ist kein Zusatzprodukt, sondern das Rückgrat, das Marketing, Nachfassen und Vertrieb verbindet."
+        "Das CRM ist kein Zusatzprodukt auf der Website, sondern der operative Rahmen hinter Vermarktung, Nachfassen und Übergabe."
     },
     outcome: {
       label: "Was bei Ihrem Vertrieb ankommt",
-      headline: "Vorqualifizierte Gespräche statt Kontakte zum Sortieren.",
+      headline: "Vorbereitete Anfragen statt Kontakte zum Sortieren.",
       text:
-        "Jede Anfrage erreicht Ihren Vertrieb mit Kontext: woher sie kommt, was der Interessent will, wann er kaufen möchte und ob das Budget passt. Ihr Team startet das Gespräch dort, wo es sich lohnt."
+        "Ihr Team sieht, woher die Anfrage kommt, was der Interessent sucht, wann ein Kauf realistisch ist und welcher nächste Schritt sinnvoll ist."
     },
     reference: {
       label: "Ein echtes Beispiel",
@@ -155,15 +155,15 @@ const developerLandingCopy = {
     },
     playbook: {
       label: "Playbook",
-      headline: "Bevor wir sprechen: Sehen Sie, wie wir denken.",
+      headline: "Bevor wir sprechen: Sehen Sie, wo Leads Qualität verlieren.",
       text:
-        "Unser Playbook zeigt, wie aus einem Projekt qualifizierte Käufergespräche werden – konkret, ohne Floskeln. Sie fordern es in 30 Sekunden an und erleben dabei gleich, wie unser System Anfragen aufnimmt und beantwortet."
+        "Das Playbook zeigt die typischen Lücken zwischen Projektauftritt, Anfrage, Nachfassen und Vertrieb. Es zeigt genug, um das Problem zu erkennen, ohne die komplette Maschine offenzulegen."
     },
     audience: {
       label: "Für wen wir arbeiten",
-      headline: "Für Bauträger, die ihr Projekt planbar verkaufen wollen.",
+      headline: "Für Bauträger, die ihr Projekt strukturiert vermarkten und verkaufen wollen.",
       text:
-        "Wenn ein Projekt verkauft werden muss, reichen Klicks nicht. Ihr Vertrieb braucht Käufer, die zu Projekt, Budget und Zeitplan passen. Genau dafür bauen wir den Weg vom ersten Bild bis zum qualifizierten Gespräch.",
+        "Wenn ein Projekt verkauft werden muss, reichen einzelne Maßnahmen nicht. Ihr Vertrieb braucht Interessenten, die zu Projekt, Budget und Zeitplan passen. Genau dafür bauen wir den Weg vom Projektauftritt bis zum Gespräch.",
       link: "Für Makler & Maklerteams"
     },
     trust: {
@@ -172,63 +172,63 @@ const developerLandingCopy = {
       points: [
         "Sie sehen, was Sie bekommen. Visualisierungen und Exposé-Beispiele liegen offen – beurteilen Sie die Qualität selbst.",
         "Kein Lead-Versprechen aus der Luft. Anfragenzahlen hängen von Projekt, Markt und Budget ab. Wir nennen keine Fantasiewerte.",
-        "Ein echtes Team, kein anonymer Funnel. Ihre Interessenten werden persönlich kontaktiert."
+        "Ein echter Prozess, kein anonymer Funnel. Entscheidend ist, dass jede Anfrage einen nächsten Schritt bekommt."
       ]
     },
     closing: {
-      headline: "Lassen Sie uns über Ihr Projekt sprechen.",
+      headline: "Lassen Sie uns Ihren Projektweg prüfen.",
       subline:
-        "30 Minuten. Wir schauen uns Ihr Projekt an und zeigen, wie der Weg vom Bild bis zum Käufergespräch für Sie aussehen würde."
+        "30 Minuten. Wir schauen auf Projektauftritt, Nachfrage, Nachfassen und Übergabe und klären, wo ein sauberer Prozess für Sie Sinn macht."
     }
   },
   en: {
     hero: {
-      label: "Project marketing for developers",
-      headline: "From the first visual to a qualified buyer conversation.",
+      label: "Project marketing with sales structure",
+      headline: "From project presence to qualified buyer conversation.",
       subline:
-        "We create the storytelling, visuals and expose for your project — and guide enquiries far enough that your sales team has real conversations instead of sorting contacts."
+        "We create storytelling, visuals, expose, campaign, follow-up and system-supported handover so enquiries do not just arrive, but reach sales prepared."
     },
-    trustBar: "Specialised in real estate sales · EU company (Ireland) · Active in DACH, UK & international",
+    trustBar: "Project presence · demand · follow-up · prepared handover · EU company (Ireland)",
     visible: {
-      label: "What we create for your project",
-      headline: "Material that attracts the right buyers.",
+      label: "What we make visible",
+      headline: "Material that creates interest and sets the right expectation.",
       text:
-        "Visuals and exposes are not decoration. They set the right expectation — so enquiries already fit before the first conversation begins.",
+        "Visuals, exposes and project story are the visible layer. They should not only look good, but attract the right buyers and prepare later qualification.",
       captions: ["Exterior visual – example", "Interior visual – example", "Expose excerpt – example"]
     },
     journey: {
-      label: "How a project becomes qualified conversations",
-      headline: "We guide the enquiry — until a real person calls.",
+      label: "How project interest becomes a conversation",
+      headline: "We build the path, not just isolated marketing pieces.",
       text:
-        "Most enquiries fade because no one follows up properly. We build the whole path: from the first visual to a call from our team.",
+        "A good project needs a clear flow: attention, information, enquiry, follow-up, qualification and a useful handover to sales.",
       steps: [
         ["01", "Storytelling", "Positioning that speaks to real buying intent."],
         ["02", "Visualisation", "Visuals that show what is actually being built."],
         ["03", "Expose", "Documents that inform and qualify at the same time."],
         ["04", "Campaign", "Reach aimed at exactly the right audience."],
-        ["05", "Follow-up", "Automated and personal, so no enquiry is lost."],
-        ["06", "A real call", "Our team contacts enquiries personally and checks genuine intent."]
+        ["05", "Follow-up", "Structured and personal where it makes sense."],
+        ["06", "Handover", "Sales sees context, priority and the next step."]
       ],
-      closing: "Your sales team receives prepared conversations, not raw leads."
+      closing: "The result is not a loose enquiry, but a prepared reason to speak."
     },
     system: {
-      label: "Our own system",
-      headline: "Everything comes together in a system we built ourselves.",
+      label: "The system behind the process",
+      headline: "Our own CRM system keeps the process together.",
       text:
-        "Material, enquiries and follow-up do not connect by chance. We built our own system for it — so every enquiry lands in one place and your sales team can see at a glance who is worth a conversation.",
+        "Material, enquiries and follow-up cannot stay scattered. We use our own system so enquiry, history, ownership and next step come together.",
       points: [
-        "Everything in one place. Every enquiry, its history and the next step — clear instead of scattered.",
-        "You see what matters. Source, intent, timing and budget at a glance.",
-        "Managed by us. Nothing to set up or maintain — we run the system, you have the conversations."
+        "Every enquiry receives context: source, interest, timing and budget proximity.",
+        "Every lead needs ownership, status and a next action.",
+        "The system stays in the background. What matters is that sales can work prepared."
       ],
       closing:
-        "The system is not an add-on. It is the backbone that connects marketing, follow-up and sales."
+        "The CRM is not the product demo on the website. It is the operating frame behind marketing, follow-up and handover."
     },
     outcome: {
       label: "What reaches your sales team",
-      headline: "Pre-qualified conversations instead of contacts to sort.",
+      headline: "Prepared enquiries instead of contacts to sort.",
       text:
-        "Every enquiry reaches your team with context: where it came from, what the buyer wants, when they intend to buy and whether the budget fits. Your team starts where it is worth it."
+        "Your team sees where the enquiry came from, what the buyer wants, when a purchase may be realistic and which next step makes sense."
     },
     reference: {
       label: "A real example",
@@ -246,15 +246,15 @@ const developerLandingCopy = {
     },
     playbook: {
       label: "Playbook",
-      headline: "Before we talk: see how we think.",
+      headline: "Before we talk: see where leads lose quality.",
       text:
-        "Our playbook shows how a project turns into qualified buyer conversations — concrete, no fluff. It takes 30 seconds to request, and you will experience first-hand how our system receives and responds to an enquiry."
+        "The playbook shows the typical gaps between project presence, enquiry, follow-up and sales. It shows enough to recognise the problem without exposing the whole machine."
     },
     audience: {
       label: "Who we work for",
-      headline: "For developers who want to sell their project predictably.",
+      headline: "For developers who want to market and sell their project with structure.",
       text:
-        "When a project needs to sell, clicks are not enough. Your sales team needs buyers who match the project, budget and timing. That is exactly what we build — the path from the first visual to a qualified conversation.",
+        "When a project needs to sell, isolated measures are not enough. Sales needs buyers who match the project, budget and timing. We build the path from project presence to conversation.",
       link: "For agents & broker teams"
     },
     trust: {
@@ -263,13 +263,13 @@ const developerLandingCopy = {
       points: [
         "You see what you get. Visuals and expose examples are open — judge the quality yourself.",
         "No lead promises out of thin air. Enquiry numbers depend on project, market and budget. We do not quote fantasy figures.",
-        "A real team, not an anonymous funnel. Your enquiries are contacted personally."
+        "A real process, not an anonymous funnel. What matters is that every enquiry receives a next step."
       ]
     },
     closing: {
-      headline: "Let us talk about your project.",
+      headline: "Let us review your project path.",
       subline:
-        "30 minutes. We look at your project and show you what the path from visual to buyer conversation would look like."
+        "30 minutes. We look at project presence, demand, follow-up and handover and clarify where a clean process makes sense."
     }
   }
 } as const;
@@ -311,7 +311,7 @@ function DeveloperLandingPage({ locale }: { locale: Locale }) {
         <div className="visual-placeholder-grid">
           <PlaceholderVisual name="visual-exterior-01" ratio="landscape" caption={copy.visible.captions[0]} />
           <PlaceholderVisual name="visual-interior-01" ratio="landscape" caption={copy.visible.captions[1]} />
-          <PlaceholderVisual name="expose-excerpt-01" ratio="portrait" caption={copy.visible.captions[2]} />
+          <ExposeExcerptPreview locale={locale} caption={copy.visible.captions[2]} />
         </div>
         <p className="landing-section-text">{copy.visible.text}</p>
       </section>
@@ -442,18 +442,73 @@ function PlaceholderVisual({ name, ratio, caption }: { name: string; ratio: "lan
   );
 }
 
+function ExposeExcerptPreview({ locale, caption }: { locale: Locale; caption: string }) {
+  const de = locale === "de";
+  const facts = de
+    ? [["Einheit", "A3"], ["Wohnfläche", "94 m²"], ["Status", "Reservierbar"]]
+    : [["Unit", "A3"], ["Living area", "94 m²"], ["Status", "Reservable"]];
+  const highlights = de
+    ? ["Morgensonne im Wohnbereich", "Loggia mit Blick ins Quartier", "Grundriss für Eigennutzer und Anleger"]
+    : ["Morning sun in the living area", "Loggia facing the neighbourhood", "Plan suited to owner-occupiers and investors"];
+
+  return (
+    <figure className="expose-excerpt-preview">
+      <div className="expose-sheet" aria-label={de ? "Exposé-Auszug Beispiel" : "Expose excerpt example"}>
+        <div className="expose-sheet-header">
+          <span>NovaLure</span>
+          <em>{de ? "Exposé-Auszug" : "Expose excerpt"}</em>
+        </div>
+        <div className="expose-visual-panel">
+          <div className="expose-building-mark" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <strong>{de ? "Projekt Am Park" : "Parkside Residences"}</strong>
+          <small>{de ? "Beispielhafte Projektseite" : "Sample project page"}</small>
+        </div>
+        <div className="expose-sheet-body">
+          <p className="expose-kicker">{de ? "Einheit A3 · 3 Zimmer" : "Unit A3 · 3 rooms"}</p>
+          <h3>{de ? "Ruhige Gartenwohnung mit klarer Investment-Logik." : "Quiet garden apartment with clear investment logic."}</h3>
+          <p>
+            {de
+              ? "Der Auszug zeigt nur die Informationen, die Interesse einordnen: Nutzung, Lagegefühl, Budgetnähe und nächster sinnvoller Schritt."
+              : "This excerpt shows only the details that qualify interest: use case, location feel, budget proximity and the next sensible step."}
+          </p>
+          <dl className="expose-facts">
+            {facts.map(([label, value]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+          <ul className="expose-highlight-list">
+            {highlights.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+        <div className="expose-sheet-footer">
+          <span>{de ? "Nächster Schritt" : "Next step"}</span>
+          <strong>{de ? "Finanzierungsnähe klären" : "Clarify financing proximity"}</strong>
+        </div>
+      </div>
+      <figcaption>{caption}</figcaption>
+    </figure>
+  );
+}
+
 function SystemDashboardMock({ locale }: { locale: Locale }) {
   const de = locale === "de";
   const stats = de
     ? [
         ["Projekt", "Pre-Launch"],
-        ["Visuals", "6 Szenen"],
-        ["Leads", "CRM-ready"]
+        ["Material", "6 Assets"],
+        ["Anfragen", "vorbereitet"]
       ]
     : [
         ["Project", "Pre-launch"],
-        ["Visuals", "6 scenes"],
-        ["Leads", "CRM-ready"]
+        ["Material", "6 assets"],
+        ["Enquiries", "prepared"]
       ];
   const rows = de
     ? [
@@ -472,7 +527,7 @@ function SystemDashboardMock({ locale }: { locale: Locale }) {
       <div className="system-dashboard-top">
         <span aria-hidden="true" />
         <strong>NovaLure CRM</strong>
-        <em>{de ? "Live Vorschau" : "Live preview"}</em>
+        <em>{de ? "Systembeispiel" : "System example"}</em>
       </div>
       <div className="system-dashboard-stats">
         {stats.map(([label, value]) => (
@@ -503,7 +558,7 @@ function SystemDashboardMock({ locale }: { locale: Locale }) {
       </div>
       <div className="system-dashboard-footer">
         <span>{de ? "Quelle" : "Source"}</span>
-        <strong>{de ? "Kampagne, Visualisierung, Expose und CRM verbunden" : "Campaign, visualisation, expose and CRM connected"}</strong>
+        <strong>{de ? "Kampagne, Visualisierung, Exposé und Übergabe verbunden" : "Campaign, visualisation, expose and handover connected"}</strong>
       </div>
     </div>
   );
@@ -524,9 +579,9 @@ function TrustSnapshot({ locale }: { locale: Locale }) {
           body: "Ihr Team erkennt früher, welche Anfragen passen und welche erst später relevant sind."
         },
         {
-          label: "CRM-Übergabe",
-          metric: "CRM-ready",
-          body: "Quelle, Motivation, Timing, Budgetnähe und nächster Schritt sind vor dem ersten Gespräch sichtbar."
+          label: "Übergabe",
+          metric: "vorbereitet",
+          body: "Quelle, Interesse, Timing, Budgetnähe und nächster Schritt sind vor dem ersten Gespräch sichtbar."
         },
         {
           label: "Unternehmen",
@@ -546,9 +601,9 @@ function TrustSnapshot({ locale }: { locale: Locale }) {
           body: "Your team sees earlier which enquiries fit and which ones should be followed later."
         },
         {
-          label: "CRM handover",
-          metric: "CRM-ready",
-          body: "source, motivation, timing, budget proximity and next step are visible before the first call."
+          label: "Handover",
+          metric: "prepared",
+          body: "Source, interest, timing, budget proximity and next step are visible before the first call."
         },
         {
           label: "Company",
@@ -672,25 +727,25 @@ function ProofSection({ locale }: { locale: Locale }) {
   return (
     <section className="proof-section" id="proof" data-track-section="proof">
       <div className="section-heading">
-        <p className="eyebrow">{de ? "Beispiel-Handover" : "Sample handover"}</p>
-        <h2>{de ? "Was ein qualifizierter Lead vor dem ersten Gespräch enthalten sollte" : "What a qualified lead should contain before the first call"}</h2>
+        <p className="eyebrow">{de ? "Systembeispiel" : "System example"}</p>
+        <h2>{de ? "Was eine vorbereitete Anfrage vor dem ersten Gespräch enthalten sollte" : "What a prepared enquiry should contain before the first call"}</h2>
         <p>
           {de
-            ? "Der Wert entsteht nicht durch Name und Telefonnummer. Der Wert entsteht, wenn Quelle, Motivation, Timing, Budgetnähe und nächster Schritt sichtbar sind."
-            : "The value is not the name and phone number. The value appears when source, motivation, timing, budget proximity and next step are visible."}
+            ? "Der Wert entsteht nicht durch Name und Telefonnummer. Der Wert entsteht, wenn Quelle, Interesse, Timing, Budgetnähe, Zuständigkeit und nächster Schritt sichtbar sind."
+            : "The value is not the name and phone number. The value appears when source, interest, timing, budget proximity, ownership and next step are visible."}
         </p>
       </div>
       <div className="proof-feature-grid">
         <article className="proof-card proof-card-feature">
-          <span className="proof-label">{de ? "Immobilien-Handover" : "Real estate handover"}</span>
-          <h3>{de ? "Eine Anfrage wird erst wertvoll, wenn Vertrieb den Kontext sieht." : "An enquiry becomes valuable when sales can see the context."}</h3>
+          <span className="proof-label">{de ? "Vorbereitete Übergabe" : "Prepared handover"}</span>
+          <h3>{de ? "Eine Anfrage wird erst wertvoll, wenn Vertrieb den nächsten sinnvollen Schritt sieht." : "An enquiry becomes valuable when sales can see the next sensible step."}</h3>
           <MockHandover locale={locale} compact />
         </article>
         <div className="proof-support-grid">
-        <ProofCard title={de ? "Was im Audit geprüft wird" : "What the audit reviews"} label={de ? "Beispiel-Auszug" : "Example excerpt"}>
+        <ProofCard title={de ? "Was im Projekt-Check geprüft wird" : "What the Project Check reviews"} label={de ? "Beispiel-Auszug" : "Example excerpt"}>
           <Scorecard locale={locale} />
         </ProofCard>
-        <ProofCard title={de ? "So trennen wir Neugier von Verkaufschance" : "How curiosity is separated from sales opportunity"} label={de ? "Lead-Scoring-Matrix" : "Lead scoring matrix"}>
+        <ProofCard title={de ? "So trennen wir Neugier von Gesprächsreife" : "How curiosity is separated from conversation readiness"} label={de ? "Einordnung" : "Readiness view"}>
           <ScoringMatrix locale={locale} />
         </ProofCard>
         </div>
@@ -714,7 +769,7 @@ function MockHandover({ locale, compact = false }: { locale: Locale; compact?: b
     ? [
         ["Segment", "Käufer, Eigentümer oder Projektinteressent"],
         ["Quelle", "Asset, Kampagne, Portal oder Empfehlung"],
-        ["Motivation", "Kaufen, verkaufen, investieren oder informieren"],
+        ["Interesse", "Kaufen, verkaufen, investieren oder informieren"],
         ["Timing", "0-3 Monate, 3-6 Monate oder später"],
         ["Budgetnähe", "passt / offen / nicht passend"],
         ["Nächster Schritt", "Rückruf, Suchprofil, Bewertung oder Projektgespräch"]
@@ -722,7 +777,7 @@ function MockHandover({ locale, compact = false }: { locale: Locale; compact?: b
     : [
         ["Segment", "Buyer, seller or project enquiry"],
         ["Source", "Asset, campaign, portal or referral"],
-        ["Motivation", "Buy, sell, invest or research"],
+        ["Interest", "Buy, sell, invest or research"],
         ["Timing", "0-3 months, 3-6 months or later"],
         ["Budget proximity", "fit / open / not a fit"],
         ["Next step", "Callback, search profile, valuation or project call"]
@@ -745,17 +800,17 @@ function Scorecard({ locale }: { locale: Locale }) {
   const rows = locale === "de"
     ? [
         ["Konkretes Projekt / Marktgebiet", "klar", "green"],
-        ["CRM-Kontext zum Lead", "teilweise", "amber"],
+        ["Kontext zur Anfrage", "teilweise", "amber"],
         ["Intent-Filter", "teilweise", "amber"],
-        ["Sales-Handover", "offen", "red"],
-        ["Audit-Frage", "klären", "red"]
+        ["Übergabe an Vertrieb", "offen", "red"],
+        ["Check-Frage", "klären", "red"]
       ]
     : [
         ["Concrete project / market area", "clear", "green"],
-        ["CRM lead context", "partial", "amber"],
+        ["Enquiry context", "partial", "amber"],
         ["Intent filter", "partial", "amber"],
         ["Sales handover", "open", "red"],
-        ["Audit question", "clarify", "red"]
+        ["Check question", "clarify", "red"]
       ];
 
   return (
@@ -773,8 +828,8 @@ function Scorecard({ locale }: { locale: Locale }) {
 
 function ScoringMatrix({ locale }: { locale: Locale }) {
   const rows = locale === "de"
-    ? [["Fit", 22], ["Intent", 26], ["Timing", 18], ["Budgetnähe", 16], ["Sales Readiness", 12]]
-    : [["Fit", 22], ["Intent", 26], ["Timing", 18], ["Budget proximity", 16], ["Sales readiness", 12]];
+    ? [["Fit", 22], ["Interesse", 26], ["Timing", 18], ["Budgetnähe", 16], ["Gesprächsreife", 12]]
+    : [["Fit", 22], ["Interest", 26], ["Timing", 18], ["Budget proximity", 16], ["Conversation readiness", 12]];
 
   return (
     <div className="matrix">
@@ -785,15 +840,15 @@ function ScoringMatrix({ locale }: { locale: Locale }) {
           <strong>{score}</strong>
         </div>
       ))}
-      <p>{locale === "de" ? "Gesamt: 94 / 100 - Sales-priorisiert" : "Total: 94 / 100 - sales-prioritised"}</p>
+      <p>{locale === "de" ? "Gesamt: 94 / 100 - priorisiert" : "Total: 94 / 100 - prioritised"}</p>
     </div>
   );
 }
 
 function FlowMock({ locale }: { locale: Locale }) {
   const steps = locale === "de"
-    ? ["Ad / Quelle", "Landingpage", "Intent-Filter", "AI-CRM", "Sales-Handover", "Follow-up"]
-    : ["Ad / source", "Landing page", "Intent filter", "AI CRM", "Sales handover", "Follow-up"];
+    ? ["Quelle", "Projektseite", "Qualifizierung", "System", "Übergabe", "Nachfassen"]
+    : ["Source", "Project page", "Qualification", "System", "Handover", "Follow-up"];
 
   return (
     <div className="flow-mock">
@@ -804,8 +859,8 @@ function FlowMock({ locale }: { locale: Locale }) {
 
 function Checklist({ locale }: { locale: Locale }) {
   const items = locale === "de"
-    ? ["Warum dieses Playbook existiert", "Leads ohne Vertriebskontext", "Typische Pipeline-Leaks", "Mindestkontext für sales-ready Leads", "Audit-Reife-Scorecard", "Fragen für das Pipeline-Audit", "Wann ein Audit sinnvoll ist", "Nächster Schritt: 30-Minuten-Diagnose"]
-    : ["Why this playbook exists", "Leads without sales context", "Typical pipeline leaks", "Minimum context for sales-ready leads", "Audit-readiness scorecard", "Questions for the Pipeline Audit", "When an audit makes sense", "Next step: 30-minute diagnosis"];
+    ? ["Warum dieses Playbook existiert", "Anfragen ohne Vertriebskontext", "Typische Lücken zwischen Auftritt und Gespräch", "Mindestkontext für vorbereitete Leads", "Scorecard für Projekt- und Lead-Reife", "Fragen für den Projekt-Check", "Wann ein Check sinnvoll ist", "Nächster Schritt: 30-Minuten-Check"]
+    : ["Why this playbook exists", "Enquiries without sales context", "Typical gaps between project presence and conversation", "Minimum context for prepared leads", "Scorecard for project and lead readiness", "Questions for the Project Check", "When a check makes sense", "Next step: 30-minute check"];
 
   return (
     <ul className="qa-list">
@@ -839,8 +894,8 @@ function DeliverablesSection({ content }: { content: HomeContent }) {
         <h2>{content.modules.title}</h2>
         <p>
           {content.locale === "en"
-            ? "NovaLure delivers the structure between first click and qualified conversation: funnel, questions, CRM handover, follow-up and reporting."
-            : "NovaLure liefert die Struktur zwischen erstem Klick und qualifiziertem Gespräch: Funnel, Fragen, CRM-Übergabe, Follow-up und Reporting."}
+            ? "NovaLure delivers the structure between first click and qualified conversation: funnel, questions, handover, follow-up and reporting."
+            : "NovaLure liefert die Struktur zwischen erstem Klick und qualifiziertem Gespräch: Funnel, Fragen, Übergabe, Follow-up und Reporting."}
         </p>
       </div>
       <div className="module-grid deliverables-focus-grid">
@@ -923,25 +978,25 @@ function SystemSection({ content }: { content: HomeContent }) {
 function PipelineAuditSection({ locale }: { locale: Locale }) {
   const de = locale === "de";
   const checks = de
-    ? ["Anzeige und Quelle", "Landingpage und Formular", "Qualifizierende Fragen", "CRM-Übergabe", "Follow-up", "Reporting nach Leadqualität"]
-    : ["Ad and source", "Landing page and form", "Qualification questions", "CRM handover", "Follow-up", "Reporting by lead quality"];
+    ? ["Anzeige und Quelle", "Landingpage und Formular", "Qualifizierende Fragen", "Vorbereitete Übergabe", "Follow-up", "Reporting nach Leadqualität"]
+    : ["Ad and source", "Landing page and form", "Qualification questions", "Prepared handover", "Follow-up", "Reporting by lead quality"];
   const outcomes = de
-    ? ["Einschätzung des aktuellen Lead-Systems", "Identifizierte Schwachstellen", "Empfehlung, ob Aufbau plus laufende Optimierung sinnvoll ist", "Klarheit über den nächsten Schritt"]
-    : ["Assessment of the current lead system", "Identified weak points", "Recommendation whether setup plus ongoing optimisation makes sense", "Clarity on the next step"];
+    ? ["Einschätzung des aktuellen Lead-Wegs", "Identifizierte Schwachstellen", "Empfehlung, ob Aufbau plus laufende Optimierung sinnvoll ist", "Klarheit über den nächsten Schritt"]
+    : ["Assessment of the current lead path", "Identified weak points", "Recommendation whether setup plus ongoing optimisation makes sense", "Clarity on the next step"];
 
   return (
     <section className="audit-section home-audit-section" id="pipeline-audit">
       <div className="section-heading narrow">
-        <p className="eyebrow">{de ? "Pipeline-Audit" : "Pipeline Audit"}</p>
+        <p className="eyebrow">{de ? "Projekt-Check" : "Project Check"}</p>
         <h2>
           {de
-            ? "Finden Sie heraus, wo Ihr Lead-System Vertriebszeit verliert."
-            : "Find out where your lead system is wasting sales time."}
+            ? "Finden Sie heraus, wo Ihr Lead-Weg Vertriebszeit verliert."
+            : "Find out where your lead path is wasting sales time."}
         </h2>
         <p>
           {de
-            ? "Das Pipeline-Audit prüft, ob Ihr aktueller Weg von Anzeige bis CRM qualifizierte Gespräche erzeugt oder nur neue Sortierarbeit."
-            : "The Pipeline Audit checks whether your current path from ad to CRM creates qualified conversations or just more sorting work."}
+            ? "Der Projekt-Check prüft, ob Ihr aktueller Weg von Auftritt bis Übergabe qualifizierte Gespräche erzeugt oder nur neue Sortierarbeit."
+            : "The Project Check reviews whether your current path from presence to handover creates qualified conversations or just more sorting work."}
         </p>
       </div>
       <div className="audit-grid">
@@ -956,7 +1011,7 @@ function PipelineAuditSection({ locale }: { locale: Locale }) {
       </div>
       <div className="section-actions">
         <Link className="button button-primary" href={`${getPath(locale, "contact")}#book-audit`} data-track="home_audit">
-          {de ? "Pipeline-Audit buchen" : "Book a Pipeline Audit"}
+          {de ? "Projekt-Check anfragen" : "Request Project Check"}
         </Link>
         <Link className="button button-secondary dark" href={getPlaybookFormPath(locale)} data-track="home_playbook_secondary">
           {de ? "Playbook herunterladen" : "Download playbook"}
@@ -1016,7 +1071,7 @@ function MarketComparisonSection({ locale }: { locale: Locale }) {
     ? [
         {
           title: "Klassische Agentur",
-          points: ["Fokus auf Kampagnen, Klicks und Creatives", "CRM-Kontext oft nachgelagert", "Erfolg häufig über CPL gemessen"]
+          points: ["Fokus auf Kampagnen, Klicks und Creatives", "Übergabekontext oft nachgelagert", "Erfolg häufig über CPL gemessen"]
         },
         {
           title: "Lead-Portal",
@@ -1030,7 +1085,7 @@ function MarketComparisonSection({ locale }: { locale: Locale }) {
     : [
         {
           title: "Classic agency",
-          points: ["Focus on campaigns, clicks and creatives", "CRM context often comes too late", "Success often measured by CPL"]
+          points: ["Focus on campaigns, clicks and creatives", "Handover context often comes too late", "Success often measured by CPL"]
         },
         {
           title: "Lead portal",
@@ -1038,7 +1093,7 @@ function MarketComparisonSection({ locale }: { locale: Locale }) {
         },
         {
           title: "NovaLure",
-          points: ["Owned lead path with pre-qualification", "CRM-ready handover with next step", "Reporting by lead quality and focus on qualified conversations"]
+          points: ["Owned lead path with pre-qualification", "Prepared handover with next step", "Reporting by lead quality and focus on qualified conversations"]
         }
       ];
 
@@ -1074,13 +1129,13 @@ function AntiPromisesSection({ locale }: { locale: Locale }) {
         ["„Wir garantieren 50 Leads pro Monat“", "Wir garantieren Struktur, nicht Volumen"],
         ["Logo-Wand ohne Freigabe", "Demo-Artefakte mit klarer Kennzeichnung"],
         ["One-Shot-Kampagne", "Mindestens 3 Monate Run mit Optimierung"],
-        ["„Wir machen alles“", "Audit vor Angebot – kein Standardscope"]
+        ["„Wir machen alles“", "Check vor Angebot – kein Standardscope"]
       ]
     : [
         ["“We guarantee 50 leads per month”", "We guarantee structure, not volume"],
         ["Logo wall without release", "Demo artefacts with clear labelling"],
         ["One-shot campaign", "At least 3 months run with optimisation"],
-        ["“We do everything”", "Audit before proposal – no standard scope"]
+        ["“We do everything”", "Check before proposal – no standard scope"]
       ];
 
   return (
@@ -1184,8 +1239,8 @@ function AudiencePage({ content }: { content: PageContent }) {
       </section>
       <PlaybookConversion
         locale={content.locale}
-        title={content.locale === "en" ? "Download the playbook, then request an audit if the problem is concrete." : "Laden Sie das Playbook, dann fragen Sie bei konkretem Problem das Audit an."}
-        body={content.locale === "en" ? "The playbook prepares your team for a sharper diagnosis." : "Das Playbook bereitet Ihr Team auf eine schärfere Diagnose vor."}
+        title={content.locale === "en" ? "Download the playbook, then request a check if the problem is concrete." : "Laden Sie das Playbook, dann fragen Sie bei konkretem Problem den Projekt-Check an."}
+        body={content.locale === "en" ? "The playbook prepares your team for a sharper review." : "Das Playbook bereitet Ihr Team auf einen schärferen Check vor."}
       />
       <FaqSection locale={content.locale} items={content.faq || []} />
       <FinalCta content={content} />
@@ -1197,8 +1252,8 @@ function AudienceProof({ locale, pageKey }: { locale: Locale; pageKey: PageConte
   const isDeveloper = pageKey === "developers";
   const de = locale === "de";
   const title = isDeveloper
-    ? de ? "Demo: CRM-fähiger Bauträger-Lead" : "Demo: CRM-ready developer lead"
-    : de ? "Demo: CRM-fähige Makler-Leads" : "Demo: CRM-ready agent leads";
+    ? de ? "Demo: vorbereitete Bauträger-Anfrage" : "Demo: prepared developer enquiry"
+    : de ? "Demo: vorbereitete Makler-Anfragen" : "Demo: prepared agent enquiries";
 
   return (
     <section className="proof-section compact-proof">
@@ -1241,17 +1296,17 @@ function PlaybooksPage({ content }: { content: PageContent }) {
           <ProofCard title={de ? "Diagnose-Rahmen des Playbooks" : "Playbook diagnosis frame"} label={de ? "Vorschau" : "Preview"}>
             <Checklist locale={content.locale} />
           </ProofCard>
-          <ProofCard title={de ? "Beispielseite: Lead ohne Vertriebskontext" : "Example page: lead without sales context"} label={de ? "Demo-Seite" : "Demo page"}>
+          <ProofCard title={de ? "Beispiel: Anfrage mit Übergabekontext" : "Example: enquiry with handover context"} label={de ? "Demo-Seite" : "Demo page"}>
             <MockHandover locale={content.locale} compact />
           </ProofCard>
-          <ProofCard title={de ? "Ist das Lead-System audit-reif?" : "Is the lead system audit-ready?"} label={de ? "Mini-Scorecard" : "Mini scorecard"}>
+          <ProofCard title={de ? "Ist der Projektweg prüfenswert?" : "Is the project path worth reviewing?"} label={de ? "Mini-Scorecard" : "Mini scorecard"}>
             <Scorecard locale={content.locale} />
           </ProofCard>
-          <ProofCard title={de ? "Typische Symptome, keine fertige Lösung" : "Typical symptoms, not a full solution"} label={de ? "Beispiel-Auszug" : "Example excerpt"}>
+          <ProofCard title={de ? "Typische Lücken, keine fertige Lösung" : "Typical gaps, not a full solution"} label={de ? "Beispiel-Auszug" : "Example excerpt"}>
             <ul className="qa-list">
               {(de
-                ? ["CRM zeigt Anfrage, aber kein Motiv", "Follow-up startet ohne Segment", "Sales sieht Quelle, aber keinen nächsten Schritt", "Kampagne wird optimiert, obwohl die Übergabe unklar ist"]
-                : ["CRM shows an enquiry, but no motivation", "Follow-up starts without a segment", "Sales sees the source, but no clear next step", "Campaigns get optimised while handover remains unclear"]
+                ? ["Anfrage ist da, aber Motiv und Timing fehlen", "Nachfassen startet ohne klares Segment", "Vertrieb sieht Quelle, aber keinen nächsten Schritt", "Kampagne wird optimiert, obwohl die Übergabe unklar ist"]
+                : ["The enquiry exists, but motivation and timing are missing", "Follow-up starts without a clear segment", "Sales sees the source, but no next step", "Campaigns get optimised while handover remains unclear"]
               ).map((item) => <li key={item}>{item}</li>)}
             </ul>
           </ProofCard>
@@ -1260,10 +1315,9 @@ function PlaybooksPage({ content }: { content: PageContent }) {
       <PlaybookHub
         id="playbook-download"
         locale={content.locale}
-        title={de ? "Zwei Playbooks. Ein Ziel: bessere qualifizierte Pipeline." : "Two playbooks. One goal: better qualified pipeline."}
-        body={de ? "Laden Sie das Bauträger-Pipeline-Playbook oder Makler-Lead-Playbook über HubSpot-Formulare herunter." : "Download the Developer Pipeline Playbook or Real Estate Agent Lead Playbook through HubSpot forms."}
+        title={de ? "Zwei Playbooks. Ein Ziel: bessere Gespräche aus vorhandener Nachfrage." : "Two playbooks. One goal: better conversations from existing demand."}
+        body={de ? "Laden Sie das passende Playbook herunter und prüfen Sie, wo Projektauftritt, Anfrage, Nachfassen und Übergabe auseinanderfallen." : "Download the relevant playbook and see where project presence, enquiry, follow-up and handover fall apart."}
       />
-      <EmailSequenceSection locale={content.locale} />
       <FaqSection locale={content.locale} items={content.faq || []} />
       <FinalCta content={content} />
     </main>
@@ -1273,14 +1327,14 @@ function PlaybooksPage({ content }: { content: PageContent }) {
 function EmailSequenceSection({ locale }: { locale: Locale }) {
   const de = locale === "de";
   const days = de
-    ? [["Tag 0", "Ihr NovaLure Playbook"], ["Tag 1", "Wo verliert Ihre Pipeline zuerst Qualität?"], ["Tag 3", "Beispiel: ein CRM-fähiger Immobilienlead"], ["Tag 5", "Der häufigste Fehler: Leads ohne Vertriebslogik"], ["Tag 7", "Sollten wir Ihr Lead-System prüfen?"], ["Tag 10", "Wir haben schon Marketing reicht nicht"], ["Tag 14", "Letzter klarer Schritt"]]
-    : [["Day 0", "Your NovaLure Playbook"], ["Day 1", "Where does your pipeline first lose quality?"], ["Day 3", "Example: a CRM-ready real estate lead"], ["Day 5", "The common mistake: leads without sales logic"], ["Day 7", "Should we review your lead system?"], ["Day 10", "We already have marketing is not enough"], ["Day 14", "Last clear step"]];
+    ? [["Tag 0", "Ihr NovaLure Playbook"], ["Tag 1", "Wo verliert Ihre Anfrage zuerst Qualität?"], ["Tag 3", "Beispiel: eine vorbereitete Immobilienanfrage"], ["Tag 5", "Der häufigste Fehler: Leads ohne Vertriebslogik"], ["Tag 7", "Sollten wir Ihren Projektweg prüfen?"], ["Tag 10", "Wir haben schon Marketing reicht nicht"], ["Tag 14", "Letzter klarer Schritt"]]
+    : [["Day 0", "Your NovaLure Playbook"], ["Day 1", "Where does your enquiry first lose quality?"], ["Day 3", "Example: a prepared real estate enquiry"], ["Day 5", "The common mistake: leads without sales logic"], ["Day 7", "Should we review your project path?"], ["Day 10", "We already have marketing is not enough"], ["Day 14", "Last clear step"]];
 
   return (
     <section className="process-section">
       <div className="section-heading narrow">
-        <p className="eyebrow">{de ? "E-Mail-Sequenz vorbereitet" : "Email sequence prepared"}</p>
-        <h2>{de ? "Follow-up führt zum Audit, nicht in Newsletter-Rauschen." : "Follow-up moves toward the audit, not newsletter noise."}</h2>
+        <p className="eyebrow">{de ? "Nachfasslogik vorbereitet" : "Follow-up logic prepared"}</p>
+        <h2>{de ? "Nachfassen führt zum Projekt-Check, nicht in Newsletter-Rauschen." : "Follow-up moves toward the Project Check, not newsletter noise."}</h2>
         <p>{de ? "Die vollständigen exportierbaren Inhalte liegen zusätzlich in der Funnel-Ops-Checkliste." : "The full exportable content is also documented in the funnel ops checklist."}</p>
       </div>
       <ol className="process-list email-sequence-list">
@@ -1310,17 +1364,17 @@ function ContactPage({ content }: { content: PageContent }) {
 function AuditExplainer({ locale }: { locale: Locale }) {
   const de = locale === "de";
   const fit = de
-    ? ["Sie sind Bauträger, Projektentwickler, Projektvertrieb, Maklerteam oder professioneller Makler.", "Sie haben bereits Leads, Kampagnen, Portale oder Projektanfragen.", "Sie verlieren Zeit durch unqualifizierte Anfragen oder fehlenden CRM-Kontext.", "Sie wollen aus Anfragen qualifizierte Gespräche machen.", "Sie können Budget und Entscheidungskompetenz realistisch klären."]
-    : ["You are a developer, project sales team, broker team or professional real estate agent.", "You already have leads, campaigns, portals or project enquiries.", "You lose time through unqualified enquiries or missing CRM context.", "You want enquiries to become qualified conversations.", "You can realistically clarify budget and decision authority."];
+    ? ["Sie sind Bauträger, Projektentwickler, Projektvertrieb, Maklerteam oder professioneller Makler.", "Sie haben ein konkretes Projekt, Marktgebiet oder eine klare Zielgruppe.", "Sie möchten Projektauftritt, Kampagne, Nachfassen und Übergabe sauber verbinden.", "Sie verlieren Zeit durch unqualifizierte Anfragen oder fehlenden Kontext.", "Sie können Budget und Entscheidungskompetenz realistisch klären."]
+    : ["You are a developer, project sales team, broker team or professional real estate agent.", "You have a concrete project, market area or target audience.", "You want project presence, campaign, follow-up and handover to connect cleanly.", "You lose time through unqualified enquiries or missing context.", "You can realistically clarify budget and decision authority."];
   const noFit = de
     ? ["Sie sammeln nur kostenlose Marketingideen.", "Sie erwarten eine feste Lead-Zahl unabhängig von Markt und Angebot.", "Sie wollen keine CRM- oder Follow-up-Struktur aufbauen.", "Sie können aktuell kein Projekt, Marktgebiet oder Leadproblem benennen."]
-    : ["You only want free marketing ideas.", "You expect a fixed lead number regardless of market and offer.", "You do not want CRM or follow-up structure.", "You cannot name a project, market area or lead-quality problem."];
+    : ["You only want free marketing ideas.", "You expect a fixed lead number regardless of market and offer.", "You do not want follow-up or handover structure.", "You cannot name a project, market area or lead-quality problem."];
   const checks = de
-    ? ["Zielgruppe und Projekt-/Marktlogik", "bestehende Leadquellen", "Landingpage- und Formularlogik", "Qualifizierungsfragen", "CRM-Handover", "Follow-up-Disziplin", "Engpass zwischen Marketing und Vertrieb", "ob ein Build+Run wirtschaftlich sinnvoll ist"]
-    : ["target group and project/market logic", "existing lead sources", "landing page and form logic", "qualification questions", "CRM handover", "follow-up discipline", "bottleneck between marketing and sales", "whether Build+Run is commercially sensible"];
+    ? ["Zielgruppe und Projekt-/Marktlogik", "Story, Visualisierung und Exposé-Logik", "bestehende Leadquellen", "Landingpage- und Formularlogik", "Qualifizierungsfragen", "Nachfassen und Übergabe", "Engpass zwischen Marketing und Vertrieb", "ob Aufbau und laufende Verbesserung wirtschaftlich sinnvoll sind"]
+    : ["target group and project/market logic", "story, visualisation and expose logic", "existing lead sources", "landing page and form logic", "qualification questions", "follow-up and handover", "bottleneck between marketing and sales", "whether setup and ongoing improvement are commercially sensible"];
   const after = de
-    ? ["Einschätzung des aktuellen Lead-Systems", "3-5 identifizierte Schwachstellen", "Empfehlung, ob Aufbau plus laufende Optimierung sinnvoll ist", "Nächster Schritt: Angebot, zweites Diagnosegespräch oder klare Absage"]
-    : ["assessment of the current lead system", "3-5 identified weak points", "recommendation on whether build plus ongoing optimisation makes sense", "next step: proposal, second diagnosis call or clear refusal"];
+    ? ["Einschätzung des aktuellen Projekt- und Lead-Wegs", "3-5 identifizierte Schwachstellen", "Empfehlung, ob Aufbau plus laufende Verbesserung sinnvoll ist", "Nächster Schritt: Angebot, zweites Diagnosegespräch oder klare Absage"]
+    : ["assessment of the current project and lead path", "3-5 identified weak points", "recommendation on whether setup plus ongoing improvement makes sense", "next step: proposal, second diagnosis call or clear refusal"];
   const notIncluded = de
     ? ["keine vollständige Funnel-Strategie gratis", "keine Media-Planung gratis", "keine Lead-Garantie", "keine rechtliche oder finanzielle Beratung", "keine Zusage ohne Scope-Prüfung"]
     : ["no full funnel strategy for free", "no free media planning", "no lead guarantee", "no legal or financial advice", "no commitment without scope review"];
@@ -1328,10 +1382,10 @@ function AuditExplainer({ locale }: { locale: Locale }) {
   return (
     <section className="audit-section">
       <div className="audit-grid">
-        <article className="content-section"><h2>{de ? "Dieses Audit ist richtig für Sie, wenn..." : "This audit is right for you if..."}</h2><ul className="check-list">{fit.map((item) => <li key={item}>{item}</li>)}</ul></article>
-        <article className="content-section"><h2>{de ? "Dieses Audit ist nicht richtig für Sie, wenn..." : "This audit is not right for you if..."}</h2><ul className="check-list">{noFit.map((item) => <li key={item}>{item}</li>)}</ul></article>
+        <article className="content-section"><h2>{de ? "Dieser Check ist richtig für Sie, wenn..." : "This check is right for you if..."}</h2><ul className="check-list">{fit.map((item) => <li key={item}>{item}</li>)}</ul></article>
+        <article className="content-section"><h2>{de ? "Dieser Check ist nicht richtig für Sie, wenn..." : "This check is not right for you if..."}</h2><ul className="check-list">{noFit.map((item) => <li key={item}>{item}</li>)}</ul></article>
         <article className="content-section"><h2>{de ? "Was wir in 30 Minuten prüfen" : "What we review in 30 minutes"}</h2><ul className="check-list">{checks.map((item) => <li key={item}>{item}</li>)}</ul></article>
-        <article className="content-section"><h2>{de ? "Was Sie nach dem Audit bekommen" : "What you receive after the audit"}</h2><ul className="check-list">{after.map((item) => <li key={item}>{item}</li>)}</ul></article>
+        <article className="content-section"><h2>{de ? "Was Sie nach dem Check bekommen" : "What you receive after the check"}</h2><ul className="check-list">{after.map((item) => <li key={item}>{item}</li>)}</ul></article>
         <article className="content-section content-section-wide"><h2>{de ? "Was Sie nicht bekommen" : "What you do not receive"}</h2><ul className="check-list">{notIncluded.map((item) => <li key={item}>{item}</li>)}</ul></article>
       </div>
     </section>
@@ -1431,18 +1485,18 @@ function FinalCta({ content, title }: { content: PageContent; title?: string }) 
     <section className="cta-band">
       <div>
         <p className="eyebrow">{content.locale === "en" ? "Next step" : "Nächster Schritt"}</p>
-        <h2>{title || (content.locale === "en" ? "Review whether your funnel needs a Build+Run system." : "Prüfen Sie in 30 Minuten, ob Ihr Funnel ein Build+Run-System braucht.")}</h2>
-        <p>{content.locale === "en" ? "See whether your current funnel creates qualified conversations or only more sorting work." : "Sehen Sie, ob Ihr aktueller Funnel qualifizierte Gespräche erzeugt oder nur neue Sortierarbeit."}</p>
+        <h2>{title || (content.locale === "en" ? "Review whether your current path creates prepared conversations." : "Prüfen Sie in 30 Minuten, ob Ihr aktueller Weg vorbereitete Gespräche erzeugt.")}</h2>
+        <p>{content.locale === "en" ? "See whether project presence, follow-up and handover work together or create more sorting work." : "Sehen Sie, ob Projektauftritt, Nachfassen und Übergabe zusammenspielen oder neue Sortierarbeit erzeugen."}</p>
       </div>
       <div className="hero-actions">
         <div className="cta-primary-group">
           <Link className="button button-primary" href={`${getPath(content.locale, "contact")}#book-audit`} data-track="cta_audit">
-            {content.locale === "en" ? "Book a Pipeline Audit" : "Pipeline-Audit buchen"}
+            {content.locale === "en" ? "Request Project Check" : "Projekt-Check anfragen"}
           </Link>
           <p className="cta-microcopy">
             {content.locale === "en"
-              ? "30 min diagnosis. Clear bottleneck. Clear next step."
-              : "30 Min. Diagnose. Klarer Engpass. Klarer nächster Schritt."}
+              ? "30 min review. Clear bottleneck. Clear next step."
+              : "30 Min. Check. Klarer Engpass. Klarer nächster Schritt."}
           </p>
         </div>
         <Link className="button button-secondary dark" href={getPlaybookFormPath(content.locale)} data-track="cta_playbook">

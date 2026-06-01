@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     default: "NovaLure",
     template: "%s"
   },
-  description: "CRM-ready lead systems that turn real estate enquiries into qualified conversations.",
+  description: "Project marketing, follow-up and prepared handover for real estate teams that turn enquiries into qualified conversations.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { getCrmAppUrl, getPath, getPlaybookFormPath, navLabels, routeMap, type Locale } from "@/lib/i18n";
+import { getPath, getPlaybookFormPath, navLabels, routeMap, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
 
 const ctaLabels = {
-  en: { primary: "Book a Project Check", crm: "CRM login", menu: "Menu", close: "Close menu" },
-  de: { primary: "Projekt-Check buchen", crm: "CRM-Login", menu: "Menü", close: "Menü schließen" }
+  en: { primary: "Request Project Check", menu: "Menu", close: "Close menu" },
+  de: { primary: "Projekt-Check anfragen", menu: "Menü", close: "Menü schließen" }
 };
 
-const headerRouteItems = ["developers", "agents", "playbooks"] as const;
+const headerRouteItems = ["developers", "agents", "handover", "playbooks"] as const;
 
 export function Header({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
@@ -25,7 +25,6 @@ export function Header({ locale }: { locale: Locale }) {
   const switchHref = activeKey ? routeMap[activeKey][switchLocale] : getPath(switchLocale, "home");
   const playbookHref = getPlaybookFormPath(locale);
   const auditHref = `${getPath(locale, "contact")}#book-audit`;
-  const crmHref = getCrmAppUrl(locale);
 
   return (
     <header className={`site-header ${open ? "menu-open" : ""}`}>
@@ -45,7 +44,6 @@ export function Header({ locale }: { locale: Locale }) {
             {navLabels[locale][key]}
           </Link>
         ))}
-        <a href={crmHref} data-track="nav_crm_login">{labels.crm}</a>
       </nav>
 
       <div className="header-actions desktop-actions">
@@ -80,9 +78,6 @@ export function Header({ locale }: { locale: Locale }) {
             {navLabels[locale][key]}
           </Link>
         ))}
-        <a className="crm-login-link" href={crmHref} data-track="mobile_nav_crm_login" onClick={() => setOpen(false)}>
-          {labels.crm}
-        </a>
         <Link className="button button-primary" href={auditHref} onClick={() => setOpen(false)}>
           {labels.primary}
         </Link>

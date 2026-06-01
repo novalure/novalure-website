@@ -68,17 +68,17 @@ export type HomeContent = PageContent & {
 
 const labels = {
   en: {
-    audit: "Book a Pipeline Audit",
+    audit: "Request a Project Check",
     handover: "View example handover",
     playbook: "Download playbook",
-    developerPlaybook: "Developer Pipeline Playbook",
+    developerPlaybook: "Developer Project Playbook",
     agentPlaybook: "Real Estate Agent Lead Playbook"
   },
   de: {
-    audit: "Pipeline-Audit buchen",
+    audit: "Projekt-Check anfragen",
     handover: "Beispiel-Handover ansehen",
     playbook: "Playbook herunterladen",
-    developerPlaybook: "Bauträger-Pipeline-Playbook",
+    developerPlaybook: "Bauträger-Projekt-Playbook",
     agentPlaybook: "Makler-Lead-Playbook"
   }
 };
@@ -90,9 +90,9 @@ export const playbooks: Record<Locale, Playbook[]> = {
       title: labels.en.developerPlaybook,
       subtitle: "A practical system map for turning project demand into qualified buyer conversations.",
       learns: [
-        "How to structure a project funnel before media spend scales",
+        "How to structure the project path before media spend scales",
         "Where buyer intent should be filtered before sales handover",
-        "Which CRM context your sales team needs before the first call"
+        "Which handover context your sales team needs before the first call"
       ]
     },
     {
@@ -100,7 +100,7 @@ export const playbooks: Record<Locale, Playbook[]> = {
       title: labels.en.agentPlaybook,
       subtitle: "A field guide for agents who want owned seller and buyer demand beyond portals.",
       learns: [
-        "How to separate portal dependency from owned pipeline",
+        "How to separate portal dependency from owned demand",
         "What seller and buyer lead flows need to qualify intent",
         "How follow-up structure protects serious opportunities"
       ]
@@ -112,9 +112,9 @@ export const playbooks: Record<Locale, Playbook[]> = {
       title: labels.de.developerPlaybook,
       subtitle: "Eine praktische Systemkarte, um Projektnachfrage in qualifizierte Käufergespräche zu verwandeln.",
       learns: [
-        "Wie ein Projekt-Funnel aufgebaut wird, bevor Media-Budget skaliert",
+        "Wie ein Projektweg aufgebaut wird, bevor Media-Budget skaliert",
         "Wo Kaufabsicht vor der Vertriebsübergabe gefiltert werden sollte",
-        "Welchen CRM-Kontext Ihr Vertrieb vor dem ersten Gespräch braucht"
+        "Welchen Übergabekontext Ihr Vertrieb vor dem ersten Gespräch braucht"
       ]
     },
     {
@@ -122,7 +122,7 @@ export const playbooks: Record<Locale, Playbook[]> = {
       title: labels.de.agentPlaybook,
       subtitle: "Ein Leitfaden für Makler, die eigene Verkäufer- und Käufernachfrage jenseits von Portalen aufbauen wollen.",
       learns: [
-        "Wie Sie Portalabhängigkeit von eigener Pipeline trennen",
+        "Wie Sie Portalabhängigkeit von eigener Nachfrage trennen",
         "Welche Filter Verkäufer- und Käufer-Leads wirklich brauchen",
         "Wie strukturierte Nachverfolgung ernsthafte Chancen schützt"
       ]
@@ -134,7 +134,7 @@ const hardFaq: Record<Locale, FaqItem[]> = {
   de: [
     {
       question: "Warum sollte ich NovaLure vertrauen, wenn es noch keine öffentlichen Referenzen gibt?",
-      answer: "Weil wir keine Referenzen erfinden. Stattdessen zeigen wir Demo-Funnels, Beispiel-CRM-Handover, Audit-Outputs und QA-Checklisten. Entscheiden Sie anhand der Systemlogik, nicht anhand erfundener Logos."
+      answer: "Weil wir keine Referenzen erfinden. Stattdessen zeigen wir Beispiel-Handover, Projekt-Check-Auszüge und echte Arbeitslogik. Entscheiden Sie anhand der Systemlogik, nicht anhand erfundener Logos."
     },
     {
       question: "Haben Sie schon Kunden?",
@@ -146,7 +146,7 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Ist NovaLure eine Marketingagentur?",
-      answer: "Nicht im klassischen Sinn. Kampagnen können Teil des Systems sein, aber das Ziel ist nicht Werbung. Das Ziel ist eine qualifizierte Pipeline: Landingpage, Fragen, CRM-Kontext, Follow-up und Reporting."
+      answer: "Nicht im klassischen Sinn. Kampagnen können Teil des Systems sein, aber das Ziel ist nicht Werbung allein. Das Ziel ist ein sauberer Weg vom Projektauftritt über Nachfrage und Nachfassen bis zur vorbereiteten Übergabe."
     },
     {
       question: "Garantiert NovaLure eine bestimmte Anzahl Leads?",
@@ -154,15 +154,15 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Warum gibt es keine öffentlichen Preise?",
-      answer: "Weil Scope, Assets, CRM-Reife, Projektart und Run-Aufwand stark variieren. Budgetfähigkeit wird aber vor dem Audit abgefragt, damit niemand Zeit verliert."
+      answer: "Weil Scope, vorhandene Assets, Projektart, Lead-Situation und laufender Aufwand stark variieren. Budgetfähigkeit wird aber vor dem Projekt-Check abgefragt, damit niemand Zeit verliert."
     },
     {
       question: "Was kostet so ein System ungefähr?",
-      answer: "NovaLure veröffentlicht keine harte Preisliste. Vor dem Audit wird geprüft, ob grundsätzlich Budget für Setup, operative Betreuung und gegebenenfalls Media vorhanden ist. Ohne Budgetfähigkeit ist ein Audit nicht sinnvoll."
+      answer: "NovaLure veröffentlicht keine harte Preisliste. Vor dem Projekt-Check wird geprüft, ob grundsätzlich Budget für Setup, operative Betreuung und gegebenenfalls Media vorhanden ist. Ohne Budgetfähigkeit ist ein Check nicht sinnvoll."
     },
     {
       question: "Was passiert, wenn keine guten Leads kommen?",
-      answer: "Dann wird im Run geprüft: Quelle, Landingpage, Formular, Intent-Fragen, Asset, Markt, Budget und Sales-Follow-up. Es gibt keine Lead-Garantie, aber eine klare Optimierungslogik."
+      answer: "Dann wird geprüft: Quelle, Projektauftritt, Formular, Qualifizierung, Asset, Markt, Budget und Nachfassen. Es gibt keine Lead-Garantie, aber eine klare Verbesserungslogik."
     },
     {
       question: "Brauchen wir ein eigenes Sales Team?",
@@ -170,7 +170,7 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Was brauche ich vor dem Start?",
-      answer: "Projekt oder Marktgebiet, Zielgruppe, vorhandene Assets, CRM-Zugang, Entscheidungsperson, Budgetfreigabe und Ansprechpartner."
+      answer: "Projekt oder Marktgebiet, Zielgruppe, vorhandene Assets, aktueller Lead-Prozess, Entscheidungsperson, Budgetfreigabe und Ansprechpartner."
     },
     {
       question: "Arbeiten Sie alleine oder mit einem Team?",
@@ -186,33 +186,33 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Warum reicht eine normale Website nicht?",
-      answer: "Eine Website präsentiert. Ein Sales-System qualifiziert, übergibt und verfolgt nach. Ohne Handover bleibt Nachfrage oft im Postfach oder CRM liegen."
+      answer: "Eine Website präsentiert. Ein Sales-System führt weiter: qualifizieren, nachfassen, übergeben und sichtbar machen, was als Nächstes passieren muss."
     },
     {
       question: "Warum reicht Meta oder Google Ads nicht?",
-      answer: "Ads erzeugen Aufmerksamkeit. Ohne Funnel, Filter, CRM und Follow-up entsteht oft Volumen, aber keine nutzbare Pipeline."
+      answer: "Ads erzeugen Aufmerksamkeit. Ohne Projektseite, Qualifizierung, Nachfassen und Übergabe entsteht oft Volumen, aber keine nutzbare Verkaufschance."
     },
     {
       question: "Was unterscheidet NovaLure von Immo-Marketing-Agenturen?",
-      answer: "NovaLure fokussiert nicht zuerst auf Kampagnenästhetik oder Klickpreise, sondern auf qualifizierte Immobiliengespräche. Entscheidend ist, ob Quelle, Motivation, Timing, Budgetnähe und nächster Schritt vor dem ersten Gespräch sichtbar sind."
+      answer: "NovaLure fokussiert nicht zuerst auf Kampagnenästhetik oder Klickpreise, sondern auf qualifizierte Immobiliengespräche. Entscheidend ist, ob Quelle, Interesse, Timing, Budgetnähe und nächster Schritt vor dem ersten Gespräch sichtbar sind."
     },
     {
       question: "Wann ist NovaLure nicht der richtige Partner?",
       answer: "Wenn kein Projekt, kein Marktgebiet, kein Budget und keine Bereitschaft zur strukturierten Nachverfolgung vorhanden sind. NovaLure eignet sich nicht für reine Logo-, Image- oder Reichweitenkampagnen ohne Vertriebsziel."
     },
     {
-      question: "Was bekomme ich nach dem Pipeline-Audit?",
-      answer: "Eine Einschätzung des aktuellen Lead-Systems, identifizierte Schwachstellen und eine Empfehlung, ob Build+Run sinnvoll ist. Das Audit liefert Klarheit über den nächsten Schritt, aber keine kostenlose Komplettstrategie."
+      question: "Was bekomme ich nach dem Projekt-Check?",
+      answer: "Eine Einschätzung des aktuellen Projekt- und Lead-Wegs, identifizierte Schwachstellen und eine Empfehlung, ob Aufbau plus laufende Verbesserung sinnvoll ist. Der Check liefert Klarheit über den nächsten Schritt, aber keine kostenlose Komplettstrategie."
     },
     {
-      question: "Wann lohnt sich Build+Run nicht?",
-      answer: "Wenn kein Projekt, kein Marktgebiet, kein Media- oder Umsetzungsbudget, kein Sales-Follow-up oder kein klares Ziel vorhanden ist."
+      question: "Wann lohnt sich ein Aufbau nicht?",
+      answer: "Wenn kein Projekt, kein Marktgebiet, kein Media- oder Umsetzungsbudget, kein Nachfassen oder kein klares Ziel vorhanden ist."
     }
   ],
   en: [
     {
       question: "Why should I trust NovaLure without public references?",
-      answer: "Because we do not invent references. Instead, we show demo funnels, example CRM handovers, audit outputs and QA checklists. Judge the system logic, not a fabricated logo wall."
+      answer: "Because we do not invent references. Instead, we show example handovers, Project Check excerpts and real working logic. Judge the system logic, not a fabricated logo wall."
     },
     {
       question: "Do you already have clients?",
@@ -224,7 +224,7 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Is NovaLure a marketing agency?",
-      answer: "Not in the classic sense. Campaigns can be part of the system, but the goal is not advertising. The goal is a qualified pipeline: landing page, questions, CRM context, follow-up and reporting."
+      answer: "Not in the classic sense. Campaigns can be part of the system, but the goal is not advertising alone. The goal is a clean path from project presence through demand and follow-up to prepared handover."
     },
     {
       question: "Does NovaLure guarantee a certain number of leads?",
@@ -232,15 +232,15 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Why are there no public prices?",
-      answer: "Scope, assets, CRM maturity, project type and Run effort vary materially. Budget readiness is checked before the audit so no one wastes time."
+      answer: "Scope, existing assets, project type, lead situation and ongoing effort vary materially. Budget readiness is checked before the Project Check so no one wastes time."
     },
     {
       question: "What does a system like this cost?",
-      answer: "NovaLure does not publish a hard price list. Before the audit we check whether budget for setup, operating support and possible media exists. Without budget readiness, an audit is not useful."
+      answer: "NovaLure does not publish a hard price list. Before the Project Check we check whether budget for setup, operating support and possible media exists. Without budget readiness, a check is not useful."
     },
     {
       question: "What happens if lead quality is poor?",
-      answer: "The Run reviews source, landing page, form, intent questions, asset, market, budget and sales follow-up. There is no lead guarantee, but there is a clear optimisation logic."
+      answer: "We review source, project presence, form, qualification, asset, market, budget and follow-up. There is no lead guarantee, but there is a clear improvement logic."
     },
     {
       question: "Do we need our own sales team?",
@@ -248,7 +248,7 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "What do I need before starting?",
-      answer: "A project or market area, target group, available assets, CRM access, decision owner, budget readiness and a clear internal contact."
+      answer: "A project or market area, target group, available assets, current lead process, decision owner, budget readiness and a clear internal contact."
     },
     {
       question: "Do you work alone or with a team?",
@@ -264,27 +264,27 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Why is a normal website not enough?",
-      answer: "A website presents. A sales system qualifies, hands over and follows up. Without handover, demand often gets stuck in an inbox or CRM."
+      answer: "A website presents. A sales system carries the enquiry further: qualification, follow-up, handover and a visible next step."
     },
     {
       question: "Why are Meta or Google Ads not enough?",
-      answer: "Ads create attention. Without funnel, filter, CRM and follow-up, teams often get volume but no usable pipeline."
+      answer: "Ads create attention. Without project page, qualification, follow-up and handover, teams often get volume but no usable sales opportunity."
     },
     {
       question: "How is NovaLure different from real estate marketing agencies?",
-      answer: "NovaLure does not start with campaign aesthetics or cheap clicks. It starts with qualified real estate conversations. The question is whether source, motivation, timing, budget proximity and next step are visible before the first call."
+      answer: "NovaLure does not start with campaign aesthetics or cheap clicks. It starts with qualified real estate conversations. The question is whether source, interest, timing, budget proximity and next step are visible before the first call."
     },
     {
       question: "When is NovaLure not the right partner?",
       answer: "When there is no project, no market area, no budget and no willingness to follow up in a structured way. NovaLure is not built for pure logo, image or reach campaigns without a sales goal."
     },
     {
-      question: "What do I receive after the Pipeline Audit?",
-      answer: "An assessment of the current lead system, identified weak points and a recommendation on whether Build+Run makes sense. The audit gives clarity on the next step, but not a free full strategy."
+      question: "What do I receive after the Project Check?",
+      answer: "An assessment of the current project and lead path, identified weak points and a recommendation on whether setup plus ongoing improvement makes sense. The check gives clarity on the next step, but not a free full strategy."
     },
     {
-      question: "When is Build+Run not worth it?",
-      answer: "When there is no project, market area, media or implementation budget, sales follow-up or clear goal."
+      question: "When is setup not worth it?",
+      answer: "When there is no project, market area, media or implementation budget, follow-up or clear goal."
     }
   ]
 };
@@ -294,19 +294,19 @@ const homeContent: Record<Locale, HomeContent> = {
     key: "home",
     locale: "de",
     template: "home",
-    eyebrow: "Projektvermarktung für Bauträger",
-    title: "Vom ersten Bild bis zum qualifizierten Käufergespräch.",
-    seoTitle: "NovaLure | Projektvermarktung für Bauträger",
+    eyebrow: "Projektvermarktung mit Vertriebsstruktur",
+    title: "Vom Projektauftritt bis zum qualifizierten Käufergespräch.",
+    seoTitle: "NovaLure | Projektvermarktung mit Vertriebsstruktur",
     description:
-      "Wir entwickeln Storytelling, Visualisierung und Exposé für Bauträgerprojekte und führen Interessenten bis zum qualifizierten Käufergespräch.",
+      "Wir entwickeln Storytelling, Visualisierung, Exposé, Kampagne, Nachfassen und systemgestützte Übergabe für Immobilienprojekte.",
     metaDescription:
-      "NovaLure entwickelt Storytelling, Visualisierung, Exposé und CRM-gestützte Lead-Systeme für Bauträger: qualifizierte Käufergespräche statt Rohleads.",
-    primaryCta: { label: "Projekt-Check buchen", target: "contact", anchor: "book-audit" },
+      "NovaLure verbindet Projektvermarktung, Nachfassen und systemgestützte Lead-Wege für Immobilienvertrieb: qualifizierte Gespräche statt Rohkontakte.",
+    primaryCta: { label: "Projekt-Check anfragen", target: "contact", anchor: "book-audit" },
     secondaryCta: { label: "Playbook herunterladen", target: "playbooks", variant: "subtle" },
     heroBullets: [
       "Weniger Zeit mit unqualifizierten Anfragen",
       "Mehr Kontext vor dem ersten Gespräch",
-      "Klare Priorisierung im CRM",
+      "Klare Priorisierung im System",
       "Für Bauträger, Projektvertriebe und Makler"
     ],
     audience: {
@@ -316,13 +316,13 @@ const homeContent: Record<Locale, HomeContent> = {
           title: "Für Bauträger und Projektvertriebe",
           body: "Wenn ein Projekt verkauft werden muss, reichen Klicks nicht. Ihr Vertrieb braucht Käufer, die zum Projekt, Budget und Timing passen.",
           hrefKey: "developers",
-          points: ["Projekt-Funnel nach Einheitentyp und Zielgruppe", "Käuferfragen zu Budget, Timing und Nutzung", "CRM-Übergabe mit nächstem Schritt"]
+          points: ["Projektweg nach Einheitentyp und Zielgruppe", "Käuferfragen zu Budget, Timing und Nutzung", "Vorbereitete Übergabe mit nächstem Schritt"]
         },
         {
           title: "Für Makler und Maklerteams",
           body: "Wenn Eigentümer- und Käuferanfragen unsortiert im Postfach landen, verliert Ihr Team Zeit. NovaLure trennt Neugier von echter Verkaufs- oder Kaufabsicht.",
           hrefKey: "agents",
-          points: ["Verkäufer-Lead-Systeme", "Käufer-Funnels mit Suchprofil-Logik", "Follow-up und CRM-Kontext statt Portalabhängigkeit"]
+          points: ["Verkäuferanfragen mit klarer Reife", "Käuferwege mit Suchprofil-Logik", "Follow-up und Übergabekontext statt Portalabhängigkeit"]
         }
       ]
     },
@@ -333,16 +333,16 @@ const homeContent: Record<Locale, HomeContent> = {
       points: [
         { title: "Rohleads kosten Zeit", body: "Wenn Ihr Team erst im Telefonat merkt, dass Budget, Timing oder Motivation nicht passen, ist der Fehler schon vorher passiert." },
         { title: "CPL ist nicht Pipeline", body: "Mehr Leads lösen das Problem nicht, wenn die falschen Anfragen zuerst im Vertrieb landen." },
-        { title: "Portalabhängigkeit bleibt riskant", body: "Portale schaffen Reichweite, aber keine eigene Funnel-Logik, CRM-Übergabe oder Follow-up-Disziplin." }
+        { title: "Portalabhängigkeit bleibt riskant", body: "Portale schaffen Reichweite, aber keine eigene Anfrage-Logik, vorbereitete Übergabe oder Follow-up-Disziplin." }
       ]
     },
     system: {
-      title: "Ein PropTech Sales System ist die Struktur zwischen erstem Klick und qualifiziertem Gespräch.",
-      body: "Es verbindet Landingpage, Fragen zur Kauf- oder Verkaufsabsicht, CRM-Übergabe, Follow-up und Reporting. Ads können Teil davon sein, sind aber nicht das Produkt.",
+      title: "Die NovaLure Struktur verbindet Auftritt, Anfrage und qualifiziertes Gespräch.",
+      body: "Sie verbindet Landingpage, Fragen zur Kauf- oder Verkaufsabsicht, vorbereitete Übergabe, Follow-up und Reporting. Ads können Teil davon sein, sind aber nicht das Produkt.",
       layers: [
         { label: "01", title: "Der Weg vom Klick zur Anfrage", body: "Zielgruppe, Projekt oder Marktgebiet und die wichtigsten Entscheidungsfragen werden vor Media-Budget geklärt." },
         { label: "02", title: "Vorqualifizierende Fragen", body: "Fragen erkennen echte Kauf- oder Verkaufsabsicht, bevor Ihr Team Zeit in ein Gespräch investiert." },
-        { label: "03", title: "Übergabe ins CRM", body: "Quelle, Motivation, Timing, Budgetnähe und nächster Schritt werden sichtbar statt nur Name und Telefonnummer." },
+        { label: "03", title: "Vorbereitete Übergabe", body: "Quelle, Motivation, Timing, Budgetnähe und nächster Schritt werden sichtbar statt nur Name und Telefonnummer." },
         { label: "04", title: "Aufbau plus laufende Optimierung", body: "Leadqualität wird anhand von Gesprächen, Feedback und Reporting verbessert, nicht nur anhand von Klicks." }
       ]
     },
@@ -357,30 +357,30 @@ const homeContent: Record<Locale, HomeContent> = {
     },
     playbookSection: {
       title: "Das Playbook bleibt der zweite Schritt, nicht der Hauptverkauf.",
-      body: "Wenn Sie noch nicht bereit für ein Audit sind, zeigt das Playbook, wo Anfragen vor dem Vertrieb Kontext verlieren. Der direkte Weg bleibt das Pipeline-Audit."
+      body: "Wenn Sie noch nicht bereit für einen Projekt-Check sind, zeigt das Playbook, wo Anfragen vor dem Vertrieb Kontext verlieren. Der direkte Weg bleibt der 30-Minuten-Check."
     },
     beforeAfter: {
       beforeTitle: "Vor NovaLure",
-      afterTitle: "Nach dem Build+Run-System",
+      afterTitle: "Nach dem aufgebauten Lead-Weg",
       before: ["Unklare Formularleads", "CPL statt Pipeline-Sicht", "Follow-up hängt an Einzelpersonen", "CRM ohne Kontext", "Vertrieb sortiert manuell"],
-      after: ["Quelle, Segment und Timing sichtbar", "Priorisierte Verkaufschancen im CRM", "Follow-up je Segment", "Handover-Notiz vor dem ersten Call", "Run-Optimierung nach Leadqualität"]
+      after: ["Quelle, Segment und Timing sichtbar", "Priorisierte Verkaufschancen im System", "Follow-up je Segment", "Übergabenotiz vor dem ersten Call", "Verbesserung nach Leadqualität"]
     },
     process: {
       id: "prozess",
       title: "Erst Diagnose. Dann Aufbau. Danach laufende Optimierung.",
       body: "NovaLure verkauft kein Standardpaket. Der Scope entsteht aus Leadproblem, Marktgebiet, Projektlogik, Sales-Struktur und wirtschaftlicher Sinnhaftigkeit.",
-      steps: ["Pipeline-Audit", "Engpass klären", "Scope definieren", "Lead-Weg bauen", "CRM-Übergabe einrichten", "Launch", "Leadqualität optimieren"]
+      steps: ["Projekt-Check", "Engpass klären", "Scope definieren", "Lead-Weg bauen", "Übergabe einrichten", "Launch", "Leadqualität verbessern"]
     },
     team: {
       id: "team",
       title: "Gebaut aus Immobilienvertriebsperspektive, nicht aus Kampagnenperspektive.",
       body:
-        "NovaLure wird durch die Teamleitung geführt. Der Fokus liegt auf einem einfachen Problem: Viele Immobilienanfragen erreichen den Vertrieb ohne ausreichenden Kontext. NovaLure baut Systeme, die Nachfrage, Qualifizierung, CRM-Übergabe und Follow-up zusammenführen, damit schneller klar wird, welche Gespräche wirklich Priorität haben.",
+        "NovaLure wird durch die Teamleitung geführt. Der Fokus liegt auf einem einfachen Problem: Viele Immobilienanfragen erreichen den Vertrieb ohne ausreichenden Kontext. NovaLure baut Systeme, die Nachfrage, Qualifizierung, Übergabe und Follow-up zusammenführen, damit schneller klar wird, welche Gespräche wirklich Priorität haben.",
       pillars: [
         "Immobilienvertrieb steht vor Kampagnenlogik: Erst Gesprächsqualität, dann Media.",
         "Fokus auf qualifizierte Immobiliengespräche statt reiner Leadanzahl.",
-        "CRM-Kontext vor dem ersten Anruf: Quelle, Motivation, Timing, Budgetnähe und nächster Schritt.",
-        "Audit vor Angebot: Scope wird erst nach Diagnose definiert.",
+        "Übergabekontext vor dem ersten Anruf: Quelle, Motivation, Timing, Budgetnähe und nächster Schritt.",
+        "Check vor Angebot: Scope wird erst nach Diagnose definiert.",
         "Bestehende Sales-Teams werden gestärkt; fehlende Sales-Struktur kann operativ mit aufgebaut werden."
       ],
       founder: "Franz Romih – Teamleitung: Diagnose, Systemarchitektur und kommerzielle Priorisierung",
@@ -390,25 +390,25 @@ const homeContent: Record<Locale, HomeContent> = {
         "NovaLure ist ein in Irland verwurzeltes Unternehmen mit internationaler Ausrichtung und betreut Kunden in Irland, UK, der DACH-Region und darüber hinaus. Operativ zählen klare Ansprechpartner, saubere Vertragsgrundlage, DSGVO-konforme Tools, nachvollziehbare Kommunikation und definierte Deliverables."
     },
     faq: hardFaq.de,
-    finalCtaTitle: "Lassen Sie prüfen, wo Ihr Lead-System Vertriebszeit verliert."
+    finalCtaTitle: "Lassen Sie prüfen, wo Ihr Lead-Weg Vertriebszeit verliert."
   },
   en: {
     key: "home",
     locale: "en",
     template: "home",
-    eyebrow: "Project marketing for developers",
-    title: "From the first visual to a qualified buyer conversation.",
-    seoTitle: "NovaLure | Project marketing for developers",
+    eyebrow: "Project marketing with sales structure",
+    title: "From project presence to qualified buyer conversation.",
+    seoTitle: "NovaLure | Project marketing with sales structure",
     description:
-      "We create storytelling, visualisation and expose for developer projects and guide enquiries through to qualified buyer conversations.",
+      "We create storytelling, visualisation, expose, campaigns, follow-up and system-supported handover for real estate projects.",
     metaDescription:
-      "NovaLure creates storytelling, visualisation, expose and CRM-supported lead systems for developers: qualified buyer conversations instead of raw leads.",
-    primaryCta: { label: "Book a Project Check", target: "contact", anchor: "book-audit" },
+      "NovaLure connects project marketing, follow-up and system-supported lead paths for real estate sales: qualified conversations instead of raw contacts.",
+    primaryCta: { label: "Request Project Check", target: "contact", anchor: "book-audit" },
     secondaryCta: { label: "Download playbook", target: "playbooks", variant: "subtle" },
     heroBullets: [
       "Less time wasted on unqualified enquiries",
       "More context before the first call",
-      "Clear CRM prioritisation",
+      "Clear system prioritisation",
       "Built for developers, project sales teams and agents"
     ],
     audience: {
@@ -418,13 +418,13 @@ const homeContent: Record<Locale, HomeContent> = {
           title: "For developers and project sales teams",
           body: "When a project needs to sell, clicks are not enough. Sales needs buyers who match the project, budget and timing.",
           hrefKey: "developers",
-          points: ["Project funnel by unit type and target group", "Buyer questions for budget, timing and use case", "CRM handover with next step"]
+          points: ["Project funnel by unit type and target group", "Buyer questions for budget, timing and use case", "Prepared handover with next step"]
         },
         {
           title: "For agents and broker teams",
           body: "When seller and buyer enquiries land in an inbox without priority, your team loses time. NovaLure separates curiosity from real selling or buying intent.",
           hrefKey: "agents",
-          points: ["Seller lead systems", "Buyer funnels with search-profile logic", "Follow-up and CRM context beyond portals"]
+          points: ["Seller enquiries with clear readiness", "Buyer paths with search-profile logic", "Follow-up and handover context beyond portals"]
         }
       ]
     },
@@ -435,16 +435,16 @@ const homeContent: Record<Locale, HomeContent> = {
       points: [
         { title: "Raw leads waste time", body: "If your team only finds out during the call that budget, timing or motivation do not fit, the mistake happened earlier." },
         { title: "CPL is not pipeline", body: "More leads do not solve the problem if the wrong enquiries reach sales first." },
-        { title: "Portal dependency stays risky", body: "Portals create reach, but not your own funnel logic, CRM handover or follow-up discipline." }
+        { title: "Portal dependency stays risky", body: "Portals create reach, but not your own funnel logic, prepared handover or follow-up discipline." }
       ]
     },
     system: {
-      title: "A PropTech Sales System is the structure between first click and qualified conversation.",
-      body: "It connects landing page, qualification questions, CRM handover, follow-up and reporting. Ads can be part of it, but they are not the product.",
+      title: "The NovaLure structure connects presence, enquiry and qualified conversation.",
+      body: "It connects landing page, qualification questions, prepared handover, follow-up and reporting. Ads can be part of it, but they are not the product.",
       layers: [
         { label: "01", title: "Path from click to enquiry", body: "Target group, project or market area and the key decision questions are defined before media spend." },
         { label: "02", title: "Pre-qualification questions", body: "Questions identify real buying or selling intent before your team invests time in a conversation." },
-        { label: "03", title: "CRM-ready handover", body: "Source, motivation, timing, budget proximity and next step become visible instead of just name and phone number." },
+        { label: "03", title: "Prepared handover", body: "Source, interest, timing, budget proximity and next step become visible instead of just name and phone number." },
         { label: "04", title: "Build plus ongoing optimisation", body: "Lead quality improves through sales feedback, reporting and conversation quality, not clicks alone." }
       ]
     },
@@ -459,30 +459,30 @@ const homeContent: Record<Locale, HomeContent> = {
     },
     playbookSection: {
       title: "The playbook is the second step, not the main sale.",
-      body: "If you are not ready for an audit yet, the playbook shows where enquiries lose context before sales. The direct path remains the Pipeline Audit."
+      body: "If you are not ready for a Project Check yet, the playbook shows where enquiries lose context before sales. The direct path remains the 30-minute check."
     },
     beforeAfter: {
       beforeTitle: "Before NovaLure",
-      afterTitle: "After the Build+Run system",
-      before: ["Unclear form leads", "CPL instead of pipeline visibility", "Follow-up depends on individuals", "CRM without context", "Sales teams sort leads manually"],
-      after: ["Source, segment and timing visible", "Prioritised CRM opportunities", "Segmented follow-up", "Handover note before the first call", "Run optimisation by lead quality"]
+      afterTitle: "After the lead path is built",
+      before: ["Unclear form leads", "CPL instead of pipeline visibility", "Follow-up depends on individuals", "No handover context", "Sales teams sort leads manually"],
+      after: ["Source, segment and timing visible", "Prioritised opportunities in the system", "Segmented follow-up", "Handover note before the first call", "Improvement by lead quality"]
     },
     process: {
       id: "process",
       title: "First diagnosis. Then build. Then ongoing optimisation.",
       body: "NovaLure does not sell a standard package. Scope follows lead problem, market area, project logic, sales structure and commercial fit.",
-      steps: ["Pipeline Audit", "Clarify bottleneck", "Define scope", "Build lead path", "Set CRM handover", "Launch", "Optimise lead quality"]
+      steps: ["Project Check", "Clarify bottleneck", "Define scope", "Build lead path", "Set handover", "Launch", "Improve lead quality"]
     },
     team: {
       id: "team",
       title: "Built from a real estate sales perspective, not a campaign perspective.",
       body:
-        "NovaLure is led by its team lead. The focus is on a simple problem: many real estate enquiries reach sales without sufficient context. NovaLure builds systems that combine demand, qualification, CRM handover and follow-up, so it becomes clear faster which conversations deserve priority.",
+        "NovaLure is led by its team lead. The focus is on a simple problem: many real estate enquiries reach sales without sufficient context. NovaLure builds systems that combine demand, qualification, handover and follow-up, so it becomes clear faster which conversations deserve priority.",
       pillars: [
         "Real estate sales before campaign logic: conversation quality first, media second.",
         "Focus on qualified real estate conversations instead of raw lead count.",
-        "CRM context before the first call: source, motivation, timing, budget proximity and next step.",
-        "Audit before proposal: scope is defined only after diagnosis.",
+        "Handover context before the first call: source, motivation, timing, budget proximity and next step.",
+        "Check before proposal: scope is defined only after diagnosis.",
         "Existing sales teams get stronger; missing sales structure can be built operationally."
       ],
       founder: "Franz Romih – Team Lead: diagnosis, systems architecture and commercial prioritisation",
@@ -492,7 +492,7 @@ const homeContent: Record<Locale, HomeContent> = {
         "NovaLure is a company rooted in Ireland with an international focus, serving clients in Ireland, the UK, the DACH region and beyond. What counts operationally: clear points of contact, sound contractual basis, GDPR-compliant tools, transparent communication and defined deliverables."
     },
     faq: hardFaq.en,
-    finalCtaTitle: "Find out where your lead system is wasting sales time."
+    finalCtaTitle: "Find out where your lead path is wasting sales time."
   }
 };
 
@@ -504,40 +504,40 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "de",
       template: "audience",
       eyebrow: "Für Bauträger und Projektvertriebe",
-      title: "Mehr qualifizierte Käufergespräche für Bauträger und Projektvertriebe.",
-      seoTitle: "Qualifizierte Käuferanfragen für Bauträger | NovaLure",
+      title: "Projektvermarktung, die nicht bei der Anfrage endet.",
+      seoTitle: "Projektvermarktung für qualifizierte Käufergespräche | NovaLure",
       description:
-        "Wenn ein Projekt verkauft werden muss, reichen Klicks nicht. NovaLure baut Projekt-Funnels, Käuferfragen und CRM-Übergaben, damit Ihr Vertrieb schneller mit passenden Käufern spricht.",
-      primaryCta: { label: "Pipeline-Audit buchen", target: "contact", anchor: "book-audit" },
+        "NovaLure verbindet Storytelling, Visualisierung, Exposé, Kampagne, Nachfassen und systemgestützte Übergabe, damit Ihr Vertrieb mit vorbereiteten Interessenten spricht.",
+      primaryCta: { label: "Projekt-Check anfragen", target: "contact", anchor: "book-audit" },
       secondaryCta: { label: "Bauträger-Playbook herunterladen", target: "playbooks" },
       heroBullets: [
-        "Projektlogik nach Lage, Einheitentyp und Käuferprofil",
-        "Fragen zu Budget, Timing und Eigennutzung oder Investment",
-        "CRM-Übergabe mit Quelle, Motivation und nächstem Schritt"
+        "Storytelling, Visualisierung und Exposé aus einer Logik",
+        "Kampagne, Formular und Nachfassen mit Qualifizierung",
+        "Übergabe mit Quelle, Interesse, Timing und nächstem Schritt"
       ],
       sections: [
         {
-          title: "Warum Bauträger-Leads vor dem Vertrieb Qualität verlieren",
-          body: "Projektseiten sammeln oft Namen und Telefonnummern. Ihr Vertrieb braucht aber Käuferkontext: Einheitentyp, Timing, Budgetnähe, Finanzierungsstatus und nächsten Schritt.",
+          title: "Warum Projektvermarktung mehr braucht als gute Bilder",
+          body: "Visualisierung und Exposé schaffen Aufmerksamkeit. Entscheidend ist aber, ob der Weg danach klar weiterführt: zur passenden Anfrage, zur Qualifizierung und zu einem nächsten Schritt im Vertrieb.",
           items: [
-            "Projektseite sammelt Anfragen ohne Käuferkontext.",
-            "Formular fragt zu wenig.",
-            "Vertrieb sieht Quelle, Interesse und Timing nicht.",
-            "Leads werden nicht nach Einheitentyp, Budgetnähe oder Kaufphase sortiert.",
-            "Kampagnen werden nach CPL bewertet statt nach Gesprächsqualität."
+            "Projektseite und Exposé setzen die Erwartung, bevor ein Interessent anfragt.",
+            "Formular und Nachfassen klären Interesse, Timing und Budgetnähe.",
+            "Der Vertrieb sieht nicht nur Kontaktdaten, sondern den Kontext zur Anfrage.",
+            "Interessenten werden nach Projektfit und Gesprächsreife eingeordnet.",
+            "Kampagnen werden nach Gesprächsqualität betrachtet, nicht nur nach Kontaktmenge."
           ]
         },
         {
-          title: "Was ein qualifizierter Projektlead enthalten sollte",
-          body: "Ein Projektlead sollte Projekt, Lage, gewünschten Einheitentyp, Eigennutzung oder Investment, Timing, Budgetnähe, groben Finanzierungsstatus, Quelle und nächsten Schritt enthalten."
+          title: "Was bei Ihrem Vertrieb ankommen sollte",
+          body: "Ein vorbereiteter Projektlead zeigt Projektbezug, Lage- oder Einheitentyp, Eigennutzung oder Investment, Timing, Budgetnähe, grobe Finanzierung, Quelle und den nächsten sinnvollen Schritt."
         },
         {
-          title: "Was NovaLure für Bauträger konkret baut",
-          body: "NovaLure baut Landingpage oder Projekt-Funnel, vorqualifizierende Fragen, Lead-Asset, CRM-Felder, Priorisierung, Handover-Notiz, Follow-up und Reporting."
+          title: "Was NovaLure für Bauträger konkret aufsetzt",
+          body: "NovaLure erstellt Projektstory, Visualisierung, Exposé-Logik, Landingpage oder Projektweg, Kampagne, Qualifizierungsfragen, Nachfassen, Übergabe, Priorisierung und Reporting."
         },
         {
-          title: "Wann ein Pipeline-Audit sinnvoll ist",
-          body: "Sinnvoll ist das Audit bei Neubauprojekten, Investmentprojekten, Projektvertrieben und Entwicklern mit Launch- oder Abverkaufsdruck.",
+          title: "Wann ein Projekt-Check sinnvoll ist",
+          body: "Sinnvoll ist der Check bei Neubauprojekten, Investmentprojekten, Projektvertrieben und Entwicklern mit Launch-, Vermarktungs- oder Abverkaufsdruck.",
           items: ["Nicht geeignet: kein konkretes Projekt", "Nicht geeignet: kein Budget oder keine Entscheidungskompetenz", "Nicht geeignet: Lead-Garantie-Erwartung", "Nicht geeignet: reine Branding-Kampagne ohne Vertriebsziel"]
         }
       ],
@@ -548,25 +548,25 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "de",
       template: "audience",
       eyebrow: "Für Maklerteams",
-      title: "Mehr qualifizierte Eigentümer- und Käufergespräche für Immobilienmakler.",
+      title: "Eigentümer- und Käuferanfragen sauber weiterführen.",
       seoTitle: "Qualifizierte Eigentümer- und Käuferanfragen für Makler | NovaLure",
       description:
-        "NovaLure baut lokale Lead-Systeme für Makler: Verkäufer-Intent, Käuferreife, CRM-Kontext und Follow-up, damit Ihr Team weniger sortiert und schneller mit echten Chancen spricht.",
-      primaryCta: { label: "Pipeline-Audit buchen", target: "contact", anchor: "book-audit" },
+        "NovaLure verbindet lokale Positionierung, Kampagnen, Formulare, Nachfassen und systemgestützte Übergabe, damit Ihr Team echte Chancen von bloßer Recherche trennt.",
+      primaryCta: { label: "Projekt-Check anfragen", target: "contact", anchor: "book-audit" },
       secondaryCta: { label: "Makler-Playbook herunterladen", target: "playbooks" },
       heroBullets: [
-        "Ernsthafte Gespräche statt Formularvolumen",
+        "Lokale Nachfrage mit klarer Gesprächslogik",
         "Verkäufer- und Käuferabsicht sauber trennen",
-        "CRM-Kontext und Follow-up für lokale Pipeline"
+        "Nachfassen und Übergabe mit sichtbarem nächstem Schritt"
       ],
       sections: [
         {
-          title: "Warum viele Makler-Leads nicht gesprächsreif sind",
-          body: "Makler-Funnels brauchen eine klare Trennung zwischen echter Verkäuferabsicht, Käuferreife und bloßer Recherche.",
+          title: "Warum viele Makler-Anfragen nicht sofort gesprächsreif sind",
+          body: "Bewertungsanfragen, Käuferkontakte und Portal-Leads können wertvoll sein. Sie brauchen aber eine klare Trennung zwischen echter Verkaufsabsicht, Käuferreife und bloßer Recherche.",
           items: [
             "Verkäufer-Leads ohne echte Verkaufsabsicht.",
             "Käufer-Leads ohne Budget- oder Suchprofil.",
-            "Website-Anfragen landen ohne Priorität im Postfach.",
+            "Website-Anfragen landen ohne Priorität oder nächsten Schritt im Postfach.",
             "Portalabhängigkeit bleibt ungebrochen.",
             "Follow-up hängt an Einzelpersonen statt System."
           ]
@@ -576,12 +576,12 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
           body: "Verkäufer brauchen Felder zu Immobilientyp, Lage, Verkaufszeitpunkt, Motivation und Bewertungserwartung. Käufer brauchen Suchgebiet, Objektart, Budgetnähe, Finanzierung, Timing und Must-haves."
         },
         {
-          title: "Was ein qualifizierter Maklerlead enthalten sollte",
-          body: "Ein Maklerlead muss Quelle, Segment, Timing, Budgetnähe, Gesprächsnotiz und nächsten Schritt so übergeben, dass Follow-up sofort möglich ist."
+          title: "Was ein vorbereiteter Maklerlead enthalten sollte",
+          body: "Ein Maklerlead sollte Quelle, Segment, Timing, Budgetnähe, Gesprächsnotiz und nächsten Schritt so übergeben, dass Nachfassen sofort möglich ist."
         },
         {
-          title: "Wann ein Makler-Funnel ein Audit braucht",
-          body: "Ein Audit lohnt sich, wenn lokale Spezialisierung, Follow-up-Bereitschaft und Budget für Aufbau plus laufende Optimierung vorhanden sind.",
+          title: "Wann ein Makler-System einen Check braucht",
+          body: "Ein Check lohnt sich, wenn lokale Spezialisierung, Nachfass-Bereitschaft und Budget für Aufbau plus laufende Verbesserung vorhanden sind.",
           items: ["Nicht geeignet: keine lokale Spezialisierung", "Nicht geeignet: keine Bereitschaft zu strukturiertem Follow-up", "Nicht geeignet: reine Leadzahl-Erwartung", "Nicht geeignet: kein Budget für Aufbau und Optimierung"]
         }
       ],
@@ -592,16 +592,16 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "de",
       template: "playbooks",
       eyebrow: "Playbook",
-      title: "Das Playbook, mit dem Sie prüfen, ob Ihr Lead-System qualifizierte Immobiliengespräche erzeugt oder nur Follow-up-Arbeit.",
-      seoTitle: "Immobilien Lead-System Playbook | NovaLure",
+      title: "Das Playbook zeigt, wo aus Interesse noch kein qualifiziertes Gespräch wird.",
+      seoTitle: "Immobilien Lead-Playbook | NovaLure",
       description:
-        "Erkennen Sie, wo Immobilien-Leads vor dem Vertrieb Kontext verlieren, welche Handover-Lücken Zeit kosten und ob ein Pipeline-Audit der richtige nächste Schritt ist.",
+        "Erkennen Sie, wo Immobilien-Leads vor dem Vertrieb Kontext verlieren, welche Übergabe-Lücken Zeit kosten und ob ein Projekt-Check der richtige nächste Schritt ist.",
       primaryCta: { label: labels.de.playbook, target: "playbooks", anchor: "playbook-download" },
       secondaryCta: { label: labels.de.audit, target: "contact", anchor: "book-audit" },
       heroBullets: [
-        "Diagnose statt Gratis-Funnelplan",
-        "Mini-Scorecard für Audit-Reife",
-        "Klarer Übergang zur 30-Minuten-Diagnose"
+        "Lücken erkennen, ohne die ganze Maschine offenzulegen",
+        "Mini-Scorecard für Projekt- und Lead-Reife",
+        "Klarer Übergang zum 30-Minuten-Check"
       ],
       faq: hardFaq.de
     },
@@ -609,28 +609,28 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       key: "contact",
       locale: "de",
       template: "contact",
-      eyebrow: "Pipeline-Audit",
-      title: "Pipeline-Audit: Finden Sie heraus, wo Ihr Lead-System Vertriebszeit verliert.",
-      seoTitle: "Pipeline-Audit für den Immobilienvertrieb | NovaLure",
+      eyebrow: "Projekt-Check",
+      title: "Projekt-Check: Prüfen Sie den Weg vom Auftritt bis zum Gespräch.",
+      seoTitle: "Projekt-Check für Immobilienvertrieb | NovaLure",
       description:
-        "In 30 Minuten prüfen wir Anzeige, Landingpage, Formular, Qualifizierung, CRM-Übergabe, Follow-up und Reporting. Danach wissen Sie, ob Aufbau plus laufende Optimierung wirtschaftlich sinnvoll ist.",
-      primaryCta: { label: "Pipeline-Audit buchen", target: "contact", anchor: "book-audit" },
+        "In 30 Minuten prüfen wir Projektauftritt, Kampagne, Formular, Qualifizierung, Nachfassen, Übergabe und Reporting. Danach wissen Sie, ob der Aufbau eines sauberen Lead-Wegs sinnvoll ist.",
+      primaryCta: { label: "Projekt-Check anfragen", target: "contact", anchor: "book-audit" },
       secondaryCta: { label: labels.de.playbook, target: "playbooks" },
-      heroBullets: ["Lead-System einschätzen", "Schwachstellen identifizieren", "Nächsten Schritt klären"],
+      heroBullets: ["Projektweg einschätzen", "Schwachstellen identifizieren", "Nächsten Schritt klären"],
       faq: hardFaq.de
     },
     handover: {
       key: "handover",
       locale: "de",
       template: "handover",
-      eyebrow: "CRM-Handover",
-      title: "CRM-Übergabe für qualifizierte Immobilien-Leads",
-      seoTitle: "CRM-Handover für Immobilien-Leads | NovaLure",
+      eyebrow: "Systembeispiel",
+      title: "Was beim Vertrieb ankommt, wenn eine Anfrage vorbereitet ist.",
+      seoTitle: "Systembeispiel für qualifizierte Immobilien-Leads | NovaLure",
       description:
-        "Eine Anfrage ist erst dann vertriebsfähig, wenn Ihr Team Quelle, Motivation, Timing, Budgetnähe und nächsten Schritt sieht.",
+        "Eine Anfrage wird erst dann wertvoll, wenn Ihr Team Quelle, Interesse, Timing, Budgetnähe, Zuständigkeit und nächsten Schritt sieht.",
       primaryCta: { label: labels.de.handover, target: "home", anchor: "proof" },
       secondaryCta: { label: labels.de.audit, target: "contact", anchor: "book-audit" },
-      heroBullets: ["Quelle", "Segment", "Timing", "Budgetnähe", "Nächster Schritt"],
+      heroBullets: ["Quelle", "Interesse", "Timing", "Budgetnähe", "Nächster Schritt"],
       faq: hardFaq.de.slice(0, 8)
     },
     playbookThanks: thankYou("de", "playbookThanks"),
@@ -646,34 +646,34 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "en",
       template: "audience",
       eyebrow: "For developers and project sales teams",
-      title: "More qualified buyer conversations for developers and project sales teams.",
-      seoTitle: "Qualified Buyer Enquiries for Developers | NovaLure",
+      title: "Project marketing that does not stop at the enquiry.",
+      seoTitle: "Project Marketing for Qualified Buyer Conversations | NovaLure",
       description:
-        "When a project needs to sell, clicks are not enough. NovaLure builds project funnels, buyer questions and CRM handovers so sales can speak faster with the right buyers.",
-      primaryCta: { label: "Book a Pipeline Audit", target: "contact", anchor: "book-audit" },
+        "NovaLure connects storytelling, visualisation, expose, campaign, follow-up and system-supported handover so sales speaks with prepared enquiries.",
+      primaryCta: { label: "Request Project Check", target: "contact", anchor: "book-audit" },
       secondaryCta: { label: "Download developer playbook", target: "playbooks" },
       heroBullets: [
-        "Project logic by location, unit type and buyer profile",
-        "CRM-ready handover with source, intent and call context",
-        "CRM handover with source, motivation and next step"
+        "Storytelling, visualisation and expose in one logic",
+        "Campaign, form and follow-up with qualification",
+        "Handover with source, interest, timing and next step"
       ],
       sections: [
         {
-          title: "Why developer leads lose quality before sales",
-          body: "Project pages often collect names and phone numbers. Sales needs buyer context: unit type, timing, budget proximity, financing status and next step.",
-          items: ["Project pages collect enquiries without buyer context.", "Forms ask too little.", "Sales cannot see source, interest and timing.", "Leads are not sorted by unit type, budget proximity or purchase phase.", "Campaigns are judged by CPL instead of conversation quality."]
+          title: "Why project marketing needs more than strong visuals",
+          body: "Visuals and exposes create attention. What matters next is whether the path continues cleanly: to the right enquiry, qualification and a useful next step for sales.",
+          items: ["Project page and expose set the expectation before someone enquires.", "Form and follow-up clarify interest, timing and budget proximity.", "Sales receives context, not only contact details.", "Enquiries are sorted by project fit and conversation readiness.", "Campaigns are reviewed by conversation quality, not just contact volume."]
         },
         {
-          title: "What a qualified project lead should contain",
-          body: "A project lead should include project, location, unit type, own-use or investment intent, timing, budget proximity, rough financing status, source and next step."
+          title: "What should reach your sales team",
+          body: "A prepared project lead shows project context, location or unit type, own-use or investment intent, timing, budget proximity, rough financing, source and the next sensible step."
         },
         {
-          title: "What NovaLure builds for developers",
-          body: "NovaLure builds landing page or project funnel, pre-qualification questions, lead asset, CRM fields, prioritisation, handover note, follow-up and reporting."
+          title: "What NovaLure sets up for developers",
+          body: "NovaLure creates project story, visual logic, expose logic, landing page or project path, campaign, qualification questions, follow-up, handover, prioritisation and reporting."
         },
         {
-          title: "When a Pipeline Audit makes sense",
-          body: "The audit is suitable for new-build projects, investment projects, project sales teams and launches with sales pressure.",
+          title: "When a Project Check makes sense",
+          body: "The check is suitable for new-build projects, investment projects, project sales teams and launches with real sales or go-to-market pressure.",
           items: ["Not a fit: no concrete project", "Not a fit: no budget or decision authority", "Not a fit: lead-guarantee expectation", "Not a fit: pure branding campaign without a sales goal"]
         }
       ],
@@ -684,30 +684,30 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "en",
       template: "audience",
       eyebrow: "For real estate teams",
-      title: "More qualified seller and buyer conversations for real estate agents.",
+      title: "Seller and buyer enquiries followed through cleanly.",
       seoTitle: "Qualified Seller and Buyer Enquiries for Agents | NovaLure",
       description:
-        "NovaLure builds local lead systems for agents: seller intent, buyer readiness, CRM context and follow-up so your team sorts less and speaks faster with real opportunities.",
-      primaryCta: { label: "Book a Pipeline Audit", target: "contact", anchor: "book-audit" },
+        "NovaLure connects local positioning, campaigns, forms, follow-up and system-supported handover so your team separates real opportunities from casual research.",
+      primaryCta: { label: "Request Project Check", target: "contact", anchor: "book-audit" },
       secondaryCta: { label: "Download agent playbook", target: "playbooks" },
-      heroBullets: ["Serious conversations, not form volume", "Separate seller and buyer intent", "CRM context and follow-up for local pipeline"],
+      heroBullets: ["Local demand with clear conversation logic", "Separate seller and buyer intent", "Follow-up and handover with a visible next step"],
       sections: [
         {
-          title: "Why many agent leads are not conversation-ready",
-          body: "Agent funnels need a clear separation between real seller intent, buyer readiness and casual research.",
-          items: ["Seller leads without real selling intent.", "Buyer leads without budget or search profile.", "Website enquiries land in the inbox without priority.", "Portal dependency stays untouched.", "Follow-up depends on individuals instead of a system."]
+          title: "Why many agent enquiries are not conversation-ready",
+          body: "Valuation requests, buyer contacts and portal leads can be valuable. They need a clear separation between real seller intent, buyer readiness and casual research.",
+          items: ["Seller leads without real selling intent.", "Buyer leads without budget or search profile.", "Website enquiries land in the inbox without priority or next step.", "Portal dependency stays untouched.", "Follow-up depends on individuals instead of a system."]
         },
         {
           title: "Separate seller and buyer leads cleanly",
           body: "Seller leads need property type, location, selling timeline, motivation and valuation expectation. Buyer leads need search area, property type, budget proximity, financing, timing and must-haves."
         },
         {
-          title: "What a qualified agent lead should contain",
-          body: "An agent lead must hand over source, segment, timing, budget proximity, call note and next step so follow-up can start immediately."
+          title: "What a prepared agent lead should contain",
+          body: "An agent lead should hand over source, segment, timing, budget proximity, call note and next step so follow-up can start immediately."
         },
         {
-          title: "When an agent funnel needs an audit",
-          body: "An audit makes sense when local specialisation, follow-up discipline and budget for build plus ongoing optimisation exist.",
+          title: "When an agent system needs a check",
+          body: "A check makes sense when local specialisation, follow-up discipline and budget for setup plus ongoing improvement exist.",
           items: ["Not a fit: no local specialisation", "Not a fit: no willingness for structured follow-up", "Not a fit: raw lead-volume expectation", "Not a fit: no budget for build and optimisation"]
         }
       ],
@@ -718,41 +718,41 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "en",
       template: "playbooks",
       eyebrow: "Playbook",
-      title: "The playbook for checking whether your lead system creates qualified real estate conversations or only follow-up work.",
+      title: "The playbook shows where interest still fails to become a qualified conversation.",
       seoTitle: "Real Estate Lead System Playbook | NovaLure",
       description:
-        "See where real estate leads lose context before sales, which handover gaps cost time and whether a Pipeline Audit is the right next step.",
+        "See where real estate leads lose context before sales, which handover gaps cost time and whether a Project Check is the right next step.",
       primaryCta: { label: labels.en.playbook, target: "playbooks", anchor: "playbook-download" },
       secondaryCta: { label: labels.en.audit, target: "contact", anchor: "book-audit" },
-      heroBullets: ["Diagnosis instead of a free funnel plan", "Mini scorecard for audit readiness", "Clear path to a 30-minute diagnosis"],
+      heroBullets: ["Spot the gaps without exposing the whole machine", "Mini scorecard for project and lead readiness", "Clear path to a 30-minute check"],
       faq: hardFaq.en
     },
     contact: {
       key: "contact",
       locale: "en",
       template: "contact",
-      eyebrow: "Pipeline Audit",
-      title: "Pipeline Audit: find out where your lead system wastes sales time.",
-      seoTitle: "Pipeline Audit for Real Estate Sales | NovaLure",
+      eyebrow: "Project Check",
+      title: "Project Check: review the path from project presence to conversation.",
+      seoTitle: "Project Check for Real Estate Sales | NovaLure",
       description:
-        "In 30 minutes, we review ad, landing page, form, qualification, CRM handover, follow-up and reporting. After that, you know whether build plus ongoing optimisation makes commercial sense.",
-      primaryCta: { label: "Book a Pipeline Audit", target: "contact", anchor: "book-audit" },
+        "In 30 minutes, we review project presence, campaign, form, qualification, follow-up, handover and reporting. After that, you know whether a clean lead path makes sense.",
+      primaryCta: { label: "Request Project Check", target: "contact", anchor: "book-audit" },
       secondaryCta: { label: labels.en.playbook, target: "playbooks" },
-      heroBullets: ["Assess the lead system", "Identify weak points", "Clarify the next step"],
+      heroBullets: ["Assess the project path", "Identify weak points", "Clarify the next step"],
       faq: hardFaq.en
     },
     handover: {
       key: "handover",
       locale: "en",
       template: "handover",
-      eyebrow: "CRM handover",
-      title: "CRM handover for qualified real estate leads",
-      seoTitle: "CRM Handover for Real Estate Leads | NovaLure",
+      eyebrow: "System example",
+      title: "What reaches sales when an enquiry is properly prepared.",
+      seoTitle: "System Example for Qualified Real Estate Leads | NovaLure",
       description:
-        "An enquiry is only sales-ready when your team can see source, motivation, timing, budget proximity and next step.",
+        "An enquiry becomes valuable when your team can see source, interest, timing, budget proximity, ownership and next step.",
       primaryCta: { label: labels.en.handover, target: "home", anchor: "proof" },
       secondaryCta: { label: labels.en.audit, target: "contact", anchor: "book-audit" },
-      heroBullets: ["Source", "Segment", "Timing", "Budget proximity", "Next step"],
+      heroBullets: ["Source", "Interest", "Timing", "Budget proximity", "Next step"],
       faq: hardFaq.en.slice(0, 8)
     },
     playbookThanks: thankYou("en", "playbookThanks"),
@@ -771,41 +771,41 @@ function thankYou(locale: Locale, key: "playbookThanks" | "auditThanks"): PageCo
     key,
     locale,
     template: "thank-you",
-    eyebrow: isPlaybook ? (de ? "Playbook" : "Playbook") : (de ? "Audit-Anfrage" : "Audit request"),
+    eyebrow: isPlaybook ? (de ? "Playbook" : "Playbook") : (de ? "Projekt-Check" : "Project Check"),
     title: isPlaybook
       ? de ? "Ihr Playbook ist unterwegs." : "Your playbook is on its way."
-      : de ? "Ihre Audit-Anfrage ist eingegangen." : "Your audit request has been received.",
+      : de ? "Ihre Projekt-Check-Anfrage ist eingegangen." : "Your Project Check request has been received.",
     seoTitle: isPlaybook
       ? de ? "Playbook angefordert | NovaLure" : "Playbook requested | NovaLure"
-      : de ? "Audit-Anfrage eingegangen | NovaLure" : "Audit request received | NovaLure",
+      : de ? "Projekt-Check-Anfrage eingegangen | NovaLure" : "Project Check request received | NovaLure",
     description: isPlaybook
       ? de
-        ? "Lesen Sie zuerst die Abschnitte zu CRM-Handover und Intent-Filter. Wenn Sie ein konkretes Projekt, Marktgebiet oder Leadproblem haben, können Sie direkt ein Pipeline-Audit anfragen."
-        : "Read the CRM handover and intent-filter sections first. If you have a concrete project, market area or lead-quality problem, you can request a Pipeline Audit."
+        ? "Lesen Sie zuerst die Abschnitte zu Übergabe und Intent-Filter. Wenn Sie ein konkretes Projekt, Marktgebiet oder Leadproblem haben, können Sie direkt einen Projekt-Check anfragen."
+        : "Read the handover and intent-filter sections first. If you have a concrete project, market area or lead-quality problem, you can request a Project Check."
       : de
-        ? "Wir prüfen Ihre Angaben. Das Audit ist eine Diagnose, kein kostenloses Gutachten. Bitte bereiten Sie Projekt, Leadquellen, CRM-Prozess und größten Vertriebsengpass vor."
-        : "We will review your details. The audit is a diagnosis, not a free consulting report. Please prepare your project, lead sources, CRM process and biggest sales bottleneck.",
+        ? "Wir prüfen Ihre Angaben. Der Check ist eine Diagnose, kein kostenloses Gutachten. Bitte bereiten Sie Projekt, Leadquellen, Leadmanagement und größten Vertriebsengpass vor."
+        : "We will review your details. The check is a diagnosis, not a free consulting report. Please prepare your project, lead sources, lead-management process and biggest sales bottleneck.",
     primaryCta: isPlaybook
-      ? { label: de ? "Pipeline-Audit anfragen" : "Request a Pipeline Audit", target: "contact", anchor: "book-audit" }
+      ? { label: de ? "Projekt-Check anfragen" : "Request Project Check", target: "contact", anchor: "book-audit" }
       : { label: de ? "Beispiel-Handover ansehen" : "View example handover", target: "home", anchor: "proof" },
     secondaryCta: isPlaybook
       ? { label: de ? "Beispiel-Handover ansehen" : "View example handover", target: "home", anchor: "proof" }
       : { label: de ? "Playbook herunterladen" : "Download playbook", target: "playbooks" },
     heroBullets: isPlaybook
       ? de
-        ? ["Wo verliert Ihr Vertrieb aktuell Zeit?", "Welche Leadquellen liefern zu wenig Kontext?", "Ist Budget für Build+Run grundsätzlich vorhanden?"]
-        : ["Where does sales currently lose time?", "Which lead sources work but lack context?", "Is budget for Build+Run basically available?"]
+        ? ["Wo verliert Ihr Vertrieb aktuell Zeit?", "Welche Leadquellen liefern zu wenig Kontext?", "Ist Budget für Aufbau und laufende Verbesserung vorhanden?"]
+        : ["Where does sales currently lose time?", "Which lead sources work but lack context?", "Is budget for setup and ongoing improvement available?"]
       : de
         ? ["aktuelles Projekt / Marktgebiet", "bestehende Leadquellen", "CRM oder Leadmanagement", "größter Engpass", "Budgetfähigkeit", "Entscheiderstatus"]
         : ["current project / market area", "existing lead sources", "CRM or lead management", "biggest bottleneck", "budget readiness", "decision status"],
     sections: isPlaybook
       ? [
           {
-            title: de ? "3 Fragen vor dem Audit" : "3 questions before the audit",
-            body: de ? "Wenn diese Fragen konkret beantwortbar sind, ist ein Pipeline-Audit sinnvoller als weitere allgemeine Marketingideen." : "If these questions can be answered concretely, a Pipeline Audit is more useful than more general marketing ideas.",
+            title: de ? "3 Fragen vor dem Projekt-Check" : "3 questions before the Project Check",
+            body: de ? "Wenn diese Fragen konkret beantwortbar sind, ist ein Projekt-Check sinnvoller als weitere allgemeine Marketingideen." : "If these questions can be answered concretely, a Project Check is more useful than more general marketing ideas.",
             items: de
-              ? ["Wo verliert Ihr Vertrieb aktuell Zeit?", "Welche Leadquellen funktionieren, aber liefern zu wenig Kontext?", "Ist Budget für Build+Run grundsätzlich vorhanden?"]
-              : ["Where does your sales team currently lose time?", "Which lead sources work but provide too little context?", "Is budget for Build+Run basically available?"]
+              ? ["Wo verliert Ihr Vertrieb aktuell Zeit?", "Welche Leadquellen funktionieren, aber liefern zu wenig Kontext?", "Ist Budget für Aufbau und laufende Verbesserung grundsätzlich vorhanden?"]
+              : ["Where does your sales team currently lose time?", "Which lead sources work but provide too little context?", "Is budget for setup and ongoing improvement basically available?"]
           }
         ]
       : [
@@ -860,11 +860,11 @@ function imprintSections(locale: Locale): PageSection[] {
         ]
       },
       {
-        title: "4. Tätigkeit von NovaLure: PropTech Sales System",
-        body: "NovaLure baut PropTech Sales Systeme und CRM-fähige Lead-Systeme für den Immobilienvertrieb. Der Fokus liegt auf Funnel-Architektur, Lead-Qualifizierung, CRM-Handover, Follow-up-Struktur, Tracking, Reporting und laufender Optimierung.",
+        title: "4. Tätigkeit von NovaLure: Projektvermarktung und Lead-Wege",
+        body: "NovaLure verbindet Projektvermarktung, Lead-Qualifizierung, Nachfassen, vorbereitete Übergabe, Tracking, Reporting und laufende Verbesserung für den Immobilienvertrieb.",
         items: [
           "NovaLure arbeitet insbesondere mit Bauträgern, Immobilienentwicklern, Projektvertrieben, Maklerteams und weiteren B2B-Ansprechpartnern im Immobilienvertrieb.",
-          "NovaLure ist kein klassischer Online-Shop und kein Immobilienportal, sondern ein B2B-Anbieter für Lead-Systeme, CRM-Handover und Pipeline-Sichtbarkeit.",
+          "NovaLure ist kein klassischer Online-Shop und kein Immobilienportal, sondern ein B2B-Anbieter für Projektvermarktung, Lead-Wege und bessere Übergaben an den Vertrieb.",
           "Die Website richtet sich primär an geschäftliche Nutzer und Entscheidungsträger, nicht an Verbraucherangebote im klassischen Online-Shop-Sinn.",
           "Konkrete Leistungen, Umfang, Preise, Laufzeiten und Verantwortlichkeiten werden individuell im Angebot oder Vertrag geregelt."
         ]
@@ -1000,11 +1000,11 @@ function imprintSections(locale: Locale): PageSection[] {
       ]
     },
     {
-      title: "4. Business activity: PropTech Sales System",
-      body: "NovaLure builds PropTech Sales Systems and CRM-ready lead systems for real estate sales. The focus is funnel architecture, lead qualification, CRM handover, follow-up structure, tracking, reporting and ongoing optimisation.",
+      title: "4. Business activity: project marketing and lead paths",
+      body: "NovaLure connects project marketing, lead qualification, follow-up, prepared handover, tracking, reporting and ongoing improvement for real estate sales.",
       items: [
         "NovaLure works in particular with property developers, real estate developers, project sales teams, broker teams and other B2B contacts in real estate sales.",
-        "NovaLure is not a conventional online shop or property portal; it is a B2B provider for lead systems, CRM handover and pipeline visibility.",
+        "NovaLure is not a conventional online shop or property portal; it is a B2B provider for project marketing, lead paths and better handovers to sales.",
         "The website is primarily directed at business users and decision-makers, not at consumer offers in the classic online-shop sense.",
         "Concrete services, scope, pricing, term and responsibilities are agreed individually in the relevant proposal or contract."
       ]
@@ -1111,10 +1111,10 @@ function privacySections(locale: Locale): PageSection[] {
     return [
       {
         title: "1. Stand und Geltungsbereich",
-        body: "Stand: Mai 2026. Diese Datenschutzinformationen erklären, wie NovaLure CLG personenbezogene Daten verarbeitet, wenn Sie novalure.eu besuchen, ein Playbook anfordern, ein Formular absenden, einen Pipeline-Audit anfragen, einen Termin buchen oder mit uns per E-Mail, Telefon oder anderen geschäftlichen Kanälen kommunizieren.",
+        body: "Stand: Mai 2026. Diese Datenschutzinformationen erklären, wie NovaLure CLG personenbezogene Daten verarbeitet, wenn Sie novalure.eu besuchen, ein Playbook anfordern, ein Formular absenden, einen Projekt-Check anfragen, einen Termin buchen oder mit uns per E-Mail, Telefon oder anderen geschäftlichen Kanälen kommunizieren.",
         items: [
           "Diese Informationen gelten für Website-Besucher, Interessenten, Kunden, Geschäftspartner und Ansprechpartner in Unternehmen.",
-          "Soweit wir für Kunden eigene Lead-Systeme, CRM-Prozesse oder Kampagnen umsetzen, können zusätzlich projektbezogene Datenschutzvereinbarungen, Auftragsverarbeitungsverträge oder gemeinsame Verantwortlichkeitsregelungen gelten."
+          "Soweit wir für Kunden eigene Lead-Wege, CRM-Prozesse oder Kampagnen umsetzen, können zusätzlich projektbezogene Datenschutzvereinbarungen, Auftragsverarbeitungsverträge oder gemeinsame Verantwortlichkeitsregelungen gelten."
         ]
       },
       {
@@ -1140,10 +1140,10 @@ function privacySections(locale: Locale): PageSection[] {
       },
       {
         title: "4. Zwecke der Verarbeitung",
-        body: "Wir verarbeiten personenbezogene Daten für klar bestimmte geschäftliche Zwecke rund um unsere Website, Lead-Systeme und Kundenkommunikation.",
+        body: "Wir verarbeiten personenbezogene Daten für klar bestimmte geschäftliche Zwecke rund um unsere Website, Lead-Wege und Kundenkommunikation.",
         items: [
           "Betrieb, Sicherheit, Fehleranalyse und technische Bereitstellung der Website.",
-          "Bearbeitung von Kontakt-, Playbook-, Termin- und Pipeline-Audit-Anfragen.",
+          "Bearbeitung von Kontakt-, Playbook-, Termin- und Projekt-Check-Anfragen.",
           "Zustellung angeforderter Inhalte, insbesondere Playbooks, Bestätigungs-E-Mails und vorbereitende Informationen.",
           "Vorbereitung, Durchführung und Nachbereitung von Beratung, Angeboten, Vertragsverhandlungen und Kundenmandaten.",
           "Pflege von CRM-Daten, Lead-Qualifizierung, Follow-up, Segmentierung und Priorisierung von geschäftlichen Anfragen.",
@@ -1156,7 +1156,7 @@ function privacySections(locale: Locale): PageSection[] {
         title: "5. Rechtsgrundlagen",
         body: "Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 DSGVO. Welche Rechtsgrundlage gilt, hängt vom jeweiligen Zweck ab.",
         items: [
-          "Art. 6 Abs. 1 lit. b DSGVO: vorvertragliche Maßnahmen und Vertragserfüllung, wenn Sie ein Angebot, ein Audit, einen Termin, ein Playbook oder eine Leistung anfragen.",
+          "Art. 6 Abs. 1 lit. b DSGVO: vorvertragliche Maßnahmen und Vertragserfüllung, wenn Sie ein Angebot, einen Projekt-Check, einen Termin, ein Playbook oder eine Leistung anfragen.",
           "Art. 6 Abs. 1 lit. f DSGVO: berechtigte Interessen an B2B-Kommunikation, Website-Sicherheit, Betrugs- und Spamvermeidung, CRM-Verwaltung, interner Organisation, Direktkontakt zu geschäftlichen Ansprechpartnern und Rechtsverteidigung.",
           "Art. 6 Abs. 1 lit. a DSGVO: Einwilligung für optionale Cookies, Analytics, Marketing-Technologien, externe Medien, freiwillige Marketing-Kommunikation und vergleichbare zustimmungspflichtige Vorgänge.",
           "Art. 6 Abs. 1 lit. c DSGVO: rechtliche Pflichten, insbesondere steuerliche, buchhalterische, handelsrechtliche und aufsichtsrechtliche Aufbewahrungs- oder Mitwirkungspflichten."
@@ -1173,11 +1173,11 @@ function privacySections(locale: Locale): PageSection[] {
         ]
       },
       {
-        title: "7. Formulare, Playbooks und Pipeline-Audit",
-        body: "Wenn Sie ein Formular absenden, verarbeiten wir die angegebenen Daten, um Ihre Anfrage zu prüfen, das gewünschte Playbook bereitzustellen, eine Audit-Anfrage vorzubereiten oder mit Ihnen geschäftlich Kontakt aufzunehmen.",
+        title: "7. Formulare, Playbooks und Projekt-Check",
+        body: "Wenn Sie ein Formular absenden, verarbeiten wir die angegebenen Daten, um Ihre Anfrage zu prüfen, das gewünschte Playbook bereitzustellen, eine Projekt-Check-Anfrage vorzubereiten oder mit Ihnen geschäftlich Kontakt aufzunehmen.",
         items: [
           "Bei Playbook-Anfragen verarbeiten wir Name, E-Mail, Unternehmen, Telefonnummer, ausgewähltes Playbook, Sprache, Seiten-URL, UTM-Parameter, erforderliche Verarbeitungseinwilligung, optionale Marketing-Einwilligung, Consent-Zeitstempel und die jeweils gültige Datenschutzversion.",
-          "Bei Pipeline-Audit- und Kontaktanfragen verarbeiten wir die Formularangaben zu Unternehmen, Website, Rolle, Projekt oder Marktgebiet, Leadproblem, CRM, Leadvolumen, Sales-Engpass, Assets, Timing, Budgetbereitschaft, Entscheidungsstatus und Nachricht.",
+          "Bei Projekt-Check- und Kontaktanfragen verarbeiten wir die Formularangaben zu Unternehmen, Website, Rolle, Projekt oder Marktgebiet, Leadproblem, CRM, Leadvolumen, Sales-Engpass, Assets, Timing, Budgetbereitschaft, Entscheidungsstatus und Nachricht.",
           "Soweit die Website- oder Formularlogik eine Datenbank nutzt, können entsprechende Anfragen, Einwilligungs- und Systemdaten in einer Neon PostgreSQL-Datenbank am Serverstandort Frankfurt verarbeitet werden.",
           "Für Formularschutz kann ein verstecktes Feld oder eine vergleichbare Spam-Prüfung genutzt werden.",
           "Pflichtfelder sind erforderlich, damit wir die Anfrage sinnvoll bearbeiten können. Freiwillige Angaben helfen bei Einordnung und Vorbereitung."
@@ -1291,10 +1291,10 @@ function privacySections(locale: Locale): PageSection[] {
   return [
     {
       title: "1. Effective date and scope",
-      body: "Effective date: May 2026. This Privacy Policy explains how NovaLure CLG processes personal data when you visit novalure.eu, request a playbook, submit a form, request a Pipeline Audit, book a meeting or communicate with us by email, phone or other business channels.",
+      body: "Effective date: May 2026. This Privacy Policy explains how NovaLure CLG processes personal data when you visit novalure.eu, request a playbook, submit a form, request a Project Check, book a meeting or communicate with us by email, phone or other business channels.",
       items: [
         "This policy applies to website visitors, prospects, clients, business partners and company contacts.",
-        "Where we build lead systems, CRM processes or campaigns for clients, additional project-specific privacy terms, data processing agreements or joint-controller arrangements may apply."
+        "Where we build lead paths, CRM processes or campaigns for clients, additional project-specific privacy terms, data processing agreements or joint-controller arrangements may apply."
       ]
     },
     {
@@ -1320,10 +1320,10 @@ function privacySections(locale: Locale): PageSection[] {
     },
     {
       title: "4. Purposes of processing",
-      body: "We process personal data for clear business purposes connected with our website, lead systems and client communication.",
+      body: "We process personal data for clear business purposes connected with our website, lead paths and client communication.",
       items: [
         "Operating, securing, debugging and technically delivering the website.",
-        "Handling contact, playbook, meeting and Pipeline Audit requests.",
+        "Handling contact, playbook, meeting and Project Check requests.",
         "Delivering requested content, including playbooks, confirmation emails and preparation information.",
         "Preparing, performing and following up on consulting, proposals, contract negotiations and client mandates.",
         "Maintaining CRM records, qualifying leads, following up, segmenting and prioritising business enquiries.",
@@ -1336,7 +1336,7 @@ function privacySections(locale: Locale): PageSection[] {
       title: "5. Legal bases",
       body: "Processing is based on Article 6 GDPR. The applicable legal basis depends on the specific purpose.",
       items: [
-        "Article 6(1)(b) GDPR: pre-contractual steps and contract performance where you request a proposal, audit, meeting, playbook or service.",
+        "Article 6(1)(b) GDPR: pre-contractual steps and contract performance where you request a proposal, Project Check, meeting, playbook or service.",
         "Article 6(1)(f) GDPR: legitimate interests in B2B communication, website security, fraud and spam prevention, CRM management, internal administration, direct contact with business representatives and legal defence.",
         "Article 6(1)(a) GDPR: consent for optional cookies, analytics, marketing technologies, external media, voluntary marketing communication and similar consent-based processing.",
         "Article 6(1)(c) GDPR: legal obligations, including tax, accounting, company-law, regulatory and record-keeping obligations."
@@ -1353,11 +1353,11 @@ function privacySections(locale: Locale): PageSection[] {
       ]
     },
     {
-      title: "7. Forms, playbooks and Pipeline Audit",
-      body: "When you submit a form, we process the data you provide to review your request, deliver the requested playbook, prepare a Pipeline Audit or contact you for business follow-up.",
+      title: "7. Forms, playbooks and Project Check",
+      body: "When you submit a form, we process the data you provide to review your request, deliver the requested playbook, prepare a Project Check or contact you for business follow-up.",
       items: [
         "For playbook requests, we process name, email, company, phone number, selected playbook, language, page URL, UTM parameters, required processing consent, optional marketing consent, consent timestamp and the applicable privacy-policy version.",
-        "For Pipeline Audit and contact requests, we process form details about company, website, role, project or market area, lead problem, CRM, lead volume, sales bottleneck, assets, timing, budget readiness, decision status and message content.",
+        "For Project Check and contact requests, we process form details about company, website, role, project or market area, lead problem, CRM, lead volume, sales bottleneck, assets, timing, budget readiness, decision status and message content.",
         "Where website or form logic uses a database, relevant enquiry, consent and system data may be processed in a Neon PostgreSQL database with server location in Frankfurt, Germany.",
         "For form protection, we may use a hidden field or comparable spam check.",
         "Mandatory fields are required so we can meaningfully handle the request. Voluntary information helps us assess and prepare the next step."
@@ -1484,7 +1484,7 @@ function legal(locale: Locale, key: "imprint" | "privacy" | "cookies"): PageCont
     eyebrow: de ? "Rechtliches" : "Legal",
     title,
     seoTitle: `${title} | NovaLure`,
-    primaryCta: { label: de ? "Pipeline-Audit anfragen" : "Request a Pipeline Audit", target: "contact" as PageKey, anchor: "book-audit" },
+    primaryCta: { label: de ? "Projekt-Check anfragen" : "Request Project Check", target: "contact" as PageKey, anchor: "book-audit" },
     secondaryCta: { label: de ? "Playbook herunterladen" : "Download playbook", target: "playbooks" as PageKey },
     heroBullets: [
       "NovaLure CLG",

@@ -2,13 +2,20 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 
 const require = createRequire(import.meta.url);
-let chromium;
+const execFileAsync = promisify(execFile);
+let chromium = null;
 try {
   ({ chromium } = require("playwright"));
 } catch {
-  ({ chromium } = require("C:/Users/Franz/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright"));
+  try {
+    ({ chromium } = require("C:/Users/Franz/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright"));
+  } catch {
+    chromium = null;
+  }
 }
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -59,11 +66,65 @@ function findLocalBrowser() {
   return candidates.find((candidate) => candidate && fs.existsSync(candidate));
 }
 
+async function renderCoverWithChrome(executablePath, htmlPath, outputPath) {
+  await execFileAsync(
+    executablePath,
+    [
+      "--headless=new",
+      "--disable-gpu",
+      "--hide-scrollbars",
+      "--no-first-run",
+      "--disable-extensions",
+      "--window-size=1240,1754",
+      `--screenshot=${outputPath}`,
+      pathToFileURL(htmlPath).href
+    ],
+    { cwd: root, maxBuffer: 1024 * 1024 }
+  );
+}
+
+async function renderCoversWithPython() {
+  const pythonCandidates = [
+    process.env.PYTHON,
+    "python",
+    "C:/Users/Franz/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe"
+  ].filter(Boolean);
+  let lastError;
+
+  for (const python of pythonCandidates) {
+    try {
+      await execFileAsync(python, [path.join(root, "scripts", "render-playbook-covers.py")], {
+        cwd: root,
+        maxBuffer: 1024 * 1024
+      });
+      return;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw lastError;
+}
+
 async function renderCovers() {
   const executablePath = findLocalBrowser();
 
   if (!executablePath) {
     throw new Error("Chrome or Edge was not found.");
+  }
+
+  if (!chromium) {
+    try {
+      for (const entry of Object.values(playbooks)) {
+        const htmlPath = path.join(root, entry.html);
+        const outputPath = path.join(root, entry.cover);
+        fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+        await renderCoverWithChrome(executablePath, htmlPath, outputPath);
+      }
+    } catch {
+      await renderCoversWithPython();
+    }
+    return;
   }
 
   const browser = await chromium.launch({ headless: true, executablePath });

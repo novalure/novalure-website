@@ -72,19 +72,19 @@ export const playbookFormCopy: Record<Locale, {
       sentAfter: "."
     },
     meeting: {
-      title: "Book your Pipeline Audit",
+      title: "Request your Project Check",
       body: "Choose a time that works for you. The calendar opens with live availability and sends the Microsoft Teams link after booking."
     },
     variants: {
       developer: {
         eyebrow: "Playbook delivery",
-        title: "Developer Pipeline Playbook",
-        headline: "Developer Pipeline Playbook",
+        title: "Developer Project Playbook",
+        headline: "Developer Project Playbook",
         subline: "{pages}-page diagnostic guide · PDF · delivered in 2 minutes",
         inside: [
           "Where project enquiries lose context before sales can act",
           "Which handover gaps make buyer leads expensive to sort",
-          "Audit-readiness check: is your project concrete enough for a Pipeline Audit"
+          "Project-readiness check: is your project concrete enough for a 30-minute review"
         ]
       },
       agent: {
@@ -94,8 +94,8 @@ export const playbookFormCopy: Record<Locale, {
         subline: "{pages}-page diagnostic guide · PDF · delivered in 2 minutes",
         inside: [
           "Where seller and buyer enquiries lose intent before follow-up",
-          "Which CRM context separates curiosity from sales readiness",
-          "Audit-readiness check: is your local lead system ready for a Pipeline Audit"
+          "Which context separates curiosity from sales readiness",
+          "Readiness check: is your local enquiry path concrete enough for a 30-minute review"
         ]
       }
     }
@@ -134,19 +134,19 @@ export const playbookFormCopy: Record<Locale, {
       sentAfter: " gesendet."
     },
     meeting: {
-      title: "Pipeline-Audit buchen",
+      title: "Projekt-Check anfragen",
       body: "Wählen Sie einen passenden Termin. Der Kalender zeigt verfügbare Zeiten und sendet nach der Buchung den Microsoft-Teams-Link."
     },
     variants: {
       developer: {
         eyebrow: "Playbook-Versand",
-        title: "Bauträger-Pipeline-Playbook",
-        headline: "Bauträger-Pipeline-Playbook",
+        title: "Bauträger-Projekt-Playbook",
+        headline: "Bauträger-Projekt-Playbook",
         subline: "{pages}-seitiges Diagnose-Playbook · PDF · in 2 Minuten im Postfach",
         inside: [
           "Wo Projekt-Anfragen Kontext verlieren, bevor der Vertrieb übernimmt",
           "Welche Übergabe-Lücken Käufer-Leads teuer machen",
-          "Audit-Reife-Check: Ist Ihr Projekt konkret genug für ein Pipeline-Audit"
+          "Projekt-Reife-Check: Ist Ihr Projekt konkret genug für einen 30-Minuten-Check"
         ]
       },
       agent: {
@@ -156,8 +156,8 @@ export const playbookFormCopy: Record<Locale, {
         subline: "{pages}-seitiges Diagnose-Playbook · PDF · in 2 Minuten im Postfach",
         inside: [
           "Wo Verkäufer- und Käufer-Anfragen Intent verlieren",
-          "Welcher CRM-Kontext Neugier von Verkaufsbereitschaft trennt",
-          "Audit-Reife-Check: Ist Ihr lokales Lead-System bereit für ein Pipeline-Audit"
+          "Welcher Kontext Neugier von Verkaufsbereitschaft trennt",
+          "Reife-Check: Ist Ihr lokaler Anfrageweg konkret genug für einen 30-Minuten-Check"
         ]
       }
     }

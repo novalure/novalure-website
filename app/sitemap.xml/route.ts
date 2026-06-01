@@ -11,8 +11,8 @@ const routes = [
   "/de/playbooks",
   "/en/contact",
   "/de/kontakt",
-  "/en/real-estate-crm-handover",
-  "/de/immobilien-crm-handover"
+  "/en/system-example",
+  "/de/systembeispiel"
 ];
 
 function absolute(path: string) {

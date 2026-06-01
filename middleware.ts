@@ -8,7 +8,7 @@ const allowedPaths = new Set([
   "/en/agents",
   "/en/playbooks",
   "/en/contact",
-  "/en/real-estate-crm-handover",
+  "/en/system-example",
   "/en/playbooks/thank-you",
   "/en/contact/thank-you",
   "/en/legal/imprint",
@@ -19,7 +19,7 @@ const allowedPaths = new Set([
   "/de/makler",
   "/de/playbooks",
   "/de/kontakt",
-  "/de/immobilien-crm-handover",
+  "/de/systembeispiel",
   "/de/playbooks/danke",
   "/de/kontakt/danke",
   "/de/rechtliches/impressum",
@@ -37,9 +37,11 @@ const redirects: Record<string, string> = {
   "/en/privacy": "/en/legal/privacy",
   "/en/cookies": "/en/legal/cookies",
   "/en/terms": "/en/contact#audit-form",
+  "/en/real-estate-crm-handover": "/en/system-example",
   "/de/impressum": "/de/rechtliches/impressum",
   "/de/datenschutz": "/de/rechtliches/datenschutz",
-  "/de/cookies": "/de/rechtliches/cookies"
+  "/de/cookies": "/de/rechtliches/cookies",
+  "/de/immobilien-crm-handover": "/de/systembeispiel"
 };
 
 export function middleware(request: NextRequest) {
