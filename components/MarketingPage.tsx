@@ -97,7 +97,6 @@ const developerLandingCopy = {
       subline:
         "Wir entwickeln Storytelling, Visualisierung, Exposé, Kampagne, Nachfassen und systemgestützte Übergabe so, dass Interessenten nicht nur anfragen, sondern vorbereitet beim Vertrieb ankommen."
     },
-    trustBar: "Projektauftritt · Nachfrage · Nachfassen · vorbereitete Übergabe · EU-Unternehmen (Irland)",
     visible: {
       label: "Was wir sichtbar machen",
       headline: "Material, das Interesse weckt und die richtige Erwartung setzt.",
@@ -188,7 +187,6 @@ const developerLandingCopy = {
       subline:
         "We create storytelling, visuals, expose, campaign, follow-up and system-supported handover so enquiries do not just arrive, but reach sales prepared."
     },
-    trustBar: "Project presence · demand · follow-up · prepared handover · EU company (Ireland)",
     visible: {
       label: "What we make visible",
       headline: "Material that creates interest and sets the right expectation.",
@@ -300,10 +298,6 @@ function DeveloperLandingPage({ locale }: { locale: Locale }) {
             <source src="/videos/hero-visualisation-video.mp4" type="video/mp4" />
           </video>
         </div>
-      </section>
-
-      <section className="landing-trust-bar" aria-label={de ? "Vertrauenssignale" : "Trust signals"}>
-        <p>{copy.trustBar}</p>
       </section>
 
       <section className="landing-section landing-visible-work" id="visible-work">
