@@ -308,9 +308,19 @@ function DeveloperLandingPage({ locale }: { locale: Locale }) {
 
       <section className="landing-section landing-visible-work" id="visible-work">
         <LandingSectionHeading label={copy.visible.label} headline={copy.visible.headline} />
-        <div className="visual-placeholder-grid">
-          <PlaceholderVisual name="visual-exterior-01" ratio="landscape" caption={copy.visible.captions[0]} />
-          <PlaceholderVisual name="visual-interior-01" ratio="landscape" caption={copy.visible.captions[1]} />
+        <div className="visual-rendering-grid">
+          <RenderingVisual
+            src="/images/visual-exterior-01.jpg"
+            alt={de ? "Aussenvisualisierung eines alpinen Wohnprojekts" : "Exterior rendering of an alpine residential project"}
+            ratio="landscape"
+            caption={copy.visible.captions[0]}
+          />
+          <RenderingVisual
+            src="/images/visual-interior-01.jpg"
+            alt={de ? "Innenvisualisierung eines Badezimmers mit Holz und Stein" : "Interior rendering of a bathroom with wood and stone finishes"}
+            ratio="landscape"
+            caption={copy.visible.captions[1]}
+          />
           <ExposeExcerptPreview locale={locale} caption={copy.visible.captions[2]} />
         </div>
         <p className="landing-section-text">{copy.visible.text}</p>
@@ -433,10 +443,12 @@ function LandingCtaBand({ locale }: { locale: Locale }) {
   );
 }
 
-function PlaceholderVisual({ name, ratio, caption }: { name: string; ratio: "landscape" | "portrait"; caption: string }) {
+function RenderingVisual({ src, alt, ratio, caption }: { src: string; alt: string; ratio: "landscape" | "portrait"; caption: string }) {
   return (
-    <figure className={`visual-placeholder visual-placeholder-${ratio}`}>
-      <div>PLATZHALTER: {name}</div>
+    <figure className={`visual-rendering visual-rendering-${ratio}`}>
+      <div className="visual-rendering-frame">
+        <Image src={src} alt={alt} fill sizes="(min-width: 1180px) 31vw, (min-width: 900px) 46vw, 92vw" />
+      </div>
       <figcaption>{caption}</figcaption>
     </figure>
   );
