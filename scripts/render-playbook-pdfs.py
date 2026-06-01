@@ -141,6 +141,32 @@ def pipeline(c, x, y, width, height, lang, audience):
         c.drawCentredString(px, py - 28, label[:19])
 
 
+def pipeline_leak(c, x, y, width, height, lang, audience):
+    pipeline(c, x, y, width, height, lang, audience)
+    c.setStrokeColor(colors.HexColor("#e05a5a"))
+    c.setDash(5, 4)
+    c.setLineWidth(1.8)
+    c.roundRect(x + width * 0.70, y + height * 0.20, width * 0.22, height * 0.58, 10, stroke=1, fill=0)
+    c.setDash()
+    c.setFillColor(colors.HexColor("#2a1518"))
+    c.setStrokeColor(colors.HexColor("#e05a5a"))
+    c.roundRect(x + width * 0.73, y + height * 0.78, 27 * mm, 9 * mm, 4 * mm, stroke=1, fill=1)
+    c.setFillColor(colors.HexColor("#ffb0b0"))
+    c.setFont("Helvetica-Bold", 8)
+    c.drawCentredString(x + width * 0.73 + 13.5 * mm, y + height * 0.78 + 3 * mm, "Leck" if lang == "de" else "Leak")
+
+    note = (
+        "Hier verliert das System Kontext - Käufertyp, Timing und Reife erreichen den Vertrieb nicht."
+        if lang == "de"
+        else "This is where the system loses context - buyer type, timing and readiness never reach sales."
+    )
+    c.setFillColor(colors.HexColor("#fff1f1"))
+    c.setStrokeColor(colors.HexColor("#e8b4b4"))
+    c.roundRect(x, y - 15 * mm, width, 11 * mm, 5 * mm, stroke=1, fill=1)
+    p, _ = paragraph(note, style(8.7, 10.5, colors.HexColor("#6c2020"), True, 1), width - 12 * mm)
+    p.drawOn(c, x + 6 * mm, y - 12 * mm)
+
+
 def system_layers(c, x, y, width, height, lang):
     labels = ["Auftritt", "Nachfrage", "Qualifizierung", "Übergabe"] if lang == "de" else ["Presence", "Demand", "Qualification", "Handover"]
     c.setFillColor(colors.HexColor("#111318"))
@@ -159,7 +185,7 @@ def system_layers(c, x, y, width, height, lang):
 def matrix(c, x, y, width, height, lang):
     c.setFillColor(colors.HexColor("#f7f4eb"))
     c.roundRect(x, y, width, height, 14, stroke=0, fill=1)
-    labels = ["Nurture", "Prüfen", "Disqualifizieren", "Sales-ready"] if lang == "de" else ["Nurture", "Review", "Disqualify", "Sales-ready"]
+    labels = ["Disqualifizieren", "Prüfen", "Nurture", "Sales-ready"] if lang == "de" else ["Disqualify", "Review", "Nurture", "Sales-ready"]
     cells = [
         (x + 42, y + 35, labels[0], False),
         (x + width / 2 + 8, y + 35, labels[1], False),
@@ -176,11 +202,52 @@ def matrix(c, x, y, width, height, lang):
         p, ph = paragraph(label, label_style, cell_w - 12)
         p.drawOn(c, cx + 6, cy + (cell_h - ph) / 2 + 1)
     c.setStrokeColor(colors.HexColor("#111318"))
+    c.setLineWidth(1)
     c.line(x + 22, y + 25, x + width - 22, y + 25)
     c.line(x + 22, y + 25, x + 22, y + height - 18)
+    c.setFillColor(colors.HexColor("#111318"))
+    arrow = c.beginPath()
+    arrow.moveTo(x + width - 22, y + 25)
+    arrow.lineTo(x + width - 29, y + 29)
+    arrow.lineTo(x + width - 29, y + 21)
+    arrow.close()
+    c.drawPath(arrow, stroke=0, fill=1)
+    arrow = c.beginPath()
+    arrow.moveTo(x + 22, y + height - 18)
+    arrow.lineTo(x + 18, y + height - 25)
+    arrow.lineTo(x + 26, y + height - 25)
+    arrow.close()
+    c.drawPath(arrow, stroke=0, fill=1)
+    c.setFont("Helvetica-Bold", 6.5)
+    x_label = "Kaufabsicht / Reife" if lang == "de" else "Buying intent / readiness"
+    y_label = "Kontext vorhanden" if lang == "de" else "Context available"
+    low = "niedrig" if lang == "de" else "low"
+    high = "hoch" if lang == "de" else "high"
+    c.drawCentredString(x + width / 2 + 8, y + 8, x_label)
+    c.setFillColor(colors.HexColor("#606977"))
+    c.setFont("Helvetica-Bold", 5.5)
+    c.drawString(x + 38, y + 15, low)
+    c.drawRightString(x + width - 28, y + 15, high)
+    c.saveState()
+    c.translate(x + 8, y + 38)
+    c.rotate(90)
+    c.drawString(0, 0, low)
+    c.restoreState()
+    c.saveState()
+    c.translate(x + 8, y + height - 43)
+    c.rotate(90)
+    c.drawRightString(0, 0, high)
+    c.restoreState()
+    c.saveState()
+    c.translate(x + 10, y + height / 2)
+    c.rotate(90)
+    c.setFillColor(colors.HexColor("#111318"))
+    c.setFont("Helvetica-Bold", 6.5)
+    c.drawCentredString(0, 0, y_label)
+    c.restoreState()
 
 
-def bullet_boxes(c, bullets, x, y, width, dark=False):
+def bullet_boxes(c, bullets, x, y, width, dark=False, checkbox=False):
     text_color = colors.white if dark else colors.HexColor("#111318")
     box_color = colors.HexColor("#191e27") if dark else colors.white
     border_color = colors.HexColor("#303846") if dark else colors.HexColor("#e1ddd2")
@@ -196,10 +263,53 @@ def bullet_boxes(c, bullets, x, y, width, dark=False):
         c.setStrokeColor(border_color)
         c.roundRect(x, y - box_h, width, box_h, 8, stroke=1, fill=1)
         c.setFillColor(colors.HexColor("#ffd43b"))
-        c.circle(x + 10, y - 13, 3.2, stroke=0, fill=1)
+        if checkbox:
+            c.setStrokeColor(colors.HexColor("#ffd43b"))
+            c.roundRect(x + 7, y - 18, 7, 7, 1.5, stroke=1, fill=0)
+        else:
+            c.circle(x + 10, y - 13, 3.2, stroke=0, fill=1)
         p.drawOn(c, x + 23, y - box_h + 7)
         y -= box_h + 6
     return y
+
+
+def scorecard_assessment(lang, audience):
+    project = audience == "developer"
+    if lang == "de":
+        return [
+            "0-2 erfüllt -> Erst Grundlagen klären, ein Check wäre verfrüht.",
+            f"3-4 erfüllt -> Ein Projekt-Check macht jetzt sichtbar, wo {'Kontext' if project else 'Markt- und Leadkontext'} verloren geht.",
+            f"5 erfüllt -> Ihr {'Funnel produziert Volumen, aber keine verlässliche Pipeline' if project else 'Markt erzeugt Nachfrage, aber keine verlässliche Pipeline'}. Genau dafür ist der Check.",
+        ]
+    return [
+        "0-2 met -> Clarify the basics first; a check would be premature.",
+        f"3-4 met -> A Project Check can now reveal where {'context' if project else 'market and lead context'} is being lost.",
+        f"5 met -> Your {'funnel produces volume, but not a reliable pipeline' if project else 'market produces demand, but not a reliable pipeline'}. That is exactly what the check is for.",
+    ]
+
+
+def draw_assessment(c, items, x, y, width, dark=False):
+    fill = colors.HexColor("#191e27") if dark else colors.HexColor("#fffaf0")
+    border = colors.HexColor("#303846") if dark else colors.HexColor("#e0d1d1")
+    text_color = colors.HexColor("#d0d7e2") if dark else colors.HexColor("#303640")
+    title_color = colors.white if dark else colors.HexColor("#111318")
+    c.setFillColor(fill)
+    c.setStrokeColor(border)
+    box_h = 38 * mm
+    c.roundRect(x, y - box_h, width, box_h, 8, stroke=1, fill=1)
+    c.setFillColor(colors.HexColor("#ffd43b"))
+    c.rect(x, y - box_h, 4, box_h, stroke=0, fill=1)
+    c.setFillColor(title_color)
+    c.setFont("Helvetica-Bold", 10)
+    c.drawString(x + 10 * mm, y - 10 * mm, "Ihre Einschätzung:" if items[0].endswith("verfrüht.") else "Your assessment:")
+    row_y = y - 17 * mm
+    for item in items:
+        c.setStrokeColor(colors.HexColor("#9ca3af"))
+        c.roundRect(x + 10 * mm, row_y - 2, 4 * mm, 4 * mm, 1, stroke=1, fill=0)
+        p, ph = paragraph(item, style(8.4, 10.2, text_color), width - 25 * mm)
+        p.drawOn(c, x + 17 * mm, row_y - ph + 4)
+        row_y -= max(ph + 4, 8 * mm)
+    return y - box_h
 
 
 def draw_cards(c, cards, start_y):
@@ -273,7 +383,17 @@ def render(book):
         c.drawString(M, H - M, str(idx).zfill(2))
         y = para(c, section["title"], M, H - M - 18, W - 2 * M, style(22, 25.5, text_color, True))
         y = para(c, section["body"], M, y - 9, W - 2 * M - 8 * mm, style(10.7, 15.8, body_color))
-        bullet_boxes(c, section["bullets"], M, y - 12, W - 2 * M, dark=dark)
+        title_lower = section["title"].lower()
+        is_leak = "leaks" in title_lower
+        is_scorecard = section["title"].startswith("Mini")
+        if is_leak:
+            visual_h = 48 * mm
+            visual_y = y - 8 - visual_h
+            pipeline_leak(c, M, visual_y, W - 2 * M, visual_h, book["lang"], book["audience"])
+            y = visual_y - 19 * mm
+        y = bullet_boxes(c, section["bullets"], M, y - 12, W - 2 * M, dark=dark, checkbox=is_scorecard)
+        if is_scorecard:
+            draw_assessment(c, scorecard_assessment(book["lang"], book["audience"]), M, y - 5, W - 2 * M, dark=dark)
         footer(c, page, book["lang"], dark=dark)
         c.showPage()
         page += 1
@@ -282,9 +402,9 @@ def render(book):
     draw_logo(c, M, H - 34 * mm, 78 * mm, dark=True)
     final_title = "Lassen Sie Ihren aktuellen Projektweg prüfen." if book["lang"] == "de" else "Have your current project path reviewed."
     final_body = (
-        "Wenn Sie sehen möchten, welche Schichten in Ihrem aktuellen Setup fehlen, buchen Sie einen Projekt-Check. Wir prüfen Projektauftritt, Lead-Qualifizierung, Übergabe und Nachfass-Logik ohne Druck und ohne falsche Versprechen."
+        "30 Minuten, ein konkretes Projekt oder eine Leadquelle, die aktuell Reibung erzeugt. Wir prüfen Projektauftritt, Lead-Qualifizierung, Übergabe und Follow-up - und Sie erhalten eine klare Einschätzung, an welcher Stelle Ihr System Kontext verliert und ob ein strukturierter Aufbau wirtschaftlich trägt. Kein Pitch, kein vollständiges Betriebshandbuch. Eine Diagnose, mit der Sie selbst entscheiden können."
         if book["lang"] == "de"
-        else "If you want to see which layers are missing in your current setup, book a Project Check. We review project presence, lead qualification, handover and follow-up logic without pressure and without false promises."
+        else "30 minutes, one concrete project or lead source that currently creates friction. We review project presence, lead qualification, handover and follow-up, then give you a clear assessment of where your system loses context and whether a structured setup makes commercial sense. No pitch, no operations manual handed over for nothing. A diagnosis you can use to decide for yourself."
     )
     y = para(c, final_title, M, H - 82 * mm, W - 2 * M, style(26, 30, colors.white, True))
     y = para(c, final_body, M, y - 14, W - 2 * M - 10 * mm, style(12, 18, colors.HexColor("#d7deea")))
@@ -293,7 +413,7 @@ def render(book):
     c.roundRect(M, button_y, 72 * mm, 14 * mm, 7 * mm, stroke=0, fill=1)
     c.setFillColor(colors.HexColor("#111318"))
     c.setFont("Helvetica-Bold", 11)
-    c.drawCentredString(M + 36 * mm, button_y + 5 * mm, "novalure.eu")
+    c.drawCentredString(M + 36 * mm, button_y + 5 * mm, "-> novalure.eu")
     pipeline(c, M, 36 * mm, W - 2 * M, 58 * mm, book["lang"], book["audience"])
     footer(c, page, book["lang"], dark=True)
     c.save()

@@ -36,9 +36,9 @@ function findLocalBrowser() {
 
 const shared = {
   en: {
-    label: "English edition",
-    primaryCta: "Request a Project Check",
-    primaryUrl: "https://www.novalure.eu/en/contact#book-audit",
+    label: "ENGLISH EDITION",
+    primaryCta: "→ novalure.eu",
+    primaryUrl: "https://www.novalure.eu",
     footer: "NovaLure | Project marketing with prepared handover",
     introEyebrow: "Why this playbook exists",
     introTitle: "A focused review, not a full blueprint.",
@@ -52,14 +52,14 @@ const shared = {
     summaryEyebrow: "Next step",
     summaryTitle: "Have your current project path reviewed.",
     summaryBody:
-      "If you have a concrete project, market area or lead-quality problem, the Project Check is the next step. We review project presence, qualification, handover and follow-up readiness. No full free blueprint. No lead guarantee. Clear diagnosis before proposal.",
+      "30 minutes, one concrete project or lead source that currently creates friction. We review project presence, lead qualification, handover and follow-up, then give you a clear assessment of where your system loses context and whether a structured setup makes commercial sense. No pitch, no operations manual handed over for nothing. A diagnosis you can use to decide for yourself.",
     note:
       "This playbook is a diagnostic guide. It is not a promise of lead volume, revenue, delivery timing or legal compliance, and it does not include a full implementation blueprint, media strategy or scoring model."
   },
   de: {
-    label: "Deutsche Ausgabe",
-    primaryCta: "Projekt-Check anfragen",
-    primaryUrl: "https://www.novalure.eu/de/kontakt#book-audit",
+    label: "DEUTSCHE AUSGABE",
+    primaryCta: "→ novalure.eu",
+    primaryUrl: "https://www.novalure.eu",
     footer: "NovaLure | Projektvermarktung mit vorbereiteter Übergabe",
     introEyebrow: "Warum dieses Playbook existiert",
     introTitle: "Ein fokussierter Check, kein vollständiger Blueprint.",
@@ -73,7 +73,7 @@ const shared = {
     summaryEyebrow: "Nächster Schritt",
     summaryTitle: "Lassen Sie Ihren aktuellen Projektweg prüfen.",
     summaryBody:
-      "Wenn Sie ein konkretes Projekt, Marktgebiet oder Leadproblem haben, ist der Projekt-Check der nächste Schritt. Wir prüfen Projektauftritt, Qualifizierung, Übergabe und Nachfass-Reife. Kein vollständiger Gratis-Blueprint. Keine Lead-Garantie. Klare Diagnose vor Angebot.",
+      "30 Minuten, ein konkretes Projekt oder eine Leadquelle, die aktuell Reibung erzeugt. Wir prüfen Projektauftritt, Lead-Qualifizierung, Übergabe und Follow-up - und Sie erhalten eine klare Einschätzung, an welcher Stelle Ihr System Kontext verliert und ob ein strukturierter Aufbau wirtschaftlich trägt. Kein Pitch, kein vollständiges Betriebshandbuch. Eine Diagnose, mit der Sie selbst entscheiden können.",
     note:
       "Dieses Playbook ist ein diagnostischer Leitfaden. Es verspricht keine Leadmenge, Umsätze, Lieferzeiten oder rechtliche Konformität und enthält keinen vollständigen Umsetzungs-Blueprint, keine Media-Strategie und kein Scoring-Modell."
   }
@@ -112,7 +112,7 @@ const developerSectionsEn = [
     bullets: [
       "Project or location interest is visible before sales opens the record.",
       "Buyer type, unit logic or use case is at least directionally clear.",
-      "Timing and budget proximity are not hidden in free-text notes.",
+      "Timing and budget proximity are not hidden in open notes.",
       "Source, landing page and requested asset are connected to the record.",
       "The next step is obvious enough that follow-up can start without guesswork."
     ],
@@ -127,7 +127,7 @@ const developerSectionsEn = [
       "Leads already exist, but sales cannot trust or prioritize them cleanly.",
       "The CRM or lead management process is visible enough to inspect.",
       "Sales can explain which leads waste time and which create real conversations.",
-      "Budget and decision readiness can be discussed without turning the check into free consulting."
+      "Budget and decision readiness can be discussed without turning the check into an implementation handover."
     ],
     question: "Can you name the project, lead problem and sales bottleneck in one sentence?"
   },
@@ -147,7 +147,7 @@ const developerSectionsEn = [
   {
     title: "What the Project Check clarifies",
     body:
-      "The Project Check is not a free strategy workshop. It is a focused review of where the current project path loses commercial quality before sales can act.",
+      "The Project Check is not a strategy workshop in disguise. It is a focused review of where the current project path loses commercial quality before sales can act.",
     bullets: [
       "Where project demand enters the system and where context is lost.",
       "Whether the landing page and lead asset attract the right buyer type.",
@@ -160,12 +160,12 @@ const developerSectionsEn = [
   {
     title: "When the Project Check fits and when it does not",
     body:
-      "The check is useful when there is a real project, sales pressure and willingness to improve the path from visibility to conversation. It is not useful when the goal is only to collect free ideas, demand a lead guarantee or avoid follow-up discipline.",
+      "The check is useful when there is a real project, sales pressure and willingness to improve the path from visibility to conversation. It is not useful when the goal is only to collect loose ideas, demand fixed lead numbers or avoid follow-up discipline.",
     bullets: [
       "Fit: active project, launch pressure, internal sales ownership and budget readiness.",
       "Fit: existing lead sources that produce volume but not enough usable context.",
       "No fit: no concrete project, no sales function or no willingness to operate the system.",
-      "No fit: expectation of guaranteed lead numbers or a full campaign blueprint from a free call."
+      "No fit: expectation of fixed lead numbers or a full campaign blueprint from an introductory call."
     ],
     question: "Are you trying to diagnose a commercial bottleneck or only gather more marketing ideas?"
   },
@@ -177,7 +177,7 @@ const developerSectionsEn = [
       "Use the check to test whether the system is missing project clarity, qualification or prepared handover.",
       "Bring one concrete project, market area or lead-quality problem.",
       "Prepare the current lead sources, handover process and biggest sales bottleneck.",
-      "Expect a clear assessment, not a free implementation plan."
+      "Expect a clear assessment, not a handed-over implementation plan."
     ],
     question: "Should your next move be more traffic, or a diagnosis of why current demand is not becoming qualified conversations?"
   }
@@ -199,7 +199,7 @@ const developerSectionsDe = [
   {
     title: "Typische Pipeline-Leaks bei Projekten",
     body:
-      "Schwache Projektwege scheitern selten an einer einzigen Stelle. Qualität geht in mehreren kleinen Übergaben verloren: von der Anzeige zur Seite, von der Seite zum Formular, vom Formular in die Übergabe und von dort ins Follow-up. Das Leak ist wirtschaftlich, nicht kosmetisch.",
+      "Schwache Projektwege scheitern selten an einer einzigen Stelle. Qualität geht in mehreren kleinen Übergaben verloren: von der Anzeige zur Seite, von der Seite zum Formular, vom Formular in die Übergabe und von dort ins Follow-up. Das Leck ist wirtschaftlich, nicht kosmetisch.",
     bullets: [
       "Die Seite erklärt das Projekt, aber nicht die Kaufentscheidung.",
       "Das Formular erfasst Kontaktdaten, aber nicht Projekt-Fit, Timing oder Käufertyp.",
@@ -231,7 +231,7 @@ const developerSectionsDe = [
       "Leads existieren bereits, aber Sales kann sie nicht sauber priorisieren.",
       "CRM oder Leadmanagement sind sichtbar genug, um geprüft zu werden.",
       "Sales kann erklären, welche Leads Zeit binden und welche echte Gespräche erzeugen.",
-      "Budget- und Entscheidungsfähigkeit können geklärt werden, ohne den Check als Gratisberatung zu behandeln."
+      "Budget- und Entscheidungsfähigkeit können geklärt werden, ohne den Check als Umsetzungsübergabe zu behandeln."
     ],
     question: "Können Sie Projekt, Leadproblem und Vertriebsengpass in einem Satz benennen?"
   },
@@ -251,7 +251,7 @@ const developerSectionsDe = [
   {
     title: "Welche Fragen der Projekt-Check klärt",
     body:
-      "Der Projekt-Check ist kein kostenloser Strategie-Workshop. Er ist eine fokussierte Prüfung, wo der aktuelle Projektweg wirtschaftliche Qualität verliert, bevor Sales handeln kann.",
+      "Der Projekt-Check ist kein Strategie-Workshop unter anderem Namen. Er ist eine fokussierte Prüfung, wo der aktuelle Projektweg wirtschaftliche Qualität verliert, bevor Sales handeln kann.",
     bullets: [
       "Wo Projektnachfrage ins System eintritt und wo Kontext verloren geht.",
       "Ob Landingpage und Lead-Asset den richtigen Käufertyp anziehen.",
@@ -264,12 +264,12 @@ const developerSectionsDe = [
   {
     title: "Wann der Projekt-Check passt und wann nicht",
     body:
-      "Der Check ist sinnvoll, wenn ein echtes Projekt, Vertriebsdruck und die Bereitschaft zum Systemaufbau vorhanden sind. Er ist nicht sinnvoll, wenn nur kostenlose Ideen gesammelt, Lead-Garantien erwartet oder Nachfass-Disziplin vermieden werden sollen.",
+      "Der Check ist sinnvoll, wenn ein echtes Projekt, Vertriebsdruck und die Bereitschaft zum Systemaufbau vorhanden sind. Er ist nicht sinnvoll, wenn nur lose Ideen gesammelt, feste Leadzahlen erwartet oder Nachfass-Disziplin vermieden werden sollen.",
     bullets: [
       "Passend: aktives Projekt, Launch-Druck, Sales-Verantwortung und Budgetfähigkeit.",
       "Passend: vorhandene Leadquellen mit Volumen, aber zu wenig nutzbarem Kontext.",
       "Nicht passend: kein konkretes Projekt, kein aktiver Vertrieb oder keine Bereitschaft zum Betrieb.",
-      "Nicht passend: Erwartung garantierter Leadzahlen oder eines vollständigen Gratis-Blueprints."
+      "Nicht passend: Erwartung fester Leadzahlen oder eines vollständigen Umsetzungs-Blueprints."
     ],
     question: "Wollen Sie einen wirtschaftlichen Engpass diagnostizieren oder nur weitere Marketingideen sammeln?"
   },
@@ -281,7 +281,7 @@ const developerSectionsDe = [
       "Nutzen Sie den Check, um fehlende Projektklarheit, Qualifizierung oder vorbereitete Übergabe zu prüfen.",
       "Bringen Sie ein konkretes Projekt, Marktgebiet oder Leadqualitätsproblem mit.",
       "Bereiten Sie aktuelle Leadquellen, Übergabeprozess und größten Vertriebsengpass vor.",
-      "Erwarten Sie eine klare Einschätzung, keinen kostenlosen Umsetzungsplan."
+      "Erwarten Sie eine klare Einschätzung, keinen übergebenen Umsetzungsplan."
     ],
     question: "Brauchen Sie wirklich mehr Traffic, oder zuerst eine Diagnose, warum bestehende Nachfrage nicht zur Pipeline wird?"
   }
@@ -291,9 +291,9 @@ const agentSectionsEn = [
   {
     title: "The actual problem: seller and buyer leads without context",
     body:
-      "Agent lead generation often produces contact details before it produces sales context. Seller leads arrive without motivation, timing or property reality. Buyer leads arrive without budget proximity, search logic or readiness. The team then spends time discovering basics that should have been prepared before the first call.",
+      "Agent lead generation often produces contact details before it produces sales context. Seller acquisition needs more than curiosity: seller leads arrive without motivation, timing, property reality or a clear path toward a sole mandate. Buyer leads arrive without budget proximity, search logic or readiness. The team then spends time discovering basics that should have been prepared before the first call.",
     bullets: [
-      "A seller lead is not valuable if selling intent is unclear.",
+      "A seller lead is not valuable if selling intent and sole mandate potential are unclear.",
       "A buyer lead is not sales-ready if budget, timing and search area are missing.",
       "Portal dependency creates activity, but not enough control over source, segment or follow-up.",
       "If follow-up depends on individual memory, the enquiry path is not yet operating."
@@ -309,7 +309,7 @@ const agentSectionsEn = [
       "Buyer funnels collect interest but do not separate search profile from casual browsing.",
       "Local expertise is used as content, but not as a conversion filter.",
       "CRM stages are too broad to show who needs a call now.",
-      "Nurture is either absent or too generic to create a future sales conversation."
+      "Nurture is either absent or too generic to create a future sales conversation, including reactivating past clients."
     ],
     question: "Which lead type currently looks active in reporting but weak in real conversations?"
   },
@@ -342,7 +342,7 @@ const agentSectionsEn = [
   {
     title: "Symptoms worth reviewing, not a full solution",
     body:
-      "This playbook does not provide a full seller funnel, buyer nurture sequence or campaign plan. Those decisions depend on market position, sales capacity, local trust, assets and CRM maturity. The useful first step is to identify which symptom is causing commercial drag.",
+      "This playbook does not provide a full seller acquisition funnel, buyer nurture sequence or campaign plan. Those decisions depend on market position, sales capacity, local trust, assets and CRM maturity. The useful first step is to identify which symptom is causing commercial drag.",
     bullets: [
       "Many valuation leads but few serious selling conversations indicate weak intent filtering.",
       "Many buyer enquiries but poor appointment quality indicate missing search and budget context.",
@@ -355,7 +355,7 @@ const agentSectionsEn = [
   {
     title: "What the Project Check clarifies",
     body:
-      "The Project Check reviews whether your current enquiry path can qualify, segment and prepare leads in a way sales can use. It does not produce a full campaign plan for free.",
+      "The Project Check reviews whether your current enquiry path can qualify, segment and prepare leads in a way sales can use. It does not hand over a full campaign plan.",
     bullets: [
       "Whether seller and buyer demand are separated before sales attention.",
       "Whether lead magnets attract the right local signal or only generic curiosity.",
@@ -368,12 +368,12 @@ const agentSectionsEn = [
   {
     title: "When the Project Check fits and when it does not",
     body:
-      "The check fits broker teams, agencies and professional agents with a concrete market, active sales discipline and a real lead-quality problem. It does not fit if the expectation is raw lead volume, a guarantee or a free implementation plan.",
+      "The check fits broker teams, agencies and professional agents with a concrete market, active sales discipline and a real lead-quality problem. It does not fit if the expectation is raw lead volume, fixed outcomes or a handed-over implementation plan.",
     bullets: [
       "Fit: local specialization, active follow-up and a clear sales bottleneck.",
       "Fit: existing traffic or portal dependency that needs owned enquiry structure.",
       "No fit: no sales ownership, no CRM discipline or no implementation budget.",
-      "No fit: expectation that a free call should replace strategy, build and run."
+      "No fit: expectation that an introductory call should replace strategy, build and run."
     ],
     question: "Do you have a lead-quality problem that can be diagnosed, or only a wish for more volume?"
   },
@@ -385,7 +385,7 @@ const agentSectionsEn = [
       "Use the check to test seller intent, buyer segmentation and prepared handover.",
       "Bring one local market, target segment or lead source that currently creates friction.",
       "Prepare examples of good and weak leads from recent weeks.",
-      "Expect a decision on whether a structured setup makes sense, not a free operating manual."
+      "Expect a decision on whether a structured setup makes sense, not a handed-over operating manual."
     ],
     question: "Should you add more enquiries, or first inspect why current enquiries do not become reliable sales conversations?"
   }
@@ -395,9 +395,9 @@ const agentSectionsDe = [
   {
     title: "Das eigentliche Problem: Verkäufer- und Käuferleads ohne Kontext",
     body:
-      "Makler-Leadgenerierung erzeugt oft Kontaktdaten, bevor sie Vertriebskontext erzeugt. Verkäuferleads kommen ohne Motivation, Timing oder Objektrealität. Käuferleads kommen ohne Budgetnähe, Suchlogik oder Reife. Das Team verbringt Zeit mit Basisfragen, die das System vorbereiten müsste.",
+      "Makler-Leadgenerierung erzeugt oft Kontaktdaten, bevor sie Vertriebskontext erzeugt. Verkäufer-Akquise braucht mehr als Neugier: Verkäuferleads kommen ohne Motivation, Timing, Objektrealität oder klare Nähe zum Alleinauftrag. Käuferleads kommen ohne Budgetnähe, Suchlogik oder Reife. Das Team verbringt Zeit mit Basisfragen, die das System vorbereiten müsste.",
     bullets: [
-      "Ein Verkäuferlead ist nicht wertvoll, wenn die Verkaufsabsicht unklar bleibt.",
+      "Ein Verkäuferlead ist nicht wertvoll, wenn Verkaufsabsicht und Potenzial für einen Alleinauftrag unklar bleiben.",
       "Ein Käuferlead ist nicht sales-ready, wenn Budget, Timing und Suchgebiet fehlen.",
       "Portalabhängigkeit erzeugt Aktivität, aber zu wenig Kontrolle über Quelle, Segment und Follow-up.",
       "Wenn Follow-up von persönlicher Erinnerung abhängt, arbeitet der Anfrageweg noch nicht."
@@ -413,7 +413,7 @@ const agentSectionsDe = [
       "Käuferwege erfassen Interesse, trennen aber Suchprofil nicht von Stöbern.",
       "Lokale Expertise wird als Content genutzt, aber nicht als Conversion-Filter.",
       "CRM-Stufen sind zu grob, um zu zeigen, wer jetzt einen Call braucht.",
-      "Nurturing fehlt oder ist zu allgemein, um spätere Verkaufsgespräche aufzubauen."
+      "Nurturing fehlt oder ist zu allgemein, um spätere Verkaufsgespräche oder Bestandskunden-Reaktivierung aufzubauen."
     ],
     question: "Welcher Leadtyp sieht im Reporting aktiv aus, ist aber in echten Gesprächen schwach?"
   },
@@ -446,7 +446,7 @@ const agentSectionsDe = [
   {
     title: "Symptome prüfen, keine vollständige Lösung verschenken",
     body:
-      "Dieses Playbook liefert keinen vollständigen Verkäuferweg, keine Käufer-Nurture-Sequenz und keinen Kampagnenplan. Diese Entscheidungen hängen von Marktposition, Sales-Kapazität, lokaler Vertrauensbasis, Assets und Systemreife ab. Der erste sinnvolle Schritt ist, das Symptom mit wirtschaftlicher Wirkung zu erkennen.",
+      "Dieses Playbook liefert keinen vollständigen Verkäufer-Akquise-Funnel, keine Käufer-Nurture-Sequenz und keinen Kampagnenplan. Diese Entscheidungen hängen von Marktposition, Sales-Kapazität, lokaler Vertrauensbasis, Assets und Systemreife ab. Der erste sinnvolle Schritt ist, das Symptom mit wirtschaftlicher Wirkung zu erkennen.",
     bullets: [
       "Viele Bewertungsleads, aber wenige ernsthafte Verkaufsgespräche deuten auf schwache Intent-Filter.",
       "Viele Käuferanfragen, aber schwache Terminqualität deuten auf fehlenden Such- und Budgetkontext.",
@@ -459,7 +459,7 @@ const agentSectionsDe = [
   {
     title: "Welche Fragen der Projekt-Check klärt",
     body:
-      "Der Projekt-Check prüft, ob Ihr aktueller Anfrageweg Leads so qualifizieren, segmentieren und vorbereiten kann, dass Sales damit arbeiten kann. Er liefert keinen vollständigen Kampagnenplan gratis.",
+      "Der Projekt-Check prüft, ob Ihr aktueller Anfrageweg Leads so qualifizieren, segmentieren und vorbereiten kann, dass Sales damit arbeiten kann. Er übergibt keinen vollständigen Kampagnenplan.",
     bullets: [
       "Ob Verkäufer- und Käufernachfrage vor Sales-Aufwand sauber getrennt werden.",
       "Ob Lead Magnets das richtige lokale Signal anziehen oder nur allgemeine Neugier.",
@@ -472,12 +472,12 @@ const agentSectionsDe = [
   {
     title: "Wann der Projekt-Check passt und wann nicht",
     body:
-      "Der Check passt für Maklerteams, Agenturen und professionelle Makler mit konkretem Markt, aktiver Vertriebsdisziplin und echtem Leadqualitätsproblem. Er passt nicht, wenn nur rohe Leadmenge, eine Garantie oder ein kostenloser Umsetzungsplan erwartet wird.",
+      "Der Check passt für Maklerteams, Agenturen und professionelle Makler mit konkretem Markt, aktiver Vertriebsdisziplin und echtem Leadqualitätsproblem. Er passt nicht, wenn nur rohe Leadmenge, feste Ergebnisse oder ein übergebener Umsetzungsplan erwartet werden.",
     bullets: [
       "Passend: lokale Spezialisierung, aktives Follow-up und klarer Vertriebsengpass.",
       "Passend: vorhandener Traffic oder Portalabhängigkeit, die eigene Pipeline-Struktur braucht.",
       "Nicht passend: keine Sales-Verantwortung, keine CRM-Disziplin oder kein Umsetzungsbudget.",
-      "Nicht passend: Erwartung, dass ein kostenloser Call Strategie, Build und Run ersetzt."
+      "Nicht passend: Erwartung, dass ein Einstiegsgespräch Strategie, Build und Run ersetzt."
     ],
     question: "Haben Sie ein Leadqualitätsproblem, das diagnostiziert werden kann, oder nur den Wunsch nach mehr Volumen?"
   },
@@ -489,7 +489,7 @@ const agentSectionsDe = [
       "Nutzen Sie den Check, um Verkäufer-Intent, Käufersegmentierung und vorbereitete Übergabe zu prüfen.",
       "Bringen Sie einen lokalen Markt, ein Zielsegment oder eine Leadquelle mit, die aktuell Reibung erzeugt.",
       "Bereiten Sie Beispiele guter und schwacher Leads aus den letzten Wochen vor.",
-      "Erwarten Sie eine Entscheidung, ob ein strukturierter Aufbau sinnvoll ist, kein kostenloses Betriebshandbuch."
+      "Erwarten Sie eine Entscheidung, ob ein strukturierter Aufbau sinnvoll ist, kein übergebenes Betriebshandbuch."
     ],
     question: "Sollten Sie mehr Anfragen hinzufügen oder zuerst prüfen, warum aktuelle Anfragen keine verlässlichen Verkaufsgespräche werden?"
   }
@@ -512,7 +512,7 @@ const playbooks = [
       "New-build or investment teams that need cleaner prepared handover",
       "Teams considering a structured setup but not yet sure where the leak sits"
     ],
-    sections: developerSectionsEn
+    sections: enrichSections(developerSectionsEn, "en", "developer")
   },
   {
     slug: "bautraeger-pipeline-playbook-de",
@@ -530,7 +530,7 @@ const playbooks = [
       "Neubau- oder Investmentteams, die sauberere vorbereitete Übergabe brauchen",
       "Teams, die einen strukturierten Aufbau prüfen, aber den Engpass noch nicht klar sehen"
     ],
-    sections: developerSectionsDe
+    sections: enrichSections(developerSectionsDe, "de", "developer")
   },
   {
     slug: "real-estate-agent-lead-playbook-en",
@@ -548,7 +548,7 @@ const playbooks = [
       "Real estate teams that need prepared context before follow-up",
       "Teams considering a structured setup for a defined local market"
     ],
-    sections: agentSectionsEn
+    sections: enrichSections(agentSectionsEn, "en", "agent")
   },
   {
     slug: "makler-lead-playbook-de",
@@ -566,7 +566,7 @@ const playbooks = [
       "Immobilienteams, die vor dem Follow-up mehr vorbereiteten Kontext brauchen",
       "Teams, die einen strukturierten Aufbau für einen definierten lokalen Markt prüfen"
     ],
-    sections: agentSectionsDe
+    sections: enrichSections(agentSectionsDe, "de", "agent")
   }
 ];
 
@@ -578,15 +578,20 @@ function esc(value) {
     .replaceAll('"', "&quot;");
 }
 
-function pipelineSvg(lang, audience) {
+function pipelineSvg(lang, audience, showLeak = false) {
   const labels =
     lang === "de"
       ? audience === "developer"
-        ? ["Nachfrage", "Projekt-Fit", "Intent-Filter", "Übergabe", "Check-Frage"]
-        : ["Lokale Nachfrage", "Segment", "Intent-Filter", "Übergabe", "Check-Frage"]
+        ? ["Nachfrage", "Projekt-Fit", "Qualifizierung", "Übergabe", "Vertrieb"]
+        : ["Lokale Nachfrage", "Lead Magnet", "Segmentierung", "Übergabe", "Follow-up"]
       : audience === "developer"
-        ? ["Demand", "Project Fit", "Intent Filter", "Handover", "Check Question"]
-        : ["Local Demand", "Segment", "Intent Filter", "Handover", "Check Question"];
+        ? ["Demand", "Project Fit", "Qualification", "Handover", "Sales"]
+        : ["Local Demand", "Lead Magnet", "Segmentation", "Handover", "Follow-up"];
+  const leakLabel = lang === "de" ? "Leck" : "Leak";
+  const leakNote =
+    lang === "de"
+      ? "Hier verliert das System Kontext - Käufertyp, Timing und Reife erreichen den Vertrieb nicht."
+      : "This is where the system loses context - buyer type, timing and readiness never reach sales.";
   return `
   <svg viewBox="0 0 920 260" role="img" aria-label="Project check diagram">
     <defs>
@@ -595,6 +600,13 @@ function pipelineSvg(lang, audience) {
     </defs>
     <rect width="920" height="260" rx="28" fill="#101217"/>
     <path d="M80 132 C210 40, 330 220, 470 130 S690 44, 840 130" fill="none" stroke="#343944" stroke-width="3" stroke-dasharray="8 10"/>
+    ${
+      showLeak
+        ? `<rect x="646" y="86" width="170" height="108" rx="20" fill="rgba(143,38,38,.12)" stroke="#e05a5a" stroke-width="3" stroke-dasharray="10 9"/>
+          <rect x="674" y="46" width="86" height="32" rx="13" fill="#2a1518" stroke="#e05a5a"/>
+          <text x="717" y="67" text-anchor="middle" fill="#ff9a9a" font-size="16" font-family="Arial" font-weight="800">${esc(leakLabel)}</text>`
+        : ""
+    }
     ${labels
       .map((label, index) => {
         const x = 92 + index * 180;
@@ -607,16 +619,24 @@ function pipelineSvg(lang, audience) {
         </g>`;
       })
       .join("")}
+    ${
+      showLeak
+        ? `<rect x="150" y="210" width="620" height="34" rx="13" fill="#2a1718" stroke="#7b3030"/>
+          <text x="460" y="232" text-anchor="middle" fill="#ffd0d0" font-size="15" font-family="Arial" font-weight="700">${esc(leakNote)}</text>`
+        : ""
+    }
   </svg>`;
 }
 
 function matrixSvg(lang) {
-  const x = lang === "de" ? "Absicht" : "Intent";
-  const y = lang === "de" ? "Kontext" : "Context";
+  const x = lang === "de" ? "Kaufabsicht / Reife" : "Buying intent / readiness";
+  const y = lang === "de" ? "Kontext vorhanden" : "Context available";
+  const low = lang === "de" ? "niedrig" : "low";
+  const high = lang === "de" ? "hoch" : "high";
   const cells =
     lang === "de"
-      ? ["Nurture", "Prüfen", "No-Fit", "Prüfbar"]
-      : ["Nurture", "Review", "No-fit", "Review-ready"];
+      ? ["Disqualifizieren", "Prüfen", "Nurture", "Sales-ready"]
+      : ["Disqualify", "Review", "Nurture", "Sales-ready"];
   const label = (text, x, y, color, size = 25) => {
     if (text.length > 12) {
       const [first, second] = text.includes("-") ? text.split("-") : [text.slice(0, 7), text.slice(7)];
@@ -628,9 +648,15 @@ function matrixSvg(lang) {
   <svg viewBox="0 0 920 520" role="img" aria-label="Project check readiness matrix">
     <rect width="920" height="520" rx="28" fill="#f7f4eb"/>
     <line x1="160" y1="420" x2="790" y2="420" stroke="#1b1f27" stroke-width="3"/>
+    <path d="M790 420 L770 409 L770 431 Z" fill="#1b1f27"/>
     <line x1="160" y1="420" x2="160" y2="90" stroke="#1b1f27" stroke-width="3"/>
+    <path d="M160 90 L149 110 L171 110 Z" fill="#1b1f27"/>
     <text x="475" y="475" text-anchor="middle" fill="#111318" font-size="24" font-family="Arial" font-weight="700">${esc(x)}</text>
+    <text x="190" y="449" text-anchor="start" fill="#606977" font-size="15" font-family="Arial" font-weight="700">${esc(low)}</text>
+    <text x="754" y="449" text-anchor="end" fill="#606977" font-size="15" font-family="Arial" font-weight="700">${esc(high)}</text>
     <text x="70" y="255" text-anchor="middle" fill="#111318" font-size="24" font-family="Arial" font-weight="700" transform="rotate(-90 70 255)">${esc(y)}</text>
+    <text x="118" y="398" text-anchor="middle" fill="#606977" font-size="15" font-family="Arial" font-weight="700" transform="rotate(-90 118 398)">${esc(low)}</text>
+    <text x="118" y="124" text-anchor="middle" fill="#606977" font-size="15" font-family="Arial" font-weight="700" transform="rotate(-90 118 124)">${esc(high)}</text>
     <rect x="190" y="250" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
     <rect x="500" y="250" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
     <rect x="190" y="95" width="250" height="140" rx="20" fill="#ffffff" stroke="#ddd7c9"/>
@@ -663,20 +689,104 @@ function systemSvg(lang) {
   </svg>`;
 }
 
+function checkRevealsSection(lang, audience) {
+  if (lang === "de" && audience === "developer") {
+    return {
+      title: "Was ein Check sichtbar macht",
+      body:
+        "Ein Projektvertrieb hatte laufend Anfragen über Portal und Projektseite. Der Engpass wurde erst sichtbar, als die Übergabe geprüft wurde: Ein großer Teil der Anfragen erreichte den Vertrieb ohne Hinweis auf Käufertyp, Timing oder Finanzierungsnähe. Sales baute den Kontext im Erstgespräch jedes Mal neu auf. Das Volumen war nicht das Problem. Die fehlende Schicht zwischen Formular und Erstgespräch war es.",
+      bullets: [],
+      question: "Welche Kontextschicht fehlt heute zwischen Anfrage und erstem Vertriebsgespräch?"
+    };
+  }
+  if (lang === "de") {
+    return {
+      title: "Was ein Check sichtbar macht",
+      body:
+        "Ein Maklerteam erhielt regelmäßig Bewertungs- und Käuferanfragen. Erst die Prüfung zeigte, dass Verkäufer-Neugier und echte Verkaufsabsicht im selben Topf landeten. Das Team verbrachte Zeit mit Anfragen, die das System hätte vorsortieren müssen. Nicht die Anzahl der Leads war das Thema, sondern die fehlende Trennung vor dem ersten Anruf.",
+      bullets: [],
+      question: "Wo müsste Ihr Anfrageweg Verkäufer-Neugier, Alleinauftrag-Potenzial und Käuferreife früher trennen?"
+    };
+  }
+  if (audience === "developer") {
+    return {
+      title: "What a check reveals",
+      body:
+        "A project sales team was receiving steady enquiries through portals and the project site. The bottleneck only became visible when the handover was reviewed: many enquiries reached sales without a clear indication of buyer type, timing or financing proximity. Sales had to rebuild the context in every first conversation. Volume was not the issue. The missing layer between form and first call was.",
+      bullets: [],
+      question: "Which context layer is missing today between enquiry and first sales conversation?"
+    };
+  }
+  return {
+    title: "What a check reveals",
+    body:
+      "An estate agency team regularly received valuation and buyer enquiries. The review showed that seller curiosity and genuine selling intent were landing in the same bucket. The team spent time on enquiries the system should have pre-sorted. The issue was not the number of leads, but the missing separation before the first call.",
+    bullets: [],
+    question: "Where should your enquiry path separate seller curiosity, sole mandate potential and buyer readiness earlier?"
+  };
+}
+
+function scorecardAssessment(lang, audience) {
+  const project = audience === "developer";
+  if (lang === "de") {
+    return [
+      "0-2 erfüllt -> Erst Grundlagen klären, ein Check wäre verfrüht.",
+      `3-4 erfüllt -> Ein Projekt-Check macht jetzt sichtbar, wo ${project ? "Kontext" : "Markt- und Leadkontext"} verloren geht.`,
+      `5 erfüllt -> Ihr ${project ? "Funnel produziert Volumen, aber keine verlässliche Pipeline" : "Markt erzeugt Nachfrage, aber keine verlässliche Pipeline"}. Genau dafür ist der Check.`
+    ];
+  }
+  return [
+    "0-2 met -> Clarify the basics first; a check would be premature.",
+    `3-4 met -> A Project Check can now reveal where ${project ? "context" : "market and lead context"} is being lost.`,
+    `5 met -> Your ${project ? "funnel produces volume, but not a reliable pipeline" : "market produces demand, but not a reliable pipeline"}. That is exactly what the check is for.`
+  ];
+}
+
+function enrichSections(sections, lang, audience) {
+  const enriched = sections.map((section, index) => {
+    const next = { ...section };
+    if (index === 1) {
+      next.visual = "leak-pipeline";
+    }
+    if (index === 3) {
+      next.checklist = true;
+      next.assessment = scorecardAssessment(lang, audience);
+    }
+    return next;
+  });
+  enriched.splice(5, 0, checkRevealsSection(lang, audience));
+  return enriched;
+}
+
 function renderHtml(book) {
   const ui = shared[book.lang];
   const title = esc(book.title);
   const sections = book.sections
-    .map(
-      (section, index) => `
+    .map((section, index) => {
+      const bulletsClass = section.checklist ? "bullets checklist" : "bullets";
+      const visual =
+        section.visual === "leak-pipeline"
+          ? `<div class="visual leak-visual">${pipelineSvg(book.lang, book.audience, true)}</div>`
+          : "";
+      const bullets = section.bullets.length
+        ? `<ul class="${bulletsClass}">${section.bullets.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`
+        : "";
+      const assessment = section.assessment
+        ? `<div class="scorecard-assessment"><h3>${book.lang === "de" ? "Ihre Einschätzung:" : "Your assessment:"}</h3>${section.assessment
+            .map((item) => `<p><span class="assessment-box"></span>${esc(item)}</p>`)
+            .join("")}</div>`
+        : "";
+      return `
         <section class="page section">
           <div class="section-number">${String(index + 1).padStart(2, "0")}</div>
           <h2>${esc(section.title)}</h2>
           <p class="body">${esc(section.body)}</p>
-          <ul class="bullets">${section.bullets.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+          ${visual}
+          ${bullets}
+          ${assessment}
           <p class="diagnostic-question">${esc(section.question)}</p>
-        </section>`
-    )
+        </section>`;
+    })
     .join("");
 
   return `<!doctype html>
@@ -705,6 +815,12 @@ function renderHtml(book) {
   .bullets { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 11px; }
   .bullets li { font-size: 15.5px; line-height: 1.42; padding: 14px 16px 14px 42px; border: 1px solid #e1ddd2; border-radius: 8px; background: #fff; position: relative; }
   .bullets li:before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #ffd43b; position: absolute; left: 19px; top: 21px; box-shadow: 0 0 0 5px rgba(255,212,59,.18); }
+  .checklist li:before { width: 14px; height: 14px; border-radius: 3px; background: transparent; border: 2px solid #ffd43b; box-shadow: none; top: 17px; }
+  .leak-visual { margin-top: 22px; margin-bottom: 2px; }
+  .scorecard-assessment { margin-top: 20px; padding: 16px 18px; border: 1px solid #e0d1d1; border-left: 5px solid #ffd43b; border-radius: 8px; background: #fffaf0; }
+  .scorecard-assessment h3 { font-size: 18px; margin: 0 0 10px; }
+  .scorecard-assessment p { display: flex; gap: 10px; align-items: flex-start; margin: 8px 0 0; font-size: 14.5px; line-height: 1.38; color: #303640; }
+  .assessment-box { flex: 0 0 13px; width: 13px; height: 13px; border: 2px solid #9ca3af; border-radius: 3px; margin-top: 2px; }
   .diagnostic-question { margin-top: 28px; padding: 18px 20px; border-left: 5px solid #ffd43b; background: rgba(255,212,59,.14); font-size: 19px; line-height: 1.42; font-weight: 800; color: #151923; }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
   .card { border: 1px solid #ded9ce; border-radius: 8px; padding: 18px; background: #fff; min-height: 132px; }
@@ -722,6 +838,8 @@ function renderHtml(book) {
   .section:nth-child(odd) { background: #101217; color: #fff; }
   .section:nth-child(odd) .body { color: #d0d7e2; }
   .section:nth-child(odd) .bullets li { background: #191e27; border-color: #303846; color: #fff; }
+  .section:nth-child(odd) .scorecard-assessment { background: #191e27; border-color: #303846; color: #fff; }
+  .section:nth-child(odd) .scorecard-assessment p { color: #d0d7e2; }
   .section:nth-child(odd) .diagnostic-question { color: #fff7c7; background: rgba(255,212,59,.1); }
   .summary { background: #111318; color: #fff; }
   .summary .body { color: #d7deea; max-width: 700px; margin-bottom: 26px; }
