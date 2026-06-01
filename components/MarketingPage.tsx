@@ -352,37 +352,7 @@ function DeveloperLandingPage({ locale }: { locale: Locale }) {
 
       <LandingCtaBand locale={locale} />
 
-      <section className="landing-section landing-reference" id="reference">
-        <div>
-          <LandingSectionHeading label={copy.reference.label} headline={copy.reference.headline} />
-          <blockquote>&ldquo;{copy.reference.quote}&rdquo;</blockquote>
-          <p className="reference-person">{copy.reference.person}</p>
-          <p className="reference-metrics">{copy.reference.metrics}</p>
-        </div>
-        <div className="reference-assets">
-          <div className="reference-logo-card">
-            <div className="reference-brand-mark" aria-label="GRASL Immobilien">
-              <span>GRASL</span>
-              <strong>Immobilien</strong>
-              <em>{de ? "Referenzpartner" : "Reference partner"}</em>
-            </div>
-          </div>
-          <div className="reference-person-card">
-            <Image
-              className="testimonial-avatar"
-              src="/images/thomas-grasl-portrait.jpg"
-              alt="SV Thomas Grasl"
-              width={96}
-              height={96}
-              sizes="96px"
-            />
-            <div>
-              <strong>SV Thomas Grasl</strong>
-              <span>GRASL Immobilien</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CaseProofSection locale={locale} />
 
       <section className="landing-section landing-team" id="team">
         <div className="team-photo-frame">
