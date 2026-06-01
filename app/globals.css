@@ -3979,8 +3979,8 @@ code {
 
 .landing-section {
   display: grid;
-  gap: 28px;
-  padding: 86px clamp(20px, 6vw, 92px);
+  gap: 24px;
+  padding: 68px clamp(20px, 6vw, 92px);
 }
 
 .landing-section-heading {
@@ -4104,6 +4104,45 @@ code {
   font-size: 1.12rem;
   font-weight: 850;
   line-height: 1.55;
+}
+
+.landing-visible-work {
+  padding-bottom: 72px;
+}
+
+.landing-journey {
+  padding-top: 72px;
+  padding-bottom: 46px;
+}
+
+.landing-system {
+  padding-top: 52px;
+  padding-bottom: 62px;
+}
+
+.landing-outcome {
+  padding-top: 62px;
+  padding-bottom: 62px;
+}
+
+.landing-team {
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.landing-playbook {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.landing-audience {
+  padding-top: 68px;
+  padding-bottom: 36px;
+}
+
+.landing-trust {
+  padding-top: 42px;
+  padding-bottom: 72px;
 }
 
 .landing-system,
@@ -4607,7 +4646,38 @@ code {
 
   .landing-section,
   .landing-closing-cta {
-    padding: 58px 20px;
+    padding: 48px 20px;
+  }
+
+  .landing-visible-work {
+    padding-bottom: 50px;
+  }
+
+  .landing-journey {
+    padding-top: 50px;
+    padding-bottom: 34px;
+  }
+
+  .landing-system {
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .landing-outcome,
+  .landing-team,
+  .landing-playbook {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .landing-audience {
+    padding-top: 48px;
+    padding-bottom: 28px;
+  }
+
+  .landing-trust {
+    padding-top: 34px;
+    padding-bottom: 52px;
   }
 
   .landing-section-heading h2,
