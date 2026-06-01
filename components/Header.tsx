@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { getPath, getPlaybookFormPath, navLabels, routeMap, type Locale } from "@/lib/i18n";
+import { getCrmAppUrl, getPath, getPlaybookFormPath, navLabels, routeMap, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
 
 const ctaLabels = {
@@ -25,6 +25,7 @@ export function Header({ locale }: { locale: Locale }) {
   const switchHref = activeKey ? routeMap[activeKey][switchLocale] : getPath(switchLocale, "home");
   const playbookHref = getPlaybookFormPath(locale);
   const auditHref = `${getPath(locale, "contact")}#book-audit`;
+  const crmHref = getCrmAppUrl(locale);
 
   return (
     <header className={`site-header ${open ? "menu-open" : ""}`}>
@@ -47,6 +48,9 @@ export function Header({ locale }: { locale: Locale }) {
       </nav>
 
       <div className="header-actions desktop-actions">
+        <a className="crm-login-link" href={crmHref} target="_blank" rel="noreferrer" data-track="nav_crm_login">
+          CRM Login
+        </a>
         <Link className="button button-primary" href={auditHref} data-track="nav_audit">{labels.primary}</Link>
         <Link className="locale-switch" href={switchHref} hrefLang={switchLocale}>{switchLocale.toUpperCase()}</Link>
       </div>
@@ -78,6 +82,9 @@ export function Header({ locale }: { locale: Locale }) {
             {navLabels[locale][key]}
           </Link>
         ))}
+        <a className="crm-login-link" href={crmHref} target="_blank" rel="noreferrer" data-track="mobile_crm_login" onClick={() => setOpen(false)}>
+          CRM Login
+        </a>
         <Link className="button button-primary" href={auditHref} onClick={() => setOpen(false)}>
           {labels.primary}
         </Link>

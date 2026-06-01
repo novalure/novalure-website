@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPath, getPlaybookFormPath, legalKeys, navLabels, type Locale } from "@/lib/i18n";
+import { getCrmAppUrl, getPath, getPlaybookFormPath, legalKeys, navLabels, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
 
 const footerCopy = {
@@ -26,6 +26,7 @@ const footerCopy = {
 export function Footer({ locale }: { locale: Locale }) {
   const copy = footerCopy[locale];
   const switchLocale = locale === "en" ? "de" : "en";
+  const crmHref = getCrmAppUrl(locale);
 
   return (
     <footer className="site-footer">
@@ -48,6 +49,9 @@ export function Footer({ locale }: { locale: Locale }) {
           <Link href={getPlaybookFormPath(locale)}>{navLabels[locale].playbooks}</Link>
           <Link href={`${getPath(locale, "contact")}#book-audit`}>{copy.projectCheck}</Link>
           <Link href={getPath(locale, "handover")}>{navLabels[locale].handover}</Link>
+          <a href={crmHref} target="_blank" rel="noreferrer" data-track="footer_crm_login">
+            CRM Login
+          </a>
         </nav>
 
         <div className="footer-newsletter">
