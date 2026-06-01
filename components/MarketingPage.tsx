@@ -456,54 +456,69 @@ function RenderingVisual({ src, alt, ratio, caption }: { src: string; alt: strin
 
 function ExposeExcerptPreview({ locale, caption }: { locale: Locale; caption: string }) {
   const de = locale === "de";
-  const facts = de
-    ? [["Einheit", "A3"], ["Wohnfläche", "94 m²"], ["Status", "Reservierbar"]]
-    : [["Unit", "A3"], ["Living area", "94 m²"], ["Status", "Reservable"]];
-  const highlights = de
-    ? ["Morgensonne im Wohnbereich", "Loggia mit Blick ins Quartier", "Grundriss für Eigennutzer und Anleger"]
-    : ["Morning sun in the living area", "Loggia facing the neighbourhood", "Plan suited to owner-occupiers and investors"];
+  const copy = de
+    ? {
+        eyebrow: "Exklusive Neubau-Residenz",
+        title: "Penthouse-Residenz",
+        location: "Alpine Höhenlage · Südausrichtung · Bergpanorama",
+        imageAlt: "Moderne alpine Penthouse-Terrasse mit Glasfronten, Naturstein und Bergpanorama",
+        headline: "Privater Rückzugsort mit Panorama, Licht und diskreter Architektur.",
+        text:
+          "Großzügige Glasflächen, warme Holzdecken und Naturstein schaffen eine ruhige Penthouse-Atmosphäre. Die Terrasse erweitert den Wohnraum nach außen und setzt das Bergpanorama als zentrales Gestaltungselement.",
+        facts: [["Wohnfläche", "142 m²"], ["Terrasse", "38 m²"], ["Zimmer", "4"], ["Etage", "Penthouse"]],
+        features: ["Bodentiefe Fenster", "Eichenparkett und Natursteinbäder", "Smart-Home, Tiefgarage und Concierge"],
+        footer: "Preis auf Anfrage · Bezugsfertig in Vorbereitung"
+      }
+    : {
+        eyebrow: "Exclusive new-build residence",
+        title: "Penthouse Residence",
+        location: "Alpine elevation · south-facing · mountain panorama",
+        imageAlt: "Modern alpine penthouse terrace with glass fronts, natural stone and mountain panorama",
+        headline: "A private retreat shaped by panorama, light and quiet architecture.",
+        text:
+          "Generous glazing, warm timber ceilings and natural stone create a calm penthouse atmosphere. The terrace extends the living space outdoors and frames the mountain panorama as the defining design element.",
+        facts: [["Living space", "142 m²"], ["Terrace", "38 m²"], ["Rooms", "4"], ["Floor", "Penthouse"]],
+        features: ["Floor-to-ceiling windows", "Oak flooring and natural-stone bathrooms", "Smart home, underground parking and concierge"],
+        footer: "Price on request · Occupancy in preparation"
+      };
 
   return (
     <figure className="expose-excerpt-preview">
-      <div className="expose-sheet" aria-label={de ? "Exposé-Auszug Beispiel" : "Expose excerpt example"}>
-        <div className="expose-sheet-header">
-          <span>NovaLure</span>
-          <em>{de ? "Exposé-Auszug" : "Expose excerpt"}</em>
-        </div>
-        <div className="expose-visual-panel">
-          <div className="expose-building-mark" aria-hidden="true">
-            <span />
-            <span />
-            <span />
+      <article className="expose-sheet" aria-label={de ? "A4 Exposé-Auszug" : "A4 expose excerpt"}>
+        <header className="expose-sheet-header">
+          <div>
+            <span>{copy.eyebrow}</span>
+            <h3>{copy.title}</h3>
           </div>
-          <strong>{de ? "Projekt Am Park" : "Parkside Residences"}</strong>
-          <small>{de ? "Beispielhafte Projektseite" : "Sample project page"}</small>
+          <p>{copy.location}</p>
+        </header>
+        <div className="expose-sheet-image">
+          <Image
+            src="/images/ai-render-15594499.jpg"
+            alt={copy.imageAlt}
+            fill
+            sizes="(min-width: 1180px) 23vw, (min-width: 900px) 46vw, 92vw"
+          />
         </div>
+        <dl className="expose-facts">
+          {copy.facts.map(([label, value]) => (
+            <div key={label}>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
         <div className="expose-sheet-body">
-          <p className="expose-kicker">{de ? "Einheit A3 · 3 Zimmer" : "Unit A3 · 3 rooms"}</p>
-          <h3>{de ? "Ruhige Gartenwohnung mit klarer Investment-Logik." : "Quiet garden apartment with clear investment logic."}</h3>
-          <p>
-            {de
-              ? "Der Auszug zeigt nur die Informationen, die Interesse einordnen: Nutzung, Lagegefühl, Budgetnähe und nächster sinnvoller Schritt."
-              : "This excerpt shows only the details that qualify interest: use case, location feel, budget proximity and the next sensible step."}
-          </p>
-          <dl className="expose-facts">
-            {facts.map(([label, value]) => (
-              <div key={label}>
-                <dt>{label}</dt>
-                <dd>{value}</dd>
-              </div>
-            ))}
-          </dl>
-          <ul className="expose-highlight-list">
-            {highlights.map((item) => <li key={item}>{item}</li>)}
-          </ul>
+          <h4>{copy.headline}</h4>
+          <p>{copy.text}</p>
         </div>
-        <div className="expose-sheet-footer">
-          <span>{de ? "Nächster Schritt" : "Next step"}</span>
-          <strong>{de ? "Finanzierungsnähe klären" : "Clarify financing proximity"}</strong>
-        </div>
-      </div>
+        <ul className="expose-highlight-list">
+          {copy.features.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+        <footer className="expose-sheet-footer">
+          <span>{copy.footer}</span>
+        </footer>
+      </article>
       <figcaption>{caption}</figcaption>
     </figure>
   );
