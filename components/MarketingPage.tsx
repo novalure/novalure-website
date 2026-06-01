@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getPath, getPlaybookFormPath } from "@/lib/i18n";
-import { playbooks, type Cta, type HomeContent, type PageContent } from "@/content/pages";
+import type { Cta, HomeContent, PageContent } from "@/content/pages";
 import { ContactInquiryForm } from "@/components/ContactInquiryForm";
 import { FunnelHeroVisual } from "@/components/FunnelHeroVisual";
 import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholders";
@@ -1001,26 +1001,16 @@ function PlaybookConversion({ locale, title, body }: { locale: Locale; title: st
 }
 
 function PlaybookHub({ locale, title, body, eyebrow, id }: { locale: Locale; title: string; body: string; eyebrow?: string; id?: string }) {
+  const introLabel = eyebrow || (locale === "en" ? "Playbook selection" : "Playbook-Auswahl");
+
   return (
-    <section className="playbook-section" id={id}>
-      <div className="section-heading">
-        <p className="eyebrow">{eyebrow || (locale === "en" ? "Playbook selection" : "Playbook-Auswahl")}</p>
+    <section className="playbook-section playbook-conversion-section" id={id} aria-label={title}>
+      <div className="sr-only">
+        <p>{introLabel}</p>
         <h2>{title}</h2>
         <p>{body}</p>
       </div>
-      <div className="playbook-hub-grid">
-        {playbooks[locale].map((playbook) => (
-          <article className="playbook-summary-card" key={playbook.key}>
-            <span className="pill">{playbook.key === "developer" ? (locale === "en" ? "Developers" : "Bauträger") : locale === "en" ? "Agents" : "Makler"}</span>
-            <h3>{playbook.title}</h3>
-            <p>{playbook.subtitle}</p>
-            <ul className="check-list">
-              {playbook.learns.map((item) => <li key={item}>{item}</li>)}
-            </ul>
-          </article>
-        ))}
-        <HubSpotForm locale={locale} playbook="developer" selectable />
-      </div>
+      <HubSpotForm locale={locale} playbook="developer" selectable />
     </section>
   );
 }
