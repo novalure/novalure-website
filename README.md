@@ -128,14 +128,16 @@ Studio is available at `/studio` when Sanity environment variables are configure
 
 The site is prepared for:
 
-- Developer Playbook form: `NEXT_PUBLIC_HUBSPOT_DEVELOPER_FORM_ID`
-- Agent Playbook form: `NEXT_PUBLIC_HUBSPOT_AGENT_FORM_ID`
+- HubSpot account: `HUBSPOT_PORTAL_ID`
+- Shared Playbook form: `HUBSPOT_PLAYBOOK_FORM_GUID`
+- Optional Developer override: `HUBSPOT_DEVELOPER_FORM_GUID`
+- Optional Agent override: `HUBSPOT_AGENT_FORM_GUID`
 - Meeting Scheduler fallback: `NEXT_PUBLIC_HUBSPOT_MEETING_URL`
 - English Meeting Scheduler: `NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN`
 - German Meeting Scheduler: `NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE`
 - HubSpot Tracking Code: `NEXT_PUBLIC_HUBSPOT_TRACKING_CODE_ID`
 
-Playbook forms submit to the local API route `/api/playbook`. That route sends the submission to HubSpot's Forms API when portal and form IDs are configured.
+Playbook forms submit to the local API route `/api/playbook`. That route sends the CRM lead to HubSpot's Forms API when the portal and form GUID are configured. HubSpot errors are logged but do not block the transactional Playbook email. The previous `NEXT_PUBLIC_HUBSPOT_*` portal and form names remain supported as migration fallbacks.
 
 ## Resend Playbook Delivery
 
@@ -146,18 +148,25 @@ Required variables:
 
 - `RESEND_API_KEY`
 - `RESEND_FROM_EMAIL`
+- `DOUBLE_OPT_IN_SECRET`
+- `RESEND_CONTACT_SEGMENT_ID`
+- `RESEND_MARKETING_TOPIC_ID`
 - `DEVELOPER_PLAYBOOK_URL`
 - `AGENT_PLAYBOOK_URL`
 - Optional localized overrides: `DEVELOPER_PLAYBOOK_URL_EN`, `DEVELOPER_PLAYBOOK_URL_DE`, `AGENT_PLAYBOOK_URL_EN`, `AGENT_PLAYBOOK_URL_DE`
+
+When marketing consent is requested, the app sends a 24-hour confirmation link. Opening the link only renders a confirmation page; the explicit form submission records the contact, confirmation timestamp, privacy-policy version and requested Playbook in Resend and opts the contact into the configured topic. This prevents link-scanning software from creating consent through a GET request.
 
 Recommended flow:
 
 1. Verify `novalure.eu` in Resend.
 2. Add the DNS records Resend gives you.
-3. Create an API key.
-4. Use the built-in PDF URLs or upload each Playbook PDF to a private or unlisted asset URL.
-5. Set the Playbook URL variables in Vercel only if you want to override the built-in URLs.
-6. Submit a test form and confirm the contact appears in HubSpot and the Playbook email arrives.
+3. Create an API key with access to email and contact operations.
+4. Create a contact segment and an opt-out-by-default marketing topic.
+5. Create the contact properties `doi_confirmed_at`, `doi_source`, `privacy_policy_version` and `requested_playbook`.
+6. Use the built-in PDF URLs or upload each Playbook PDF to a private or unlisted asset URL.
+7. Set the Playbook URL variables in Vercel only if you want to override the built-in URLs.
+8. Submit a test form, confirm the email link manually and verify the lead in HubSpot plus the topic opt-in in Resend.
 
 To regenerate the HTML sources, run `npm run playbooks`. In this Codex workspace, PDFs were rendered from those HTML sources with `scripts/render-playbook-pdfs.py`.
 

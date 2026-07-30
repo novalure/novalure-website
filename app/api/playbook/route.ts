@@ -137,8 +137,12 @@ function getPlaybookUrl(key: PlaybookKey) {
 
 function getFormId(playbook: PlaybookType) {
   return playbook === "developer"
-    ? process.env.NEXT_PUBLIC_HUBSPOT_DEVELOPER_FORM_ID
-    : process.env.NEXT_PUBLIC_HUBSPOT_AGENT_FORM_ID;
+    ? process.env.HUBSPOT_DEVELOPER_FORM_GUID
+      || process.env.NEXT_PUBLIC_HUBSPOT_DEVELOPER_FORM_ID
+      || process.env.HUBSPOT_PLAYBOOK_FORM_GUID
+    : process.env.HUBSPOT_AGENT_FORM_GUID
+      || process.env.NEXT_PUBLIC_HUBSPOT_AGENT_FORM_ID
+      || process.env.HUBSPOT_PLAYBOOK_FORM_GUID;
 }
 
 function getClientIp(request: NextRequest) {
@@ -173,8 +177,7 @@ async function submitToHubSpot({
   pageUri,
   segment,
   utm,
-  consentRequired,
-  consentMarketing
+  consentRequired
 }: {
   playbookKey: PlaybookKey;
   playbook: PlaybookType;
@@ -186,32 +189,24 @@ async function submitToHubSpot({
   segment: string;
   utm: Record<string, string>;
   consentRequired: true;
-  consentMarketing: boolean;
 }) {
-  const portalId = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
+  const portalId = process.env.HUBSPOT_PORTAL_ID || process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
   const formId = getFormId(playbook);
 
   if (!portalId || !formId) {
-    return { skipped: true };
+    return {
+      skipped: true,
+      portalConfigured: Boolean(portalId),
+      formConfigured: Boolean(formId)
+    };
   }
 
-  const communicationSubscriptionId = process.env.HUBSPOT_MARKETING_SUBSCRIPTION_TYPE_ID;
   const legalConsentOptions: Record<string, unknown> = {
     consent: {
       consentToProcess: consentRequired,
       text: `Visitor requested the NovaLure playbook ${playbookKey} and consented to data processing for email delivery. Privacy policy version: ${privacyPolicyVersion}.`
     }
   };
-
-  if (consentMarketing && communicationSubscriptionId) {
-    legalConsentOptions.communications = [
-      {
-        value: true,
-        subscriptionTypeId: Number(communicationSubscriptionId),
-        text: `Visitor requested NovaLure email updates. Status: double opt-in pending. Privacy policy version: ${privacyPolicyVersion}.`
-      }
-    ];
-  }
 
   const response = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`, {
     method: "POST",
@@ -429,7 +424,7 @@ export async function POST(request: NextRequest) {
       userAgent
     });
 
-    await submitToHubSpot({
+    const hubspotResult = await submitToHubSpot({
       playbookKey,
       playbook: type,
       name,
@@ -439,9 +434,16 @@ export async function POST(request: NextRequest) {
       pageUri,
       segment,
       utm,
-      consentRequired,
-      consentMarketing
+      consentRequired
+    }).catch((error) => {
+      console.error("novalure_hubspot_submission_failed", error);
+      return { skipped: false, failed: true };
     });
+
+    if (hubspotResult.skipped) {
+      console.warn("novalure_hubspot_submission_skipped", JSON.stringify(hubspotResult));
+    }
+
     await sendPlaybookEmail({ key: playbookKey, name, email });
     await sendOwnerNotificationEmail({
       key: playbookKey,
