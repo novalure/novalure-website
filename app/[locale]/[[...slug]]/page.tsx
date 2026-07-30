@@ -17,7 +17,8 @@ export function generateStaticParams() {
   return getLocalizedParams();
 }
 
-export function generateMetadata({ params }: { params: RouteParams }): Metadata {
+export async function generateMetadata(props: { params: Promise<RouteParams> }): Promise<Metadata> {
+  const params = await props.params;
   if (!isLocale(params.locale)) return {};
   const locale = params.locale as Locale;
   const key = getPageKey(locale, params.slug);
@@ -49,7 +50,8 @@ export function generateMetadata({ params }: { params: RouteParams }): Metadata 
   };
 }
 
-export default function LocalizedPage({ params }: { params: RouteParams }) {
+export default async function LocalizedPage(props: { params: Promise<RouteParams> }) {
+  const params = await props.params;
   if (!isLocale(params.locale)) notFound();
   const locale = params.locale as Locale;
   const key = getPageKey(locale, params.slug);

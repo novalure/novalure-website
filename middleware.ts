@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { geolocation } from "@vercel/functions";
+
 const germanCountryCodes = new Set(["AT", "DE", "CH"]);
 
 const allowedPaths = new Set([
@@ -68,7 +70,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const country = request.geo?.country?.toUpperCase();
+  const country = geolocation(request)?.country?.toUpperCase();
   const prefersGerman = country ? germanCountryCodes.has(country) : false;
   const url = request.nextUrl.clone();
   url.pathname = prefersGerman ? "/de" : "/en";
