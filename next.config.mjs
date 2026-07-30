@@ -17,7 +17,7 @@ const nextConfig = {
   },
   experimental: {
     cpus: 1,
-    workerThreads: true,
+    workerThreads: false,
     webpackBuildWorker: false,
     typedRoutes: false
   }
