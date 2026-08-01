@@ -207,14 +207,16 @@ describe("playbook submission route", () => {
     expect(ownerPayload.html).not.toContain("Double-Opt-in von Resend angenommen");
   });
 
-  it("uses the Vercel preview domain in DOI links when no public URL is fixed", async () => {
+  it("uses the routable branch URL in DOI links while keeping Preview deployment identity separate", async () => {
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "");
     vi.stubEnv("VERCEL_ENV", "preview");
-    vi.stubEnv("VERCEL_URL", "novalure-preview.vercel.app");
+    vi.stubEnv("VERCEL_URL", "novalure-immutable.vercel.app");
+    vi.stubEnv("VERCEL_BRANCH_URL", "novalure-git-feature.vercel.app");
     const response = await POST(request(validBody({ consentMarketing: true })));
     expect(response.status).toBe(200);
     const doiPayload = mocks.send.mock.calls[1][0] as { html: string };
-    expect(doiPayload.html).toContain("https://novalure-preview.vercel.app/api/playbook/confirm");
+    expect(doiPayload.html).toContain("https://novalure-git-feature.vercel.app/api/playbook/confirm");
+    expect(doiPayload.html).not.toContain("https://novalure-immutable.vercel.app/api/playbook/confirm");
   });
 
   it("uses an explicit local origin instead of the public site for development DOI links", async () => {

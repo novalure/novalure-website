@@ -4,7 +4,13 @@ export type DeploymentEnvironment = "production" | "preview" | "development";
 
 export type DeploymentContext = {
   environment: DeploymentEnvironment;
+  // Immutable origin used as the trust boundary for signatures, Redis keys
+  // and provider idempotency. Never replace this with a moving branch alias.
   origin: string;
+  // Routable origin used in recipient-facing links. Preview deployments use
+  // their Git branch alias when available because VERCEL_URL is incompatible
+  // with Standard Deployment Protection.
+  publicOrigin: string;
   audience: string;
   namespaceHash: string;
   ipRateLimitId: string;
@@ -38,13 +44,16 @@ export function resolveDeploymentContext(): DeploymentContext {
   const rawEnvironment = process.env.VERCEL_ENV?.trim();
   let environment: DeploymentEnvironment;
   let origin: string;
+  let publicOrigin: string;
 
   if (rawEnvironment === "preview") {
     environment = "preview";
     origin = canonicalOrigin(process.env.VERCEL_URL || "");
+    publicOrigin = canonicalOrigin(process.env.VERCEL_BRANCH_URL || process.env.VERCEL_URL || "");
   } else if (rawEnvironment === "production") {
     environment = "production";
     origin = canonicalOrigin(process.env.NEXT_PUBLIC_SITE_URL || "");
+    publicOrigin = origin;
   } else if (!rawEnvironment || rawEnvironment === "development") {
     environment = "development";
     // Never reuse the public Production URL for local DOI links. A token made
@@ -55,6 +64,7 @@ export function resolveDeploymentContext(): DeploymentContext {
     if (!["localhost", "127.0.0.1", "[::1]"].includes(developmentHost)) {
       throw new Error("Development origin must use localhost");
     }
+    publicOrigin = origin;
   } else {
     throw new Error("VERCEL_ENV is invalid");
   }
@@ -67,7 +77,7 @@ export function resolveDeploymentContext(): DeploymentContext {
       ? "novalure-playbook-submit"
       : "novalure-playbook-submit-development";
 
-  return { environment, origin, audience, namespaceHash, ipRateLimitId };
+  return { environment, origin, publicOrigin, audience, namespaceHash, ipRateLimitId };
 }
 
 export function getScopedIdempotencyKey(kind: "playbook" | "doi" | "owner", submissionId: string) {

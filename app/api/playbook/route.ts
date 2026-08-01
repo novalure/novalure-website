@@ -177,7 +177,7 @@ function getPlaybookParts(key: PlaybookKey): { locale: Locale; type: PlaybookTyp
 }
 
 function getPlaybookUrl(key: PlaybookKey) {
-  const siteUrl = resolveDeploymentContext().origin;
+  const siteUrl = resolveDeploymentContext().publicOrigin;
   const meta = playbooks[key];
   const { locale, type } = getPlaybookParts(key);
   const fallback = `${siteUrl}${meta.file}`;
@@ -345,7 +345,7 @@ async function sendPlaybookEmail({
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
   const playbookUrl = getPlaybookUrl(key);
-  const siteUrl = resolveDeploymentContext().origin;
+  const siteUrl = resolveDeploymentContext().publicOrigin;
   const { locale, type } = getPlaybookParts(key);
 
   if (!apiKey || !from) {
@@ -474,7 +474,7 @@ async function sendDoubleOptInEmail({
   }
 
   const { locale } = getPlaybookParts(key);
-  const siteUrl = resolveDeploymentContext().origin;
+  const siteUrl = resolveDeploymentContext().publicOrigin;
   const issuedAt = consentTimestamp;
   const expiresAt = new Date(Date.parse(issuedAt) + 24 * 60 * 60 * 1000).toISOString();
   const tokenId = submissionId;
@@ -590,7 +590,7 @@ export async function POST(request: NextRequest) {
     }
 
     const email = normalizeRecipientEmail(body.email);
-    const pageUri = typeof body.pageUri === "string" ? body.pageUri : resolveDeploymentContext().origin;
+    const pageUri = typeof body.pageUri === "string" ? body.pageUri : resolveDeploymentContext().publicOrigin;
     const ipAddress = getClientIp(request);
     const userAgent = request.headers.get("user-agent") || "";
 
