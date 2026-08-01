@@ -1,0 +1,75 @@
+import { createHash } from "node:crypto";
+
+export type DeploymentEnvironment = "production" | "preview" | "development";
+
+export type DeploymentContext = {
+  environment: DeploymentEnvironment;
+  origin: string;
+  audience: string;
+  namespaceHash: string;
+  ipRateLimitId: string;
+};
+
+function canonicalOrigin(value: string, allowLocalHttp = false) {
+  const trimmed = value.trim();
+  if (!trimmed) throw new Error("Deployment origin is missing");
+
+  const candidate = /^[a-z][a-z\d+.-]*:\/\//i.test(trimmed)
+    ? trimmed
+    : `https://${trimmed}`;
+  const url = new URL(candidate);
+  const isLocal = url.hostname === "localhost" || url.hostname === "127.0.0.1" || url.hostname === "[::1]";
+
+  if (
+    url.username
+    || url.password
+    || (url.pathname && url.pathname !== "/")
+    || url.search
+    || url.hash
+    || (url.protocol !== "https:" && !(allowLocalHttp && isLocal && url.protocol === "http:"))
+  ) {
+    throw new Error("Deployment origin is invalid");
+  }
+
+  return url.origin;
+}
+
+export function resolveDeploymentContext(): DeploymentContext {
+  const rawEnvironment = process.env.VERCEL_ENV?.trim();
+  let environment: DeploymentEnvironment;
+  let origin: string;
+
+  if (rawEnvironment === "preview") {
+    environment = "preview";
+    origin = canonicalOrigin(process.env.VERCEL_URL || "");
+  } else if (rawEnvironment === "production") {
+    environment = "production";
+    origin = canonicalOrigin(process.env.NEXT_PUBLIC_SITE_URL || "");
+  } else if (!rawEnvironment || rawEnvironment === "development") {
+    environment = "development";
+    // Never reuse the public Production URL for local DOI links. A token made
+    // locally is audience-bound to development and would therefore be rejected
+    // if the link accidentally pointed at Production.
+    origin = canonicalOrigin(process.env.PLAYBOOK_DEVELOPMENT_ORIGIN || "http://localhost:3000", true);
+    const developmentHost = new URL(origin).hostname;
+    if (!["localhost", "127.0.0.1", "[::1]"].includes(developmentHost)) {
+      throw new Error("Development origin must use localhost");
+    }
+  } else {
+    throw new Error("VERCEL_ENV is invalid");
+  }
+
+  const audience = `${environment}:${origin}`;
+  const namespaceHash = createHash("sha256").update(audience, "utf8").digest("hex");
+  const ipRateLimitId = environment === "preview"
+    ? "novalure-playbook-submit-preview"
+    : environment === "production"
+      ? "novalure-playbook-submit"
+      : "novalure-playbook-submit-development";
+
+  return { environment, origin, audience, namespaceHash, ipRateLimitId };
+}
+
+export function getScopedIdempotencyKey(kind: "playbook" | "doi" | "owner", submissionId: string) {
+  return `${kind}/${resolveDeploymentContext().namespaceHash}/${submissionId}`;
+}

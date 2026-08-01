@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Locale } from "@/lib/i18n";
 import type { PlaybookKey as ContentPlaybookKey } from "@/content/pages";
@@ -105,6 +105,7 @@ export function HubSpotForm({
   const [values, setValues] = useState<FormValues>(initialValues);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submittedEmail, setSubmittedEmail] = useState("");
+  const submissionRef = useRef<{ id: string; consentTimestamp: string } | null>(null);
   const text = playbookFormCopy[locale];
   const previewKey = toMetaKey(locale, selectedPlaybook);
   const meta = playbookMeta[previewKey];
@@ -117,6 +118,7 @@ export function HubSpotForm({
   );
 
   function updateField(field: keyof FormValues, value: string | boolean) {
+    submissionRef.current = null;
     setValues((current) => {
       const next = { ...current, [field]: value };
       if (field in errors || field === "requiredConsent") {
@@ -152,6 +154,7 @@ export function HubSpotForm({
   }
 
   function onPlaybookChange(nextPlaybook: ContentPlaybookKey) {
+    submissionRef.current = null;
     setSelectedPlaybook(nextPlaybook);
     setState("idle");
   }
@@ -169,7 +172,11 @@ export function HubSpotForm({
     if (Object.keys(nextErrors).length > 0) return;
 
     setState("loading");
-    const consentTimestamp = new Date().toISOString();
+    const submission = submissionRef.current ?? {
+      id: window.crypto.randomUUID(),
+      consentTimestamp: new Date().toISOString()
+    };
+    submissionRef.current = submission;
 
     try {
       const response = await fetch("/api/playbook", {
@@ -182,12 +189,14 @@ export function HubSpotForm({
           email: values.email.trim(),
           company: values.company.trim(),
           phone: values.phone.trim(),
+          website: values.website.trim(),
           pageUri: window.location.href,
           segment: selectedPlaybook === "developer" ? "developers" : "agents",
           utm: Object.fromEntries(new URLSearchParams(window.location.search)),
           consentRequired: values.requiredConsent,
           consentMarketing: values.marketingConsent,
-          consentTimestamp,
+          consentTimestamp: submission.consentTimestamp,
+          submissionId: submission.id,
           privacyPolicyVersion
         })
       });
