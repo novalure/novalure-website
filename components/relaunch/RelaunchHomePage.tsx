@@ -12,10 +12,10 @@ function SectionKicker({ children, inverse = false }: { children: React.ReactNod
 function HeroPipeline({ locale }: { locale: Locale }) {
   const t = relaunchCopy[locale];
   const cards = [
-    { name: "Penthouse A3", score: 87, status: t.stViewing, source: t.srcCampaign, next: t.next1, tone: "high" },
-    { name: "Garten B1", score: 74, status: t.stQualified, source: t.srcBrochure, next: t.next2, tone: "medium" },
-    { name: "Maisonette C2", score: 69, status: t.stFollowup, source: t.srcLanding, next: t.next3, tone: "medium" },
-    { name: "Top D4", score: 91, status: t.stHandover, source: t.srcReferral, next: t.next4, tone: "high" }
+    { name: t.unitPenthouseA3, score: 87, status: t.stViewing, source: t.srcCampaign, next: t.next1, tone: "high" },
+    { name: t.unitGardenB1, score: 74, status: t.stQualified, source: t.srcBrochure, next: t.next2, tone: "medium" },
+    { name: t.unitDuplexC2, score: 69, status: t.stFollowup, source: t.srcLanding, next: t.next3, tone: "medium" },
+    { name: t.unitApartmentD4, score: 91, status: t.stHandover, source: t.srcReferral, next: t.next4, tone: "high" }
   ] as const;
 
   return (
@@ -31,7 +31,7 @@ function HeroPipeline({ locale }: { locale: Locale }) {
             <article className={`v3-pipeline-card v3-card-${index + 1}`} key={card.name}>
               <div>
                 <strong>{card.name}</strong>
-                <span className={`v3-score is-${card.tone}`}>Score {card.score}</span>
+                <span className={`v3-score is-${card.tone}`}>{t.scoreLabel} {card.score}</span>
               </div>
               <p>{card.status} · {card.source}</p>
               <small>→ {card.next}</small>
@@ -42,7 +42,20 @@ function HeroPipeline({ locale }: { locale: Locale }) {
       </div>
       <div className="v3-reference-chip">
         <span>{t.chipKicker}</span>
-        <strong>GRASL Immobilien, Schwaz</strong>
+        <div className="v3-reference-brands">
+          <strong>GRASL Immobilien, Schwaz</strong>
+          <div className="v3-reference-logo-wrap">
+            <Image
+              className="v3-reference-logo"
+              src="/images/vallis-aachen-residenzen-logo.png"
+              alt="Vallis Achen Residenzen"
+              width={344}
+              height={194}
+              sizes="(max-width: 479px) 114px, 132px"
+              priority
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -59,25 +72,25 @@ function SystemBoard({ locale }: { locale: Locale }) {
       title: t.colA,
       count: 4,
       cards: [
-        { name: "Garten B2", score: 41, note: t.srcBrochure },
-        { name: "Top E1", score: 38, note: t.srcCampaign },
-        { name: "Maisonette C1", score: 33, note: t.srcLanding }
+        { name: t.unitGardenB2, score: 41, note: t.srcBrochure },
+        { name: t.unitApartmentE1, score: 38, note: t.srcCampaign },
+        { name: t.unitDuplexC1, score: 33, note: t.srcLanding }
       ]
     },
     {
       title: t.colB,
       count: 3,
       cards: [
-        { name: "Garten B1", score: 74, note: t.next2 },
-        { name: "Maisonette C2", score: 69, note: t.stDocs }
+        { name: t.unitGardenB1, score: 74, note: t.next2 },
+        { name: t.unitDuplexC2, score: 69, note: t.stDocs }
       ]
     },
     {
       title: t.colC,
       count: 2,
       cards: [
-        { name: "Penthouse A3", score: 87, note: `${t.stViewing} · ${locale === "de" ? "Do 14:00" : "Thu 2pm"}`, highlight: true, scorePill: true },
-        { name: "Top D4", score: 91, note: t.stHandover, scorePill: true }
+        { name: t.unitPenthouseA3, score: 87, note: `${t.stViewing} · ${locale === "de" ? "Do 14:00" : "Thu 2pm"}`, highlight: true, scorePill: true },
+        { name: t.unitApartmentD4, score: 91, note: t.stHandover, scorePill: true }
       ]
     }
   ];
@@ -98,13 +111,13 @@ function SystemBoard({ locale }: { locale: Locale }) {
                 <article className={card.highlight ? "is-highlighted" : ""} key={card.name}>
                   {card.scorePill ? (
                     <>
-                      <div><strong>{card.name}</strong><span>{card.score}</span></div>
+                      <div><strong>{card.name}</strong><span aria-label={`${t.scoreLabel} ${card.score}`}>{card.score}</span></div>
                       <small>{card.note}</small>
                     </>
                   ) : (
                     <>
                       <strong>{card.name}</strong>
-                      <small>{card.note} · Score {card.score}</small>
+                      <small>{card.note} · {t.scoreLabel} {card.score}</small>
                     </>
                   )}
                 </article>

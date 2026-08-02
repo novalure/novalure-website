@@ -452,20 +452,21 @@ body {
 .v3-reference-chip {
   position: absolute;
   top: 404px;
-  left: min(420px, calc(100% - 270px));
+  right: clamp(18px, 2vw, 28px);
+  left: auto;
   display: grid;
   width: max-content;
   max-width: calc(100% - 12px);
-  gap: 4px;
-  padding: 14px 18px;
+  gap: 8px;
+  padding: 12px 14px;
   color: #fff;
   border-radius: 12px;
-  background: var(--v3-navy);
+  background: #222a2d;
   box-shadow: 0 16px 38px rgba(14, 27, 51, 0.24);
   transform: rotate(1.5deg);
 }
 
-.v3-reference-chip span {
+.v3-reference-chip > span {
   color: var(--v3-gold-light);
   font-size: 0.67rem;
   font-weight: 700;
@@ -473,8 +474,33 @@ body {
   text-transform: uppercase;
 }
 
-.v3-reference-chip strong {
-  font-size: 1.0625rem;
+.v3-reference-brands {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.v3-reference-brands > strong {
+  max-width: 164px;
+  font-size: 0.96rem;
+  line-height: 1.25;
+}
+
+.v3-reference-logo-wrap {
+  width: 146px;
+  height: 48px;
+  flex: 0 0 146px;
+  padding-left: 14px;
+  overflow: hidden;
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.v3-reference-logo {
+  display: block;
+  width: 132px;
+  max-width: none;
+  height: auto;
+  transform: translateY(-10px);
 }
 
 /* Proof */
@@ -1786,6 +1812,7 @@ body {
   .v3-reference-chip {
     position: relative;
     top: auto;
+    right: auto;
     left: auto;
     width: max-content;
     max-width: 100%;
@@ -1918,6 +1945,33 @@ body {
   .v3-card-3,
   .v3-card-4 {
     display: none;
+  }
+
+  .v3-reference-chip {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .v3-reference-brands {
+    gap: 10px;
+  }
+
+  .v3-reference-brands > strong {
+    min-width: 0;
+    flex: 1 1 auto;
+    font-size: 0.88rem;
+  }
+
+  .v3-reference-logo-wrap {
+    width: 120px;
+    height: 44px;
+    flex-basis: 120px;
+    padding-left: 10px;
+  }
+
+  .v3-reference-logo {
+    width: 114px;
+    transform: translateY(-8px);
   }
 
   .v3-demo-note {
