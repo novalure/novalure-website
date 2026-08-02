@@ -6,6 +6,7 @@ import { ContactInquiryForm } from "@/components/ContactInquiryForm";
 import { FunnelHeroVisual } from "@/components/FunnelHeroVisual";
 import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholders";
 import { TeamLeadImage } from "@/components/TeamLeadImage";
+import { RelaunchHomePage } from "@/components/relaunch/RelaunchHomePage";
 
 type Locale = "en" | "de";
 
@@ -81,7 +82,7 @@ function SystemMiniCard({ bullets }: { bullets: string[] }) {
 }
 
 function HomePage({ content }: { content: HomeContent }) {
-  return <DeveloperLandingPage locale={content.locale} />;
+  return <RelaunchHomePage locale={content.locale} />;
 }
 
 const landingCtaLabels = {

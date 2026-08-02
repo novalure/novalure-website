@@ -16,7 +16,7 @@ export function organizationSchema(locale: Locale) {
         ? "Project marketing, follow-up and prepared handover for real estate sales."
         : "Projektvermarktung, Nachfassen und vorbereitete Übergabe für den Immobilienvertrieb.",
     logo: `${siteUrl}/novalure-logo.png`,
-    areaServed: ["AT", "DE", "CH", "LI", "IE", "EU"],
+    areaServed: ["AT", "DE", "CH", "LI", "IE", "GB", "EU"],
     founder: {
       "@type": "Person",
       name: "Franz Romih",
@@ -75,9 +75,12 @@ export function faqSchema(items: FaqItem[] = []) {
 export function pageSchemas(content: PageContent) {
   const schemas: unknown[] = [
     organizationSchema(content.locale),
-    websiteSchema(content.locale),
-    breadcrumbSchema(content.locale, content.key, content.title)
+    websiteSchema(content.locale)
   ];
+
+  if (content.key !== "home") {
+    schemas.push(breadcrumbSchema(content.locale, content.key, content.title));
+  }
 
   if (content.faq?.length) {
     schemas.push(faqSchema(content.faq));

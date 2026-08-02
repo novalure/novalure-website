@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ChangeEvent, FormEvent, useMemo, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Locale } from "@/lib/i18n";
 import type { PlaybookKey as ContentPlaybookKey } from "@/content/pages";
@@ -94,11 +94,13 @@ function CheckIcon() {
 export function HubSpotForm({
   locale,
   playbook = "developer",
-  selectable = false
+  selectable = false,
+  compact = false
 }: {
   locale: Locale;
   playbook?: ContentPlaybookKey;
   selectable?: boolean;
+  compact?: boolean;
 }) {
   const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [selectedPlaybook, setSelectedPlaybook] = useState<ContentPlaybookKey>(playbook);
@@ -260,11 +262,13 @@ export function HubSpotForm({
             </div>
           ) : (
             <>
-              <div className="hubspot-meta playbook-form-heading">
-                <span>{variant.eyebrow}</span>
-                <strong>{variant.headline}</strong>
-                <p>{formatSubline(variant.subline, meta.pages)}</p>
-              </div>
+              {!compact && (
+                <div className="hubspot-meta playbook-form-heading">
+                  <span>{variant.eyebrow}</span>
+                  <strong>{variant.headline}</strong>
+                  <p>{formatSubline(variant.subline, meta.pages)}</p>
+                </div>
+              )}
 
               <form className="contact-form playbook-contact-form" onSubmit={submit} data-track-form="playbook" noValidate>
                 {selectable && (
@@ -350,7 +354,18 @@ export function HubSpotForm({
   );
 }
 
-export function HubSpotMeetingEmbed({ locale }: { locale: Locale }) {
+export function HubSpotMeetingEmbed({
+  locale,
+  title,
+  body,
+  linkLabel
+}: {
+  locale: Locale;
+  title?: string;
+  body?: string;
+  linkLabel?: string;
+}) {
+  const [externalAllowed, setExternalAllowed] = useState(false);
   const text = playbookFormCopy[locale].meeting;
   const localizedMeetingUrl = locale === "de"
     ? process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE
@@ -358,14 +373,43 @@ export function HubSpotMeetingEmbed({ locale }: { locale: Locale }) {
   const meetingUrl = localizedMeetingUrl || process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL || defaultMeetingUrls[locale];
   const schedulerUrl = meetingUrl ? withSchedulerLocale(meetingUrl, locale) : "";
 
+  useEffect(() => {
+    function updateConsent(event: Event) {
+      const consent = (event as CustomEvent<{ external?: boolean }>).detail;
+      setExternalAllowed(Boolean(consent?.external));
+    }
+
+    window.addEventListener("novalure:consent", updateConsent);
+    try {
+      const stored = window.localStorage.getItem("novalure-cookie-consent");
+      if (stored) {
+        updateConsent(new CustomEvent("novalure:consent", { detail: JSON.parse(stored) }));
+      }
+    } catch {
+      setExternalAllowed(false);
+    }
+
+    return () => window.removeEventListener("novalure:consent", updateConsent);
+  }, []);
+
   return (
     <section className="hubspot-card meeting-card">
       <div>
-        <span className="panel-label">{text.title}</span>
-        <p>{text.body}</p>
+        <span className="panel-label">{title || text.title}</span>
+        <p>{body || text.body}</p>
       </div>
-      {schedulerUrl ? (
-        <iframe className="hubspot-meeting-frame" src={schedulerUrl} title={text.title} loading="lazy" />
+      {schedulerUrl && externalAllowed ? (
+        <iframe className="hubspot-meeting-frame" src={schedulerUrl} title={title || text.title} loading="lazy" />
+      ) : schedulerUrl ? (
+        <div className="hubspot-meeting-consent">
+          <p>{locale === "de" ? "Aktivieren Sie externe Medien, um den HubSpot-Buchungskalender zu laden." : "Allow external media to load the HubSpot booking calendar."}</p>
+          <button className="button button-secondary" type="button" onClick={() => window.dispatchEvent(new Event("novalure:open-cookie-settings"))}>
+            {locale === "de" ? "Cookie-Einstellungen öffnen" : "Open cookie settings"}
+          </button>
+          <a href={schedulerUrl} target="_blank" rel="noopener noreferrer">
+            {linkLabel || (locale === "de" ? "Terminseite direkt öffnen" : "Open booking page directly")}
+          </a>
+        </div>
       ) : (
         <code>{locale === "de" ? "NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE" : "NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN"}</code>
       )}

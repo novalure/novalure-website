@@ -37,8 +37,8 @@ export async function generateMetadata(props: { params: Promise<RouteParams> }):
       title: content.seoTitle,
       description,
       url: `${siteUrl}${getAlternates(locale, key).canonical}`,
-      locale: locale === "de" ? "de_DE" : "en_US",
-      alternateLocale: locale === "en" ? "de_DE" : "en_US",
+      locale: locale === "de" ? "de_DE" : "en_GB",
+      alternateLocale: locale === "en" ? "de_DE" : "en_GB",
       images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: content.title }]
     },
     twitter: {
