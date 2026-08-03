@@ -279,8 +279,6 @@ export function RelaunchHomePage({ locale }: { locale: Locale }) {
             <p>{t.teamBody}</p>
             <div className="v3-team-person">
               <strong>Franz Romih</strong>
-              {/* TODO: LinkedIn-Profil vor Veröffentlichung verifizieren. */}
-              <a href="https://www.linkedin.com/in/franz-romih" target="_blank" rel="noreferrer">LinkedIn ↗</a>
             </div>
             <div className="v3-tags">{[t.tagA, t.tagB, t.tagC].map((tag) => <span key={tag}>{tag}</span>)}</div>
           </div>
