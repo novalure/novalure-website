@@ -40,6 +40,9 @@ function page({
   form?: { token: string; label: string };
   locale?: "de" | "en";
 }) {
+  const statusLabel = locale === "de" ? "E-Mail-Bestätigung" : "Email confirmation";
+  const securityLabel = locale === "de" ? "Sicherer NovaLure Bestätigungsschritt" : "Secure NovaLure confirmation step";
+
   return `<!doctype html>
     <html lang="${locale}">
       <head>
@@ -47,18 +50,27 @@ function page({
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>NovaLure</title>
       </head>
-      <body style="font-family:Arial,sans-serif;padding:32px;color:#111318;background:#f8f8f6">
-        <main style="max-width:620px;margin:48px auto;background:#fff;padding:32px;border-radius:12px">
-          <h1 style="font-size:28px;line-height:1.2;margin:0 0 16px">${escapeHtml(title)}</h1>
-          ${body ? `<p style="line-height:1.6">${escapeHtml(body)}</p>` : ""}
-          ${form ? `
-            <form method="post" action="/api/playbook/confirm" style="margin-top:24px">
-              <input type="hidden" name="token" value="${escapeHtml(form.token)}">
-              <button type="submit" style="appearance:none;border:0;border-radius:8px;background:#ffd43b;color:#211800;font:700 16px Arial,sans-serif;padding:14px 22px;cursor:pointer">
-                ${escapeHtml(form.label)}
-              </button>
-            </form>
-          ` : ""}
+      <body style="box-sizing:border-box;margin:0;min-height:100vh;padding:0;color:#0e1b33;background:#fdfcfa;font-family:Arial,sans-serif">
+        <header style="display:flex;min-height:72px;align-items:center;justify-content:space-between;padding:0 max(20px,4vw);border-bottom:1px solid rgba(14,27,51,.09);background:rgba(253,252,250,.96)">
+          <strong style="font-size:19px;letter-spacing:.16em">NOVALURE</strong>
+          <span style="color:#8f6f2e;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">${statusLabel}</span>
+        </header>
+        <main style="position:relative;display:grid;min-height:calc(100vh - 72px);place-items:center;overflow:hidden;padding:48px 20px;background:radial-gradient(circle at 8% 0%,rgba(199,165,91,.16),transparent 30%),radial-gradient(circle at 92% 22%,rgba(14,27,51,.07),transparent 34%),#fdfcfa">
+          <section style="position:relative;width:min(680px,100%);box-sizing:border-box;padding:clamp(28px,5vw,52px);border:1px solid rgba(14,27,51,.1);border-radius:18px;background:#fff;box-shadow:0 24px 70px rgba(14,27,51,.12)">
+            <span style="display:grid;width:52px;height:52px;place-items:center;margin-bottom:26px;border-radius:50%;color:#0e1b33;background:#c7a55b;font-size:22px;font-weight:700">✓</span>
+            <p style="display:flex;gap:9px;align-items:center;margin:0 0 16px;color:#8f6f2e;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase"><span style="display:inline-block;width:22px;height:2px;background:#c7a55b"></span>${statusLabel}</p>
+            <h1 style="max-width:600px;margin:0;color:#0e1b33;font-family:Georgia,serif;font-size:clamp(34px,7vw,52px);font-weight:400;line-height:1.08">${escapeHtml(title)}</h1>
+            ${body ? `<p style="max-width:560px;margin:20px 0 0;color:#4a5570;font-size:16px;line-height:1.7">${escapeHtml(body)}</p>` : ""}
+            ${form ? `
+              <form method="post" action="/api/playbook/confirm" style="margin-top:28px">
+                <input type="hidden" name="token" value="${escapeHtml(form.token)}">
+                <button type="submit" style="appearance:none;min-height:48px;border:1px solid #c7a55b;border-radius:9px;background:#c7a55b;color:#0e1b33;font:700 15px Arial,sans-serif;padding:12px 22px;box-shadow:0 4px 14px rgba(199,165,91,.28);cursor:pointer">
+                  ${escapeHtml(form.label)}
+                </button>
+              </form>
+            ` : ""}
+            <p style="margin:28px 0 0;padding-top:18px;color:#6a7288;border-top:1px solid rgba(14,27,51,.1);font-size:12px;line-height:1.5">${securityLabel}</p>
+          </section>
         </main>
       </body>
     </html>`;

@@ -22,12 +22,15 @@ export default function LocaleNotFound() {
       };
 
   return (
-    <main className="state-page">
-      <section className="state-card">
-        <p className="eyebrow">{copy.eyebrow}</p>
+    <main className="state-page v3-state-page">
+      <section className="state-card v3-state-card">
+        <span className="v3-state-mark" aria-hidden="true">404</span>
+        <p className="v3-kicker"><span aria-hidden="true" />{copy.eyebrow}</p>
         <h1>{copy.title}</h1>
         <p>{copy.body}</p>
-        <Link className="button button-primary" href={getPath(locale, "home")}>{copy.cta}</Link>
+        <div className="v3-state-actions">
+          <Link className="v3-button v3-button-primary" href={getPath(locale, "home")}>{copy.cta}</Link>
+        </div>
       </section>
     </main>
   );

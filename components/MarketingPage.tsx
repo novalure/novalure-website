@@ -3,10 +3,10 @@ import Link from "next/link";
 import { getPath, getPlaybookFormPath } from "@/lib/i18n";
 import { playbooks, type Cta, type HomeContent, type PageContent } from "@/content/pages";
 import { ContactInquiryForm } from "@/components/ContactInquiryForm";
-import { FunnelHeroVisual } from "@/components/FunnelHeroVisual";
 import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholders";
 import { TeamLeadImage } from "@/components/TeamLeadImage";
 import { RelaunchHomePage } from "@/components/relaunch/RelaunchHomePage";
+import { FaqAccordion } from "@/components/relaunch/RelaunchInteractive";
 
 type Locale = "en" | "de";
 
@@ -20,64 +20,62 @@ export function MarketingPage({ content }: { content: PageContent | HomeContent 
   return <AudiencePage content={content} />;
 }
 
-function Hero({ content, visual = false }: { content: PageContent; visual?: boolean }) {
+function Hero({ content }: { content: PageContent }) {
+  const homeLabel = content.locale === "de" ? "Startseite" : "Home";
+
   return (
-    <section className={`hero hero-${content.template}`}>
-      <div className="hero-copy">
-        <p className="eyebrow">{content.eyebrow}</p>
-        <h1>{content.title}</h1>
-        <p className="hero-description">{content.description}</p>
-        <div className="hero-actions">
-          <CtaLink className="button button-primary" locale={content.locale} cta={content.primaryCta} track="cta_primary" />
-          <CtaLink className={getSecondaryCtaClass(content.secondaryCta)} locale={content.locale} cta={content.secondaryCta} track="cta_secondary" />
+    <section className={`v3-subpage-hero is-${content.template}`}>
+      <div className="v3-subpage-hero-inner">
+        <div className="v3-subpage-hero-copy">
+          <nav className="v3-breadcrumb" aria-label={content.locale === "de" ? "Brotkrümelnavigation" : "Breadcrumb"}>
+            <Link href={getPath(content.locale, "home")}>{homeLabel}</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{content.eyebrow}</span>
+          </nav>
+          <p className="v3-kicker"><span aria-hidden="true" />{content.eyebrow}</p>
+          <h1>{content.title}</h1>
+          <p className="v3-subpage-hero-description">{content.description}</p>
+          <div className="v3-subpage-hero-actions">
+            <CtaLink className="v3-button v3-button-primary" locale={content.locale} cta={content.primaryCta} track="cta_primary" />
+            <CtaLink className={getSecondaryCtaClass(content.secondaryCta)} locale={content.locale} cta={content.secondaryCta} track="cta_secondary" />
+          </div>
         </div>
-        <ul className="hero-bullets">
-          {content.heroBullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
-        </ul>
-        {content.template === "home" && <HeroLeadPreview locale={content.locale} />}
+        <SubpageSignalCard content={content} />
       </div>
-      {visual ? <FunnelHeroVisual locale={content.locale} /> : <SystemMiniCard bullets={content.heroBullets} />}
     </section>
   );
 }
 
-function HeroLeadPreview({ locale }: { locale: Locale }) {
-  const de = locale === "de";
-  const rows = de
-    ? [
-        ["Anfrage", "Eigentümer möchte Verkaufsoptionen prüfen"],
-        ["Kontext", "Motivation, Timing und Objektart bekannt"],
-        ["Nächster Schritt", "Priorisierter Rückruf statt Rohlead im Postfach"]
-      ]
-    : [
-        ["Enquiry", "Seller wants to review selling options"],
-        ["Context", "Motivation, timing and property type known"],
-        ["Next step", "Prioritised callback instead of a raw inbox lead"]
-      ];
+function SubpageSignalCard({ content }: { content: PageContent }) {
+  const de = content.locale === "de";
+  const label = content.template === "legal"
+    ? de ? "Unternehmensangaben" : "Company details"
+    : content.template === "thank-you"
+      ? de ? "Nächste Schritte" : "Next steps"
+      : de ? "Auf einen Blick" : "At a glance";
 
   return (
-    <div className="hero-lead-preview" aria-label={de ? "Mini-Handover Beispiel" : "Mini handover example"}>
-      <span>{de ? "Mini-Handover" : "Mini handover"}</span>
-      {rows.map(([label, value]) => (
-        <div key={label}>
-          <small>{label}</small>
-          <strong>{value}</strong>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function SystemMiniCard({ bullets }: { bullets: string[] }) {
-  return (
-    <div className="hero-panel" aria-label="System highlights">
-      {bullets.map((point, index) => (
-        <div className="metric" key={point}>
-          <span>{String(index + 1).padStart(2, "0")}</span>
-          <strong>{point}</strong>
-        </div>
-      ))}
-    </div>
+    <aside className={`v3-subpage-signal is-${content.template}`} aria-label={label}>
+      <div className="v3-subpage-signal-bar">
+        <span className="v3-window-dots" aria-hidden="true"><i /><i /><i /></span>
+        <strong>NovaLure</strong>
+        <span>{de ? "Übersicht" : "Overview"}</span>
+      </div>
+      <div className="v3-subpage-signal-body">
+        <p>{label}</p>
+        <ol>
+          {content.heroBullets.map((bullet, index) => (
+            <li key={bullet}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <strong>{bullet}</strong>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <p className="v3-subpage-signal-note">
+        {de ? "Klarer Kontext. Klarer nächster Schritt." : "Clear context. Clear next step."}
+      </p>
+    </aside>
   );
 }
 
@@ -1242,8 +1240,8 @@ function TeamBlock({ content }: { content: HomeContent }) {
 
 function AudiencePage({ content }: { content: PageContent }) {
   return (
-    <main>
-      <Hero content={content} visual />
+    <main className="relaunch-subpage relaunch-subpage-audience">
+      <Hero content={content} />
       <AudienceProof locale={content.locale} pageKey={content.key} />
       <section className="section-grid">
         {content.sections?.map((section, index) => (
@@ -1307,7 +1305,7 @@ function AudienceProof({ locale, pageKey }: { locale: Locale; pageKey: PageConte
 function PlaybooksPage({ content }: { content: PageContent }) {
   const de = content.locale === "de";
   return (
-    <main>
+    <main className="relaunch-subpage relaunch-subpage-playbooks">
       <Hero content={content} />
       <section className="proof-section">
         <div className="section-heading">
@@ -1370,7 +1368,7 @@ function EmailSequenceSection({ locale }: { locale: Locale }) {
 
 function ContactPage({ content }: { content: PageContent }) {
   return (
-    <main>
+    <main className="relaunch-subpage relaunch-subpage-contact">
       <Hero content={content} />
       <AuditExplainer locale={content.locale} />
       <section className="meeting-section" id="book-audit">
@@ -1416,7 +1414,7 @@ function AuditExplainer({ locale }: { locale: Locale }) {
 
 function HandoverPage({ content }: { content: PageContent }) {
   return (
-    <main>
+    <main className="relaunch-subpage relaunch-subpage-handover">
       <Hero content={content} />
       <ProofSection locale={content.locale} />
       <FaqSection locale={content.locale} items={content.faq || []} />
@@ -1427,11 +1425,12 @@ function HandoverPage({ content }: { content: PageContent }) {
 
 function ThankYouPage({ content }: { content: PageContent }) {
   return (
-    <main>
+    <main className="relaunch-subpage relaunch-subpage-thank-you">
       <Hero content={content} />
-      <section className="legal-section">
+      <section className="legal-section v3-confirmation-section">
         {content.sections?.map((section) => (
           <article className="legal-card" key={section.title}>
+            <span className="v3-confirmation-mark" aria-hidden="true">✓</span>
             <h2>{section.title}</h2>
             <p>{section.body}</p>
             {section.items && <ul className="check-list">{section.items.map((item) => <li key={item}>{item}</li>)}</ul>}
@@ -1443,17 +1442,33 @@ function ThankYouPage({ content }: { content: PageContent }) {
 }
 
 function LegalPage({ content }: { content: PageContent }) {
+  const de = content.locale === "de";
+
   return (
-    <main>
+    <main className="relaunch-subpage relaunch-subpage-legal">
       <Hero content={content} />
-      <section className="legal-section">
-        {content.sections?.map((section) => (
-          <article className="legal-card" key={section.title}>
-            <h2>{section.title}</h2>
-            <p>{section.body}</p>
-            {section.items && <ul className="check-list">{section.items.map((item) => <li key={item}>{item}</li>)}</ul>}
-          </article>
-        ))}
+      <section className="legal-section v3-legal-section">
+        <aside className="v3-legal-index">
+          <p className="v3-kicker"><span aria-hidden="true" />{de ? "Inhalt" : "Contents"}</p>
+          <nav aria-label={de ? "Inhaltsverzeichnis" : "Table of contents"}>
+            {content.sections?.map((section, index) => (
+              <a href={`#legal-section-${index + 1}`} key={section.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                {section.title.replace(/^\d+\.\s*/, "")}
+              </a>
+            ))}
+          </nav>
+        </aside>
+        <div className="v3-legal-cards">
+          {content.sections?.map((section, index) => (
+            <article className="legal-card" id={`legal-section-${index + 1}`} key={section.title}>
+              <span className="section-index">{String(index + 1).padStart(2, "0")}</span>
+              <h2>{section.title}</h2>
+              <p>{section.body}</p>
+              {section.items && <ul className="check-list">{section.items.map((item) => <li key={item}>{item}</li>)}</ul>}
+            </article>
+          ))}
+        </div>
       </section>
     </main>
   );
@@ -1461,58 +1476,32 @@ function LegalPage({ content }: { content: PageContent }) {
 
 function FaqSection({ locale, items }: { locale: Locale; items: { question: string; answer: string }[] }) {
   if (!items.length) return null;
-  const groups = groupFaqItems(locale, items);
 
   return (
-    <section className="faq-section">
+    <section className="faq-section v3-subpage-faq">
       <div className="section-heading">
-        <p className="eyebrow">FAQ</p>
+        <p className="v3-kicker"><span aria-hidden="true" />FAQ</p>
         <h2>{locale === "en" ? "Hard questions before we talk." : "Harte Fragen vor dem Gespräch."}</h2>
       </div>
-      <div className="faq-group-grid">
-        {groups.map((group) => (
-          <article className="faq-group" key={group.title}>
-            <h3>{group.title}</h3>
-            <div className="faq-list">
-              {group.items.map((item) => (
-                <details key={item.question}>
-                  <summary>{item.question}</summary>
-                  <p>{item.answer}</p>
-                </details>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
+      <FaqAccordion
+        locale={locale}
+        items={items.map((item) => ({ q: item.question, a: item.answer }))}
+      />
     </section>
   );
 }
 
-function groupFaqItems(locale: Locale, items: { question: string; answer: string }[]) {
-  const de = locale === "de";
-  const labels = de
-    ? ["Vertrauen", "Angebot", "Zusammenarbeit", "Grenzen"]
-    : ["Trust", "Offer", "Working together", "Boundaries"];
-
-  return [
-    { title: labels[0], items: items.slice(0, 3) },
-    { title: labels[1], items: items.slice(3, 8) },
-    { title: labels[2], items: items.slice(8, 13) },
-    { title: labels[3], items: items.slice(13) }
-  ].filter((group) => group.items.length);
-}
-
 function FinalCta({ content, title }: { content: PageContent; title?: string }) {
   return (
-    <section className="cta-band">
+    <section className="cta-band v3-subpage-cta">
       <div>
-        <p className="eyebrow">{content.locale === "en" ? "Next step" : "Nächster Schritt"}</p>
+        <p className="v3-kicker is-inverse"><span aria-hidden="true" />{content.locale === "en" ? "Next step" : "Nächster Schritt"}</p>
         <h2>{title || (content.locale === "en" ? "Review whether your current path creates prepared conversations." : "Prüfen Sie in 30 Minuten, ob Ihr aktueller Weg vorbereitete Gespräche erzeugt.")}</h2>
         <p>{content.locale === "en" ? "See whether project presence, follow-up and handover work together or create more sorting work." : "Sehen Sie, ob Projektauftritt, Nachfassen und Übergabe zusammenspielen oder neue Sortierarbeit erzeugen."}</p>
       </div>
       <div className="hero-actions">
         <div className="cta-primary-group">
-          <Link className="button button-primary" href={`${getPath(content.locale, "contact")}#book-audit`} data-track="cta_audit">
+          <Link className="v3-button v3-button-primary" href={`${getPath(content.locale, "contact")}#book-audit`} data-track="cta_audit">
             {content.locale === "en" ? "Request Project Check" : "Projekt-Check anfragen"}
           </Link>
           <p className="cta-microcopy">
@@ -1521,7 +1510,7 @@ function FinalCta({ content, title }: { content: PageContent; title?: string }) 
               : "30 Min. Check. Klarer Engpass. Klarer nächster Schritt."}
           </p>
         </div>
-        <Link className="button button-secondary dark" href={getPlaybookFormPath(content.locale)} data-track="cta_playbook">
+        <Link className="v3-button v3-button-dark-outline" href={getPlaybookFormPath(content.locale)} data-track="cta_playbook">
           {content.locale === "en" ? "Download playbook" : "Playbook herunterladen"}
         </Link>
       </div>
@@ -1548,7 +1537,7 @@ function CtaLink({ className, locale, cta, track }: { className: string; locale:
 }
 
 function getSecondaryCtaClass(cta: Cta) {
-  return cta.variant === "subtle" ? "hero-subtle-link" : "button button-secondary";
+  return cta.variant === "subtle" ? "v3-text-link v3-subpage-hero-link" : "v3-button v3-button-secondary";
 }
 
 function getCtaHref(locale: Locale, cta: Cta) {
