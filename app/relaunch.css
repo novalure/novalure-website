@@ -3111,3 +3111,94 @@ body {
     width: 100%;
   }
 }
+
+/* Mobile playbook form containment */
+@media (max-width: 599.98px) {
+  .playbook-request-card,
+  .playbook-form-layout,
+  .playbook-form-panel,
+  .playbook-contact-form,
+  .playbook-selector,
+  .consent-stack,
+  .consent-row,
+  .consent-row > span,
+  .playbook-submit-button,
+  .trust-microcopy,
+  .field-error,
+  .form-state,
+  .form-state p,
+  .form-state b {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .playbook-form-layout,
+  .playbook-contact-form,
+  .playbook-selector {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .playbook-selector label {
+    width: 100%;
+    min-height: 0;
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  .playbook-selector input {
+    flex: 0 0 16px;
+    margin-top: 2px;
+  }
+
+  .playbook-selector label span,
+  .consent-row > span,
+  .trust-microcopy,
+  .field-error,
+  .form-state,
+  .form-state p,
+  .form-state b {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  .consent-row {
+    width: 100%;
+    grid-template-columns: 18px minmax(0, 1fr);
+  }
+
+  .playbook-submit-button {
+    width: 100%;
+    padding: 12px 14px;
+    white-space: normal;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .relaunch-subpage .playbook-section {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .relaunch-subpage .playbook-request-card {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .v3-playbook .hubspot-card {
+    padding: 18px 12px;
+  }
+}
+
+@media (max-width: 479.98px) {
+  .v3-section.v3-playbook {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .v3-playbook-shell {
+    gap: 22px;
+    padding: 22px 10px;
+    border-radius: 14px;
+  }
+}
