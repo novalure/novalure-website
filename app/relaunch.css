@@ -1153,12 +1153,12 @@ body {
 
 .v3-playbook-shell {
   display: grid;
-  max-width: 1180px;
-  grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
-  gap: clamp(28px, 5vw, 60px);
+  max-width: 1260px;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  gap: clamp(32px, 4vw, 52px);
   align-items: center;
   margin: 0 auto;
-  padding: clamp(28px, 5vw, 60px);
+  padding: clamp(32px, 4vw, 52px);
   color: #fff;
   border-radius: 18px;
   background: var(--v3-navy);
@@ -1176,8 +1176,10 @@ body {
 }
 
 .v3-playbook .hubspot-card {
+  container-name: home-playbook-card;
+  container-type: inline-size;
   margin: 0;
-  padding: 0;
+  padding: clamp(22px, 2.2vw, 30px);
   color: var(--v3-navy);
   border: 0;
   border-radius: 14px;
@@ -1186,7 +1188,8 @@ body {
 }
 
 .v3-playbook .playbook-form-layout {
-  grid-template-columns: minmax(170px, 0.68fr) minmax(0, 1.32fr);
+  grid-template-columns: minmax(190px, 0.62fr) minmax(0, 1.38fr);
+  gap: clamp(20px, 2.2vw, 28px);
 }
 
 .v3-playbook .playbook-preview-panel {
@@ -1681,6 +1684,30 @@ body {
   box-shadow: 0 0 0 3px rgba(199, 165, 91, 0.18);
 }
 
+@container home-playbook-card (max-width: 699.98px) {
+  .v3-playbook .playbook-form-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .v3-playbook .playbook-preview-panel {
+    display: none;
+  }
+}
+
+@container home-playbook-card (max-width: 519.98px) {
+  .v3-playbook .playbook-contact-form,
+  .v3-playbook .playbook-selector {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1349.98px) {
+  .v3-playbook-shell {
+    max-width: 960px;
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 1099.98px) {
   .v3-desktop-nav,
   .v3-header-actions {
@@ -1843,7 +1870,7 @@ body {
   }
 
   .v3-playbook-shell {
-    max-width: 880px;
+    max-width: 960px;
   }
 
   .v3-footer-main {
