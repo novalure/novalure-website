@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
+import { Schibsted_Grotesk, Source_Serif_4 } from "next/font/google";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
+import "./relaunch.css";
 
 const siteUrl = getSiteUrl();
-const googleAnalyticsId = "G-0LV11ZNV38";
+const schibsted = Schibsted_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-schibsted",
+  display: "swap"
+});
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-source-serif",
+  display: "swap"
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -36,24 +49,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`} />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('consent', 'default', {
-  analytics_storage: 'denied',
-  ad_storage: 'denied'
-});
-gtag('config', '${googleAnalyticsId}', { send_page_view: false });
-            `.trim()
-          }}
-        />
-      </head>
+    <html className={`${schibsted.variable} ${sourceSerif.variable}`} lang="en" suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );

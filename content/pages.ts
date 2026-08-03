@@ -1,4 +1,5 @@
 import { type Locale, type PageKey } from "@/lib/i18n";
+import { relaunchCopy } from "@/content/relaunch-copy";
 
 export type Cta =
   | {
@@ -295,10 +296,9 @@ const homeContent: Record<Locale, HomeContent> = {
     locale: "de",
     template: "home",
     eyebrow: "Projektvermarktung mit Vertriebsstruktur",
-    title: "Vom Projektauftritt bis zum qualifizierten Käufergespräch.",
+    title: relaunchCopy.de.heroH1,
     seoTitle: "NovaLure | Projektvermarktung mit Vertriebsstruktur",
-    description:
-      "Wir entwickeln Storytelling, Visualisierung, Exposé, Kampagne, Nachfassen und systemgestützte Übergabe für Immobilienprojekte.",
+    description: relaunchCopy.de.heroSub,
     metaDescription:
       "NovaLure verbindet Projektvermarktung, Nachfassen und systemgestützte Lead-Wege für Immobilienvertrieb: qualifizierte Gespräche statt Rohkontakte.",
     primaryCta: { label: "Projekt-Check anfragen", target: "contact", anchor: "book-audit" },
@@ -389,7 +389,7 @@ const homeContent: Record<Locale, HomeContent> = {
       ireland:
         "NovaLure ist ein in Irland verwurzeltes Unternehmen mit internationaler Ausrichtung und betreut Kunden in Irland, UK, der DACH-Region und darüber hinaus. Operativ zählen klare Ansprechpartner, saubere Vertragsgrundlage, DSGVO-konforme Tools, nachvollziehbare Kommunikation und definierte Deliverables."
     },
-    faq: hardFaq.de,
+    faq: relaunchCopy.de.faq.map(({ q, a }) => ({ question: q, answer: a })),
     finalCtaTitle: "Lassen Sie prüfen, wo Ihr Lead-Weg Vertriebszeit verliert."
   },
   en: {
@@ -397,10 +397,9 @@ const homeContent: Record<Locale, HomeContent> = {
     locale: "en",
     template: "home",
     eyebrow: "Project marketing with sales structure",
-    title: "From project presence to qualified buyer conversation.",
+    title: relaunchCopy.en.heroH1,
     seoTitle: "NovaLure | Project marketing with sales structure",
-    description:
-      "We create storytelling, visualisation, expose, campaigns, follow-up and system-supported handover for real estate projects.",
+    description: relaunchCopy.en.heroSub,
     metaDescription:
       "NovaLure connects project marketing, follow-up and system-supported lead paths for real estate sales: qualified conversations instead of raw contacts.",
     primaryCta: { label: "Request Project Check", target: "contact", anchor: "book-audit" },
@@ -491,7 +490,7 @@ const homeContent: Record<Locale, HomeContent> = {
       ireland:
         "NovaLure is a company rooted in Ireland with an international focus, serving clients in Ireland, the UK, the DACH region and beyond. What counts operationally: clear points of contact, sound contractual basis, GDPR-compliant tools, transparent communication and defined deliverables."
     },
-    faq: hardFaq.en,
+    faq: relaunchCopy.en.faq.map(({ q, a }) => ({ question: q, answer: a })),
     finalCtaTitle: "Find out where your lead path is wasting sales time."
   }
 };

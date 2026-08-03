@@ -6,33 +6,68 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "playbooks": "node scripts/generate-playbooks.mjs",
     "playbook:covers": "node scripts/generate-playbook-covers.mjs",
     "playbook-previews": "node scripts/render-playbook-previews.mjs"
   },
   "dependencies": {
-    "@portabletext/react": "^3.2.1",
-    "@sanity/client": "^6.22.4",
-    "@sanity/vision": "^3.60.0",
+    "@sanity/client": "^7.26.0",
+    "@sanity/vision": "^4.22.0",
+    "@upstash/redis": "^1.38.1",
+    "@vercel/firewall": "^1.2.2",
+    "@vercel/functions": "^3.7.6",
     "framer-motion": "^11.11.17",
-    "next": "^14.2.16",
-    "next-sanity": "^9.4.7",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "next": "^15.5.22",
+    "next-sanity": "^11.6.13",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "resend": "^4.1.2",
-    "sanity": "^3.60.0"
+    "sanity": "^4.22.0",
+    "sharp": "^0.35.3",
+    "styled-components": "^6.4.4"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@types/node": "^20.17.6",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.20",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.16",
-    "postcss": "^8.4.47",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^15.5.22",
+    "postcss": "^8.5.25",
     "tailwindcss": "^3.4.14",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "@sanity/runtime-cli": {
+      "adm-zip": "0.6.0"
+    },
+    "@sanity/uuid": {
+      "uuid": "11.1.1"
+    },
+    "@oclif/core": {
+      "ejs": "6.0.1"
+    },
+    "@vercel/frameworks": {
+      "js-yaml": "3.15.0"
+    },
+    "archiver-utils@5.0.2": {
+      "glob": "13.0.6"
+    },
+    "archiver": {
+      "readdir-glob": "3.0.0"
+    },
+    "postcss": "$postcss",
+    "sanity": {
+      "rimraf": "6.1.3"
+    },
+    "sharp": "$sharp",
+    "typeid-js": {
+      "uuid": "11.1.1"
+    }
   }
 }

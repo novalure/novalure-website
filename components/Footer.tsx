@@ -1,77 +1,57 @@
 import Link from "next/link";
-import { getCrmAppUrl, getPath, getPlaybookFormPath, legalKeys, navLabels, type Locale } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
-
-const footerCopy = {
-  en: {
-    intro: "Project marketing, follow-up and system-supported handover for real estate teams that want enquiries to become qualified conversations.",
-    contact: "Contact",
-    pages: "Pages",
-    newsletter: "Newsletter",
-    newsletterText: "Practical project marketing and lead-path insights - no spam, unsubscribe anytime.",
-    newsletterCta: "Download playbook",
-    projectCheck: "Project Check"
-  },
-  de: {
-    intro: "Projektvermarktung, Nachfassen und systemgestützte Übergabe für Immobilienteams, die aus Anfragen qualifizierte Gespräche machen wollen.",
-    contact: "Kontakt",
-    pages: "Seiten",
-    newsletter: "Newsletter",
-    newsletterText: "Konkrete Impulse zu Projektvermarktung und Lead-Wegen - kein Spam, jederzeit abbestellbar.",
-    newsletterCta: "Playbook herunterladen",
-    projectCheck: "Projekt-Check"
-  }
-} as const;
+import { CookieSettingsButton } from "@/components/relaunch/RelaunchInteractive";
+import { relaunchCopy } from "@/content/relaunch-copy";
+import { getCrmAppUrl, getPath, type Locale } from "@/lib/i18n";
 
 export function Footer({ locale }: { locale: Locale }) {
-  const copy = footerCopy[locale];
-  const switchLocale = locale === "en" ? "de" : "en";
-  const crmHref = getCrmAppUrl(locale);
+  const t = relaunchCopy[locale];
+  const homePath = getPath(locale, "home");
+  const anchor = (id: string) => `${homePath}#${id}`;
 
   return (
-    <footer className="site-footer">
-      <div className="footer-main footer-main-four">
-        <div className="footer-brand">
+    <footer className="site-footer v3-site-footer">
+      <div className="v3-footer-main">
+        <div className="v3-footer-brand">
           <Logo locale={locale} />
-          <p>{copy.intro}</p>
-        </div>
-
-        <div className="footer-contact-column">
-          <h2>{copy.contact}</h2>
-          <a href="tel:+353892695248">+353 (0)89 269 5248</a>
+          <p>{t.footTag}</p>
           <a href="mailto:hello@novalure.eu">hello@novalure.eu</a>
+          <a href="tel:+353892695248">+353 89 269 5248</a>
         </div>
 
-        <nav aria-label={copy.pages}>
-          <h2>{copy.pages}</h2>
-          <Link href={getPath(locale, "developers")}>{navLabels[locale].developers}</Link>
-          <Link href={getPath(locale, "agents")}>{navLabels[locale].agents}</Link>
-          <Link href={getPlaybookFormPath(locale)}>{navLabels[locale].playbooks}</Link>
-          <Link href={`${getPath(locale, "contact")}#book-audit`}>{copy.projectCheck}</Link>
-          <Link href={getPath(locale, "handover")}>{navLabels[locale].handover}</Link>
-          <a href={crmHref} target="_blank" rel="noreferrer" data-track="footer_crm_login">
-            CRM Login
-          </a>
+        <nav aria-label={t.footPages}>
+          <h2>{t.footPages}</h2>
+          <Link href={getPath(locale, "developers")}>{t.navA}</Link>
+          <Link href={getPath(locale, "agents")}>{t.navB}</Link>
+          <Link href={anchor("prozess")}>{t.navC}</Link>
+          <Link href={getPath(locale, "handover")}>{t.navD}</Link>
+          <Link href={getPath(locale, "playbooks")}>{t.navE}</Link>
+          <Link href={getPath(locale, "contact")}>{t.cta}</Link>
+          <a href={getCrmAppUrl(locale)} target="_blank" rel="noreferrer" data-track="footer_crm_login">{t.login}</a>
         </nav>
 
-        <div className="footer-newsletter">
-          <h2>{copy.newsletter}</h2>
-          <p>{copy.newsletterText}</p>
-          <Link className="footer-newsletter-link" href={getPlaybookFormPath(locale)}>
-            {copy.newsletterCta}
-          </Link>
+        <nav aria-label={t.footLegal}>
+          <h2>{t.footLegal}</h2>
+          <Link href={getPath(locale, "imprint")}>{t.imprint}</Link>
+          <Link href={getPath(locale, "privacy")}>{t.privacy}</Link>
+          <Link href={getPath(locale, "cookies")}>{t.cookies}</Link>
+          <CookieSettingsButton>{t.ckSettingsLabel}</CookieSettingsButton>
+        </nav>
+
+        <div className="v3-footer-newsletter">
+          <h2>{t.pbKicker}</h2>
+          <p>{t.pbBody}</p>
+          <Link className="v3-button v3-button-primary" href={getPath(locale, "playbooks")}>{t.pbBtn}</Link>
+          <small>{locale === "de" ? "Optionales Update-Opt-in wird per E-Mail bestätigt." : "Optional updates opt-in is confirmed by email."}</small>
         </div>
       </div>
 
-      <div className="footer-bottom footer-bottom-redesign">
-        <span>NovaLure CLG · Dublin, Ireland</span>
-        <nav aria-label={locale === "de" ? "Rechtliche Links" : "Legal links"}>
-          {legalKeys.map((key) => (
-            <Link key={key} href={getPath(locale, key)}>{navLabels[locale][key]}</Link>
-          ))}
+      <div className="v3-footer-bottom">
+        <span>© 2026 NovaLure · Dublin, Ireland</span>
+        <nav className="v3-footer-languages" aria-label={locale === "de" ? "Sprache" : "Language"}>
+          <Link className={locale === "de" ? "is-active" : ""} href={getPath("de", "home")} hrefLang="de">DE</Link>
+          <Link className={locale === "en" ? "is-active" : ""} href={getPath("en", "home")} hrefLang="en">EN</Link>
         </nav>
-        <Link href={getPath(switchLocale, "home")} hrefLang={switchLocale}>{switchLocale.toUpperCase()}</Link>
-        <span>© 2026 NovaLure</span>
       </div>
     </footer>
   );

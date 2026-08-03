@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
-import type { Locale } from "@/lib/i18n";
+import Link from "next/link";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { getPath, type Locale } from "@/lib/i18n";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -55,7 +56,9 @@ const copy = {
     submit: "Send enquiry",
     loading: "Sending...",
     success: "Thank you. Your enquiry has been received.",
-    error: "Something went wrong. Please try again or email hello@novalure.eu"
+    error: "Something went wrong. Please try again or email hello@novalure.eu",
+    privacy: "How we process your data:",
+    privacyLink: "Privacy policy"
   },
   de: {
     eyebrow: "Direkte Anfrage",
@@ -86,7 +89,9 @@ const copy = {
     submit: "Anfrage senden",
     loading: "Wird gesendet...",
     success: "Vielen Dank. Ihre Anfrage wurde übermittelt.",
-    error: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie an hello@novalure.eu"
+    error: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie an hello@novalure.eu",
+    privacy: "Hinweise zur Verarbeitung Ihrer Daten:",
+    privacyLink: "Datenschutz"
   }
 } as const;
 
@@ -94,13 +99,24 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export function ContactInquiryForm({ locale }: { locale: Locale }) {
+export function ContactInquiryForm({ locale, compact = false }: { locale: Locale; compact?: boolean }) {
   const text = copy[locale];
   const [values, setValues] = useState<FormValues>(emptyValues);
   const [status, setStatus] = useState<Status>("idle");
   const [statusMessage, setStatusMessage] = useState("");
 
   const isLoading = status === "loading";
+
+  useEffect(() => {
+    function selectProjectType(event: Event) {
+      const detail = (event as CustomEvent<"developers" | "agents">).detail;
+      if (detail !== "developers" && detail !== "agents") return;
+      setValues((current) => ({ ...current, interest: detail }));
+    }
+
+    window.addEventListener("novalure:project-type", selectProjectType);
+    return () => window.removeEventListener("novalure:project-type", selectProjectType);
+  }, []);
 
   function updateValue(event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     const { name, value } = event.target;
@@ -159,13 +175,20 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
   }
 
   return (
-    <section className="contact-inquiry-section" id="audit-form" aria-labelledby="contact-inquiry-title">
+    <section
+      className="contact-inquiry-section"
+      id="audit-form"
+      aria-label={compact ? text.title : undefined}
+      aria-labelledby={compact ? undefined : "contact-inquiry-title"}
+    >
       <div className="contact-inquiry-shell">
-        <div className="contact-inquiry-copy">
-          <p className="eyebrow">{text.eyebrow}</p>
-          <h2 id="contact-inquiry-title">{text.title}</h2>
-          <p>{text.body}</p>
-        </div>
+        {!compact && (
+          <div className="contact-inquiry-copy">
+            <p className="eyebrow">{text.eyebrow}</p>
+            <h2 id="contact-inquiry-title">{text.title}</h2>
+            <p>{text.body}</p>
+          </div>
+        )}
         <form className="contact-inquiry-form" onSubmit={submitForm} data-track-form="contact">
           <label className="contact-field">
             <span>{text.fields.firstName}</span>
@@ -207,6 +230,9 @@ export function ContactInquiryForm({ locale }: { locale: Locale }) {
               {statusMessage}
             </p>
           </div>
+          <p className="contact-form-privacy">
+            {text.privacy} <Link href={getPath(locale, "privacy")}>{text.privacyLink}</Link>
+          </p>
         </form>
       </div>
     </section>

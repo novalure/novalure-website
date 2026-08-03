@@ -2,95 +2,151 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { getCrmAppUrl, getPath, getPlaybookFormPath, navLabels, routeMap, type Locale } from "@/lib/i18n";
+import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/Logo";
+import { getCrmAppUrl, getPath, routeMap, type Locale } from "@/lib/i18n";
 
-const ctaLabels = {
-  en: { primary: "Request Project Check", menu: "Menu", close: "Close menu" },
-  de: { primary: "Projekt-Check anfragen", menu: "Menü", close: "Menü schließen" }
-};
-
-const headerRouteItems = ["developers", "agents", "handover", "playbooks"] as const;
+const headerCopy = {
+  en: {
+    menu: "Open menu", close: "Close menu", navigation: "Primary navigation",
+    nav: ["Developers", "Agents", "Process", "System", "Playbook"], login: "CRM login", cta: "Request a project check"
+  },
+  de: {
+    menu: "Menü öffnen", close: "Menü schließen", navigation: "Hauptnavigation",
+    nav: ["Bauträger", "Makler", "Prozess", "System", "Playbook"], login: "CRM-Login", cta: "Projekt-Check anfragen"
+  }
+} as const;
 
 export function Header({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const labels = ctaLabels[locale];
+  const menuRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const t = headerCopy[locale];
+  const homePath = getPath(locale, "home");
 
   const switchLocale = locale === "en" ? "de" : "en";
   const activeKey = Object.entries(routeMap).find(([, paths]) => paths[locale] === pathname)?.[0] as
     | keyof typeof routeMap
     | undefined;
   const switchHref = activeKey ? routeMap[activeKey][switchLocale] : getPath(switchLocale, "home");
-  const playbookHref = getPlaybookFormPath(locale);
-  const auditHref = `${getPath(locale, "contact")}#book-audit`;
   const crmHref = getCrmAppUrl(locale);
+  const anchor = (id: string) => `${homePath}#${id}`;
+  const navItems = [
+    [t.nav[0], anchor("bautraeger")],
+    [t.nav[1], anchor("makler")],
+    [t.nav[2], anchor("prozess")],
+    [t.nav[3], anchor("system")],
+    [t.nav[4], anchor("playbook")]
+  ] as const;
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    const toggle = toggleRef.current;
+    document.body.style.overflow = "hidden";
+    const menu = menuRef.current;
+    const headerRoot = Array.from(document.body.children).find((element) => menu && element.contains(menu));
+    const inertTargets = Array.from(document.body.children).filter(
+      (element): element is HTMLElement => element instanceof HTMLElement && element !== headerRoot
+    );
+    const previousInert = inertTargets.map((element) => element.inert);
+    inertTargets.forEach((element) => { element.inert = true; });
+    const headerTargets = Array.from(menu?.parentElement?.children || []).filter(
+      (element): element is HTMLElement => element instanceof HTMLElement && element !== menu
+    );
+    const previousHeaderInert = headerTargets.map((element) => element.inert);
+    headerTargets.forEach((element) => { element.inert = true; });
+    const focusable = menu?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    closeRef.current?.focus();
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      inertTargets.forEach((element, index) => { element.inert = previousInert[index]; });
+      headerTargets.forEach((element, index) => { element.inert = previousHeaderInert[index]; });
+      document.removeEventListener("keydown", onKeyDown);
+      toggle?.focus();
+    };
+  }, [open]);
 
   return (
-    <header className={`site-header ${open ? "menu-open" : ""}`}>
-      <div className="header-brand-group">
-        <Logo locale={locale} />
-        <span className="header-trust-badge">
-          {locale === "de" ? "Verwurzelt in Irland · Tätig in DACH, UK & international" : "Rooted in Ireland · Active in DACH, UK & international"}
-        </span>
-      </div>
+    <header className={`site-header v3-site-header${open ? " menu-open" : ""}`}>
+      <Logo locale={locale} priority />
 
-      <nav className="desktop-nav" aria-label="Primary navigation">
-        {headerRouteItems.map((key) => (
-          <Link
-            key={key}
-            href={key === "playbooks" ? playbookHref : getPath(locale, key)}
-          >
-            {navLabels[locale][key]}
-          </Link>
-        ))}
+      <nav className="desktop-nav v3-desktop-nav" aria-label={t.navigation}>
+        {navItems.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
       </nav>
 
-      <div className="header-actions desktop-actions">
-        <a className="crm-login-link" href={crmHref} target="_blank" rel="noreferrer" data-track="nav_crm_login">
-          CRM Login
-        </a>
-        <Link className="button button-primary" href={auditHref} data-track="nav_audit">{labels.primary}</Link>
-        <Link className="locale-switch" href={switchHref} hrefLang={switchLocale}>{switchLocale.toUpperCase()}</Link>
+      <div className="header-actions desktop-actions v3-header-actions">
+        <div className="v3-language-switch" aria-label={locale === "de" ? "Sprache" : "Language"}>
+          <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref} hrefLang="de">DE</Link>
+          <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref} hrefLang="en">EN</Link>
+        </div>
+        <a className="v3-header-login" href={crmHref} target="_blank" rel="noreferrer" data-track="nav_crm_login">{t.login}</a>
+        <Link className="v3-button v3-button-primary v3-header-cta" href={anchor("kontakt")} data-track="nav_audit">{t.cta}</Link>
       </div>
 
-      <Link className="button button-primary mobile-sticky-cta" href={auditHref}>
-        {labels.primary}
-      </Link>
+      <div className="v3-mobile-sticky-bar">
+        <Link className="v3-mobile-sticky-cta" href={anchor("kontakt")}>{t.cta}</Link>
+      </div>
 
       <button
-        className="menu-toggle"
+        className="menu-toggle v3-menu-toggle"
         type="button"
+        ref={toggleRef}
+        aria-label={open ? t.close : t.menu}
         aria-expanded={open}
         aria-controls="mobile-menu"
         onClick={() => setOpen((value) => !value)}
       >
-        <span className="sr-only">{open ? labels.close : labels.menu}</span>
         <span aria-hidden="true" />
         <span aria-hidden="true" />
         <span aria-hidden="true" />
       </button>
 
-      <nav className="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-        {headerRouteItems.map((key) => (
-          <Link
-            key={key}
-            href={key === "playbooks" ? playbookHref : getPath(locale, key)}
-            onClick={() => setOpen(false)}
-          >
-            {navLabels[locale][key]}
-          </Link>
-        ))}
-        <a className="crm-login-link" href={crmHref} target="_blank" rel="noreferrer" data-track="mobile_crm_login" onClick={() => setOpen(false)}>
-          CRM Login
-        </a>
-        <Link className="button button-primary" href={auditHref} onClick={() => setOpen(false)}>
-          {labels.primary}
-        </Link>
-        <Link className="locale-switch mobile-locale" href={switchHref} hrefLang={switchLocale} onClick={() => setOpen(false)}>
-          {switchLocale.toUpperCase()}
-        </Link>
+      <nav
+        className="mobile-menu v3-mobile-menu"
+        id="mobile-menu"
+        aria-label={t.navigation}
+        aria-hidden={!open}
+        ref={menuRef}
+      >
+        <div className="v3-mobile-menu-head">
+          <Logo locale={locale} />
+          <button ref={closeRef} type="button" aria-label={t.close} onClick={() => setOpen(false)}>×</button>
+        </div>
+        <div className="v3-mobile-menu-links">
+          {navItems.map(([label, href]) => <Link href={href} key={href} onClick={() => setOpen(false)}>{label}</Link>)}
+        </div>
+        <div className="v3-mobile-menu-actions">
+          <Link className="v3-button v3-button-primary" href={anchor("kontakt")} onClick={() => setOpen(false)}>{t.cta}</Link>
+          <a className="v3-button v3-button-dark-outline" href={crmHref} target="_blank" rel="noreferrer" data-track="mobile_crm_login" onClick={() => setOpen(false)}>{t.login}</a>
+          <div className="v3-language-switch is-dark">
+            <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref} hrefLang="de">DE</Link>
+            <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref} hrefLang="en">EN</Link>
+          </div>
+        </div>
       </nav>
     </header>
   );

@@ -2363,6 +2363,18 @@ code {
   margin-top: 6px;
 }
 
+.contact-form-privacy {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.contact-form-privacy a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .contact-form-status {
   min-height: 22px;
   margin: 0;

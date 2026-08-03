@@ -17,7 +17,8 @@ export function generateStaticParams() {
   return getLocalizedParams();
 }
 
-export function generateMetadata({ params }: { params: RouteParams }): Metadata {
+export async function generateMetadata(props: { params: Promise<RouteParams> }): Promise<Metadata> {
+  const params = await props.params;
   if (!isLocale(params.locale)) return {};
   const locale = params.locale as Locale;
   const key = getPageKey(locale, params.slug);
@@ -36,8 +37,8 @@ export function generateMetadata({ params }: { params: RouteParams }): Metadata 
       title: content.seoTitle,
       description,
       url: `${siteUrl}${getAlternates(locale, key).canonical}`,
-      locale: locale === "de" ? "de_DE" : "en_US",
-      alternateLocale: locale === "en" ? "de_DE" : "en_US",
+      locale: locale === "de" ? "de_DE" : "en_GB",
+      alternateLocale: locale === "en" ? "de_DE" : "en_GB",
       images: [{ url: "/og-default.svg", width: 1200, height: 630, alt: content.title }]
     },
     twitter: {
@@ -49,7 +50,8 @@ export function generateMetadata({ params }: { params: RouteParams }): Metadata 
   };
 }
 
-export default function LocalizedPage({ params }: { params: RouteParams }) {
+export default async function LocalizedPage(props: { params: Promise<RouteParams> }) {
+  const params = await props.params;
   if (!isLocale(params.locale)) notFound();
   const locale = params.locale as Locale;
   const key = getPageKey(locale, params.slug);
