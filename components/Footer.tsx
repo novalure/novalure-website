@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { CookieSettingsButton } from "@/components/relaunch/RelaunchInteractive";
 import { relaunchCopy } from "@/content/relaunch-copy";
-import { getCrmAppUrl, getPath, type Locale } from "@/lib/i18n";
+import { getCrmAppUrl, getPath, getProcessAnchor, type Locale } from "@/lib/i18n";
 
 export function Footer({ locale }: { locale: Locale }) {
   const t = relaunchCopy[locale];
@@ -23,7 +23,7 @@ export function Footer({ locale }: { locale: Locale }) {
           <h2>{t.footPages}</h2>
           <Link href={getPath(locale, "developers")}>{t.navA}</Link>
           <Link href={getPath(locale, "agents")}>{t.navB}</Link>
-          <Link href={anchor("prozess")}>{t.navC}</Link>
+          <Link href={anchor(getProcessAnchor(locale))}>{t.navC}</Link>
           <Link href={getPath(locale, "handover")}>{t.navD}</Link>
           <Link href={getPath(locale, "playbooks")}>{t.navE}</Link>
           <Link href={getPath(locale, "contact")}>{t.cta}</Link>

@@ -75,6 +75,10 @@ export function getPath(locale: Locale, key: PageKey) {
   return routeMap[key][locale];
 }
 
+export function getProcessAnchor(locale: Locale) {
+  return locale === "es" ? "proceso" : "prozess";
+}
+
 export function getPlaybookFormPath(locale: Locale) {
   return `${getPath(locale, "playbooks")}#playbook-download`;
 }

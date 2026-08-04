@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/Logo";
-import { getCrmAppUrl, getPath, routeMap, type Locale } from "@/lib/i18n";
+import { getCrmAppUrl, getPath, getProcessAnchor, routeMap, type Locale } from "@/lib/i18n";
 
 const headerCopy = {
   en: {
@@ -41,7 +41,7 @@ export function Header({ locale }: { locale: Locale }) {
   const navItems = [
     [t.nav[0], anchor("bautraeger")],
     [t.nav[1], anchor("makler")],
-    [t.nav[2], anchor("prozess")],
+    [t.nav[2], anchor(getProcessAnchor(locale))],
     [t.nav[3], anchor("system")],
     [t.nav[4], anchor("playbook")]
   ] as const;
