@@ -3,7 +3,9 @@ import type { Locale } from "@/lib/i18n";
 export function FunnelHeroVisual({ locale }: { locale: Locale }) {
   const label = locale === "de"
     ? "Animation: rohe Immobilien-Leads werden durch NovaLure qualifiziert und vorbereitet an den Vertrieb übergeben."
-    : "Animation: raw real estate leads are qualified by NovaLure and handed over to sales with context.";
+    : locale === "es"
+      ? "Animación: NovaLure cualifica las solicitudes inmobiliarias y las traspasa al equipo comercial con contexto."
+      : "Animation: raw real estate leads are qualified by NovaLure and handed over to sales with context.";
 
   return (
     <div className="funnel-hero-visual hero-video-visual" aria-label={label}>
@@ -31,7 +33,7 @@ export function FunnelHeroVisual({ locale }: { locale: Locale }) {
       </video>
       <div className="hero-video-fallback" aria-hidden="true">
         <span>NovaLure System</span>
-        <strong>{locale === "de" ? "Kontext vor dem ersten Gespräch" : "Context before the first call"}</strong>
+        <strong>{locale === "de" ? "Kontext vor dem ersten Gespräch" : locale === "es" ? "Contexto antes de la primera llamada" : "Context before the first call"}</strong>
       </div>
     </div>
   );

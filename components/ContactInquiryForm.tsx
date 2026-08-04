@@ -92,6 +92,39 @@ const copy = {
     error: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie an hello@novalure.eu",
     privacy: "Hinweise zur Verarbeitung Ihrer Daten:",
     privacyLink: "Datenschutz"
+  },
+  es: {
+    eyebrow: "Consulta directa",
+    title: "Envíe una consulta confidencial.",
+    body: "Facilite sus datos de contacto y el equipo de NovaLure responderá directamente.",
+    fields: {
+      firstName: "Nombre",
+      lastName: "Apellidos",
+      email: "Correo electrónico profesional",
+      phone: "Número de teléfono",
+      company: "Empresa",
+      interest: "Área de interés",
+      inquiry: "Su consulta"
+    },
+    interests: {
+      placeholder: "Seleccione una opción",
+      developers: "Promotores inmobiliarios",
+      agents: "Agencias inmobiliarias"
+    },
+    placeholders: {
+      firstName: "Nombre",
+      lastName: "Apellidos",
+      email: "usted@empresa.com",
+      phone: "+34...",
+      company: "Nombre de la empresa",
+      inquiry: "Describa brevemente el asunto que desea tratar."
+    },
+    submit: "Enviar consulta",
+    loading: "Enviando...",
+    success: "Gracias. Hemos recibido su consulta.",
+    error: "No hemos podido enviar la consulta. Inténtelo de nuevo o escriba a hello@novalure.eu",
+    privacy: "Información sobre el tratamiento de sus datos:",
+    privacyLink: "Política de privacidad"
   }
 } as const;
 

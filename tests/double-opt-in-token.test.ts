@@ -65,6 +65,23 @@ describe("double opt-in tokens", () => {
     });
   });
 
+  it("accepts a locale-matched Spanish playbook token", () => {
+    const token = createDoubleOptInToken({
+      email: "lector@example.com",
+      locale: "es",
+      playbook: "es-developer",
+      issuedAt: payload().issuedAt,
+      expiresAt: payload().expiresAt,
+      privacyPolicyVersion: "2026-08-01",
+      tokenId
+    });
+
+    expect(verifyDoubleOptInToken(token)).toMatchObject({
+      locale: "es",
+      playbook: "es-developer"
+    });
+  });
+
   it("requires a current secret of at least 32 bytes", () => {
     vi.stubEnv("DOUBLE_OPT_IN_SECRET", "too-short");
     expect(() => signPayload(payload())).not.toThrow();

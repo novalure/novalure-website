@@ -3,7 +3,9 @@
 import { usePathname } from "next/navigation";
 
 export default function ErrorPage({ reset }: { error: Error; reset: () => void }) {
-  const de = usePathname().startsWith("/de");
+  const pathname = usePathname();
+  const de = pathname.startsWith("/de");
+  const es = pathname.startsWith("/es");
   const copy = de
     ? {
         eyebrow: "Fehler",
@@ -11,7 +13,14 @@ export default function ErrorPage({ reset }: { error: Error; reset: () => void }
         body: "Bitte versuchen Sie es erneut. Wenn der Fehler bestehen bleibt, können Sie jederzeit zur Startseite zurückkehren.",
         retry: "Erneut versuchen"
       }
-    : {
+    : es
+      ? {
+          eyebrow: "Error",
+          title: "No hemos podido cargar esta página por completo.",
+          body: "Inténtelo de nuevo. Si el problema continúa, puede volver a la página de inicio.",
+          retry: "Volver a intentarlo"
+        }
+      : {
         eyebrow: "Error",
         title: "This page could not be loaded completely.",
         body: "Please try again. If the problem continues, you can return to the homepage at any time.",

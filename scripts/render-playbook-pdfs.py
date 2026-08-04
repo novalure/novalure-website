@@ -47,7 +47,7 @@ def parse_book(path):
     return {
         "slug": path.stem,
         "lang": lang,
-        "audience": "developer" if "developer" in path.name or "bautraeger" in path.name else "agent",
+        "audience": "developer" if "developer" in path.name or "bautraeger" in path.name or "promotores" in path.name else "agent",
         "eyebrow": text_content(cover.xpath(".//*[contains(@class,'eyebrow')]")[0]),
         "title": text_content(cover.xpath(".//h1")[0]),
         "subtitle": text_content(cover.xpath(".//*[contains(@class,'subtitle')]")[0]),
@@ -92,6 +92,8 @@ def footer(c, page, lang, dark=False):
     footer_text = (
         "Novalure | Projektvermarktung mit vorbereiteter Übergabe"
         if lang == "de"
+        else "NovaLure | Comercialización inmobiliaria con traspaso preparado"
+        if lang == "es"
         else "Novalure | Project marketing with prepared handover"
     )
     c.setFillColor(colors.HexColor("#8b93a0" if not dark else "#b8c0cc"))
@@ -116,6 +118,10 @@ def pipeline(c, x, y, width, height, lang, audience):
         if lang == "de" and audience == "developer"
         else ["Lokale Nachfrage", "Lead Magnet", "Segmentierung", "Übergabe", "Follow-up"]
         if lang == "de"
+        else ["Demanda", "Encaje", "Cualificación", "Traspaso", "Ventas"]
+        if lang == "es" and audience == "developer"
+        else ["Demanda local", "Recurso", "Segmentación", "Traspaso", "Seguimiento"]
+        if lang == "es"
         else ["Demand", "Project Fit", "Qualification", "Handover", "Sales"]
         if audience == "developer"
         else ["Local Demand", "Lead Magnet", "Segmentation", "Handover", "Follow-up"]
@@ -153,11 +159,13 @@ def pipeline_leak(c, x, y, width, height, lang, audience):
     c.roundRect(x + width * 0.73, y + height * 0.78, 27 * mm, 9 * mm, 4 * mm, stroke=1, fill=1)
     c.setFillColor(colors.HexColor("#ffb0b0"))
     c.setFont("Helvetica-Bold", 8)
-    c.drawCentredString(x + width * 0.73 + 13.5 * mm, y + height * 0.78 + 3 * mm, "Leck" if lang == "de" else "Leak")
+    c.drawCentredString(x + width * 0.73 + 13.5 * mm, y + height * 0.78 + 3 * mm, "Leck" if lang == "de" else "Brecha" if lang == "es" else "Leak")
 
     note = (
         "Hier verliert das System Kontext - Käufertyp, Timing und Reife erreichen den Vertrieb nicht."
         if lang == "de"
+        else "Aquí se pierde contexto: el tipo de comprador, el plazo y la madurez no llegan a ventas."
+        if lang == "es"
         else "This is where the system loses context - buyer type, timing and readiness never reach sales."
     )
     c.setFillColor(colors.HexColor("#fff1f1"))
@@ -168,7 +176,7 @@ def pipeline_leak(c, x, y, width, height, lang, audience):
 
 
 def system_layers(c, x, y, width, height, lang):
-    labels = ["Auftritt", "Nachfrage", "Qualifizierung", "Übergabe"] if lang == "de" else ["Presence", "Demand", "Qualification", "Handover"]
+    labels = ["Auftritt", "Nachfrage", "Qualifizierung", "Übergabe"] if lang == "de" else ["Presentación", "Demanda", "Cualificación", "Traspaso"] if lang == "es" else ["Presence", "Demand", "Qualification", "Handover"]
     c.setFillColor(colors.HexColor("#111318"))
     c.roundRect(x, y, width, height, 14, stroke=0, fill=1)
     for i, label in enumerate(labels):
@@ -185,7 +193,7 @@ def system_layers(c, x, y, width, height, lang):
 def matrix(c, x, y, width, height, lang):
     c.setFillColor(colors.HexColor("#f7f4eb"))
     c.roundRect(x, y, width, height, 14, stroke=0, fill=1)
-    labels = ["Disqualifizieren", "Prüfen", "Nurture", "Sales-ready"] if lang == "de" else ["Disqualify", "Review", "Nurture", "Sales-ready"]
+    labels = ["Disqualifizieren", "Prüfen", "Nurture", "Sales-ready"] if lang == "de" else ["Descartar", "Revisar", "Seguimiento", "Preparado"] if lang == "es" else ["Disqualify", "Review", "Nurture", "Sales-ready"]
     cells = [
         (x + 42, y + 35, labels[0], False),
         (x + width / 2 + 8, y + 35, labels[1], False),
@@ -219,10 +227,10 @@ def matrix(c, x, y, width, height, lang):
     arrow.close()
     c.drawPath(arrow, stroke=0, fill=1)
     c.setFont("Helvetica-Bold", 6.5)
-    x_label = "Kaufabsicht / Reife" if lang == "de" else "Buying intent / readiness"
-    y_label = "Kontext vorhanden" if lang == "de" else "Context available"
-    low = "niedrig" if lang == "de" else "low"
-    high = "hoch" if lang == "de" else "high"
+    x_label = "Kaufabsicht / Reife" if lang == "de" else "Intención / madurez" if lang == "es" else "Buying intent / readiness"
+    y_label = "Kontext vorhanden" if lang == "de" else "Contexto disponible" if lang == "es" else "Context available"
+    low = "niedrig" if lang == "de" else "bajo" if lang == "es" else "low"
+    high = "hoch" if lang == "de" else "alto" if lang == "es" else "high"
     c.drawCentredString(x + width / 2 + 8, y + 8, x_label)
     c.setFillColor(colors.HexColor("#606977"))
     c.setFont("Helvetica-Bold", 5.5)
@@ -281,6 +289,12 @@ def scorecard_assessment(lang, audience):
             f"3-4 erfüllt -> Ein Projekt-Check macht jetzt sichtbar, wo {'Kontext' if project else 'Markt- und Leadkontext'} verloren geht.",
             f"5 erfüllt -> Ihr {'Funnel produziert Volumen, aber keine verlässliche Pipeline' if project else 'Markt erzeugt Nachfrage, aber keine verlässliche Pipeline'}. Genau dafür ist der Check.",
         ]
+    if lang == "es":
+        return [
+            "0-2 criterios -> Aclare primero los fundamentos; el análisis sería prematuro.",
+            f"3-4 criterios -> El análisis muestra dónde se pierde {'contexto' if project else 'contexto de mercado y oportunidad'}.",
+            f"5 criterios -> {'El recorrido genera volumen, pero no una cartera fiable' if project else 'El mercado genera demanda, pero no una cartera fiable'}. Para eso sirve el análisis.",
+        ]
     return [
         "0-2 met -> Clarify the basics first; a check would be premature.",
         f"3-4 met -> A Project Check can now reveal where {'context' if project else 'market and lead context'} is being lost.",
@@ -301,7 +315,8 @@ def draw_assessment(c, items, x, y, width, dark=False):
     c.rect(x, y - box_h, 4, box_h, stroke=0, fill=1)
     c.setFillColor(title_color)
     c.setFont("Helvetica-Bold", 10)
-    c.drawString(x + 10 * mm, y - 10 * mm, "Ihre Einschätzung:" if items[0].endswith("verfrüht.") else "Your assessment:")
+    assessment_title = "Ihre Einschätzung:" if items[0].endswith("verfrüht.") else "Su evaluación:" if items[0].startswith("0-2 criterios") else "Your assessment:"
+    c.drawString(x + 10 * mm, y - 10 * mm, assessment_title)
     row_y = y - 17 * mm
     for item in items:
         c.setStrokeColor(colors.HexColor("#9ca3af"))
@@ -341,6 +356,9 @@ def draw_cards(c, cards, start_y):
 def render(book):
     pdf_path = OUT_DIR / f"{book['slug']}.pdf"
     c = canvas.Canvas(str(pdf_path), pagesize=A4)
+    c.setAuthor("NovaLure CLG")
+    c.setTitle(book["title"])
+    c.setSubject("Playbook de NovaLure" if book["lang"] == "es" else "NovaLure Playbook")
     page = 1
 
     background(c, dark=True)
@@ -358,10 +376,12 @@ def render(book):
     page += 1
 
     background(c)
-    headline = "Ein System, kein weiterer Marketing-Ordner." if book["lang"] == "de" else "A system, not another marketing folder."
+    headline = "Ein System, kein weiterer Marketing-Ordner." if book["lang"] == "de" else "Un sistema, no otra carpeta de marketing." if book["lang"] == "es" else "A system, not another marketing folder."
     intro = (
         "Dieses Dokument ist als Arbeitsgrundlage gedacht. Es hilft Ihnen, Ihr aktuelles Setup zu prüfen, Lücken sichtbar zu machen und die nächsten operativen Schritte sauber zu priorisieren."
         if book["lang"] == "de"
+        else "Este documento es una guía de trabajo para revisar la estructura actual, detectar brechas y priorizar con claridad los siguientes pasos operativos."
+        if book["lang"] == "es"
         else "This document is designed as a working guide. Use it to inspect your current setup, reveal gaps and prioritize the next operating steps with more clarity."
     )
     para(c, headline, M, H - M, W - 2 * M, style(22, 26, colors.HexColor("#111318"), True))
@@ -384,7 +404,7 @@ def render(book):
         y = para(c, section["title"], M, H - M - 18, W - 2 * M, style(22, 25.5, text_color, True))
         y = para(c, section["body"], M, y - 9, W - 2 * M - 8 * mm, style(10.7, 15.8, body_color))
         title_lower = section["title"].lower()
-        is_leak = "leaks" in title_lower
+        is_leak = "leaks" in title_lower or "brechas" in title_lower
         is_scorecard = section["title"].startswith("Mini")
         if is_leak:
             visual_h = 48 * mm
@@ -400,10 +420,12 @@ def render(book):
 
     background(c, dark=True)
     draw_logo(c, M, H - 34 * mm, 78 * mm, dark=True)
-    final_title = "Lassen Sie Ihren aktuellen Projektweg prüfen." if book["lang"] == "de" else "Have your current project path reviewed."
+    final_title = "Lassen Sie Ihren aktuellen Projektweg prüfen." if book["lang"] == "de" else "Analicemos su recorrido comercial actual." if book["lang"] == "es" else "Have your current project path reviewed."
     final_body = (
         "30 Minuten, ein konkretes Projekt oder eine Leadquelle, die aktuell Reibung erzeugt. Wir prüfen Projektauftritt, Lead-Qualifizierung, Übergabe und Follow-up - und Sie erhalten eine klare Einschätzung, an welcher Stelle Ihr System Kontext verliert und ob ein strukturierter Aufbau wirtschaftlich trägt. Kein Pitch, kein vollständiges Betriebshandbuch. Eine Diagnose, mit der Sie selbst entscheiden können."
         if book["lang"] == "de"
+        else "En 30 minutos revisamos una promoción, una zona o una fuente de solicitudes que actualmente genera fricción. Analizamos la presentación, la cualificación, el traspaso y el seguimiento para determinar dónde se pierde contexto y si una estructura específica tiene sentido económico. Un diagnóstico útil para decidir con criterio."
+        if book["lang"] == "es"
         else "30 minutes, one concrete project or lead source that currently creates friction. We review project presence, lead qualification, handover and follow-up, then give you a clear assessment of where your system loses context and whether a structured setup makes commercial sense. No pitch, no operations manual handed over for nothing. A diagnosis you can use to decide for yourself."
     )
     y = para(c, final_title, M, H - 82 * mm, W - 2 * M, style(26, 30, colors.white, True))
@@ -413,7 +435,7 @@ def render(book):
     c.roundRect(M, button_y, 72 * mm, 14 * mm, 7 * mm, stroke=0, fill=1)
     c.setFillColor(colors.HexColor("#111318"))
     c.setFont("Helvetica-Bold", 11)
-    c.drawCentredString(M + 36 * mm, button_y + 5 * mm, "-> novalure.eu")
+    c.drawCentredString(M + 36 * mm, button_y + 5 * mm, "-> novalure.eu/es" if book["lang"] == "es" else "-> novalure.eu")
     pipeline(c, M, 36 * mm, W - 2 * M, 58 * mm, book["lang"], book["audience"])
     footer(c, page, book["lang"], dark=True)
     c.save()
@@ -426,6 +448,8 @@ def main():
         "bautraeger-pipeline-playbook-de.html",
         "real-estate-agent-lead-playbook-en.html",
         "makler-lead-playbook-de.html",
+        "novalure-playbook-promotores-es.html",
+        "novalure-playbook-agencias-inmobiliarias-es.html",
     }
     for html_path in sorted(path for path in OUT_DIR.glob("*.html") if path.name in playbook_names):
         render(parse_book(html_path))

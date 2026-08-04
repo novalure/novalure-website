@@ -24,7 +24,7 @@ export default async function LocaleLayout({
     <>
       <script
         dangerouslySetInnerHTML={{
-          __html: `document.documentElement.lang=${JSON.stringify(locale)};`
+          __html: `document.documentElement.lang=${JSON.stringify(locale === "es" ? "es-ES" : locale === "de" ? "de-DE" : "en-GB")};`
         }}
       />
       <Header locale={locale} />

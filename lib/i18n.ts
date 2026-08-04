@@ -1,4 +1,4 @@
-export const locales = ["en", "de"] as const;
+export const locales = ["en", "de", "es"] as const;
 
 export type Locale = (typeof locales)[number];
 
@@ -6,7 +6,8 @@ export const defaultLocale: Locale = "en";
 
 export const crmAppUrls: Record<Locale, string> = {
   en: "https://novalure-crm.app",
-  de: "https://novalure-crm.app"
+  de: "https://novalure-crm.app",
+  es: "https://novalure-crm.app"
 };
 
 export function getCrmAppUrl(locale: Locale) {
@@ -27,17 +28,17 @@ export type PageKey =
   | "cookies";
 
 export const routeMap: Record<PageKey, Record<Locale, string>> = {
-  home: { en: "/en", de: "/de" },
-  developers: { en: "/en/developers", de: "/de/bautraeger" },
-  agents: { en: "/en/agents", de: "/de/makler" },
-  playbooks: { en: "/en/playbooks", de: "/de/playbooks" },
-  contact: { en: "/en/contact", de: "/de/kontakt" },
-  handover: { en: "/en/system-example", de: "/de/systembeispiel" },
-  playbookThanks: { en: "/en/playbooks/thank-you", de: "/de/playbooks/danke" },
-  auditThanks: { en: "/en/contact/thank-you", de: "/de/kontakt/danke" },
-  imprint: { en: "/en/legal/imprint", de: "/de/rechtliches/impressum" },
-  privacy: { en: "/en/legal/privacy", de: "/de/rechtliches/datenschutz" },
-  cookies: { en: "/en/legal/cookies", de: "/de/rechtliches/cookies" }
+  home: { en: "/en", de: "/de", es: "/es" },
+  developers: { en: "/en/developers", de: "/de/bautraeger", es: "/es/promotores" },
+  agents: { en: "/en/agents", de: "/de/makler", es: "/es/agencias-inmobiliarias" },
+  playbooks: { en: "/en/playbooks", de: "/de/playbooks", es: "/es/playbooks" },
+  contact: { en: "/en/contact", de: "/de/kontakt", es: "/es/analisis-del-proyecto" },
+  handover: { en: "/en/system-example", de: "/de/systembeispiel", es: "/es/ejemplo-del-sistema" },
+  playbookThanks: { en: "/en/playbooks/thank-you", de: "/de/playbooks/danke", es: "/es/playbooks/gracias" },
+  auditThanks: { en: "/en/contact/thank-you", de: "/de/kontakt/danke", es: "/es/analisis-del-proyecto/gracias" },
+  imprint: { en: "/en/legal/imprint", de: "/de/rechtliches/impressum", es: "/es/aviso-legal" },
+  privacy: { en: "/en/legal/privacy", de: "/de/rechtliches/datenschutz", es: "/es/privacidad" },
+  cookies: { en: "/en/legal/cookies", de: "/de/rechtliches/cookies", es: "/es/cookies" }
 };
 
 export type NavigationItem =
@@ -48,7 +49,7 @@ export const navigationItems: NavigationItem[] = [
   { type: "route", key: "home" },
   { type: "route", key: "developers" },
   { type: "route", key: "agents" },
-  { type: "anchor", key: "proof", href: { en: "/en#proof", de: "/de#proof" } },
+  { type: "anchor", key: "proof", href: { en: "/en#proof", de: "/de#proof", es: "/es#proof" } },
   { type: "route", key: "playbooks" },
   { type: "route", key: "contact" }
 ];
@@ -59,6 +60,10 @@ export const allPageKeys = Object.keys(routeMap) as PageKey[];
 const routeAliases: Partial<Record<Locale, Partial<Record<string, PageKey>>>> = {
   de: {
     "/de/legal/privacy": "privacy"
+  },
+  es: {
+    "/es/sistema": "handover",
+    "/es/proceso": "home"
   }
 };
 
@@ -105,6 +110,7 @@ export function getAlternates(locale: Locale, key: PageKey) {
     languages: {
       "en-GB": routeMap[key].en,
       "de-DE": routeMap[key].de,
+      "es-ES": routeMap[key].es,
       "x-default": routeMap[key].en
     }
   };
@@ -136,6 +142,19 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     imprint: "Impressum",
     privacy: "Datenschutz",
     cookies: "Cookies"
+  },
+  es: {
+    home: "Inicio",
+    developers: "Promotores",
+    agents: "Agencias inmobiliarias",
+    playbooks: "Playbook",
+    contact: "Análisis del proyecto",
+    handover: "Ejemplo del sistema",
+    playbookThanks: "Playbook solicitado",
+    auditThanks: "Análisis solicitado",
+    imprint: "Aviso legal",
+    privacy: "Privacidad",
+    cookies: "Cookies"
   }
 };
 
@@ -147,5 +166,13 @@ export const anchorLabels: Record<Locale, Record<"proof" | "system", string>> = 
   de: {
     proof: "Proof / Systembeispiele",
     system: "System"
+  },
+  es: {
+    proof: "Referencias / ejemplos",
+    system: "Sistema"
   }
 };
+
+export function localeValue<T>(locale: Locale, values: Record<Locale, T>): T {
+  return values[locale];
+}

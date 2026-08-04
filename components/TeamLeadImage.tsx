@@ -8,7 +8,7 @@ type ImageState = "photo" | "fallback";
 
 export function TeamLeadImage({ locale }: { locale: Locale }) {
   const [imageState, setImageState] = useState<ImageState>("photo");
-  const alt = locale === "de" ? "Franz Romih, Teamleitung bei NovaLure" : "Franz Romih, Team Lead at NovaLure";
+  const alt = locale === "de" ? "Franz Romih, Teamleitung bei NovaLure" : locale === "es" ? "Franz Romih, responsable de equipo de NovaLure" : "Franz Romih, Team Lead at NovaLure";
 
   return (
     <div className={`team-lead-media ${imageState === "fallback" ? "is-fallback" : ""}`}>

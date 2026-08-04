@@ -180,6 +180,24 @@ describe("playbook submission route", () => {
     expect(mocks.register).not.toHaveBeenCalled();
   });
 
+  it("sends the Spanish playbook and recipient email for an es-ES request", async () => {
+    const response = await POST(request(validBody({
+      locale: "es",
+      playbook: "es-developer",
+      segment: "developers",
+      pageUri: "https://www.novalure.eu/es/promotores"
+    })));
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ ok: true, locale: "es" });
+    const recipient = mocks.send.mock.calls[0][0] as { subject: string; html: string; text: string };
+    expect(recipient.subject).toBe("Aquí tiene su Playbook de NovaLure");
+    expect(recipient.html).toContain("Descargar el Playbook");
+    expect(recipient.html).toContain("/playbooks/novalure-playbook-promotores-es.pdf");
+    expect(recipient.html).toContain("/es/privacidad");
+    expect(recipient.text).toContain("Hola, Ada Lovelace:");
+  });
+
   it("registers marketing state before the DOI email and uses an idempotency key", async () => {
     const response = await POST(request(validBody({ consentMarketing: true })));
     expect(response.status).toBe(200);

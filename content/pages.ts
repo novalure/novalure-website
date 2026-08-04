@@ -1,5 +1,6 @@
 import { type Locale, type PageKey } from "@/lib/i18n";
 import { relaunchCopy } from "@/content/relaunch-copy";
+import { pagesEs, playbooksEs } from "@/content/pages-es";
 
 export type Cta =
   | {
@@ -81,6 +82,13 @@ const labels = {
     playbook: "Playbook herunterladen",
     developerPlaybook: "Bauträger-Projekt-Playbook",
     agentPlaybook: "Makler-Lead-Playbook"
+  },
+  es: {
+    audit: "Solicitar un análisis del proyecto",
+    handover: "Ver un ejemplo de traspaso",
+    playbook: "Descargar el Playbook",
+    developerPlaybook: "Playbook para promotores inmobiliarios",
+    agentPlaybook: "Playbook de captación para agencias inmobiliarias"
   }
 };
 
@@ -128,7 +136,8 @@ export const playbooks: Record<Locale, Playbook[]> = {
         "Wie strukturierte Nachverfolgung ernsthafte Chancen schützt"
       ]
     }
-  ]
+  ],
+  es: playbooksEs
 };
 
 const hardFaq: Record<Locale, FaqItem[]> = {
@@ -287,7 +296,8 @@ const hardFaq: Record<Locale, FaqItem[]> = {
       question: "When is setup not worth it?",
       answer: "When there is no project, market area, media or implementation budget, follow-up or clear goal."
     }
-  ]
+  ],
+  es: []
 };
 
 const homeContent: Record<Locale, HomeContent> = {
@@ -492,7 +502,8 @@ const homeContent: Record<Locale, HomeContent> = {
     },
     faq: relaunchCopy.en.faq.map(({ q, a }) => ({ question: q, answer: a })),
     finalCtaTitle: "Find out where your lead path is wasting sales time."
-  }
+  },
+  es: pagesEs.home as HomeContent
 };
 
 export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> = {
@@ -759,7 +770,8 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
     imprint: legal("en", "imprint"),
     privacy: legal("en", "privacy"),
     cookies: legal("en", "cookies")
-  }
+  },
+  es: pagesEs
 };
 
 function thankYou(locale: Locale, key: "playbookThanks" | "auditThanks"): PageContent {

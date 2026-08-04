@@ -6,7 +6,7 @@ import { getPath, type Locale } from "@/lib/i18n";
 
 export default function LocaleNotFound() {
   const pathname = usePathname();
-  const locale: Locale = pathname.startsWith("/de") ? "de" : "en";
+  const locale: Locale = pathname.startsWith("/de") ? "de" : pathname.startsWith("/es") ? "es" : "en";
   const copy = locale === "de"
     ? {
         eyebrow: "404",
@@ -14,7 +14,14 @@ export default function LocaleNotFound() {
         body: "Der Link ist veraltet oder die Seite existiert in dieser Sprache nicht.",
         cta: "Zur Startseite"
       }
-    : {
+    : locale === "es"
+      ? {
+          eyebrow: "404",
+          title: "No hemos encontrado esta página.",
+          body: "Es posible que el enlace esté desactualizado o que la página no exista en este idioma.",
+          cta: "Volver al inicio"
+        }
+      : {
         eyebrow: "404",
         title: "This page was not found.",
         body: "The link may be outdated or the page does not exist in this language.",

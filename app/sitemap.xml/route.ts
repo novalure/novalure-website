@@ -3,16 +3,22 @@ const SITE_URL = "https://www.novalure.eu";
 const routes = [
   "/en",
   "/de",
+  "/es",
   "/en/developers",
   "/de/bautraeger",
+  "/es/promotores",
   "/en/agents",
   "/de/makler",
+  "/es/agencias-inmobiliarias",
   "/en/playbooks",
   "/de/playbooks",
+  "/es/playbooks",
   "/en/contact",
   "/de/kontakt",
+  "/es/analisis-del-proyecto",
   "/en/system-example",
-  "/de/systembeispiel"
+  "/de/systembeispiel",
+  "/es/ejemplo-del-sistema"
 ];
 
 function absolute(path: string) {

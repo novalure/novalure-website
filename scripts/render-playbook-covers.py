@@ -15,6 +15,8 @@ BOOKS = {
     "makler-lead-playbook-de.html": "covers/makler-de-cover.png",
     "developer-pipeline-playbook-en.html": "covers/developer-en-cover.png",
     "real-estate-agent-lead-playbook-en.html": "covers/agent-en-cover.png",
+    "novalure-playbook-promotores-es.html": "covers/promotores-es-cover.png",
+    "novalure-playbook-agencias-inmobiliarias-es.html": "covers/agencias-es-cover.png",
 }
 
 W, H = 1240, 1754
@@ -52,7 +54,7 @@ def parse_cover(path):
     footer = text_content(cover.xpath(".//*[contains(@class,'cover-card')]")[0])
     return {
         "lang": lang,
-        "audience": "developer" if "developer" in path.name or "bautraeger" in path.name else "agent",
+        "audience": "developer" if "developer" in path.name or "bautraeger" in path.name or "promotores" in path.name else "agent",
         "eyebrow": text_content(cover.xpath(".//*[contains(@class,'eyebrow')]")[0]),
         "title": text_content(cover.xpath(".//h1")[0]),
         "subtitle": text_content(cover.xpath(".//*[contains(@class,'subtitle')]")[0]),
@@ -126,6 +128,10 @@ def flow_labels(lang, audience):
         return ["Nachfrage", "Projekt-Fit", "Intent-Filter", "Übergabe", "Check-Frage"]
     if lang == "de":
         return ["Lokale Nachfrage", "Segment", "Intent-Filter", "Übergabe", "Check-Frage"]
+    if lang == "es" and audience == "developer":
+        return ["Demanda", "Encaje", "Cualificación", "Traspaso", "Análisis"]
+    if lang == "es":
+        return ["Demanda local", "Segmento", "Intención", "Traspaso", "Análisis"]
     if audience == "developer":
         return ["Demand", "Project Fit", "Intent Filter", "Handover", "Check Question"]
     return ["Local Demand", "Segment", "Intent Filter", "Handover", "Check Question"]

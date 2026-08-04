@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getPath, getPlaybookFormPath } from "@/lib/i18n";
+import { getPath, getPlaybookFormPath, type Locale } from "@/lib/i18n";
 import { playbooks, type Cta, type HomeContent, type PageContent } from "@/content/pages";
 import { ContactInquiryForm } from "@/components/ContactInquiryForm";
 import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholders";
@@ -8,7 +8,9 @@ import { TeamLeadImage } from "@/components/TeamLeadImage";
 import { RelaunchHomePage } from "@/components/relaunch/RelaunchHomePage";
 import { FaqAccordion } from "@/components/relaunch/RelaunchInteractive";
 
-type Locale = "en" | "de";
+function localeCopy<T>(locale: Locale, en: T, de: T, es: T): T {
+  return locale === "de" ? de : locale === "es" ? es : en;
+}
 
 export function MarketingPage({ content }: { content: PageContent | HomeContent }) {
   if (content.template === "home") return <HomePage content={content as HomeContent} />;
@@ -21,13 +23,13 @@ export function MarketingPage({ content }: { content: PageContent | HomeContent 
 }
 
 function Hero({ content }: { content: PageContent }) {
-  const homeLabel = content.locale === "de" ? "Startseite" : "Home";
+  const homeLabel = localeCopy(content.locale, "Home", "Startseite", "Inicio");
 
   return (
     <section className={`v3-subpage-hero is-${content.template}`}>
       <div className="v3-subpage-hero-inner">
         <div className="v3-subpage-hero-copy">
-          <nav className="v3-breadcrumb" aria-label={content.locale === "de" ? "Brotkrümelnavigation" : "Breadcrumb"}>
+          <nav className="v3-breadcrumb" aria-label={localeCopy(content.locale, "Breadcrumb", "Brotkrümelnavigation", "Migas de pan")}>
             <Link href={getPath(content.locale, "home")}>{homeLabel}</Link>
             <span aria-hidden="true">/</span>
             <span aria-current="page">{content.eyebrow}</span>
@@ -47,19 +49,19 @@ function Hero({ content }: { content: PageContent }) {
 }
 
 function SubpageSignalCard({ content }: { content: PageContent }) {
-  const de = content.locale === "de";
+  const { locale } = content;
   const label = content.template === "legal"
-    ? de ? "Unternehmensangaben" : "Company details"
+    ? localeCopy(locale, "Company details", "Unternehmensangaben", "Datos de la empresa")
     : content.template === "thank-you"
-      ? de ? "Nächste Schritte" : "Next steps"
-      : de ? "Auf einen Blick" : "At a glance";
+      ? localeCopy(locale, "Next steps", "Nächste Schritte", "Próximos pasos")
+      : localeCopy(locale, "At a glance", "Auf einen Blick", "De un vistazo");
 
   return (
     <aside className={`v3-subpage-signal is-${content.template}`} aria-label={label}>
       <div className="v3-subpage-signal-bar">
         <span className="v3-window-dots" aria-hidden="true"><i /><i /><i /></span>
         <strong>NovaLure</strong>
-        <span>{de ? "Übersicht" : "Overview"}</span>
+        <span>{localeCopy(locale, "Overview", "Übersicht", "Resumen")}</span>
       </div>
       <div className="v3-subpage-signal-body">
         <p>{label}</p>
@@ -73,7 +75,7 @@ function SubpageSignalCard({ content }: { content: PageContent }) {
         </ol>
       </div>
       <p className="v3-subpage-signal-note">
-        {de ? "Klarer Kontext. Klarer nächster Schritt." : "Clear context. Clear next step."}
+        {localeCopy(locale, "Clear context. Clear next step.", "Klarer Kontext. Klarer nächster Schritt.", "Contexto claro. Siguiente paso claro.")}
       </p>
     </aside>
   );
@@ -85,7 +87,8 @@ function HomePage({ content }: { content: HomeContent }) {
 
 const landingCtaLabels = {
   de: { primary: "Projekt-Check anfragen", secondary: "Playbook herunterladen" },
-  en: { primary: "Request Project Check", secondary: "Download playbook" }
+  en: { primary: "Request Project Check", secondary: "Download playbook" },
+  es: { primary: "Solicitar un análisis", secondary: "Descargar el Playbook" }
 } as const;
 
 const developerLandingCopy = {
@@ -272,7 +275,7 @@ const developerLandingCopy = {
 } as const;
 
 function DeveloperLandingPage({ locale }: { locale: Locale }) {
-  const copy = developerLandingCopy[locale];
+  const copy = developerLandingCopy[locale === "es" ? "en" : locale];
   const de = locale === "de";
 
   return (
@@ -743,29 +746,29 @@ function CaseProofSection({ locale }: { locale: Locale }) {
 }
 
 function ProofSection({ locale }: { locale: Locale }) {
-  const de = locale === "de";
   return (
     <section className="proof-section" id="proof" data-track-section="proof">
       <div className="section-heading">
-        <p className="eyebrow">{de ? "Systembeispiel" : "System example"}</p>
-        <h2>{de ? "Was eine vorbereitete Anfrage vor dem ersten Gespräch enthalten sollte" : "What a prepared enquiry should contain before the first call"}</h2>
+        <p className="eyebrow">{localeCopy(locale, "System example", "Systembeispiel", "Ejemplo del sistema")}</p>
+        <h2>{localeCopy(locale, "What a prepared enquiry should contain before the first call", "Was eine vorbereitete Anfrage vor dem ersten Gespräch enthalten sollte", "Qué debe incluir una solicitud preparada antes de la primera conversación")}</h2>
         <p>
-          {de
-            ? "Der Wert entsteht nicht durch Name und Telefonnummer. Der Wert entsteht, wenn Quelle, Interesse, Timing, Budgetnähe, Zuständigkeit und nächster Schritt sichtbar sind."
-            : "The value is not the name and phone number. The value appears when source, interest, timing, budget proximity, ownership and next step are visible."}
+          {localeCopy(locale,
+            "The value is not the name and phone number. The value appears when source, interest, timing, budget proximity, ownership and next step are visible.",
+            "Der Wert entsteht nicht durch Name und Telefonnummer. Der Wert entsteht, wenn Quelle, Interesse, Timing, Budgetnähe, Zuständigkeit und nächster Schritt sichtbar sind.",
+            "El valor no está en el nombre y el teléfono. Aparece cuando se ven el origen, el interés, el plazo, el encaje presupuestario, la responsabilidad y el siguiente paso.")}
         </p>
       </div>
       <div className="proof-feature-grid">
         <article className="proof-card proof-card-feature">
-          <span className="proof-label">{de ? "Vorbereitete Übergabe" : "Prepared handover"}</span>
-          <h3>{de ? "Eine Anfrage wird erst wertvoll, wenn Vertrieb den nächsten sinnvollen Schritt sieht." : "An enquiry becomes valuable when sales can see the next sensible step."}</h3>
+          <span className="proof-label">{localeCopy(locale, "Prepared handover", "Vorbereitete Übergabe", "Traspaso preparado")}</span>
+          <h3>{localeCopy(locale, "An enquiry becomes valuable when sales can see the next sensible step.", "Eine Anfrage wird erst wertvoll, wenn Vertrieb den nächsten sinnvollen Schritt sieht.", "Una solicitud cobra valor cuando el equipo comercial identifica el siguiente paso adecuado.")}</h3>
           <MockHandover locale={locale} compact />
         </article>
         <div className="proof-support-grid">
-        <ProofCard title={de ? "Was im Projekt-Check geprüft wird" : "What the Project Check reviews"} label={de ? "Beispiel-Auszug" : "Example excerpt"}>
+        <ProofCard title={localeCopy(locale, "What the Project Check reviews", "Was im Projekt-Check geprüft wird", "Qué revisa el análisis del proyecto")} label={localeCopy(locale, "Example excerpt", "Beispiel-Auszug", "Extracto de ejemplo")}>
           <Scorecard locale={locale} />
         </ProofCard>
-        <ProofCard title={de ? "So trennen wir Neugier von Gesprächsreife" : "How curiosity is separated from conversation readiness"} label={de ? "Einordnung" : "Readiness view"}>
+        <ProofCard title={localeCopy(locale, "How curiosity is separated from conversation readiness", "So trennen wir Neugier von Gesprächsreife", "Cómo distinguimos la curiosidad de la preparación para conversar")} label={localeCopy(locale, "Readiness view", "Einordnung", "Nivel de preparación")}>
           <ScoringMatrix locale={locale} />
         </ProofCard>
         </div>
@@ -785,27 +788,35 @@ function ProofCard({ title, label, children }: { title: string; label: string; c
 }
 
 function MockHandover({ locale, compact = false }: { locale: Locale; compact?: boolean }) {
-  const rows = locale === "de"
-    ? [
+  const rows = localeCopy(locale,
+    [
+      ["Segment", "Buyer, seller or project enquiry"],
+      ["Source", "Asset, campaign, portal or referral"],
+      ["Interest", "Buy, sell, invest or research"],
+      ["Timing", "0-3 months, 3-6 months or later"],
+      ["Budget proximity", "fit / open / not a fit"],
+      ["Next step", "Callback, search profile, valuation or project call"]
+    ],
+    [
         ["Segment", "Käufer, Eigentümer oder Projektinteressent"],
         ["Quelle", "Asset, Kampagne, Portal oder Empfehlung"],
         ["Interesse", "Kaufen, verkaufen, investieren oder informieren"],
         ["Timing", "0-3 Monate, 3-6 Monate oder später"],
         ["Budgetnähe", "passt / offen / nicht passend"],
         ["Nächster Schritt", "Rückruf, Suchprofil, Bewertung oder Projektgespräch"]
-      ]
-    : [
-        ["Segment", "Buyer, seller or project enquiry"],
-        ["Source", "Asset, campaign, portal or referral"],
-        ["Interest", "Buy, sell, invest or research"],
-        ["Timing", "0-3 months, 3-6 months or later"],
-        ["Budget proximity", "fit / open / not a fit"],
-        ["Next step", "Callback, search profile, valuation or project call"]
-      ];
+      ],
+    [
+      ["Segmento", "Comprador, propietario o interesado en la promoción"],
+      ["Origen", "Activo, campaña, portal o recomendación"],
+      ["Interés", "Comprar, vender, invertir o informarse"],
+      ["Plazo", "0-3 meses, 3-6 meses o más adelante"],
+      ["Encaje presupuestario", "encaja / abierto / no encaja"],
+      ["Siguiente paso", "Llamada, perfil de búsqueda, valoración o conversación sobre la promoción"]
+    ]);
 
   return (
     <div className={`mock-table ${compact ? "mock-table-compact" : ""}`}>
-      <span className="mock-badge">{locale === "de" ? "Demo – keine echten Kundendaten" : "Demo – no real client data"}</span>
+      <span className="mock-badge">{localeCopy(locale, "Demo – no real client data", "Demo – keine echten Kundendaten", "Demostración: sin datos reales de clientes")}</span>
       {rows.map(([label, value]) => (
         <div key={label}>
           <span>{label}</span>
@@ -817,21 +828,28 @@ function MockHandover({ locale, compact = false }: { locale: Locale; compact?: b
 }
 
 function Scorecard({ locale }: { locale: Locale }) {
-  const rows = locale === "de"
-    ? [
+  const rows = localeCopy(locale,
+    [
+      ["Concrete project / market area", "clear", "green"],
+      ["Enquiry context", "partial", "amber"],
+      ["Intent filter", "partial", "amber"],
+      ["Sales handover", "open", "red"],
+      ["Check question", "clarify", "red"]
+    ],
+    [
         ["Konkretes Projekt / Marktgebiet", "klar", "green"],
         ["Kontext zur Anfrage", "teilweise", "amber"],
         ["Intent-Filter", "teilweise", "amber"],
         ["Übergabe an Vertrieb", "offen", "red"],
         ["Check-Frage", "klären", "red"]
-      ]
-    : [
-        ["Concrete project / market area", "clear", "green"],
-        ["Enquiry context", "partial", "amber"],
-        ["Intent filter", "partial", "amber"],
-        ["Sales handover", "open", "red"],
-        ["Check question", "clarify", "red"]
-      ];
+      ],
+    [
+      ["Promoción o zona de mercado concreta", "claro", "green"],
+      ["Contexto de la solicitud", "parcial", "amber"],
+      ["Filtro de intención", "parcial", "amber"],
+      ["Traspaso comercial", "abierto", "red"],
+      ["Pregunta de análisis", "aclarar", "red"]
+    ]);
 
   return (
     <div className="scorecard">
@@ -847,9 +865,11 @@ function Scorecard({ locale }: { locale: Locale }) {
 }
 
 function ScoringMatrix({ locale }: { locale: Locale }) {
-  const rows = locale === "de"
-    ? [["Fit", 22], ["Interesse", 26], ["Timing", 18], ["Budgetnähe", 16], ["Gesprächsreife", 12]]
-    : [["Fit", 22], ["Interest", 26], ["Timing", 18], ["Budget proximity", 16], ["Conversation readiness", 12]];
+  const rows = localeCopy(locale,
+    [["Fit", 22], ["Interest", 26], ["Timing", 18], ["Budget proximity", 16], ["Conversation readiness", 12]],
+    [["Fit", 22], ["Interesse", 26], ["Timing", 18], ["Budgetnähe", 16], ["Gesprächsreife", 12]],
+    [["Encaje", 22], ["Interés", 26], ["Plazo", 18], ["Encaje presupuestario", 16], ["Preparación para conversar", 12]]
+  );
 
   return (
     <div className="matrix">
@@ -860,15 +880,17 @@ function ScoringMatrix({ locale }: { locale: Locale }) {
           <strong>{score}</strong>
         </div>
       ))}
-      <p>{locale === "de" ? "Gesamt: 94 / 100 - priorisiert" : "Total: 94 / 100 - prioritised"}</p>
+      <p>{localeCopy(locale, "Total: 94 / 100 - prioritised", "Gesamt: 94 / 100 - priorisiert", "Total: 94 / 100 - priorizado")}</p>
     </div>
   );
 }
 
 function FlowMock({ locale }: { locale: Locale }) {
-  const steps = locale === "de"
-    ? ["Quelle", "Projektseite", "Qualifizierung", "System", "Übergabe", "Nachfassen"]
-    : ["Source", "Project page", "Qualification", "System", "Handover", "Follow-up"];
+  const steps = localeCopy(locale,
+    ["Source", "Project page", "Qualification", "System", "Handover", "Follow-up"],
+    ["Quelle", "Projektseite", "Qualifizierung", "System", "Übergabe", "Nachfassen"],
+    ["Origen", "Página de la promoción", "Cualificación", "Sistema", "Traspaso", "Seguimiento"]
+  );
 
   return (
     <div className="flow-mock">
@@ -878,9 +900,11 @@ function FlowMock({ locale }: { locale: Locale }) {
 }
 
 function Checklist({ locale }: { locale: Locale }) {
-  const items = locale === "de"
-    ? ["Warum dieses Playbook existiert", "Anfragen ohne Vertriebskontext", "Typische Lücken zwischen Auftritt und Gespräch", "Mindestkontext für vorbereitete Leads", "Scorecard für Projekt- und Lead-Reife", "Fragen für den Projekt-Check", "Wann ein Check sinnvoll ist", "Nächster Schritt: 30-Minuten-Check"]
-    : ["Why this playbook exists", "Enquiries without sales context", "Typical gaps between project presence and conversation", "Minimum context for prepared leads", "Scorecard for project and lead readiness", "Questions for the Project Check", "When a check makes sense", "Next step: 30-minute check"];
+  const items = localeCopy(locale,
+    ["Why this playbook exists", "Enquiries without sales context", "Typical gaps between project presence and conversation", "Minimum context for prepared leads", "Scorecard for project and lead readiness", "Questions for the Project Check", "When a check makes sense", "Next step: 30-minute check"],
+    ["Warum dieses Playbook existiert", "Anfragen ohne Vertriebskontext", "Typische Lücken zwischen Auftritt und Gespräch", "Mindestkontext für vorbereitete Leads", "Scorecard für Projekt- und Lead-Reife", "Fragen für den Projekt-Check", "Wann ein Check sinnvoll ist", "Nächster Schritt: 30-Minuten-Check"],
+    ["Por qué existe este Playbook", "Solicitudes sin contexto comercial", "Brechas entre la presentación y la conversación", "Contexto mínimo para oportunidades preparadas", "Evaluación de madurez de la promoción y la solicitud", "Preguntas para el análisis del proyecto", "Cuándo conviene realizar un análisis", "Siguiente paso: análisis de 30 minutos"]
+  );
 
   return (
     <ul className="qa-list">
@@ -1042,21 +1066,21 @@ function PipelineAuditSection({ locale }: { locale: Locale }) {
 }
 
 function PlaybookConversion({ locale, title, body }: { locale: Locale; title: string; body: string }) {
-  return <PlaybookHub locale={locale} title={title} body={body} eyebrow={locale === "en" ? "Secondary funnel" : "Secondary Funnel"} />;
+  return <PlaybookHub locale={locale} title={title} body={body} eyebrow={localeCopy(locale, "Secondary funnel", "Secondary Funnel", "Recurso complementario")} />;
 }
 
 function PlaybookHub({ locale, title, body, eyebrow, id }: { locale: Locale; title: string; body: string; eyebrow?: string; id?: string }) {
   return (
     <section className="playbook-section" id={id}>
       <div className="section-heading">
-        <p className="eyebrow">{eyebrow || (locale === "en" ? "Playbook selection" : "Playbook-Auswahl")}</p>
+        <p className="eyebrow">{eyebrow || localeCopy(locale, "Playbook selection", "Playbook-Auswahl", "Selección del Playbook")}</p>
         <h2>{title}</h2>
         <p>{body}</p>
       </div>
       <div className="playbook-hub-grid">
         {playbooks[locale].map((playbook) => (
           <article className="playbook-summary-card" key={playbook.key}>
-            <span className="pill">{playbook.key === "developer" ? (locale === "en" ? "Developers" : "Bauträger") : locale === "en" ? "Agents" : "Makler"}</span>
+            <span className="pill">{playbook.key === "developer" ? localeCopy(locale, "Developers", "Bauträger", "Promotores") : localeCopy(locale, "Agents", "Makler", "Agencias inmobiliarias")}</span>
             <h3>{playbook.title}</h3>
             <p>{playbook.subtitle}</p>
             <ul className="check-list">
@@ -1259,8 +1283,8 @@ function AudiencePage({ content }: { content: PageContent }) {
       </section>
       <PlaybookConversion
         locale={content.locale}
-        title={content.locale === "en" ? "Download the playbook, then request a check if the problem is concrete." : "Laden Sie das Playbook, dann fragen Sie bei konkretem Problem den Projekt-Check an."}
-        body={content.locale === "en" ? "The playbook prepares your team for a sharper review." : "Das Playbook bereitet Ihr Team auf einen schärferen Check vor."}
+        title={localeCopy(content.locale, "Download the playbook, then request a check if the problem is concrete.", "Laden Sie das Playbook, dann fragen Sie bei konkretem Problem den Projekt-Check an.", "Descargue el Playbook y solicite un análisis cuando el problema sea concreto.")}
+        body={localeCopy(content.locale, "The playbook prepares your team for a sharper review.", "Das Playbook bereitet Ihr Team auf einen schärferen Check vor.", "El Playbook prepara a su equipo para un análisis más preciso.")}
       />
       <FaqSection locale={content.locale} items={content.faq || []} />
       <FinalCta content={content} />
@@ -1270,17 +1294,16 @@ function AudiencePage({ content }: { content: PageContent }) {
 
 function AudienceProof({ locale, pageKey }: { locale: Locale; pageKey: PageContent["key"] }) {
   const isDeveloper = pageKey === "developers";
-  const de = locale === "de";
   const title = isDeveloper
-    ? de ? "Demo: vorbereitete Bauträger-Anfrage" : "Demo: prepared developer enquiry"
-    : de ? "Demo: vorbereitete Makler-Anfragen" : "Demo: prepared agent enquiries";
+    ? localeCopy(locale, "Demo: prepared developer enquiry", "Demo: vorbereitete Bauträger-Anfrage", "Demostración: solicitud preparada para un promotor")
+    : localeCopy(locale, "Demo: prepared agent enquiries", "Demo: vorbereitete Makler-Anfragen", "Demostración: solicitudes preparadas para una agencia");
 
   return (
     <section className="proof-section compact-proof">
       <div className="section-heading">
-        <p className="eyebrow">{de ? "Handover-Beispiel" : "Handover example"}</p>
+        <p className="eyebrow">{localeCopy(locale, "Handover example", "Handover-Beispiel", "Ejemplo de traspaso")}</p>
         <h2>{title}</h2>
-        <p>{de ? "Alle Daten sind Demo-Daten und suggerieren keine echten Kunden." : "All data is demo data and does not suggest real clients."}</p>
+        <p>{localeCopy(locale, "All data is demo data and does not suggest real clients.", "Alle Daten sind Demo-Daten und suggerieren keine echten Kunden.", "Todos los datos son de demostración y no corresponden a clientes reales.")}</p>
       </div>
       {isDeveloper ? (
         <MockHandover locale={locale} />
@@ -1288,10 +1311,11 @@ function AudienceProof({ locale, pageKey }: { locale: Locale; pageKey: PageConte
         <div className="dual-mock">
           <MockHandover locale={locale} />
           <div className="mock-table">
-            <span className="mock-badge">{de ? "Demo - Käuferlead" : "Demo - buyer lead"}</span>
-            {(de
-              ? [["Suchgebiet", "Wien Süd"], ["Objektart", "Eigentumswohnung"], ["Budgetnähe", "bis 650.000"], ["Finanzierung", "vorbesprochen"], ["Timing", "0-6 Monate"], ["Must-haves", "Balkon, 3 Zimmer"], ["Nächster Schritt", "Suchprofil-Call"]]
-              : [["Search area", "Vienna South"], ["Property type", "Apartment"], ["Budget proximity", "up to 650,000"], ["Financing", "pre-discussed"], ["Timing", "0-6 months"], ["Must-haves", "balcony, 3 rooms"], ["Next step", "Search profile call"]]
+            <span className="mock-badge">{localeCopy(locale, "Demo - buyer lead", "Demo - Käuferlead", "Demostración - oportunidad de comprador")}</span>
+            {localeCopy(locale,
+              [["Search area", "Vienna South"], ["Property type", "Apartment"], ["Budget proximity", "up to 650,000"], ["Financing", "pre-discussed"], ["Timing", "0-6 months"], ["Must-haves", "balcony, 3 rooms"], ["Next step", "Search profile call"]],
+              [["Suchgebiet", "Wien Süd"], ["Objektart", "Eigentumswohnung"], ["Budgetnähe", "bis 650.000"], ["Finanzierung", "vorbesprochen"], ["Timing", "0-6 Monate"], ["Must-haves", "Balkon, 3 Zimmer"], ["Nächster Schritt", "Suchprofil-Call"]],
+              [["Zona de búsqueda", "Sur de Viena"], ["Tipo de inmueble", "Vivienda"], ["Encaje presupuestario", "hasta 650.000"], ["Financiación", "preacordada"], ["Plazo", "0-6 meses"], ["Imprescindibles", "balcón, 3 habitaciones"], ["Siguiente paso", "Llamada sobre el perfil de búsqueda"]]
             ).map(([label, value]) => (
               <div key={label}><span>{label}</span><strong>{value}</strong></div>
             ))}
@@ -1303,30 +1327,31 @@ function AudienceProof({ locale, pageKey }: { locale: Locale; pageKey: PageConte
 }
 
 function PlaybooksPage({ content }: { content: PageContent }) {
-  const de = content.locale === "de";
+  const locale = content.locale;
   return (
     <main className="relaunch-subpage relaunch-subpage-playbooks">
       <Hero content={content} />
       <section className="proof-section">
         <div className="section-heading">
-          <p className="eyebrow">{de ? "Vorschau" : "Preview"}</p>
-          <h2>{de ? "Was im Playbook enthalten ist" : "What the playbook includes"}</h2>
+          <p className="eyebrow">{localeCopy(locale, "Preview", "Vorschau", "Vista previa")}</p>
+          <h2>{localeCopy(locale, "What the playbook includes", "Was im Playbook enthalten ist", "Qué incluye el Playbook")}</h2>
         </div>
         <div className="proof-grid">
-          <ProofCard title={de ? "Diagnose-Rahmen des Playbooks" : "Playbook diagnosis frame"} label={de ? "Vorschau" : "Preview"}>
+          <ProofCard title={localeCopy(locale, "Playbook diagnosis frame", "Diagnose-Rahmen des Playbooks", "Marco de diagnóstico del Playbook")} label={localeCopy(locale, "Preview", "Vorschau", "Vista previa")}>
             <Checklist locale={content.locale} />
           </ProofCard>
-          <ProofCard title={de ? "Beispiel: Anfrage mit Übergabekontext" : "Example: enquiry with handover context"} label={de ? "Demo-Seite" : "Demo page"}>
+          <ProofCard title={localeCopy(locale, "Example: enquiry with handover context", "Beispiel: Anfrage mit Übergabekontext", "Ejemplo: solicitud con contexto de traspaso")} label={localeCopy(locale, "Demo page", "Demo-Seite", "Página de demostración")}>
             <MockHandover locale={content.locale} compact />
           </ProofCard>
-          <ProofCard title={de ? "Ist der Projektweg prüfenswert?" : "Is the project path worth reviewing?"} label={de ? "Mini-Scorecard" : "Mini scorecard"}>
+          <ProofCard title={localeCopy(locale, "Is the project path worth reviewing?", "Ist der Projektweg prüfenswert?", "¿Conviene analizar el recorrido de la promoción?")} label={localeCopy(locale, "Mini scorecard", "Mini-Scorecard", "Evaluación breve")}>
             <Scorecard locale={content.locale} />
           </ProofCard>
-          <ProofCard title={de ? "Typische Lücken, keine fertige Lösung" : "Typical gaps, not a full solution"} label={de ? "Beispiel-Auszug" : "Example excerpt"}>
+          <ProofCard title={localeCopy(locale, "Typical gaps, not a full solution", "Typische Lücken, keine fertige Lösung", "Brechas habituales, no una solución cerrada")} label={localeCopy(locale, "Example excerpt", "Beispiel-Auszug", "Extracto de ejemplo")}>
             <ul className="qa-list">
-              {(de
-                ? ["Anfrage ist da, aber Motiv und Timing fehlen", "Nachfassen startet ohne klares Segment", "Vertrieb sieht Quelle, aber keinen nächsten Schritt", "Kampagne wird optimiert, obwohl die Übergabe unklar ist"]
-                : ["The enquiry exists, but motivation and timing are missing", "Follow-up starts without a clear segment", "Sales sees the source, but no next step", "Campaigns get optimised while handover remains unclear"]
+              {localeCopy(locale,
+                ["The enquiry exists, but motivation and timing are missing", "Follow-up starts without a clear segment", "Sales sees the source, but no next step", "Campaigns get optimised while handover remains unclear"],
+                ["Anfrage ist da, aber Motiv und Timing fehlen", "Nachfassen startet ohne klares Segment", "Vertrieb sieht Quelle, aber keinen nächsten Schritt", "Kampagne wird optimiert, obwohl die Übergabe unklar ist"],
+                ["La solicitud existe, pero faltan motivación y plazo", "El seguimiento empieza sin un segmento claro", "El equipo comercial ve el origen, pero no el siguiente paso", "La campaña se optimiza aunque el traspaso sigue sin estar claro"]
               ).map((item) => <li key={item}>{item}</li>)}
             </ul>
           </ProofCard>
@@ -1335,8 +1360,8 @@ function PlaybooksPage({ content }: { content: PageContent }) {
       <PlaybookHub
         id="playbook-download"
         locale={content.locale}
-        title={de ? "Zwei Playbooks. Ein Ziel: bessere Gespräche aus vorhandener Nachfrage." : "Two playbooks. One goal: better conversations from existing demand."}
-        body={de ? "Laden Sie das passende Playbook herunter und prüfen Sie, wo Projektauftritt, Anfrage, Nachfassen und Übergabe auseinanderfallen." : "Download the relevant playbook and see where project presence, enquiry, follow-up and handover fall apart."}
+        title={localeCopy(locale, "Two playbooks. One goal: better conversations from existing demand.", "Zwei Playbooks. Ein Ziel: bessere Gespräche aus vorhandener Nachfrage.", "Dos Playbooks. Un objetivo: mejores conversaciones a partir de la demanda existente.")}
+        body={localeCopy(locale, "Download the relevant playbook and see where project presence, enquiry, follow-up and handover fall apart.", "Laden Sie das passende Playbook herunter und prüfen Sie, wo Projektauftritt, Anfrage, Nachfassen und Übergabe auseinanderfallen.", "Descargue el Playbook adecuado y detecte dónde se separan la presentación, la solicitud, el seguimiento y el traspaso.")}
       />
       <FaqSection locale={content.locale} items={content.faq || []} />
       <FinalCta content={content} />
@@ -1382,31 +1407,40 @@ function ContactPage({ content }: { content: PageContent }) {
 }
 
 function AuditExplainer({ locale }: { locale: Locale }) {
-  const de = locale === "de";
-  const fit = de
-    ? ["Sie sind Bauträger, Projektentwickler, Projektvertrieb, Maklerteam oder professioneller Makler.", "Sie haben ein konkretes Projekt, Marktgebiet oder eine klare Zielgruppe.", "Sie möchten Projektauftritt, Kampagne, Nachfassen und Übergabe sauber verbinden.", "Sie verlieren Zeit durch unqualifizierte Anfragen oder fehlenden Kontext.", "Sie können Budget und Entscheidungskompetenz realistisch klären."]
-    : ["You are a developer, project sales team, broker team or professional real estate agent.", "You have a concrete project, market area or target audience.", "You want project presence, campaign, follow-up and handover to connect cleanly.", "You lose time through unqualified enquiries or missing context.", "You can realistically clarify budget and decision authority."];
-  const noFit = de
-    ? ["Sie sammeln nur kostenlose Marketingideen.", "Sie erwarten eine feste Lead-Zahl unabhängig von Markt und Angebot.", "Sie wollen keine CRM- oder Follow-up-Struktur aufbauen.", "Sie können aktuell kein Projekt, Marktgebiet oder Leadproblem benennen."]
-    : ["You only want free marketing ideas.", "You expect a fixed lead number regardless of market and offer.", "You do not want follow-up or handover structure.", "You cannot name a project, market area or lead-quality problem."];
-  const checks = de
-    ? ["Zielgruppe und Projekt-/Marktlogik", "Story, Visualisierung und Exposé-Logik", "bestehende Leadquellen", "Landingpage- und Formularlogik", "Qualifizierungsfragen", "Nachfassen und Übergabe", "Engpass zwischen Marketing und Vertrieb", "ob Aufbau und laufende Verbesserung wirtschaftlich sinnvoll sind"]
-    : ["target group and project/market logic", "story, visualisation and expose logic", "existing lead sources", "landing page and form logic", "qualification questions", "follow-up and handover", "bottleneck between marketing and sales", "whether setup and ongoing improvement are commercially sensible"];
-  const after = de
-    ? ["Einschätzung des aktuellen Projekt- und Lead-Wegs", "3-5 identifizierte Schwachstellen", "Empfehlung, ob Aufbau plus laufende Verbesserung sinnvoll ist", "Nächster Schritt: Angebot, zweites Diagnosegespräch oder klare Absage"]
-    : ["assessment of the current project and lead path", "3-5 identified weak points", "recommendation on whether setup plus ongoing improvement makes sense", "next step: proposal, second diagnosis call or clear refusal"];
-  const notIncluded = de
-    ? ["keine vollständige Funnel-Strategie gratis", "keine Media-Planung gratis", "keine Lead-Garantie", "keine rechtliche oder finanzielle Beratung", "keine Zusage ohne Scope-Prüfung"]
-    : ["no full funnel strategy for free", "no free media planning", "no lead guarantee", "no legal or financial advice", "no commitment without scope review"];
+  const fit = localeCopy(locale,
+    ["You are a developer, project sales team, broker team or professional real estate agent.", "You have a concrete project, market area or target audience.", "You want project presence, campaign, follow-up and handover to connect cleanly.", "You lose time through unqualified enquiries or missing context.", "You can realistically clarify budget and decision authority."],
+    ["Sie sind Bauträger, Projektentwickler, Projektvertrieb, Maklerteam oder professioneller Makler.", "Sie haben ein konkretes Projekt, Marktgebiet oder eine klare Zielgruppe.", "Sie möchten Projektauftritt, Kampagne, Nachfassen und Übergabe sauber verbinden.", "Sie verlieren Zeit durch unqualifizierte Anfragen oder fehlenden Kontext.", "Sie können Budget und Entscheidungskompetenz realistisch klären."],
+    ["Es promotor, equipo comercial de una promoción, agencia o profesional inmobiliario.", "Dispone de una promoción, zona de mercado o público objetivo concretos.", "Quiere conectar presentación, campaña, seguimiento y traspaso.", "Pierde tiempo con solicitudes no cualificadas o sin contexto.", "Puede aclarar de forma realista el presupuesto y la capacidad de decisión."]
+  );
+  const noFit = localeCopy(locale,
+    ["You only want free marketing ideas.", "You expect a fixed lead number regardless of market and offer.", "You do not want follow-up or handover structure.", "You cannot name a project, market area or lead-quality problem."],
+    ["Sie sammeln nur kostenlose Marketingideen.", "Sie erwarten eine feste Lead-Zahl unabhängig von Markt und Angebot.", "Sie wollen keine CRM- oder Follow-up-Struktur aufbauen.", "Sie können aktuell kein Projekt, Marktgebiet oder Leadproblem benennen."],
+    ["Solo busca ideas de marketing gratuitas.", "Espera un número fijo de oportunidades con independencia del mercado y la oferta.", "No quiere estructurar el seguimiento ni el traspaso.", "No puede concretar una promoción, zona de mercado o problema de calidad de las solicitudes."]
+  );
+  const checks = localeCopy(locale,
+    ["target group and project/market logic", "story, visualisation and expose logic", "existing lead sources", "landing page and form logic", "qualification questions", "follow-up and handover", "bottleneck between marketing and sales", "whether setup and ongoing improvement are commercially sensible"],
+    ["Zielgruppe und Projekt-/Marktlogik", "Story, Visualisierung und Exposé-Logik", "bestehende Leadquellen", "Landingpage- und Formularlogik", "Qualifizierungsfragen", "Nachfassen und Übergabe", "Engpass zwischen Marketing und Vertrieb", "ob Aufbau und laufende Verbesserung wirtschaftlich sinnvoll sind"],
+    ["público objetivo y lógica de la promoción o del mercado", "relato, visualización y lógica del dossier", "fuentes de solicitudes actuales", "lógica de la página de destino y el formulario", "preguntas de cualificación", "seguimiento y traspaso", "cuello de botella entre marketing y ventas", "si la implantación y la mejora continua tienen sentido económico"]
+  );
+  const after = localeCopy(locale,
+    ["assessment of the current project and lead path", "3-5 identified weak points", "recommendation on whether setup plus ongoing improvement makes sense", "next step: proposal, second diagnosis call or clear refusal"],
+    ["Einschätzung des aktuellen Projekt- und Lead-Wegs", "3-5 identifizierte Schwachstellen", "Empfehlung, ob Aufbau plus laufende Verbesserung sinnvoll ist", "Nächster Schritt: Angebot, zweites Diagnosegespräch oder klare Absage"],
+    ["valoración del recorrido actual de la promoción y las solicitudes", "entre 3 y 5 puntos débiles identificados", "recomendación sobre la implantación y mejora continua", "siguiente paso: propuesta, segunda conversación de diagnóstico o una negativa clara"]
+  );
+  const notIncluded = localeCopy(locale,
+    ["no full funnel strategy for free", "no free media planning", "no lead guarantee", "no legal or financial advice", "no commitment without scope review"],
+    ["keine vollständige Funnel-Strategie gratis", "keine Media-Planung gratis", "keine Lead-Garantie", "keine rechtliche oder finanzielle Beratung", "keine Zusage ohne Scope-Prüfung"],
+    ["ninguna estrategia completa gratuita", "ninguna planificación de medios gratuita", "ninguna garantía de oportunidades", "ningún asesoramiento jurídico o financiero", "ningún compromiso sin revisar el alcance"]
+  );
 
   return (
     <section className="audit-section">
       <div className="audit-grid">
-        <article className="content-section"><h2>{de ? "Dieser Check ist richtig für Sie, wenn..." : "This check is right for you if..."}</h2><ul className="check-list">{fit.map((item) => <li key={item}>{item}</li>)}</ul></article>
-        <article className="content-section"><h2>{de ? "Dieser Check ist nicht richtig für Sie, wenn..." : "This check is not right for you if..."}</h2><ul className="check-list">{noFit.map((item) => <li key={item}>{item}</li>)}</ul></article>
-        <article className="content-section"><h2>{de ? "Was wir in 30 Minuten prüfen" : "What we review in 30 minutes"}</h2><ul className="check-list">{checks.map((item) => <li key={item}>{item}</li>)}</ul></article>
-        <article className="content-section"><h2>{de ? "Was Sie nach dem Check bekommen" : "What you receive after the check"}</h2><ul className="check-list">{after.map((item) => <li key={item}>{item}</li>)}</ul></article>
-        <article className="content-section content-section-wide"><h2>{de ? "Was Sie nicht bekommen" : "What you do not receive"}</h2><ul className="check-list">{notIncluded.map((item) => <li key={item}>{item}</li>)}</ul></article>
+        <article className="content-section"><h2>{localeCopy(locale, "This check is right for you if...", "Dieser Check ist richtig für Sie, wenn...", "Este análisis es adecuado si...")}</h2><ul className="check-list">{fit.map((item) => <li key={item}>{item}</li>)}</ul></article>
+        <article className="content-section"><h2>{localeCopy(locale, "This check is not right for you if...", "Dieser Check ist nicht richtig für Sie, wenn...", "Este análisis no es adecuado si...")}</h2><ul className="check-list">{noFit.map((item) => <li key={item}>{item}</li>)}</ul></article>
+        <article className="content-section"><h2>{localeCopy(locale, "What we review in 30 minutes", "Was wir in 30 Minuten prüfen", "Qué revisamos en 30 minutos")}</h2><ul className="check-list">{checks.map((item) => <li key={item}>{item}</li>)}</ul></article>
+        <article className="content-section"><h2>{localeCopy(locale, "What you receive after the check", "Was Sie nach dem Check bekommen", "Qué obtiene después del análisis")}</h2><ul className="check-list">{after.map((item) => <li key={item}>{item}</li>)}</ul></article>
+        <article className="content-section content-section-wide"><h2>{localeCopy(locale, "What you do not receive", "Was Sie nicht bekommen", "Qué no incluye")}</h2><ul className="check-list">{notIncluded.map((item) => <li key={item}>{item}</li>)}</ul></article>
       </div>
     </section>
   );
@@ -1442,15 +1476,15 @@ function ThankYouPage({ content }: { content: PageContent }) {
 }
 
 function LegalPage({ content }: { content: PageContent }) {
-  const de = content.locale === "de";
+  const locale = content.locale;
 
   return (
     <main className="relaunch-subpage relaunch-subpage-legal">
       <Hero content={content} />
       <section className="legal-section v3-legal-section">
         <aside className="v3-legal-index">
-          <p className="v3-kicker"><span aria-hidden="true" />{de ? "Inhalt" : "Contents"}</p>
-          <nav aria-label={de ? "Inhaltsverzeichnis" : "Table of contents"}>
+          <p className="v3-kicker"><span aria-hidden="true" />{localeCopy(locale, "Contents", "Inhalt", "Contenido")}</p>
+          <nav aria-label={localeCopy(locale, "Table of contents", "Inhaltsverzeichnis", "Índice")}>
             {content.sections?.map((section, index) => (
               <a href={`#legal-section-${index + 1}`} key={section.title}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
@@ -1481,7 +1515,7 @@ function FaqSection({ locale, items }: { locale: Locale; items: { question: stri
     <section className="faq-section v3-subpage-faq">
       <div className="section-heading">
         <p className="v3-kicker"><span aria-hidden="true" />FAQ</p>
-        <h2>{locale === "en" ? "Hard questions before we talk." : "Harte Fragen vor dem Gespräch."}</h2>
+        <h2>{localeCopy(locale, "Hard questions before we talk.", "Harte Fragen vor dem Gespräch.", "Preguntas importantes antes de hablar.")}</h2>
       </div>
       <FaqAccordion
         locale={locale}
@@ -1495,23 +1529,21 @@ function FinalCta({ content, title }: { content: PageContent; title?: string }) 
   return (
     <section className="cta-band v3-subpage-cta">
       <div>
-        <p className="v3-kicker is-inverse"><span aria-hidden="true" />{content.locale === "en" ? "Next step" : "Nächster Schritt"}</p>
-        <h2>{title || (content.locale === "en" ? "Review whether your current path creates prepared conversations." : "Prüfen Sie in 30 Minuten, ob Ihr aktueller Weg vorbereitete Gespräche erzeugt.")}</h2>
-        <p>{content.locale === "en" ? "See whether project presence, follow-up and handover work together or create more sorting work." : "Sehen Sie, ob Projektauftritt, Nachfassen und Übergabe zusammenspielen oder neue Sortierarbeit erzeugen."}</p>
+        <p className="v3-kicker is-inverse"><span aria-hidden="true" />{localeCopy(content.locale, "Next step", "Nächster Schritt", "Siguiente paso")}</p>
+        <h2>{title || localeCopy(content.locale, "Review whether your current path creates prepared conversations.", "Prüfen Sie in 30 Minuten, ob Ihr aktueller Weg vorbereitete Gespräche erzeugt.", "Compruebe si su recorrido actual genera conversaciones preparadas.")}</h2>
+        <p>{localeCopy(content.locale, "See whether project presence, follow-up and handover work together or create more sorting work.", "Sehen Sie, ob Projektauftritt, Nachfassen und Übergabe zusammenspielen oder neue Sortierarbeit erzeugen.", "Compruebe si la presentación, el seguimiento y el traspaso funcionan juntos o generan más trabajo de clasificación.")}</p>
       </div>
       <div className="hero-actions">
         <div className="cta-primary-group">
           <Link className="v3-button v3-button-primary" href={`${getPath(content.locale, "contact")}#book-audit`} data-track="cta_audit">
-            {content.locale === "en" ? "Request Project Check" : "Projekt-Check anfragen"}
+            {localeCopy(content.locale, "Request Project Check", "Projekt-Check anfragen", "Solicitar un análisis del proyecto")}
           </Link>
           <p className="cta-microcopy">
-            {content.locale === "en"
-              ? "30 min review. Clear bottleneck. Clear next step."
-              : "30 Min. Check. Klarer Engpass. Klarer nächster Schritt."}
+            {localeCopy(content.locale, "30 min review. Clear bottleneck. Clear next step.", "30 Min. Check. Klarer Engpass. Klarer nächster Schritt.", "Análisis de 30 minutos. Cuello de botella claro. Siguiente paso claro.")}
           </p>
         </div>
         <Link className="v3-button v3-button-dark-outline" href={getPlaybookFormPath(content.locale)} data-track="cta_playbook">
-          {content.locale === "en" ? "Download playbook" : "Playbook herunterladen"}
+          {localeCopy(content.locale, "Download playbook", "Playbook herunterladen", "Descargar el Playbook")}
         </Link>
       </div>
     </section>

@@ -34,6 +34,17 @@ const cookieCopy = {
     marketing: "Allows campaign measurement, for example through Meta or LinkedIn.",
     external: "Allows third-party embeds such as the HubSpot booking calendar.",
     fixed: "Always active"
+  },
+  es: {
+    title: "Configuración de cookies",
+    ckText: "Utilizamos cookies para funciones básicas y, solo con su consentimiento, para estadísticas, marketing y medios externos. Más información en la",
+    ckLink: "política de cookies", ckAll: "Aceptar todas", ckNec: "Solo necesarias", ckSet: "Configurar", ckSave: "Guardar selección",
+    ckCatNec: "Necesarias", ckCatStats: "Estadísticas", ckCatMkt: "Marketing", ckCatExt: "Medios externos",
+    necessary: "Necesarias para el funcionamiento, la seguridad, los formularios y para guardar su elección.",
+    statistics: "Nos ayudan a comprender el uso y el rendimiento del sitio web.",
+    marketing: "Permiten medir campañas, por ejemplo, mediante Meta o LinkedIn.",
+    external: "Permiten integrar servicios de terceros, como el calendario de reservas de HubSpot.",
+    fixed: "Siempre activas"
   }
 } as const;
 
