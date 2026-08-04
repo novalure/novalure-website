@@ -161,5 +161,67 @@ export const playbookFormCopy: Record<Locale, {
         ]
       }
     }
+  },
+  es: {
+    fields: {
+      name: "Nombre",
+      email: "Correo electrónico profesional",
+      company: "Empresa",
+      phone: "Número de teléfono",
+      honeypot: "Sitio web"
+    },
+    selectorLabel: "Seleccione su Playbook",
+    insideTitle: "Qué incluye",
+    submit: "Enviarme el Playbook",
+    loading: "Enviando...",
+    trust: "Sin spam · baja en cualquier momento · conforme al RGPD",
+    previewAlt: "Vista previa de la portada del Playbook",
+    consent: {
+      requiredBefore: "Obligatorio: Consiento que NovaLure trate mis datos de acuerdo con la ",
+      privacyLabel: "Política de privacidad",
+      requiredAfter: " para enviarme el Playbook por correo electrónico.",
+      optional: "Opcional: Sí, deseo recibir por correo electrónico contenidos, novedades y ofertas relevantes de NovaLure. Puedo retirar mi consentimiento en cualquier momento mediante el enlace de baja."
+    },
+    errors: {
+      required: "Este campo es obligatorio.",
+      email: "Introduzca un correo electrónico profesional válido.",
+      phone: "Introduzca un número de teléfono válido o deje el campo vacío.",
+      consent: "El consentimiento es obligatorio para recibir el Playbook.",
+      submit: "No hemos podido enviar el Playbook. Inténtelo de nuevo en unos minutos."
+    },
+    success: {
+      eyebrow: "Playbook enviado",
+      headline: "Revise su bandeja de entrada.",
+      sentBefore: "Hemos enviado el enlace de descarga a ",
+      sentAfter: "."
+    },
+    meeting: {
+      title: "Solicitar un análisis del proyecto",
+      body: "Elija una hora disponible. El calendario muestra la disponibilidad y envía el enlace de Microsoft Teams después de la reserva."
+    },
+    variants: {
+      developer: {
+        eyebrow: "Envío del Playbook",
+        title: "Playbook para promotores inmobiliarios",
+        headline: "Playbook para promotores inmobiliarios",
+        subline: "Guía de diagnóstico de {pages} páginas · PDF · entrega por correo electrónico",
+        inside: [
+          "Dónde pierden contexto las solicitudes antes de llegar al equipo comercial",
+          "Qué carencias del traspaso encarecen la clasificación de compradores",
+          "Evaluación de madurez: si la promoción está preparada para un análisis de 30 minutos"
+        ]
+      },
+      agent: {
+        eyebrow: "Envío del Playbook",
+        title: "Playbook de captación para agencias inmobiliarias",
+        headline: "Playbook de captación para agencias inmobiliarias",
+        subline: "Guía de diagnóstico de {pages} páginas · PDF · entrega por correo electrónico",
+        inside: [
+          "Dónde pierden intención las solicitudes de vendedores y compradores",
+          "Qué contexto separa la curiosidad de una oportunidad comercial",
+          "Evaluación de madurez del recorrido local antes de un análisis de 30 minutos"
+        ]
+      }
+    }
   }
 };

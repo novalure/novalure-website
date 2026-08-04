@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-type Locale = "en" | "de";
+type Locale = "en" | "de" | "es";
 
 const autoReplyCopy = {
   en: {
@@ -39,6 +39,24 @@ Bitte bereiten Sie Ihr aktuelles Projekt oder Marktgebiet, Leadquellen, Leadmana
 vielen Dank für Ihre Anfrage.
 
 Wir haben Ihre Nachricht erhalten und prüfen sie direkt.`
+  },
+  es: {
+    auditSubject: "Su solicitud de análisis del proyecto de NovaLure",
+    directSubject: "Su consulta a NovaLure",
+    auditButton: "Ver la lista de preparación",
+    directButton: "Visitar NovaLure",
+    auditBody: (name: string) => `Hola, ${name}:
+
+Gracias por solicitar el análisis del proyecto.
+
+Primero revisaremos la información facilitada. El análisis es un paso de diagnóstico y cualificación, no un informe de consultoría gratuito ni una garantía de oportunidades.
+
+Prepare su promoción o mercado actual, las fuentes de oportunidades, el proceso de gestión, las páginas o campañas activas, el principal cuello de botella comercial, la capacidad presupuestaria y el estado de decisión.`,
+    directBody: (name: string) => `Hola, ${name}:
+
+Gracias por su consulta.
+
+Hemos recibido su mensaje y lo revisaremos directamente.`
   }
 } as const;
 
@@ -108,7 +126,7 @@ function formatRowsHtml(rows: Record<string, string | string[]>) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const language: Locale = body.language === "de" ? "de" : "en";
+    const language: Locale = body.language === "de" || body.language === "es" ? body.language : "en";
     const firstName = clean(body.firstName);
     const lastName = clean(body.lastName);
     const isDirectInquiry = Boolean(firstName || lastName || body.inquiry);
@@ -240,7 +258,11 @@ export async function POST(request: NextRequest) {
     const replySubject = isDirectInquiry ? reply.directSubject : reply.auditSubject;
     const replyBody = isDirectInquiry ? reply.directBody(name) : reply.auditBody(name);
     const replyButton = isDirectInquiry ? reply.directButton : reply.auditButton;
-    const thankYouPath = language === "de" ? "/de/kontakt/danke" : "/en/contact/thank-you";
+    const thankYouPath = language === "de"
+      ? "/de/kontakt/danke"
+      : language === "es"
+        ? "/es/analisis-del-proyecto/gracias"
+        : "/en/contact/thank-you";
     const thankYouUrl = isDirectInquiry ? getSiteUrl() : `${getSiteUrl()}${thankYouPath}`;
 
     const customerEmail = await resend.emails.send({

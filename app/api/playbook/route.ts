@@ -17,7 +17,7 @@ import {
   type PlaybookRateLimitResult
 } from "@/lib/playbook-rate-limit";
 
-type Locale = "en" | "de";
+type Locale = "en" | "de" | "es";
 type PlaybookType = "developer" | "agent";
 
 const ownerNotificationEmail = "hello@novalure.eu";
@@ -65,6 +65,25 @@ const playbookCopy: Record<Locale, Record<PlaybookType, {
     doiHeadline: "Bitte bestätigen Sie Ihre E-Mail-Updates",
     doiIntro: "Sie haben angefragt, relevante Inhalte, Updates und Angebote von NovaLure zu erhalten. Bestätigen Sie das einmalig, damit wir die Marketing-Zustimmung korrekt dokumentieren können.",
     doiCta: "E-Mail-Updates bestätigen"
+  },
+  es: {
+    developer: {
+      subject: "Aquí tiene su Playbook de NovaLure",
+      headline: "Su Playbook para promotores está listo",
+      intro: "Gracias por solicitar el Playbook de NovaLure. En él encontrará una visión clara de los puntos en los que una solicitud inmobiliaria puede perder contexto, prioridad o un siguiente paso antes de llegar al equipo comercial.",
+      cta: "Descargar el Playbook"
+    },
+    agent: {
+      subject: "Aquí tiene su Playbook de NovaLure",
+      headline: "Su Playbook para agencias inmobiliarias está listo",
+      intro: "Gracias por solicitar el Playbook de NovaLure. En él encontrará una visión clara de los puntos en los que una solicitud inmobiliaria puede perder contexto, prioridad o un siguiente paso antes de llegar al equipo comercial.",
+      cta: "Descargar el Playbook"
+    },
+    audit: "Si tiene una promoción, un mercado o un problema concreto de calidad, el siguiente paso es un análisis del proyecto:",
+    doiSubject: "Confirme las novedades por correo de NovaLure",
+    doiHeadline: "Confirme su suscripción a las novedades",
+    doiIntro: "Ha solicitado recibir contenidos, novedades y ofertas relevantes de NovaLure. Confirme una vez su consentimiento para que podamos registrarlo correctamente.",
+    doiCta: "Confirmar la suscripción"
   }
 };
 
@@ -160,18 +179,21 @@ function renderEmailButton(href: string, label: string, variant: "primary" | "se
   `;
 }
 
-function parsePlaybookKey(value: unknown, locale: Locale): PlaybookKey {
-  if (typeof value === "string" && value in playbooks) {
+function parsePlaybookKey(value: unknown, locale: Locale): PlaybookKey | null {
+  if (typeof value === "string" && value in playbooks && value.startsWith(`${locale}-`)) {
     return value as PlaybookKey;
   }
 
-  const type: PlaybookType = value === "agent" ? "agent" : "developer";
-  return `${locale}-${type}` as PlaybookKey;
+  if (value === "developer" || value === "agent") {
+    return `${locale}-${value}` as PlaybookKey;
+  }
+
+  return null;
 }
 
 function getPlaybookParts(key: PlaybookKey): { locale: Locale; type: PlaybookType } {
   return {
-    locale: key.startsWith("de-") ? "de" : "en",
+    locale: key.startsWith("de-") ? "de" : key.startsWith("es-") ? "es" : "en",
     type: key.endsWith("agent") ? "agent" : "developer"
   };
 }
@@ -185,12 +207,16 @@ function getPlaybookUrl(key: PlaybookKey) {
   if (type === "developer") {
     return locale === "de"
       ? cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL_DE) || cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL) || fallback
-      : cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL_EN) || cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL) || fallback;
+      : locale === "es"
+        ? cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL_ES) || cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL) || fallback
+        : cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL_EN) || cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL) || fallback;
   }
 
   return locale === "de"
     ? cleanUrl(process.env.AGENT_PLAYBOOK_URL_DE) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback
-    : cleanUrl(process.env.AGENT_PLAYBOOK_URL_EN) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback;
+    : locale === "es"
+      ? cleanUrl(process.env.AGENT_PLAYBOOK_URL_ES) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback
+      : cleanUrl(process.env.AGENT_PLAYBOOK_URL_EN) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback;
 }
 
 function getFormId(playbook: PlaybookType) {
@@ -354,9 +380,17 @@ async function sendPlaybookEmail({
 
   const resend = new Resend(apiKey);
   const item = playbookCopy[locale][type];
-  const auditUrl = `${siteUrl}${locale === "de" ? "/de/kontakt" : "/en/contact"}#book-audit`;
-  const greeting = locale === "de" ? `Hallo ${name},` : `Hi ${name},`;
-  const auditCta = locale === "de" ? "Projekt-Check anfragen" : "Request Project Check";
+  const auditUrl = `${siteUrl}${locale === "de" ? "/de/kontakt" : locale === "es" ? "/es/analisis-del-proyecto" : "/en/contact"}#book-audit`;
+  const greeting = locale === "de" ? `Hallo ${name},` : locale === "es" ? `Hola, ${name}:` : `Hi ${name},`;
+  const auditCta = locale === "de" ? "Projekt-Check anfragen" : locale === "es" ? "Solicitar un análisis del proyecto" : "Request Project Check";
+  const footer = locale === "de"
+    ? { privacy: "Datenschutz", legal: "Impressum", unsubscribe: "Abmelden", signoff: "Viele Grüße, das NovaLure-Team" }
+    : locale === "es"
+      ? { privacy: "Política de privacidad", legal: "Aviso legal", unsubscribe: "Darse de baja", signoff: "Un saludo, el equipo de NovaLure" }
+      : { privacy: "Privacy Policy", legal: "Imprint", unsubscribe: "Unsubscribe", signoff: "Kind regards, the NovaLure team" };
+  const privacyUrl = `${siteUrl}${locale === "de" ? "/de/rechtliches/datenschutz" : locale === "es" ? "/es/privacidad" : "/en/legal/privacy"}`;
+  const legalUrl = `${siteUrl}${locale === "de" ? "/de/rechtliches/impressum" : locale === "es" ? "/es/aviso-legal" : "/en/legal/imprint"}`;
+  const unsubscribeUrl = `mailto:hello@novalure.eu?subject=${encodeURIComponent(footer.unsubscribe)}`;
 
   await sendResendEmail(
     resend,
@@ -366,16 +400,22 @@ async function sendPlaybookEmail({
       subject: item.subject,
       html: `
         <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111318;max-width:620px;margin:0 auto;padding:32px">
+          <div style="display:none;max-height:0;overflow:hidden;opacity:0">${locale === "es" ? "Descargue su Playbook y detecte dónde se pierde contexto antes de que intervenga el equipo comercial." : escapeHtml(item.intro)}</div>
           <h1 style="font-size:28px;line-height:1.1;margin:0 0 18px">${escapeHtml(item.headline)}</h1>
           <p>${escapeHtml(greeting)}</p>
           <p>${escapeHtml(item.intro)}</p>
           ${renderEmailButton(playbookUrl, item.cta)}
           <p style="margin-top:28px;">${escapeHtml(playbookCopy[locale].audit)}</p>
           ${renderEmailButton(auditUrl, auditCta, "secondary")}
-          <p style="color:#667085;font-size:13px;margin-top:32px">NovaLure · Project marketing with prepared handover</p>
+          <p style="margin-top:30px">${escapeHtml(footer.signoff)}</p>
+          <p style="color:#667085;font-size:13px;margin-top:32px">
+            <a href="${escapeHtml(privacyUrl)}" style="color:#667085">${escapeHtml(footer.privacy)}</a> ·
+            <a href="${escapeHtml(legalUrl)}" style="color:#667085">${escapeHtml(footer.legal)}</a> ·
+            <a href="${escapeHtml(unsubscribeUrl)}" style="color:#667085">${escapeHtml(footer.unsubscribe)}</a>
+          </p>
         </div>
       `,
-      text: `${greeting}\n\n${item.intro}\n\n${item.cta}: ${playbookUrl}\n\n${playbookCopy[locale].audit}\n${auditUrl}`
+      text: `${greeting}\n\n${item.intro}\n\n${item.cta}: ${playbookUrl}\n\n${playbookCopy[locale].audit}\n${auditUrl}\n\n${footer.signoff}\n${footer.privacy}: ${privacyUrl}\n${footer.legal}: ${legalUrl}\n${footer.unsubscribe}: ${unsubscribeUrl}`
     },
     { idempotencyKey: getScopedIdempotencyKey("playbook", submissionId) }
   );
@@ -494,7 +534,7 @@ async function sendDoubleOptInEmail({
 
   const confirmUrl = `${siteUrl}/api/playbook/confirm?token=${encodeURIComponent(token)}`;
   const copy = playbookCopy[locale];
-  const expiryText = locale === "de" ? "Der Link ist 24 Stunden gültig." : "This link is valid for 24 hours.";
+  const expiryText = locale === "de" ? "Der Link ist 24 Stunden gültig." : locale === "es" ? "El enlace es válido durante 24 horas." : "This link is valid for 24 hours.";
   const resend = new Resend(apiKey);
 
   await sendResendEmail(
@@ -549,8 +589,11 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const submittedLocale: Locale = body.locale === "de" ? "de" : "en";
+    const submittedLocale: Locale = body.locale === "de" || body.locale === "es" ? body.locale : "en";
     const playbookKey = parsePlaybookKey(body.playbook, submittedLocale);
+    if (!playbookKey) {
+      return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
+    }
     const { locale, type } = getPlaybookParts(playbookKey);
     const name = typeof body.name === "string" ? body.name.trim() : "";
     const company = typeof body.company === "string" ? body.company.trim() : "";

@@ -19,6 +19,58 @@ const responseHeaders = {
   "x-content-type-options": "nosniff"
 };
 
+type Locale = "de" | "en" | "es";
+
+const confirmationCopy: Record<Locale, {
+  status: string;
+  security: string;
+  unavailableTitle: string;
+  unavailableBody: string;
+  confirmTitle: string;
+  confirmBody: string;
+  confirmButton: string;
+  invalidTitle: string;
+  invalidBody: string;
+  processingTitle: string;
+  processingBody: string;
+  usedTitle: string;
+  usedBody: string;
+  blockedTitle: string;
+  blockedBody: string;
+  success: string;
+}> = {
+  de: {
+    status: "E-Mail-Bestätigung", security: "Sicherer NovaLure Bestätigungsschritt",
+    unavailableTitle: "Bestätigung vorübergehend nicht möglich", unavailableBody: "Bitte versuchen Sie es in einigen Minuten erneut.",
+    confirmTitle: "E-Mail-Updates bestätigen", confirmBody: "Bitte bestätigen Sie Ihre Zustimmung. Erst danach werden E-Mail-Updates aktiviert.", confirmButton: "Zustimmung bestätigen",
+    invalidTitle: "Bestätigungslink ungültig", invalidBody: "Der Link ist ungültig oder abgelaufen.",
+    processingTitle: "Bestätigung wird verarbeitet", processingBody: "Die Bestätigung wird bereits verarbeitet. Bitte versuchen Sie es in einigen Minuten erneut.",
+    usedTitle: "Bereits bestätigt", usedBody: "Dieser Bestätigungslink wurde bereits verwendet.",
+    blockedTitle: "E-Mail-Einstellungen unverändert", blockedBody: "Ihre bestehende Abmeldung wurde nicht aufgehoben.",
+    success: "Danke. Ihre E-Mail-Updates sind bestätigt."
+  },
+  en: {
+    status: "Email confirmation", security: "Secure NovaLure confirmation step",
+    unavailableTitle: "Confirmation temporarily unavailable", unavailableBody: "Please try again in a few minutes.",
+    confirmTitle: "Confirm email updates", confirmBody: "Please confirm your consent. Email updates are activated only after this step.", confirmButton: "Confirm subscription",
+    invalidTitle: "Invalid confirmation link", invalidBody: "This link is invalid or has expired.",
+    processingTitle: "Confirmation in progress", processingBody: "This confirmation is already being processed. Please try again in a few minutes.",
+    usedTitle: "Already confirmed", usedBody: "This confirmation link has already been used.",
+    blockedTitle: "Email preferences unchanged", blockedBody: "Your existing unsubscribe preference was not changed.",
+    success: "Thank you. Your email updates are confirmed."
+  },
+  es: {
+    status: "Confirmación por correo", security: "Paso seguro de confirmación de NovaLure",
+    unavailableTitle: "La confirmación no está disponible temporalmente", unavailableBody: "Inténtelo de nuevo en unos minutos.",
+    confirmTitle: "Confirmar las novedades por correo", confirmBody: "Confirme su consentimiento. Las novedades solo se activarán después de este paso.", confirmButton: "Confirmar la suscripción",
+    invalidTitle: "Enlace de confirmación no válido", invalidBody: "El enlace no es válido o ha caducado.",
+    processingTitle: "Confirmación en curso", processingBody: "Esta confirmación ya se está procesando. Inténtelo de nuevo en unos minutos.",
+    usedTitle: "Suscripción ya confirmada", usedBody: "Este enlace de confirmación ya se ha utilizado.",
+    blockedTitle: "Preferencias de correo sin cambios", blockedBody: "No se ha anulado su baja existente.",
+    success: "Gracias. Ha confirmado las novedades por correo."
+  }
+};
+
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (character) => ({
     "&": "&amp;",
@@ -38,10 +90,11 @@ function page({
   title: string;
   body?: string;
   form?: { token: string; label: string };
-  locale?: "de" | "en";
+  locale?: Locale;
 }) {
-  const statusLabel = locale === "de" ? "E-Mail-Bestätigung" : "Email confirmation";
-  const securityLabel = locale === "de" ? "Sicherer NovaLure Bestätigungsschritt" : "Secure NovaLure confirmation step";
+  const copy = confirmationCopy[locale];
+  const statusLabel = copy.status;
+  const securityLabel = copy.security;
 
   return `<!doctype html>
     <html lang="${locale}">
@@ -92,14 +145,12 @@ function getPayload(token: string): {
   }
 }
 
-function configurationUnavailable(locale: "de" | "en" = "de") {
-  const isGerman = locale === "de";
+function configurationUnavailable(locale: Locale = "de") {
+  const copy = confirmationCopy[locale];
   return htmlResponse(page({
     locale,
-    title: isGerman ? "Bestätigung vorübergehend nicht möglich" : "Confirmation temporarily unavailable",
-    body: isGerman
-      ? "Bitte versuchen Sie es in einigen Minuten erneut."
-      : "Please try again in a few minutes."
+    title: copy.unavailableTitle,
+    body: copy.unavailableBody
   }), 503);
 }
 
@@ -118,16 +169,14 @@ export async function GET(request: NextRequest) {
     }), 400);
   }
 
-  const isGerman = payload.locale === "de";
+  const copy = confirmationCopy[payload.locale];
   return htmlResponse(page({
     locale: payload.locale,
-    title: isGerman ? "E-Mail-Updates bestätigen" : "Confirm email updates",
-    body: isGerman
-      ? "Bitte bestätigen Sie Ihre Zustimmung. Erst danach werden E-Mail-Updates aktiviert."
-      : "Please confirm your consent. Email updates are activated only after this step.",
+    title: copy.confirmTitle,
+    body: copy.confirmBody,
     form: {
       token,
-      label: isGerman ? "Zustimmung bestätigen" : "Confirm subscription"
+      label: copy.confirmButton
     }
   }));
 }
@@ -157,7 +206,7 @@ export async function POST(request: NextRequest) {
     }), 400);
   }
 
-  const isGerman = payload.locale === "de";
+  const copy = confirmationCopy[payload.locale];
   let claim: Awaited<ReturnType<typeof claimDoubleOptInToken>>;
   try {
     claim = await claimDoubleOptInToken(payload.tokenId);
@@ -169,40 +218,32 @@ export async function POST(request: NextRequest) {
   if (claim.status === "missing") {
     return htmlResponse(page({
       locale: payload.locale,
-      title: isGerman ? "Bestätigungslink ungültig" : "Invalid confirmation link",
-      body: isGerman
-        ? "Der Link ist ungültig oder abgelaufen."
-        : "This link is invalid or has expired."
+      title: copy.invalidTitle,
+      body: copy.invalidBody
     }), 400);
   }
 
   if (claim.status === "processing") {
     return htmlResponse(page({
       locale: payload.locale,
-      title: isGerman ? "Bestätigung wird verarbeitet" : "Confirmation in progress",
-      body: isGerman
-        ? "Die Bestätigung wird bereits verarbeitet. Bitte versuchen Sie es in einigen Minuten erneut."
-        : "This confirmation is already being processed. Please try again in a few minutes."
+      title: copy.processingTitle,
+      body: copy.processingBody
     }), 409);
   }
 
   if (claim.status === "used") {
     return htmlResponse(page({
       locale: payload.locale,
-      title: isGerman ? "Bereits bestätigt" : "Already confirmed",
-      body: isGerman
-        ? "Dieser Bestätigungslink wurde bereits verwendet."
-        : "This confirmation link has already been used."
+      title: copy.usedTitle,
+      body: copy.usedBody
     }));
   }
 
   if (claim.status === "blocked") {
     return htmlResponse(page({
       locale: payload.locale,
-      title: isGerman ? "E-Mail-Einstellungen unverändert" : "Email preferences unchanged",
-      body: isGerman
-        ? "Ihre bestehende Abmeldung wurde nicht aufgehoben."
-        : "Your existing unsubscribe preference was not changed."
+      title: copy.blockedTitle,
+      body: copy.blockedBody
     }));
   }
 
@@ -249,20 +290,16 @@ export async function POST(request: NextRequest) {
 
     return htmlResponse(page({
       locale: payload.locale,
-      title: isGerman ? "E-Mail-Einstellungen unverändert" : "Email preferences unchanged",
-      body: isGerman
-        ? "Ihre bestehende Abmeldung wurde nicht aufgehoben."
-        : "Your existing unsubscribe preference was not changed."
+      title: copy.blockedTitle,
+      body: copy.blockedBody
     }));
   }
 
   if (result.status === "already_confirmed") {
     return htmlResponse(page({
       locale: payload.locale,
-      title: isGerman ? "Bereits bestätigt" : "Already confirmed",
-      body: isGerman
-        ? "Dieser Bestätigungslink wurde bereits verwendet."
-        : "This confirmation link has already been used."
+      title: copy.usedTitle,
+      body: copy.usedBody
     }));
   }
 
@@ -275,9 +312,7 @@ export async function POST(request: NextRequest) {
     systemOfRecord: "resend"
   }));
 
-  const message = isGerman
-    ? "Danke. Ihre E-Mail-Updates sind bestätigt."
-    : "Thank you. Your email updates are confirmed.";
+  const message = copy.success;
 
   return htmlResponse(page({ title: message, locale: payload.locale }));
 }

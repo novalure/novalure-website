@@ -6,7 +6,7 @@ export type DoubleOptInPayload = {
   purpose: "marketing-doi";
   audience: string;
   email: string;
-  locale: "de" | "en";
+  locale: "de" | "en" | "es";
   playbook: string;
   issuedAt: string;
   expiresAt: string;
@@ -70,9 +70,9 @@ function isPayload(value: unknown): value is DoubleOptInPayload {
     && payload.email.length <= 320
     && payload.email === payload.email.trim().toLowerCase()
     && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)
-    && (payload.locale === "de" || payload.locale === "en")
+    && (payload.locale === "de" || payload.locale === "en" || payload.locale === "es")
     && typeof payload.playbook === "string"
-    && /^(de|en)-(developer|agent)$/.test(payload.playbook)
+    && /^(de|en|es)-(developer|agent)$/.test(payload.playbook)
     && payload.playbook.startsWith(`${payload.locale}-`)
     && Number.isFinite(issuedAt)
     && Number.isFinite(expiresAt)

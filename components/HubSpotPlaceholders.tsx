@@ -11,7 +11,8 @@ import { playbooks as playbookMeta, privacyPolicyVersion, type PlaybookKey as Me
 
 const defaultMeetingUrls: Record<Locale, string> = {
   en: "https://meetings-eu1.hubspot.com/franz-romih/private-growth-audit-en",
-  de: "https://meetings-eu1.hubspot.com/franz-romih"
+  de: "https://meetings-eu1.hubspot.com/franz-romih",
+  es: "https://meetings-eu1.hubspot.com/franz-romih/private-growth-audit-en"
 };
 
 type FieldKey = "name" | "email" | "company" | "phone" | "requiredConsent";
@@ -369,7 +370,9 @@ export function HubSpotMeetingEmbed({
   const text = playbookFormCopy[locale].meeting;
   const localizedMeetingUrl = locale === "de"
     ? process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE
-    : process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN;
+    : locale === "es"
+      ? process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_ES
+      : process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN;
   const meetingUrl = localizedMeetingUrl || process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL || defaultMeetingUrls[locale];
   const schedulerUrl = meetingUrl ? withSchedulerLocale(meetingUrl, locale) : "";
 
@@ -402,16 +405,16 @@ export function HubSpotMeetingEmbed({
         <iframe className="hubspot-meeting-frame" src={schedulerUrl} title={title || text.title} loading="lazy" />
       ) : schedulerUrl ? (
         <div className="hubspot-meeting-consent">
-          <p>{locale === "de" ? "Aktivieren Sie externe Medien, um den HubSpot-Buchungskalender zu laden." : "Allow external media to load the HubSpot booking calendar."}</p>
+          <p>{locale === "de" ? "Aktivieren Sie externe Medien, um den HubSpot-Buchungskalender zu laden." : locale === "es" ? "Active los medios externos para cargar el calendario de reservas de HubSpot." : "Allow external media to load the HubSpot booking calendar."}</p>
           <button className="button button-secondary" type="button" onClick={() => window.dispatchEvent(new Event("novalure:open-cookie-settings"))}>
-            {locale === "de" ? "Cookie-Einstellungen öffnen" : "Open cookie settings"}
+            {locale === "de" ? "Cookie-Einstellungen öffnen" : locale === "es" ? "Abrir la configuración de cookies" : "Open cookie settings"}
           </button>
           <a href={schedulerUrl} target="_blank" rel="noopener noreferrer">
-            {linkLabel || (locale === "de" ? "Terminseite direkt öffnen" : "Open booking page directly")}
+            {linkLabel || (locale === "de" ? "Terminseite direkt öffnen" : locale === "es" ? "Abrir directamente la página de reservas" : "Open booking page directly")}
           </a>
         </div>
       ) : (
-        <code>{locale === "de" ? "NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE" : "NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN"}</code>
+        <code>{locale === "de" ? "NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE" : locale === "es" ? "NEXT_PUBLIC_HUBSPOT_MEETING_URL_ES" : "NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN"}</code>
       )}
     </section>
   );
@@ -419,6 +422,6 @@ export function HubSpotMeetingEmbed({
 
 function withSchedulerLocale(url: string, locale: Locale) {
   const separator = url.includes("?") ? "&" : "?";
-  const hubspotLocale = locale === "de" ? "de-de" : "en-us";
+  const hubspotLocale = locale === "de" ? "de-de" : locale === "es" ? "es-es" : "en-us";
   return `${url}${separator}locale=${hubspotLocale}`;
 }

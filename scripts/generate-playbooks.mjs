@@ -76,6 +76,27 @@ const shared = {
       "30 Minuten, ein konkretes Projekt oder eine Leadquelle, die aktuell Reibung erzeugt. Wir prüfen Projektauftritt, Lead-Qualifizierung, Übergabe und Follow-up - und Sie erhalten eine klare Einschätzung, an welcher Stelle Ihr System Kontext verliert und ob ein strukturierter Aufbau wirtschaftlich trägt. Kein Pitch, kein vollständiges Betriebshandbuch. Eine Diagnose, mit der Sie selbst entscheiden können.",
     note:
       "Dieses Playbook ist ein diagnostischer Leitfaden. Es verspricht keine Leadmenge, Umsätze, Lieferzeiten oder rechtliche Konformität und enthält keinen vollständigen Umsetzungs-Blueprint, keine Media-Strategie und kein Scoring-Modell."
+  },
+  es: {
+    label: "EDICIÓN EN ESPAÑOL",
+    primaryCta: "→ novalure.eu/es",
+    primaryUrl: "https://www.novalure.eu/es",
+    footer: "NovaLure | Comercialización inmobiliaria con traspaso preparado",
+    introEyebrow: "Por qué existe este Playbook",
+    introTitle: "Un análisis preciso, no un plan de ejecución completo.",
+    introBody:
+      "Este Playbook permite detectar si el recorrido actual desde la solicitud hasta el equipo comercial aporta contexto o se limita a recopilar datos de contacto. Ofrece la estructura necesaria para reconocer el problema, pero no sustituye un diagnóstico específico ni constituye un plan de implantación completo.",
+    introCardBody: "Relevante cuando el equipo comercial necesita más contexto antes de la siguiente conversación.",
+    systemEyebrow: "Marco de diagnóstico",
+    systemTitle: "La demanda resulta útil cuando el equipo comercial puede actuar.",
+    systemBody:
+      "La pregunta operativa es sencilla: ¿el sistema capta la señal adecuada, cualifica la intención, prepara el contexto y genera un siguiente paso claro para el equipo comercial?",
+    summaryEyebrow: "Siguiente paso",
+    summaryTitle: "Analicemos el recorrido comercial actual.",
+    summaryBody:
+      "En 30 minutos revisamos una promoción, una zona de mercado o una fuente de solicitudes que actualmente genera fricción. Analizamos la presentación, la cualificación, el traspaso y el seguimiento para determinar dónde se pierde contexto y si una estructura específica tiene sentido económico. Sin promesas de volumen ni un manual de implantación gratuito: un diagnóstico útil para decidir con criterio.",
+    note:
+      "Este Playbook es una guía de diagnóstico. No promete un volumen de oportunidades, ingresos, plazos de entrega ni conformidad jurídica, y no incluye un plan completo de implantación, una estrategia de medios ni un modelo de puntuación."
   }
 };
 
@@ -495,6 +516,108 @@ const agentSectionsDe = [
   }
 ];
 
+const developerSectionsEs = [
+  {
+    title: "El problema real: solicitudes sin contexto comercial",
+    body: "Muchas campañas de promociones parecen activas mientras el equipo comercial sigue clasificando contactos a mano. El formulario recoge nombres o solicitudes del dossier, pero el CRM no explica por qué esa persona es relevante ahora. Más tráfico acaba generando más trabajo, no mejores conversaciones.",
+    bullets: ["Un teléfono no convierte una solicitud en una oportunidad preparada.", "El interés por la arquitectura no demuestra por sí solo plazo, presupuesto o capacidad de decisión.", "Un informe de campaña sin retorno comercial no muestra dónde empieza la intención real.", "Si el contexto se reconstruye en cada primera llamada, el traspaso está incompleto."],
+    question: "¿Dónde pierde más tiempo su equipo comercial: antes, durante o después de la primera conversación?"
+  },
+  {
+    title: "Brechas habituales en el recorrido de una promoción",
+    body: "La calidad suele perderse en varios traspasos pequeños: del anuncio a la página, de la página al formulario, del formulario al CRM y del CRM al seguimiento. La brecha es comercial, no estética.",
+    bullets: ["La página explica la promoción, pero no ayuda a tomar una decisión.", "El formulario pide datos de contacto, pero no encaje, plazo ni tipo de comprador.", "El CRM registra el origen, pero no el motivo de prioridad.", "El seguimiento empieza igual para todos, con independencia de su madurez.", "Los informes se centran en el coste por solicitud mientras ventas sigue filtrando a mano."],
+    question: "¿Cuál de estas brechas puede demostrar hoy que está bajo control?"
+  },
+  {
+    title: "Qué debe mostrar una solicitud preparada para ventas",
+    body: "Una solicitud preparada ofrece un punto de partida útil para la primera conversación. No necesita revelar cada detalle, pero sí el contexto suficiente para decidir si conviene llamar, cómo iniciar la conversación y cuál debe ser el siguiente paso.",
+    bullets: ["La promoción o ubicación de interés es visible.", "El tipo de comprador y la vivienda buscada están razonablemente claros.", "El plazo y el encaje presupuestario no quedan ocultos en notas libres.", "El origen, la página y el activo solicitado están conectados.", "El siguiente paso permite iniciar el seguimiento sin conjeturas."],
+    question: "Si el CRM no muestra este contexto, ¿la solicitud es débil o el traspaso está incompleto?"
+  },
+  {
+    title: "Evaluación breve: ¿conviene analizar la promoción?",
+    body: "Una promoción está preparada para un análisis cuando existe una situación concreta: presión de venta, fuentes de solicitudes actuales, un proceso comercial visible y una razón económica real para mejorar la calidad.",
+    bullets: ["Existe una promoción, lanzamiento, stock o zona de mercado concreta.", "Hay solicitudes, pero no se pueden priorizar con confianza.", "El CRM o proceso de gestión puede revisarse.", "Ventas distingue qué contactos consumen tiempo y cuáles generan conversaciones.", "El presupuesto y la capacidad de decisión pueden tratarse con realismo."],
+    question: "¿Puede resumir la promoción, el problema y el cuello de botella en una sola frase?"
+  },
+  {
+    title: "Síntomas que conviene analizar, no una solución genérica",
+    body: "Este Playbook se detiene deliberadamente antes de ofrecer un plan completo. El recorrido depende del mercado, la oferta, los activos, la capacidad comercial, la madurez del sistema y el momento. Los consejos genéricos pueden generar actividad sin resolver el cuello de botella.",
+    bullets: ["Mucho volumen y pocas conversaciones apuntan a una cualificación débil.", "Muchas descargas y pocas citas apuntan a un siguiente paso poco claro.", "Un seguimiento rápido con malos resultados suele indicar poco encaje.", "Un seguimiento lento revela problemas de responsabilidad o proceso.", "La falta de confianza en los informes indica definiciones incoherentes entre marketing y ventas."],
+    question: "¿Qué síntoma resulta lo bastante costoso como para diagnosticarlo antes de invertir más?"
+  },
+  {
+    title: "Qué aclara el análisis del proyecto",
+    body: "El análisis revisa de forma precisa dónde pierde calidad comercial el recorrido actual antes de que el equipo de ventas pueda actuar.",
+    bullets: ["Dónde entra la demanda y dónde se pierde el contexto.", "Si la página y el activo atraen al comprador adecuado.", "Si la cualificación protege el tiempo comercial o solo añade fricción.", "Si el traspaso prepara la primera conversación.", "Si el seguimiento y los informes permiten mejorar tras el lanzamiento."],
+    question: "¿Qué pregunta sería difícil responder con sus datos actuales?"
+  },
+  {
+    title: "Cuándo encaja el análisis y cuándo no",
+    body: "El análisis resulta útil cuando existe una promoción real, presión comercial y voluntad de mejorar el recorrido. No lo es si solo se buscan ideas sueltas, cifras fijas de oportunidades o evitar la disciplina de seguimiento.",
+    bullets: ["Encaja: promoción activa, presión de lanzamiento y responsabilidad comercial interna.", "Encaja: fuentes que generan volumen, pero no contexto útil.", "No encaja: no hay promoción concreta ni equipo que opere el sistema.", "No encaja: se esperan cifras garantizadas o un plan completo en una llamada inicial."],
+    question: "¿Quiere diagnosticar un cuello de botella comercial o solo recopilar más ideas de marketing?"
+  },
+  {
+    title: "Siguiente paso: analizar el recorrido comercial",
+    body: "Si la evaluación revela una brecha real, el paso útil no es otra lista genérica. Es una revisión de 30 minutos y una decisión sobre si una estructura específica tiene sentido económico.",
+    bullets: ["Revise si falta claridad, cualificación o un traspaso preparado.", "Lleve una promoción, zona o problema de calidad concreto.", "Prepare las fuentes actuales, el proceso de traspaso y el principal cuello de botella.", "Espere una valoración clara, no un plan de implantación entregado."],
+    question: "¿Conviene atraer más tráfico o entender por qué la demanda actual no genera conversaciones cualificadas?"
+  }
+];
+
+const agentSectionsEs = [
+  {
+    title: "El problema real: actividad sin una cartera propia",
+    body: "Una agencia puede recibir solicitudes de portales, valoraciones y formularios sin construir una cartera predecible. Si comprador, vendedor, intención, plazo y siguiente paso no se separan, el equipo persigue contactos en lugar de gestionar oportunidades.",
+    bullets: ["Los portales aportan alcance, pero no una relación propia con el mercado.", "Una valoración puede reflejar curiosidad o intención real de vender.", "Una solicitud de comprador sin presupuesto, financiación o plazo sigue siendo difícil de priorizar.", "Sin seguimiento estructurado, las oportunidades futuras se pierden entre recordatorios."],
+    question: "¿Qué parte de la demanda actual pertenece realmente a su agencia y puede desarrollarse con el tiempo?"
+  },
+  {
+    title: "Dónde pierde calidad la captación inmobiliaria",
+    body: "La calidad se diluye cuando el activo atrae curiosidad general, el formulario no distingue intención y el CRM no crea un siguiente paso. El problema no se resuelve simplemente comprando más solicitudes.",
+    bullets: ["El contenido atrae interés, pero no identifica la necesidad inmobiliaria.", "Compradores y vendedores entran por el mismo recorrido.", "La zona, el tipo de inmueble y el plazo quedan en notas no estructuradas.", "El seguimiento depende de la memoria de cada agente.", "El rendimiento se mide por cantidad y no por conversaciones útiles."],
+    question: "¿En qué punto debería separarse antes la curiosidad de una oportunidad comercial?"
+  },
+  {
+    title: "Qué debe mostrar una oportunidad inmobiliaria preparada",
+    body: "Una oportunidad útil aporta contexto suficiente para elegir el tipo de conversación: valoración, perfil de búsqueda, seguimiento o descarte.",
+    bullets: ["Vendedor: inmueble, ubicación, plazo probable y motivo del interés.", "Comprador: zona, tipo de inmueble, presupuesto, financiación y plazo.", "Origen: activo, página, campaña o recomendación que generó la señal.", "Seguimiento: responsable, última acción, siguiente paso y segmento.", "Madurez: por qué conviene contactar ahora o mantener la relación."],
+    question: "Cuando falta este contexto, ¿su equipo hace seguimiento o reconstruye la oportunidad desde cero?"
+  },
+  {
+    title: "Evaluación breve: ¿conviene analizar su mercado?",
+    body: "El análisis tiene sentido cuando existe un mercado local definido, actividad comercial y un problema visible de calidad. No busca conseguir más nombres, sino entender por qué la demanda actual no se convierte en una cartera fiable.",
+    bullets: ["Existe una zona, segmento o foco claro de compradores o vendedores.", "Ya llegan solicitudes, contactos de portales o peticiones de valoración.", "El equipo distingue qué contactos consumen tiempo y cuáles generan conversaciones.", "Hay un CRM o proceso de gestión que puede revisarse.", "Puede abordarse un presupuesto si el diagnóstico lo justifica."],
+    question: "¿Puede identificar qué segmento debe mejorar primero y por qué ahora?"
+  },
+  {
+    title: "Analizar síntomas sin regalar una solución genérica",
+    body: "Este Playbook no entrega un embudo completo de captación, una secuencia de seguimiento ni un plan de campañas. Esas decisiones dependen de la posición local, la capacidad comercial, la confianza, los activos y la madurez del sistema.",
+    bullets: ["Muchas valoraciones y pocas conversaciones apuntan a filtros de intención débiles.", "Muchas solicitudes de compradores y pocas citas indican falta de contexto.", "Mucha actividad en portales y poca cartera propia revelan dependencia del canal.", "El seguimiento manual y los recordatorios perdidos indican brechas de CRM.", "La calidad de origen poco clara impide tomar decisiones."],
+    question: "¿Qué síntoma se repite pese a invertir en más campañas, portales o contenido?"
+  },
+  {
+    title: "Qué aclara el análisis del proyecto",
+    body: "El análisis comprueba si el recorrido actual cualifica, segmenta y prepara las solicitudes para que el equipo pueda actuar, sin sustituir un plan de implantación.",
+    bullets: ["Si la demanda de vendedores y compradores se separa antes del esfuerzo comercial.", "Si los recursos atraen una señal local relevante o solo curiosidad.", "Si los campos adecuados muestran la madurez real.", "Si el seguimiento protege oportunidades futuras.", "Si una estructura específica resulta viable para el mercado y el equipo."],
+    question: "¿Qué parte de su recorrido sería más difícil revisar con honestidad hoy?"
+  },
+  {
+    title: "Cuándo encaja el análisis y cuándo no",
+    body: "Encaja con agencias y profesionales que tienen un mercado concreto, disciplina comercial y un problema real de calidad. No encaja si se espera únicamente volumen bruto, resultados fijos o un plan completo entregado.",
+    bullets: ["Encaja: especialización local, seguimiento activo y cuello de botella claro.", "Encaja: tráfico existente o dependencia de portales que exige una cartera propia.", "No encaja: no hay responsabilidad comercial, disciplina de CRM ni presupuesto.", "No encaja: se espera que una llamada inicial sustituya la estrategia y la ejecución."],
+    question: "¿Tiene un problema de calidad diagnosticable o solo desea aumentar el volumen?"
+  },
+  {
+    title: "Siguiente paso: analizar antes de escalar",
+    body: "Si el sistema no distingue intención de venta, madurez del comprador y prioridad de seguimiento, aumentar el volumen suele escalar la confusión. Conviene diagnosticar antes de añadir más contactos.",
+    bullets: ["Revise la intención del vendedor, la segmentación del comprador y el traspaso.", "Lleve una zona, segmento o fuente que genere fricción.", "Prepare ejemplos recientes de oportunidades buenas y débiles.", "Espere una decisión sobre la conveniencia de estructurar el sistema."],
+    question: "¿Debe añadir más solicitudes o entender primero por qué las actuales no generan conversaciones fiables?"
+  }
+];
+
 const playbooks = [
   {
     slug: "developer-pipeline-playbook-en",
@@ -567,6 +690,28 @@ const playbooks = [
       "Teams, die einen strukturierten Aufbau für einen definierten lokalen Markt prüfen"
     ],
     sections: enrichSections(agentSectionsDe, "de", "agent")
+  },
+  {
+    slug: "novalure-playbook-promotores-es",
+    lang: "es",
+    audience: "developer",
+    eyebrow: "Playbook para promotores inmobiliarios",
+    title: "¿Sus solicitudes están preparadas para ventas o son solo datos de contacto?",
+    subtitle: "Una guía de diagnóstico para promotores y equipos comerciales que necesitan conversaciones con contexto, no más ruido de campaña.",
+    promise: "Detecte dónde pierde calidad la demanda antes de llegar a ventas y decida si conviene analizar el recorrido comercial.",
+    forWhom: ["Promotores con un lanzamiento o una promoción concreta", "Equipos que reciben solicitudes sin suficiente contexto", "Promociones de obra nueva que necesitan un traspaso más claro", "Equipos que quieren localizar el cuello de botella antes de implantar una estructura"],
+    sections: enrichSections(developerSectionsEs, "es", "developer")
+  },
+  {
+    slug: "novalure-playbook-agencias-inmobiliarias-es",
+    lang: "es",
+    audience: "agent",
+    eyebrow: "Playbook de captación para agencias inmobiliarias",
+    title: "¿Sus oportunidades generan conversaciones o solo trabajo de seguimiento?",
+    subtitle: "Una guía de diagnóstico para agencias que necesitan demanda propia, intención más clara y contexto más allá de los portales.",
+    promise: "Detecte dónde pierden calidad las solicitudes de vendedores y compradores y decida si conviene analizar el sistema.",
+    forWhom: ["Agencias con dependencia de portales y poca cartera propia", "Profesionales que reciben solicitudes sin una madurez clara", "Equipos que necesitan contexto antes del seguimiento", "Agencias que estudian una estructura para un mercado local definido"],
+    sections: enrichSections(agentSectionsEs, "es", "agent")
   }
 ];
 
@@ -584,14 +729,20 @@ function pipelineSvg(lang, audience, showLeak = false) {
       ? audience === "developer"
         ? ["Nachfrage", "Projekt-Fit", "Qualifizierung", "Übergabe", "Vertrieb"]
         : ["Lokale Nachfrage", "Lead Magnet", "Segmentierung", "Übergabe", "Follow-up"]
+      : lang === "es"
+        ? audience === "developer"
+          ? ["Demanda", "Encaje", "Cualificación", "Traspaso", "Ventas"]
+          : ["Demanda local", "Recurso", "Segmentación", "Traspaso", "Seguimiento"]
       : audience === "developer"
         ? ["Demand", "Project Fit", "Qualification", "Handover", "Sales"]
         : ["Local Demand", "Lead Magnet", "Segmentation", "Handover", "Follow-up"];
-  const leakLabel = lang === "de" ? "Leck" : "Leak";
+  const leakLabel = lang === "de" ? "Leck" : lang === "es" ? "Brecha" : "Leak";
   const leakNote =
     lang === "de"
       ? "Hier verliert das System Kontext - Käufertyp, Timing und Reife erreichen den Vertrieb nicht."
-      : "This is where the system loses context - buyer type, timing and readiness never reach sales.";
+      : lang === "es"
+        ? "Aquí se pierde contexto: el tipo de comprador, el plazo y la madurez no llegan al equipo comercial."
+        : "This is where the system loses context - buyer type, timing and readiness never reach sales.";
   return `
   <svg viewBox="0 0 920 260" role="img" aria-label="Project check diagram">
     <defs>
@@ -629,14 +780,16 @@ function pipelineSvg(lang, audience, showLeak = false) {
 }
 
 function matrixSvg(lang) {
-  const x = lang === "de" ? "Kaufabsicht / Reife" : "Buying intent / readiness";
-  const y = lang === "de" ? "Kontext vorhanden" : "Context available";
-  const low = lang === "de" ? "niedrig" : "low";
-  const high = lang === "de" ? "hoch" : "high";
+  const x = lang === "de" ? "Kaufabsicht / Reife" : lang === "es" ? "Intención / madurez" : "Buying intent / readiness";
+  const y = lang === "de" ? "Kontext vorhanden" : lang === "es" ? "Contexto disponible" : "Context available";
+  const low = lang === "de" ? "niedrig" : lang === "es" ? "bajo" : "low";
+  const high = lang === "de" ? "hoch" : lang === "es" ? "alto" : "high";
   const cells =
     lang === "de"
       ? ["Disqualifizieren", "Prüfen", "Nurture", "Sales-ready"]
-      : ["Disqualify", "Review", "Nurture", "Sales-ready"];
+      : lang === "es"
+        ? ["Descartar", "Revisar", "Seguimiento", "Preparado"]
+        : ["Disqualify", "Review", "Nurture", "Sales-ready"];
   const label = (text, x, y, color, size = 25) => {
     if (text.length > 12) {
       const [first, second] = text.includes("-") ? text.split("-") : [text.slice(0, 7), text.slice(7)];
@@ -672,7 +825,9 @@ function systemSvg(lang) {
   const labels =
     lang === "de"
       ? ["Signal", "Fit", "Übergabe", "Prüfbarkeit"]
-      : ["Signal", "Fit", "Handover", "Review Readiness"];
+      : lang === "es"
+        ? ["Señal", "Encaje", "Traspaso", "Preparación"]
+        : ["Signal", "Fit", "Handover", "Review Readiness"];
   return `
   <svg viewBox="0 0 920 340" role="img" aria-label="Four-layer diagnosis system">
     <rect width="920" height="340" rx="28" fill="#111318"/>
@@ -685,11 +840,26 @@ function systemSvg(lang) {
         <text x="${x + 28}" y="${y + 31}" fill="${index === 3 ? "#111318" : "#ffffff"}" font-family="Arial" font-size="20" font-weight="800">${index + 1}. ${esc(label)}</text>`;
       })
       .join("")}
-    <text x="640" y="285" fill="#aeb6c3" font-family="Arial" font-size="17">${lang === "de" ? "Ziel: vorbereitete Gespräche" : "Goal: prepared conversations"}</text>
+    <text x="640" y="285" fill="#aeb6c3" font-family="Arial" font-size="17">${lang === "de" ? "Ziel: vorbereitete Gespräche" : lang === "es" ? "Objetivo: conversaciones preparadas" : "Goal: prepared conversations"}</text>
   </svg>`;
 }
 
 function checkRevealsSection(lang, audience) {
+  if (lang === "es") {
+    return audience === "developer"
+      ? {
+          title: "Qué revela un análisis",
+          body: "Un equipo comercial recibía solicitudes constantes desde portales y la página de la promoción. Al revisar el traspaso se detectó que muchas llegaban sin tipo de comprador, plazo ni proximidad de financiación. Ventas reconstruía el contexto en cada primera conversación. El problema no era el volumen, sino la capa ausente entre el formulario y la llamada.",
+          bullets: [],
+          question: "¿Qué capa de contexto falta hoy entre la solicitud y la primera conversación comercial?"
+        }
+      : {
+          title: "Qué revela un análisis",
+          body: "Una agencia recibía solicitudes de valoración y compradores con regularidad. La revisión mostró que la curiosidad del propietario y la intención real de vender llegaban al mismo grupo. El equipo dedicaba tiempo a solicitudes que el sistema debería haber clasificado antes. El problema no era la cantidad, sino la falta de separación previa.",
+          bullets: [],
+          question: "¿Dónde debería separar antes su recorrido la curiosidad, el potencial de exclusiva y la madurez del comprador?"
+        };
+  }
   if (lang === "de" && audience === "developer") {
     return {
       title: "Was ein Check sichtbar macht",
@@ -735,6 +905,13 @@ function scorecardAssessment(lang, audience) {
       `5 erfüllt -> Ihr ${project ? "Funnel produziert Volumen, aber keine verlässliche Pipeline" : "Markt erzeugt Nachfrage, aber keine verlässliche Pipeline"}. Genau dafür ist der Check.`
     ];
   }
+  if (lang === "es") {
+    return [
+      "0-2 criterios -> Aclare primero los fundamentos; el análisis sería prematuro.",
+      `3-4 criterios -> Un análisis puede mostrar dónde se pierde ${project ? "contexto" : "contexto de mercado y oportunidad"}.`,
+      `5 criterios -> ${project ? "El recorrido genera volumen, pero no una cartera fiable" : "El mercado genera demanda, pero no una cartera fiable"}. Para eso sirve el análisis.`
+    ];
+  }
   return [
     "0-2 met -> Clarify the basics first; a check would be premature.",
     `3-4 met -> A Project Check can now reveal where ${project ? "context" : "market and lead context"} is being lost.`,
@@ -772,7 +949,7 @@ function renderHtml(book) {
         ? `<ul class="${bulletsClass}">${section.bullets.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`
         : "";
       const assessment = section.assessment
-        ? `<div class="scorecard-assessment"><h3>${book.lang === "de" ? "Ihre Einschätzung:" : "Your assessment:"}</h3>${section.assessment
+        ? `<div class="scorecard-assessment"><h3>${book.lang === "de" ? "Ihre Einschätzung:" : book.lang === "es" ? "Su evaluación:" : "Your assessment:"}</h3>${section.assessment
             .map((item) => `<p><span class="assessment-box"></span>${esc(item)}</p>`)
             .join("")}</div>`
         : "";
@@ -866,7 +1043,7 @@ function renderHtml(book) {
       <h2>${esc(ui.introTitle)}</h2>
       <p class="body">${esc(ui.introBody)}</p>
       <div class="grid">${book.forWhom.map((item) => `<div class="card"><h3>${esc(item)}</h3><p>${esc(ui.introCardBody)}</p></div>`).join("")}</div>
-      <p class="diagnostic-question">${book.lang === "de" ? "Wenn diese Ausgangslage konkret ist, ist ein Projekt-Check sinnvoller als weitere allgemeine Marketingideen." : "If this situation is concrete, a Project Check is more useful than another set of general marketing ideas."}</p>
+      <p class="diagnostic-question">${book.lang === "de" ? "Wenn diese Ausgangslage konkret ist, ist ein Projekt-Check sinnvoller als weitere allgemeine Marketingideen." : book.lang === "es" ? "Si esta situación es concreta, un análisis del proyecto resulta más útil que otra lista de ideas generales de marketing." : "If this situation is concrete, a Project Check is more useful than another set of general marketing ideas."}</p>
       <p class="note">${esc(ui.note)}</p>
       <div class="footer"><span>${esc(ui.footer)}</span><span>02</span></div>
     </section>
@@ -878,7 +1055,7 @@ function renderHtml(book) {
         <div class="visual">${systemSvg(book.lang)}</div>
         <div class="visual">${matrixSvg(book.lang)}</div>
       </div>
-      <p class="diagnostic-question">${book.lang === "de" ? "Wenn ein Feld in dieser Logik unklar bleibt, sollte es im Projekt-Check geprüft werden, bevor mehr Budget in Reichweite fließt." : "If one part of this logic is unclear, it should be reviewed in the Project Check before more budget is pushed into reach."}</p>
+      <p class="diagnostic-question">${book.lang === "de" ? "Wenn ein Feld in dieser Logik unklar bleibt, sollte es im Projekt-Check geprüft werden, bevor mehr Budget in Reichweite fließt." : book.lang === "es" ? "Si una parte de esta lógica no está clara, conviene revisarla antes de destinar más presupuesto a aumentar el alcance." : "If one part of this logic is unclear, it should be reviewed in the Project Check before more budget is pushed into reach."}</p>
       <div class="footer"><span>${esc(ui.footer)}</span><span>03</span></div>
     </section>
     ${sections}
@@ -889,7 +1066,7 @@ function renderHtml(book) {
       <p class="body">${esc(ui.summaryBody)}</p>
       <a class="cta" href="${esc(ui.primaryUrl)}">${esc(ui.primaryCta)}</a>
       <p class="note">${esc(ui.note)}</p>
-      <div class="footer"><span>${esc(ui.footer)}</span><span>${book.lang === "de" ? "Ende" : "End"}</span></div>
+      <div class="footer"><span>${esc(ui.footer)}</span><span>${book.lang === "de" ? "Ende" : book.lang === "es" ? "Fin" : "End"}</span></div>
     </section>
   </main>
 </body>

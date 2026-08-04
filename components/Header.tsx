@@ -14,6 +14,10 @@ const headerCopy = {
   de: {
     menu: "Menü öffnen", close: "Menü schließen", navigation: "Hauptnavigation",
     nav: ["Bauträger", "Makler", "Prozess", "System", "Playbook"], login: "CRM-Login", cta: "Projekt-Check anfragen"
+  },
+  es: {
+    menu: "Abrir menú", close: "Cerrar menú", navigation: "Navegación principal",
+    nav: ["Promotores", "Agencias", "Proceso", "Sistema", "Playbook"], login: "Acceso al CRM", cta: "Solicitar un análisis"
   }
 } as const;
 
@@ -26,11 +30,12 @@ export function Header({ locale }: { locale: Locale }) {
   const t = headerCopy[locale];
   const homePath = getPath(locale, "home");
 
-  const switchLocale = locale === "en" ? "de" : "en";
   const activeKey = Object.entries(routeMap).find(([, paths]) => paths[locale] === pathname)?.[0] as
     | keyof typeof routeMap
     | undefined;
-  const switchHref = activeKey ? routeMap[activeKey][switchLocale] : getPath(switchLocale, "home");
+  const switchHref = (targetLocale: Locale) => activeKey
+    ? routeMap[activeKey][targetLocale]
+    : getPath(targetLocale, "home");
   const crmHref = getCrmAppUrl(locale);
   const anchor = (id: string) => `${homePath}#${id}`;
   const navItems = [
@@ -40,6 +45,10 @@ export function Header({ locale }: { locale: Locale }) {
     [t.nav[3], anchor("system")],
     [t.nav[4], anchor("playbook")]
   ] as const;
+
+  useEffect(() => {
+    document.cookie = `novalure_locale=${locale}; Path=/; Max-Age=31536000; SameSite=Lax; Secure`;
+  }, [locale]);
 
   useEffect(() => {
     if (!open) return;
@@ -99,9 +108,10 @@ export function Header({ locale }: { locale: Locale }) {
       </nav>
 
       <div className="header-actions desktop-actions v3-header-actions">
-        <div className="v3-language-switch" aria-label={locale === "de" ? "Sprache" : "Language"}>
-          <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref} hrefLang="de">DE</Link>
-          <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref} hrefLang="en">EN</Link>
+        <div className="v3-language-switch" aria-label={locale === "de" ? "Sprache" : locale === "es" ? "Idioma" : "Language"}>
+          <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref("de")} hrefLang="de">DE</Link>
+          <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>
+          <Link className={locale === "es" ? "is-active" : ""} href={locale === "es" ? pathname : switchHref("es")} hrefLang="es">ES</Link>
         </div>
         <a className="v3-header-login" href={crmHref} target="_blank" rel="noreferrer" data-track="nav_crm_login">{t.login}</a>
         <Link className="v3-button v3-button-primary v3-header-cta" href={anchor("kontakt")} data-track="nav_audit">{t.cta}</Link>
@@ -143,8 +153,9 @@ export function Header({ locale }: { locale: Locale }) {
           <Link className="v3-button v3-button-primary" href={anchor("kontakt")} onClick={() => setOpen(false)}>{t.cta}</Link>
           <a className="v3-button v3-button-dark-outline" href={crmHref} target="_blank" rel="noreferrer" data-track="mobile_crm_login" onClick={() => setOpen(false)}>{t.login}</a>
           <div className="v3-language-switch is-dark">
-            <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref} hrefLang="de">DE</Link>
-            <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref} hrefLang="en">EN</Link>
+            <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref("de")} hrefLang="de">DE</Link>
+            <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>
+            <Link className={locale === "es" ? "is-active" : ""} href={locale === "es" ? pathname : switchHref("es")} hrefLang="es">ES</Link>
           </div>
         </div>
       </nav>

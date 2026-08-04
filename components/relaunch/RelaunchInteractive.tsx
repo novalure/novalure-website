@@ -124,7 +124,7 @@ export function ProofCounters({ locale, firstLabel, secondLabel }: { locale: Loc
   return (
     <div className="v3-proof-stats" ref={rootRef}>
       <div>
-        <strong aria-label={locale === "de" ? "15 bis 20" : "15 to 20"}>
+        <strong aria-label={locale === "de" ? "15 bis 20" : locale === "es" ? "de 15 a 20" : "15 to 20"}>
           {values.lower}–{values.upper}
         </strong>
         <span>{firstLabel}</span>

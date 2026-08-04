@@ -89,7 +89,7 @@ function SystemBoard({ locale }: { locale: Locale }) {
       title: t.colC,
       count: 2,
       cards: [
-        { name: t.unitPenthouseA3, score: 87, note: `${t.stViewing} · ${locale === "de" ? "Do 14:00" : "Thu 2pm"}`, highlight: true, scorePill: true },
+        { name: t.unitPenthouseA3, score: 87, note: `${t.stViewing} · ${locale === "de" ? "Do 14:00" : locale === "es" ? "jue. 14:00" : "Thu 2pm"}`, highlight: true, scorePill: true },
         { name: t.unitApartmentD4, score: 91, note: t.stHandover, scorePill: true }
       ]
     }
@@ -141,7 +141,7 @@ export function RelaunchHomePage({ locale }: { locale: Locale }) {
   const material = [
     { src: "/images/visual-exterior-01.jpg", title: t.mat1t, meta: t.mat1m },
     { src: "/images/visual-interior-01.jpg", title: t.mat2t, meta: t.mat2m },
-    { src: locale === "de" ? "/playbooks/covers/bautraeger-de-cover.png" : "/playbooks/covers/developer-en-cover.png", title: t.mat3t, meta: t.mat3m }
+    { src: locale === "de" ? "/playbooks/covers/bautraeger-de-cover.png" : locale === "es" ? "/playbooks/covers/promotores-es-cover.png" : "/playbooks/covers/developer-en-cover.png", title: t.mat3t, meta: t.mat3m }
   ];
 
   return (
@@ -165,7 +165,7 @@ export function RelaunchHomePage({ locale }: { locale: Locale }) {
         <HeroPipeline locale={locale} />
       </section>
 
-      <section className="v3-proof" data-reveal data-track-section="proof" aria-label={locale === "de" ? "Referenzwerte" : "Reference values"}>
+      <section className="v3-proof" data-reveal data-track-section="proof" aria-label={locale === "de" ? "Referenzwerte" : locale === "es" ? "Valores de referencia" : "Reference values"}>
         <ProofCounters locale={locale} firstLabel={t.kpi1} secondLabel={t.kpi2} />
         <p>{t.proofNote}</p>
       </section>

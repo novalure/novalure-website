@@ -42,15 +42,16 @@ export function Footer({ locale }: { locale: Locale }) {
           <h2>{t.pbKicker}</h2>
           <p>{t.pbBody}</p>
           <Link className="v3-button v3-button-primary" href={getPath(locale, "playbooks")}>{t.pbBtn}</Link>
-          <small>{locale === "de" ? "Optionales Update-Opt-in wird per E-Mail bestätigt." : "Optional updates opt-in is confirmed by email."}</small>
+          <small>{locale === "de" ? "Optionales Update-Opt-in wird per E-Mail bestätigt." : locale === "es" ? "La suscripción opcional se confirma por correo electrónico." : "Optional updates opt-in is confirmed by email."}</small>
         </div>
       </div>
 
       <div className="v3-footer-bottom">
         <span>© 2026 NovaLure · Dublin, Ireland</span>
-        <nav className="v3-footer-languages" aria-label={locale === "de" ? "Sprache" : "Language"}>
+        <nav className="v3-footer-languages" aria-label={locale === "de" ? "Sprache" : locale === "es" ? "Idioma" : "Language"}>
           <Link className={locale === "de" ? "is-active" : ""} href={getPath("de", "home")} hrefLang="de">DE</Link>
           <Link className={locale === "en" ? "is-active" : ""} href={getPath("en", "home")} hrefLang="en">EN</Link>
+          <Link className={locale === "es" ? "is-active" : ""} href={getPath("es", "home")} hrefLang="es">ES</Link>
         </nav>
       </div>
     </footer>

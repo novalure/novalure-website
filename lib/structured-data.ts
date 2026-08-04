@@ -14,13 +14,15 @@ export function organizationSchema(locale: Locale) {
     description:
       locale === "en"
         ? "Project marketing, follow-up and prepared handover for real estate sales."
-        : "Projektvermarktung, Nachfassen und vorbereitete Übergabe für den Immobilienvertrieb.",
+        : locale === "es"
+          ? "Comercialización inmobiliaria, seguimiento y traspaso preparado para equipos comerciales."
+          : "Projektvermarktung, Nachfassen und vorbereitete Übergabe für den Immobilienvertrieb.",
     logo: `${siteUrl}/novalure-logo.png`,
     areaServed: ["AT", "DE", "CH", "LI", "IE", "GB", "EU"],
     founder: {
       "@type": "Person",
       name: "Franz Romih",
-      jobTitle: locale === "en" ? "Team Lead" : "Teamleitung"
+      jobTitle: locale === "en" ? "Team Lead" : locale === "es" ? "Dirección de equipo" : "Teamleitung"
     }
   };
 }
@@ -32,7 +34,7 @@ export function websiteSchema(locale: Locale) {
     "@id": `${siteUrl}/#website`,
     name: "NovaLure",
     url: `${siteUrl}${routeMap.home[locale]}`,
-    inLanguage: locale === "de" ? "de-DE" : "en-GB"
+    inLanguage: locale === "de" ? "de-DE" : locale === "es" ? "es-ES" : "en-GB"
   };
 }
 
@@ -44,7 +46,7 @@ export function breadcrumbSchema(locale: Locale, key: PageKey, title: string) {
       {
         "@type": "ListItem",
         position: 1,
-        name: locale === "en" ? "Home" : "Start",
+        name: locale === "en" ? "Home" : locale === "es" ? "Inicio" : "Start",
         item: `${siteUrl}${routeMap.home[locale]}`
       },
       {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Schibsted_Grotesk, Source_Serif_4 } from "next/font/google";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
@@ -47,9 +48,13 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const requestHeaders = await headers();
+  const requestedLanguage = requestHeaders.get("x-novalure-document-language");
+  const documentLanguage = requestedLanguage === "de-DE" || requestedLanguage === "es-ES" ? requestedLanguage : "en-GB";
+
   return (
-    <html className={`${schibsted.variable} ${sourceSerif.variable}`} lang="en" suppressHydrationWarning>
+    <html className={`${schibsted.variable} ${sourceSerif.variable}`} lang={documentLanguage} suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );
