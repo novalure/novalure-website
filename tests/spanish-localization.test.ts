@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { pages } from "@/content/pages";
 import { relaunchCopy } from "@/content/relaunch-copy";
-import { getPath, locales, routeMap } from "@/lib/i18n";
+import { getPath, getProcessAnchor, locales, routeMap } from "@/lib/i18n";
 import { playbooks } from "@/lib/playbooks-meta";
 import { pageSchemas } from "@/lib/structured-data";
 import { selectLocale } from "@/middleware";
@@ -28,6 +28,12 @@ describe("Spanish localization", () => {
     expect(getPath("es", "developers")).toBe("/es/promotores");
     expect(getPath("es", "agents")).toBe("/es/agencias-inmobiliarias");
     expect(getPath("es", "contact")).toBe("/es/analisis-del-proyecto");
+  });
+
+  it("targets the localized Spanish process section", () => {
+    expect(getProcessAnchor("es")).toBe("proceso");
+    expect(getProcessAnchor("de")).toBe("prozess");
+    expect(getProcessAnchor("en")).toBe("prozess");
   });
 
   it.each(spanishCountries)("selects Spanish for country %s", (country) => {

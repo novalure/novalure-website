@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ContactInquiryForm } from "@/components/ContactInquiryForm";
 import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholders";
 import { relaunchCopy } from "@/content/relaunch-copy";
-import type { Locale } from "@/lib/i18n";
+import { getProcessAnchor, type Locale } from "@/lib/i18n";
 import { FaqAccordion, ProcessSteps, ProjectCheckLink, ProofCounters, SectionReveals } from "@/components/relaunch/RelaunchInteractive";
 
 function SectionKicker({ children, inverse = false }: { children: React.ReactNode; inverse?: boolean }) {
@@ -194,7 +194,7 @@ export function RelaunchHomePage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="v3-section v3-process" id="prozess" data-reveal>
+      <section className="v3-section v3-process" id={getProcessAnchor(locale)} data-reveal>
         <div className="v3-section-heading">
           <SectionKicker>{t.procKicker}</SectionKicker>
           <h2>{t.procH}</h2>
