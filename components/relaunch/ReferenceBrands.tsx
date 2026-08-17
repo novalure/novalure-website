@@ -25,9 +25,15 @@ export function ReferenceBrands({ locale, kicker }: { locale: Locale; kicker: st
       <span>{kicker}</span>
       <div className={styles.grid} role="list" aria-label={referenceLabels[locale]}>
         <div className={`${styles.mark} ${styles.grasl}`} role="listitem" aria-label="GRASL Immobilien, Schwaz">
-          <strong>GRASL</strong>
-          <span>Immobilien</span>
-          <small>Schwaz</small>
+          <Image
+            className={styles.graslLogo}
+            src="/images/grasl-immobilien-logo-white.svg"
+            alt="GRASL Immobilien"
+            width={900}
+            height={663}
+            sizes="(max-width: 479px) 84px, 94px"
+            priority
+          />
         </div>
 
         <div className={`${styles.mark} ${styles.vallis}`} role="listitem" aria-label="Vallis Achen Residenzen">
