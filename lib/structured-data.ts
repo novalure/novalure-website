@@ -13,14 +13,16 @@ export function organizationSchema(locale: Locale) {
     url: `${siteUrl}${routeMap.home[locale]}`,
     description:
       locale === "en"
-        ? "CRM-ready lead systems for real estate sales."
-        : "CRM-fähige Lead-Systeme für den Immobilienvertrieb.",
+        ? "Project marketing, follow-up and prepared handover for real estate sales."
+        : locale === "es"
+          ? "Comercialización inmobiliaria, seguimiento y traspaso preparado para equipos comerciales."
+          : "Projektvermarktung, Nachfassen und vorbereitete Übergabe für den Immobilienvertrieb.",
     logo: `${siteUrl}/novalure-logo.png`,
-    areaServed: ["AT", "DE", "CH", "LI", "IE", "EU"],
+    areaServed: ["AT", "DE", "CH", "LI", "IE", "GB", "EU"],
     founder: {
       "@type": "Person",
       name: "Franz Romih",
-      jobTitle: locale === "en" ? "Team Lead" : "Teamleitung"
+      jobTitle: locale === "en" ? "Team Lead" : locale === "es" ? "Dirección de equipo" : "Teamleitung"
     }
   };
 }
@@ -32,7 +34,7 @@ export function websiteSchema(locale: Locale) {
     "@id": `${siteUrl}/#website`,
     name: "NovaLure",
     url: `${siteUrl}${routeMap.home[locale]}`,
-    inLanguage: locale === "de" ? "de-DE" : "en-GB"
+    inLanguage: locale === "de" ? "de-DE" : locale === "es" ? "es-ES" : "en-GB"
   };
 }
 
@@ -44,7 +46,7 @@ export function breadcrumbSchema(locale: Locale, key: PageKey, title: string) {
       {
         "@type": "ListItem",
         position: 1,
-        name: locale === "en" ? "Home" : "Start",
+        name: locale === "en" ? "Home" : locale === "es" ? "Inicio" : "Start",
         item: `${siteUrl}${routeMap.home[locale]}`
       },
       {
@@ -75,9 +77,12 @@ export function faqSchema(items: FaqItem[] = []) {
 export function pageSchemas(content: PageContent) {
   const schemas: unknown[] = [
     organizationSchema(content.locale),
-    websiteSchema(content.locale),
-    breadcrumbSchema(content.locale, content.key, content.title)
+    websiteSchema(content.locale)
   ];
+
+  if (content.key !== "home") {
+    schemas.push(breadcrumbSchema(content.locale, content.key, content.title));
+  }
 
   if (content.faq?.length) {
     schemas.push(faqSchema(content.faq));

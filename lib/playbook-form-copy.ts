@@ -48,7 +48,7 @@ export const playbookFormCopy: Record<Locale, {
     },
     selectorLabel: "Choose your playbook",
     insideTitle: "What's inside",
-    submit: "Send me the playbook",
+    submit: "Send me the Playbook",
     loading: "Sending...",
     trust: "No spam · unsubscribe anytime · GDPR-compliant",
     previewAlt: "Playbook cover preview",
@@ -72,30 +72,30 @@ export const playbookFormCopy: Record<Locale, {
       sentAfter: "."
     },
     meeting: {
-      title: "Book your Pipeline Audit",
+      title: "Request your Project Check",
       body: "Choose a time that works for you. The calendar opens with live availability and sends the Microsoft Teams link after booking."
     },
     variants: {
       developer: {
         eyebrow: "Playbook delivery",
-        title: "Developer Pipeline Playbook",
-        headline: "Get your Pipeline Playbook",
+        title: "Developer Project Playbook",
+        headline: "Developer Project Playbook",
         subline: "{pages}-page diagnostic guide · PDF · delivered in 2 minutes",
         inside: [
           "Where project enquiries lose context before sales can act",
           "Which handover gaps make buyer leads expensive to sort",
-          "Audit-readiness check: is your project concrete enough for a Pipeline Audit"
+          "Project-readiness check: is your project concrete enough for a 30-minute review"
         ]
       },
       agent: {
         eyebrow: "Playbook delivery",
         title: "Real Estate Agent Lead Playbook",
-        headline: "Get your Lead Playbook",
+        headline: "Real Estate Agent Lead Playbook",
         subline: "{pages}-page diagnostic guide · PDF · delivered in 2 minutes",
         inside: [
           "Where seller and buyer enquiries lose intent before follow-up",
-          "Which CRM context separates curiosity from sales readiness",
-          "Audit-readiness check: is your local lead system ready for a Pipeline Audit"
+          "Which context separates curiosity from sales readiness",
+          "Readiness check: is your local enquiry path concrete enough for a 30-minute review"
         ]
       }
     }
@@ -110,7 +110,7 @@ export const playbookFormCopy: Record<Locale, {
     },
     selectorLabel: "Wählen Sie Ihr Playbook",
     insideTitle: "Was drin ist",
-    submit: "Schick mir den Leitfaden",
+    submit: "Playbook anfordern",
     loading: "Wird gesendet...",
     trust: "Kein Spam · jederzeit abbestellbar · DSGVO-konform",
     previewAlt: "Playbook-Cover-Vorschau",
@@ -134,30 +134,92 @@ export const playbookFormCopy: Record<Locale, {
       sentAfter: " gesendet."
     },
     meeting: {
-      title: "Pipeline-Audit buchen",
+      title: "Projekt-Check anfragen",
       body: "Wählen Sie einen passenden Termin. Der Kalender zeigt verfügbare Zeiten und sendet nach der Buchung den Microsoft-Teams-Link."
     },
     variants: {
       developer: {
         eyebrow: "Playbook-Versand",
-        title: "Bauträger-Pipeline-Leitfaden",
-        headline: "Holen Sie sich Ihren Pipeline-Leitfaden",
-        subline: "{pages}-seitiger Diagnose-Leitfaden · PDF · in 2 Minuten im Postfach",
+        title: "Bauträger-Projekt-Playbook",
+        headline: "Bauträger-Projekt-Playbook",
+        subline: "{pages}-seitiges Diagnose-Playbook · PDF · in 2 Minuten im Postfach",
         inside: [
           "Wo Projekt-Anfragen Kontext verlieren, bevor der Vertrieb übernimmt",
           "Welche Übergabe-Lücken Käufer-Leads teuer machen",
-          "Audit-Reife-Check: Ist Ihr Projekt konkret genug für ein Pipeline-Audit"
+          "Projekt-Reife-Check: Ist Ihr Projekt konkret genug für einen 30-Minuten-Check"
         ]
       },
       agent: {
         eyebrow: "Playbook-Versand",
-        title: "Makler-Lead-Leitfaden",
-        headline: "Holen Sie sich Ihren Lead-Leitfaden",
-        subline: "{pages}-seitiger Diagnose-Leitfaden · PDF · in 2 Minuten im Postfach",
+        title: "Makler-Lead-Playbook",
+        headline: "Makler-Lead-Playbook",
+        subline: "{pages}-seitiges Diagnose-Playbook · PDF · in 2 Minuten im Postfach",
         inside: [
           "Wo Verkäufer- und Käufer-Anfragen Intent verlieren",
-          "Welcher CRM-Kontext Neugier von Verkaufsbereitschaft trennt",
-          "Audit-Reife-Check: Ist Ihr lokales Lead-System bereit für ein Pipeline-Audit"
+          "Welcher Kontext Neugier von Verkaufsbereitschaft trennt",
+          "Reife-Check: Ist Ihr lokaler Anfrageweg konkret genug für einen 30-Minuten-Check"
+        ]
+      }
+    }
+  },
+  es: {
+    fields: {
+      name: "Nombre",
+      email: "Correo electrónico profesional",
+      company: "Empresa",
+      phone: "Número de teléfono",
+      honeypot: "Sitio web"
+    },
+    selectorLabel: "Seleccione su Playbook",
+    insideTitle: "Qué incluye",
+    submit: "Enviarme el Playbook",
+    loading: "Enviando...",
+    trust: "Sin spam · baja en cualquier momento · conforme al RGPD",
+    previewAlt: "Vista previa de la portada del Playbook",
+    consent: {
+      requiredBefore: "Obligatorio: Consiento que NovaLure trate mis datos de acuerdo con la ",
+      privacyLabel: "Política de privacidad",
+      requiredAfter: " para enviarme el Playbook por correo electrónico.",
+      optional: "Opcional: Sí, deseo recibir por correo electrónico contenidos, novedades y ofertas relevantes de NovaLure. Puedo retirar mi consentimiento en cualquier momento mediante el enlace de baja."
+    },
+    errors: {
+      required: "Este campo es obligatorio.",
+      email: "Introduzca un correo electrónico profesional válido.",
+      phone: "Introduzca un número de teléfono válido o deje el campo vacío.",
+      consent: "El consentimiento es obligatorio para recibir el Playbook.",
+      submit: "No hemos podido enviar el Playbook. Inténtelo de nuevo en unos minutos."
+    },
+    success: {
+      eyebrow: "Playbook enviado",
+      headline: "Revise su bandeja de entrada.",
+      sentBefore: "Hemos enviado el enlace de descarga a ",
+      sentAfter: "."
+    },
+    meeting: {
+      title: "Solicitar un análisis del proyecto",
+      body: "Elija una hora disponible. El calendario muestra la disponibilidad y envía el enlace de Microsoft Teams después de la reserva."
+    },
+    variants: {
+      developer: {
+        eyebrow: "Envío del Playbook",
+        title: "Playbook para promotores inmobiliarios",
+        headline: "Playbook para promotores inmobiliarios",
+        subline: "Guía de diagnóstico de {pages} páginas · PDF · entrega por correo electrónico",
+        inside: [
+          "Dónde pierden contexto las solicitudes antes de llegar al equipo comercial",
+          "Qué carencias del traspaso encarecen la clasificación de compradores",
+          "Evaluación de madurez: si la promoción está preparada para un análisis de 30 minutos"
+        ]
+      },
+      agent: {
+        eyebrow: "Envío del Playbook",
+        title: "Playbook de captación para agencias inmobiliarias",
+        headline: "Playbook de captación para agencias inmobiliarias",
+        subline: "Guía de diagnóstico de {pages} páginas · PDF · entrega por correo electrónico",
+        inside: [
+          "Dónde pierden intención las solicitudes de vendedores y compradores",
+          "Qué contexto separa la curiosidad de una oportunidad comercial",
+          "Evaluación de madurez del recorrido local antes de un análisis de 30 minutos"
         ]
       }
     }

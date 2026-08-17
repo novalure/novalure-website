@@ -18,6 +18,34 @@ declare global {
 
 const gaMeasurementId = "G-0LV11ZNV38";
 
+function activateGoogleAnalytics(marketingAllowed: boolean) {
+  if (!window.gtag) {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = (...args: unknown[]) => {
+      window.dataLayer?.push(args);
+    };
+    window.gtag("js", new Date());
+    window.gtag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied"
+    });
+    window.gtag("config", gaMeasurementId, { send_page_view: false });
+  }
+
+  if (!document.querySelector(`script[data-novalure-analytics="${gaMeasurementId}"]`)) {
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaMeasurementId)}`;
+    script.dataset.novalureAnalytics = gaMeasurementId;
+    document.head.appendChild(script);
+  }
+
+  window.gtag("consent", "update", {
+    analytics_storage: "granted",
+    ad_storage: marketingAllowed ? "granted" : "denied"
+  });
+}
+
 function sendPageView(path: string) {
   if (!window.gtag) return;
 
@@ -71,14 +99,22 @@ export function TrackingPlaceholders() {
           marketing: Boolean(detail?.marketing),
           external: Boolean(detail?.external)
         };
+        const wasAnalyticsAllowed = analyticsAllowed.current;
         analyticsAllowed.current = consent.analytics;
 
         if (consent.analytics) {
+          activateGoogleAnalytics(consent.marketing);
+          const page = `${window.location.pathname}${window.location.search}`;
+          if (!wasAnalyticsAllowed || lastPageView.current !== page) {
+            lastPageView.current = page;
+            sendPageView(page);
+          }
+        } else {
+          lastPageView.current = null;
           window.gtag?.("consent", "update", {
-            analytics_storage: "granted",
+            analytics_storage: "denied",
             ad_storage: consent.marketing ? "granted" : "denied"
           });
-          sendPageView(`${window.location.pathname}${window.location.search}`);
         }
 
         if (consent.analytics || consent.marketing) {

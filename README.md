@@ -128,14 +128,18 @@ Studio is available at `/studio` when Sanity environment variables are configure
 
 The site is prepared for:
 
-- Developer Playbook form: `NEXT_PUBLIC_HUBSPOT_DEVELOPER_FORM_ID`
-- Agent Playbook form: `NEXT_PUBLIC_HUBSPOT_AGENT_FORM_ID`
+- HubSpot account: `HUBSPOT_PORTAL_ID`
+- Shared Playbook form: `HUBSPOT_PLAYBOOK_FORM_GUID`
+- Optional Developer override: `HUBSPOT_DEVELOPER_FORM_GUID`
+- Optional Agent override: `HUBSPOT_AGENT_FORM_GUID`
 - Meeting Scheduler fallback: `NEXT_PUBLIC_HUBSPOT_MEETING_URL`
 - English Meeting Scheduler: `NEXT_PUBLIC_HUBSPOT_MEETING_URL_EN`
 - German Meeting Scheduler: `NEXT_PUBLIC_HUBSPOT_MEETING_URL_DE`
 - HubSpot Tracking Code: `NEXT_PUBLIC_HUBSPOT_TRACKING_CODE_ID`
 
-Playbook forms submit to the local API route `/api/playbook`. That route sends the submission to HubSpot's Forms API when portal and form IDs are configured.
+Playbook forms submit to the local API route `/api/playbook`. That route sends the CRM lead to HubSpot's Forms API when the portal and form GUID are configured. A deployment-scoped Upstash state machine serializes each client submission ID: identical concurrent requests wait behind a five-minute lease, acknowledged submissions are deduplicated for 30 days, failed attempts are released for retry, and reuse of an ID with different CRM data returns HTTP 409. HubSpot errors are logged but do not block the transactional Playbook email. The previous `NEXT_PUBLIC_HUBSPOT_*` portal and form names remain supported as migration fallbacks.
+
+HubSpot Forms does not expose a provider-side idempotency key. A transport-ambiguous failure can therefore produce a duplicate form event when the released submission is retried, although acknowledged requests are deduplicated locally and HubSpot identifies the contact by email. Owner notifications include the stable submission ID for reconciliation; the implementation deliberately favors retrying a lead over silently losing it.
 
 ## Resend Playbook Delivery
 
@@ -146,18 +150,31 @@ Required variables:
 
 - `RESEND_API_KEY`
 - `RESEND_FROM_EMAIL`
-- `DEVELOPER_PLAYBOOK_URL`
-- `AGENT_PLAYBOOK_URL`
+- `DOUBLE_OPT_IN_SECRET` (at least 32 bytes of high-entropy secret material)
+- `RESEND_MARKETING_TOPIC_ID`
+- `KV_REST_API_URL` and `KV_REST_API_TOKEN` (canonical pair injected by the connected Vercel Upstash database), or the direct Upstash pair `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
+- Optional key rotation: `DOUBLE_OPT_IN_PREVIOUS_SECRET`
+- Optional contact segment: `RESEND_CONTACT_SEGMENT_ID`
+- Optional built-in-asset overrides: `DEVELOPER_PLAYBOOK_URL`, `AGENT_PLAYBOOK_URL`
 - Optional localized overrides: `DEVELOPER_PLAYBOOK_URL_EN`, `DEVELOPER_PLAYBOOK_URL_DE`, `AGENT_PLAYBOOK_URL_EN`, `AGENT_PLAYBOOK_URL_DE`
+
+When marketing consent is requested, the app sends a one-time, 24-hour confirmation link. Opening the link only renders a confirmation page; the explicit form submission atomically claims the signed token in Redis and records the confirmation timestamp, signed privacy-policy version and requested Playbook in Resend. Tokens are v2 audience-bound: Production and every immutable Preview deployment use different signed audiences, Redis namespaces and Resend idempotency scopes. Preview recipient links use the deployment's routable Git branch URL while the token remains bound to the immutable deployment URL; moving the alias to a newer deployment therefore does not make an older token valid there. A fresh contact is created through Resend's one-row import API with the documented `on_conflict=skip` mode and explicit topic opt-in. The import ID and terminal outcome remain in deployment-scoped Redis for 48 hours, so a retry resumes the same asynchronous job and never interprets a partially imported contact as a final preference. Polling uses a bounded 20-second budget, exponential delays and retryable read handling. A concurrent or pre-existing contact is never overwritten and is accepted only when already opted into that topic. Existing global unsubscribes, topic opt-outs and ambiguous/missing topic states are never cleared by the link. This prevents link-scanning software from creating consent through a GET request.
+
+Playbook submissions are protected by separate Vercel Firewall rate-limit IDs: `novalure-playbook-submit-preview` for Preview and `novalure-playbook-submit` for Production. Both use 5 requests per 600 seconds per API-controlled client key. An exact rolling Upstash limit allows three distinct submissions per normalized recipient address within 24 hours. Every Redis key is deployment-namespaced, so Preview tests cannot consume Production quota or token state. The browser keeps one random submission ID stable across double-clicks and retries; the same ID drives the Redis member, signed token, HubSpot marker and deployment-scoped Resend idempotency keys. Recipient addresses and token IDs are stored in Redis only as SHA-256 digests. In deployed Preview and Production environments, missing Firewall, deployment-origin or Redis configuration fails closed. The Firewall SDK intentionally bypasses an absent rule during local development; use direct Upstash credentials for local API testing.
 
 Recommended flow:
 
 1. Verify `novalure.eu` in Resend.
 2. Add the DNS records Resend gives you.
-3. Create an API key.
-4. Use the built-in PDF URLs or upload each Playbook PDF to a private or unlisted asset URL.
-5. Set the Playbook URL variables in Vercel only if you want to override the built-in URLs.
-6. Submit a test form and confirm the contact appears in HubSpot and the Playbook email arrives.
+3. Create an API key with access to email and contact operations.
+4. Create a contact segment and an opt-out-by-default marketing topic.
+5. Create the contact properties `doi_confirmed_at`, `doi_source`, `privacy_policy_version`, `requested_playbook` and `doi_token_fingerprint`.
+6. Use the built-in PDF URLs or upload each Playbook PDF to a private or unlisted asset URL.
+7. Set the Playbook URL variables in Vercel only if you want to override the built-in URLs.
+8. Publish the Preview-only code-instrumented Vercel Firewall rule with ID `novalure-playbook-submit-preview` before testing a Preview API route. Create the separate `novalure-playbook-submit` Production rule only after Preview QA passes.
+9. Submit a test form, confirm the email link manually and verify the lead in HubSpot plus the topic opt-in in Resend.
+
+For local DOI email testing, set `PLAYBOOK_DEVELOPMENT_ORIGIN` to the exact localhost origin of the running development server. It defaults to `http://localhost:3000` and intentionally never inherits `NEXT_PUBLIC_SITE_URL`.
 
 To regenerate the HTML sources, run `npm run playbooks`. In this Codex workspace, PDFs were rendered from those HTML sources with `scripts/render-playbook-pdfs.py`.
 

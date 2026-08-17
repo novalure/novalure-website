@@ -9,21 +9,22 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  if (!isLocale(params.locale)) notFound();
-  const locale = params.locale as Locale;
+  const { locale: requestedLocale } = await params;
+  if (!isLocale(requestedLocale)) notFound();
+  const locale = requestedLocale as Locale;
 
   return (
     <>
       <script
         dangerouslySetInnerHTML={{
-          __html: `document.documentElement.lang=${JSON.stringify(locale)};`
+          __html: `document.documentElement.lang=${JSON.stringify(locale === "es" ? "es-ES" : locale === "de" ? "de-DE" : "en-GB")};`
         }}
       />
       <Header locale={locale} />

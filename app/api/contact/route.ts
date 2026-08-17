@@ -1,21 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-type Locale = "en" | "de";
+type Locale = "en" | "de" | "es";
 
 const autoReplyCopy = {
   en: {
-    auditSubject: "Your NovaLure Pipeline Audit request",
+    auditSubject: "Your NovaLure Project Check request",
     directSubject: "Your NovaLure enquiry",
     auditButton: "View preparation checklist",
     directButton: "Visit NovaLure",
     auditBody: (name: string) => `Hi ${name},
 
-thank you for the audit request.
+thank you for the Project Check request.
 
-We will review your details first. The Pipeline Audit is a diagnosis and qualification step, not a free consulting report and not a lead guarantee.
+We will review your details first. The Project Check is a diagnosis and qualification step, not a free consulting report and not a lead guarantee.
 
-Please prepare your current project or market area, lead sources, CRM or lead-management process, current landing pages or campaigns, biggest sales bottleneck, budget readiness and decision status.`,
+Please prepare your current project or market area, lead sources, lead-management process, current landing pages or campaigns, biggest sales bottleneck, budget readiness and decision status.`,
     directBody: (name: string) => `Hi ${name},
 
 thank you for your enquiry.
@@ -23,22 +23,40 @@ thank you for your enquiry.
 We have received your message and will review it directly.`
   },
   de: {
-    auditSubject: "Ihre NovaLure Pipeline-Audit-Anfrage",
+    auditSubject: "Ihre NovaLure Projekt-Check-Anfrage",
     directSubject: "Ihre NovaLure Anfrage",
     auditButton: "Vorbereitungsliste ansehen",
     directButton: "NovaLure öffnen",
     auditBody: (name: string) => `Hallo ${name},
 
-vielen Dank für Ihre Audit-Anfrage.
+vielen Dank für Ihre Projekt-Check-Anfrage.
 
-Wir prüfen Ihre Angaben zuerst. Das Pipeline-Audit ist eine Diagnose und Qualifizierung, kein kostenloses Gutachten und keine Lead-Garantie.
+Wir prüfen Ihre Angaben zuerst. Der Projekt-Check ist eine Diagnose und Qualifizierung, kein kostenloses Gutachten und keine Lead-Garantie.
 
-Bitte bereiten Sie Ihr aktuelles Projekt oder Marktgebiet, Leadquellen, CRM- oder Leadmanagement-Prozess, aktuelle Landingpages oder Kampagnen, größten Vertriebsengpass, Budgetfähigkeit und Entscheiderstatus vor.`,
+Bitte bereiten Sie Ihr aktuelles Projekt oder Marktgebiet, Leadquellen, Leadmanagement-Prozess, aktuelle Landingpages oder Kampagnen, größten Vertriebsengpass, Budgetfähigkeit und Entscheiderstatus vor.`,
     directBody: (name: string) => `Hallo ${name},
 
 vielen Dank für Ihre Anfrage.
 
 Wir haben Ihre Nachricht erhalten und prüfen sie direkt.`
+  },
+  es: {
+    auditSubject: "Su solicitud de análisis del proyecto de NovaLure",
+    directSubject: "Su consulta a NovaLure",
+    auditButton: "Ver la lista de preparación",
+    directButton: "Visitar NovaLure",
+    auditBody: (name: string) => `Hola, ${name}:
+
+Gracias por solicitar el análisis del proyecto.
+
+Primero revisaremos la información facilitada. El análisis es un paso de diagnóstico y cualificación, no un informe de consultoría gratuito ni una garantía de oportunidades.
+
+Prepare su promoción o mercado actual, las fuentes de oportunidades, el proceso de gestión, las páginas o campañas activas, el principal cuello de botella comercial, la capacidad presupuestaria y el estado de decisión.`,
+    directBody: (name: string) => `Hola, ${name}:
+
+Gracias por su consulta.
+
+Hemos recibido su mensaje y lo revisaremos directamente.`
   }
 } as const;
 
@@ -108,7 +126,7 @@ function formatRowsHtml(rows: Record<string, string | string[]>) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const language: Locale = body.language === "de" ? "de" : "en";
+    const language: Locale = body.language === "de" || body.language === "es" ? body.language : "en";
     const firstName = clean(body.firstName);
     const lastName = clean(body.lastName);
     const isDirectInquiry = Boolean(firstName || lastName || body.inquiry);
@@ -222,13 +240,13 @@ export async function POST(request: NextRequest) {
       to: "hello@novalure.eu",
       subject: isDirectInquiry
         ? `New NovaLure direct enquiry (${language.toUpperCase()})`
-        : `${softFit ? "[Soft fit] " : ""}New NovaLure Pipeline Audit request (${language.toUpperCase()})`,
+        : `${softFit ? "[Soft fit] " : ""}New NovaLure Project Check request (${language.toUpperCase()})`,
       replyTo: email,
-      text: `${isDirectInquiry ? "New NovaLure direct enquiry" : "New NovaLure Pipeline Audit request"}\n\n${formatRows(rows)}`,
+      text: `${isDirectInquiry ? "New NovaLure direct enquiry" : "New NovaLure Project Check request"}\n\n${formatRows(rows)}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
-          <h2>${isDirectInquiry ? "New NovaLure direct enquiry" : "New NovaLure Pipeline Audit request"}</h2>
-          ${!isDirectInquiry && softFit ? "<p><strong>Soft-fit signal:</strong> Budget or decision status suggests Build+Run may be too early.</p>" : ""}
+          <h2>${isDirectInquiry ? "New NovaLure direct enquiry" : "New NovaLure Project Check request"}</h2>
+          ${!isDirectInquiry && softFit ? "<p><strong>Soft-fit signal:</strong> Budget or decision status suggests setup may be too early.</p>" : ""}
           ${formatRowsHtml(rows)}
         </div>
       `
@@ -240,7 +258,11 @@ export async function POST(request: NextRequest) {
     const replySubject = isDirectInquiry ? reply.directSubject : reply.auditSubject;
     const replyBody = isDirectInquiry ? reply.directBody(name) : reply.auditBody(name);
     const replyButton = isDirectInquiry ? reply.directButton : reply.auditButton;
-    const thankYouPath = language === "de" ? "/de/kontakt/danke" : "/en/contact/thank-you";
+    const thankYouPath = language === "de"
+      ? "/de/kontakt/danke"
+      : language === "es"
+        ? "/es/analisis-del-proyecto/gracias"
+        : "/en/contact/thank-you";
     const thankYouUrl = isDirectInquiry ? getSiteUrl() : `${getSiteUrl()}${thankYouPath}`;
 
     const customerEmail = await resend.emails.send({
