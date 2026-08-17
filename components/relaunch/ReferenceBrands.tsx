@@ -21,7 +21,7 @@ function HeiglHouseIcon() {
 
 export function ReferenceBrands({ locale, kicker }: { locale: Locale; kicker: string }) {
   return (
-    <div className="v3-reference-chip">
+    <div className={`v3-reference-chip ${styles.frame}`}>
       <span>{kicker}</span>
       <div className={styles.grid} role="list" aria-label={referenceLabels[locale]}>
         <div className={`${styles.mark} ${styles.grasl}`} role="listitem" aria-label="GRASL Immobilien, Schwaz">
