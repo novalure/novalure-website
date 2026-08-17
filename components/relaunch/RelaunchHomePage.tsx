@@ -4,6 +4,7 @@ import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholde
 import { relaunchCopy } from "@/content/relaunch-copy";
 import { getProcessAnchor, type Locale } from "@/lib/i18n";
 import { FaqAccordion, ProcessSteps, ProjectCheckLink, ProofCounters, SectionReveals } from "@/components/relaunch/RelaunchInteractive";
+import { ReferenceBrands } from "@/components/relaunch/ReferenceBrands";
 
 function SectionKicker({ children, inverse = false }: { children: React.ReactNode; inverse?: boolean }) {
   return <p className={`v3-kicker${inverse ? " is-inverse" : ""}`}><span aria-hidden="true" />{children}</p>;
@@ -40,23 +41,7 @@ function HeroPipeline({ locale }: { locale: Locale }) {
         </div>
         <p className="v3-demo-note">{t.demoNote}</p>
       </div>
-      <div className="v3-reference-chip">
-        <span>{t.chipKicker}</span>
-        <div className="v3-reference-brands">
-          <strong>GRASL Immobilien, Schwaz</strong>
-          <div className="v3-reference-logo-wrap">
-            <Image
-              className="v3-reference-logo"
-              src="/images/vallis-aachen-residenzen-logo.png"
-              alt="Vallis Achen Residenzen"
-              width={344}
-              height={194}
-              sizes="(max-width: 479px) 114px, 132px"
-              priority
-            />
-          </div>
-        </div>
-      </div>
+      <ReferenceBrands locale={locale} kicker={t.chipKicker} />
     </div>
   );
 }
