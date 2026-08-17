@@ -101,7 +101,7 @@
 }
 
 @media (min-width: 1100px) {
-  :global(.v3-reference-chip) {
+  .frame {
     top: 348px;
   }
 }
