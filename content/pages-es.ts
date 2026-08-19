@@ -251,7 +251,7 @@ function legalEs(key: "imprint" | "privacy" | "cookies"): PageContent {
     description: descriptions[key],
     primaryCta: { label: "Solicitar un análisis del proyecto", target: "contact", anchor: "book-audit" },
     secondaryCta: { label: "Descargar el Playbook", target: "playbooks" },
-    heroBullets: ["NovaLure CLG", "20 Harcourt Street, Dublin 2, D02 H364, Ireland", "Registration number: 796735", "Irish VAT number: IE451718HH", "hello@novalure.eu"],
+    heroBullets: ["NovaLure CLG", "20 Harcourt Street, Dublin 2, D02 H364, Ireland", "Registration number: 796735", "Irish VAT number: 451718HH", "hello@novalure.eu"],
     sections
   };
 }

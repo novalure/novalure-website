@@ -8,7 +8,7 @@ export const imprintSectionsEs: PageSection[] = [
       "Denominación y forma jurídica: NovaLure CLG.",
       "Inscrita en Irlanda en el Companies Registration Office (CRO).",
       "Company registration number: 796735.",
-      "Irish VAT number: IE451718HH.",
+      "Irish VAT number: 451718HH.",
       "Registered office: 20 Harcourt Street, Dublin 2, D02 H364, Ireland.",
       "Correo electrónico: hello@novalure.eu.",
       "Teléfono: +353 (0)89 269 5248.",
@@ -66,7 +66,7 @@ export const imprintSectionsEs: PageSection[] = [
     title: "7. IVA y precios",
     body: "Actualmente el sitio no ofrece precios públicos vinculantes, carrito de compra ni contratación automatizada. Los servicios se presupuestan individualmente tras analizar el alcance y las necesidades.",
     items: [
-      "Irish VAT number: IE451718HH.",
+      "Irish VAT number: 451718HH.",
       "Si en el futuro se publican precios, se mostrarán de forma clara, incluidos los impuestos y costes aplicables cuando sea legalmente necesario.",
       "Las propuestas individuales pueden contener condiciones adicionales sobre impuestos, moneda, duración y alcance."
     ]
@@ -151,7 +151,7 @@ export const privacySectionsEs: PageSection[] = [
   },
   {
     title: "2. Responsable del tratamiento",
-    body: "El responsable es NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, registration number: 796735, Irish VAT number: IE451718HH. Contacto de privacidad: hello@novalure.eu.",
+    body: "El responsable es NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, registration number: 796735, Irish VAT number: 451718HH. Contacto de privacidad: hello@novalure.eu.",
     items: [
       "NovaLure CLG está establecida en Irlanda. Resultan especialmente relevantes el RGPD, la Irish Data Protection Act 2018 y las normas irlandesas de ePrivacy.",
       "Sitio web: www.novalure.eu.",
@@ -321,7 +321,7 @@ export const privacySectionsEs: PageSection[] = [
 export const cookieSectionsEs: PageSection[] = [
   {
     title: "Titular del sitio web",
-    body: "El titular es NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, registration number: 796735, Irish VAT number: IE451718HH. Contacto: hello@novalure.eu."
+    body: "El titular es NovaLure CLG, 20 Harcourt Street, Dublin 2, D02 H364, Ireland, registration number: 796735, Irish VAT number: 451718HH. Contacto: hello@novalure.eu."
   },
   {
     title: "Categorías de cookies",
