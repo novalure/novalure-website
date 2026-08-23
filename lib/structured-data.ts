@@ -15,10 +15,16 @@ export function organizationSchema(locale: Locale) {
       locale === "en"
         ? "Project marketing, follow-up and prepared handover for real estate sales."
         : locale === "es"
-          ? "Comercialización inmobiliaria, seguimiento y traspaso preparado para equipos comerciales."
+          ? "Sistemas internacionales de comercialización inmobiliaria para promotores y agencias en España, con experiencia en Irlanda, DACH y mercados internacionales."
           : "Projektvermarktung, Nachfassen und vorbereitete Übergabe für den Immobilienvertrieb.",
     logo: `${siteUrl}/novalure-logo.png`,
-    areaServed: ["AT", "DE", "CH", "LI", "IE", "GB", "EU"],
+    ...(locale === "es"
+      ? {
+          areaServed: ["ES", "IE", "AT", "DE", "CH", "LI", "GB", "EU"],
+          knowsLanguage: ["es", "en", "de"],
+          slogan: "Metodología internacional aplicada al mercado inmobiliario español"
+        }
+      : { areaServed: ["AT", "DE", "CH", "LI", "IE", "GB", "EU"] }),
     founder: {
       "@type": "Person",
       name: "Franz Romih",
