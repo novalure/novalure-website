@@ -5,7 +5,7 @@ import styles from "./ReferenceBrands.module.css";
 const referenceLabels: Record<Locale, string> = {
   de: "Ausgewählte Referenzprojekte",
   en: "Selected reference projects",
-  es: "Proyectos de referencia seleccionados"
+  es: "Referencias de nuestros mandatos en el mercado DACH"
 };
 
 function HeiglHouseIcon() {
