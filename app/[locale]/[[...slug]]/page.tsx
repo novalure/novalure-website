@@ -1,3 +1,4 @@
+import "@/content/spanish-market-positioning";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MarketingPage } from "@/components/MarketingPage";
