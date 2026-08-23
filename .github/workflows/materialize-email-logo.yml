@@ -1,0 +1,39 @@
+name: Materialize email logo asset
+
+on:
+  push:
+    branches:
+      - codex/add-email-logo-asset-20260823
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Reconstruct and verify PNG
+        shell: bash
+        run: |
+          mkdir -p public
+          cat .github/logo-parts/part-* | base64 --decode > public/novalure-logo-email.png
+          echo "6270cf6d9506e49cd949368ad4d14e9542e2ebd1d7bfe56499cc01250605f330  public/novalure-logo-email.png" | sha256sum --check -
+          test "$(stat -c%s public/novalure-logo-email.png)" = "18347"
+          file public/novalure-logo-email.png | grep -q "PNG image data, 356 x 142"
+
+      - name: Commit exact binary asset
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/novalure-logo-email.png
+          git diff --cached --quiet && exit 0
+          git commit -m "feat: add email signature logo asset"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

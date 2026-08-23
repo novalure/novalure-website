@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/studio"]
+      disallow: ["/studio", "/novalure-logo-email.png"]
     },
     sitemap: `${siteUrl}/sitemap.xml`
   };
