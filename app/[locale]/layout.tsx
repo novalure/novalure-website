@@ -1,3 +1,4 @@
+import "@/content/spanish-market-positioning";
 import { notFound } from "next/navigation";
 import { CookieConsent } from "@/components/CookieConsent";
 import { Footer } from "@/components/Footer";
