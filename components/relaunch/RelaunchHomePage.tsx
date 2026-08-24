@@ -6,6 +6,21 @@ import { getProcessAnchor, type Locale } from "@/lib/i18n";
 import { FaqAccordion, ProcessSteps, ProjectCheckLink, ProofCounters, SectionReveals } from "@/components/relaunch/RelaunchInteractive";
 import { ReferenceBrands } from "@/components/relaunch/ReferenceBrands";
 
+const campaignMarketCopy: Record<Locale, { d: string; g: string }> = {
+  de: {
+    d: "Zielgruppengenaue Kampagnen in DACH, der EU und ausgewählten internationalen Märkten.",
+    g: "Reichweite bei kaufbereiten Zielgruppen – in DACH, europaweit und international, statt bei unverbindlichen Klicks."
+  },
+  en: {
+    d: "Precisely targeted campaigns across Ireland, the UK, the EU and selected international markets.",
+    g: "Reach among ready-to-buy audiences – in Ireland, the UK, across the EU and internationally, not low-intent clicks."
+  },
+  es: {
+    d: "Campañas segmentadas para España, la Unión Europea y mercados internacionales seleccionados.",
+    g: "Alcance entre públicos con intención real de compra, en España, en la UE y en mercados internacionales."
+  }
+};
+
 function SectionKicker({ children, inverse = false }: { children: React.ReactNode; inverse?: boolean }) {
   return <p className={`v3-kicker${inverse ? " is-inverse" : ""}`}><span aria-hidden="true" />{children}</p>;
 }
@@ -118,6 +133,9 @@ function SystemBoard({ locale }: { locale: Locale }) {
 
 export function RelaunchHomePage({ locale }: { locale: Locale }) {
   const t = relaunchCopy[locale];
+  const processSteps = t.steps.map((step) =>
+    step.n === "04" ? { ...step, ...campaignMarketCopy[locale] } : step
+  );
   const trustItems = [
     [t.tr1b, t.tr1],
     [t.tr2b, t.tr2],
@@ -184,7 +202,7 @@ export function RelaunchHomePage({ locale }: { locale: Locale }) {
           <SectionKicker>{t.procKicker}</SectionKicker>
           <h2>{t.procH}</h2>
         </div>
-        <ProcessSteps steps={t.steps} getLabel={t.getLabel} />
+        <ProcessSteps steps={processSteps} getLabel={t.getLabel} />
         <p className="v3-process-note">{t.procNote}</p>
       </section>
 
