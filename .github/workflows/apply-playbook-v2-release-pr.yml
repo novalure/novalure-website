@@ -54,16 +54,17 @@ jobs:
 
           route = Path("tests/playbook-route.test.ts")
           source = route.read_text(encoding="utf-8")
-          source = source.replace(
-              'expect(await response.json()).toEqual({ ok: true, locale: "en" });',
-              'expect(await response.json()).toEqual({ ok: true, locale: "en", playbooks: ["en-agent"] });'
-          )
-          source = source.replace(
-              'expect(await response.json()).toEqual({ ok: true, locale: "es" });',
-              'expect(await response.json()).toEqual({ ok: true, locale: "es", playbooks: ["es-developer"] });'
-          )
-          if 'playbooks: ["en-agent"]' not in source or 'playbooks: ["es-developer"]' not in source:
-              raise SystemExit("Playbook route response expectations were not updated")
+          replacements = {
+              'expect(await response.json()).toEqual({ ok: true, locale: "en" });': 'expect(await response.json()).toEqual({ ok: true, locale: "en", playbooks: ["en-agent"] });',
+              'expect(await response.json()).toEqual({ ok: true, locale: "es" });': 'expect(await response.json()).toEqual({ ok: true, locale: "es", playbooks: ["es-developer"] });',
+              'expect(recipient.subject).toBe("Aquí tiene su Playbook de NovaLure");': 'expect(recipient.subject).toBe("Su Playbook sobre demanda de promociones");',
+              'expect(recipient.html).toContain("Descargar el Playbook");': 'expect(recipient.html).toContain("Abrir Demanda de promociones");',
+              'expect(recipient.html).toContain("/playbooks/novalure-playbook-promotores-es.pdf");': 'expect(recipient.html).toContain("/playbooks/novalure-project-demand-es.pdf");',
+          }
+          for old, new in replacements.items():
+              if old not in source:
+                  raise SystemExit(f"Expected legacy route assertion was not found: {old}")
+              source = source.replace(old, new)
           route.write_text(source, encoding="utf-8")
 
           spanish = Path("tests/spanish-localization.test.ts")
