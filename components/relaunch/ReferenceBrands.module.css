@@ -53,6 +53,32 @@
   outline-offset: 2px;
 }
 
+.preparationMark {
+  flex-direction: column;
+  gap: 4px;
+  cursor: default;
+}
+
+.brandRow {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.preparationStatus {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.47rem;
+  font-weight: 650;
+  letter-spacing: 0.015em;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .grasl,
 .vallis {
   padding: 4px 10px;
@@ -78,6 +104,10 @@
 
 .wildschoenau {
   width: 100%;
+  white-space: normal;
+}
+
+.wildschoenau .brandRow {
   gap: 4px;
   white-space: nowrap;
 }
@@ -88,7 +118,7 @@
   letter-spacing: -0.015em;
 }
 
-.wildschoenau span {
+.wildschoenau .brandRow span {
   color: #d9bc77;
   font-size: 0.62rem;
   font-weight: 750;
@@ -96,6 +126,9 @@
 
 .heigl {
   width: 100%;
+}
+
+.heigl .brandRow {
   gap: 8px;
   font-family: var(--v3-serif);
 }
@@ -142,13 +175,22 @@
     height: 50px;
   }
 
-  .wildschoenau {
+  .preparationMark {
+    gap: 2px;
+  }
+
+  .preparationStatus {
+    font-size: 0.4rem;
+    letter-spacing: 0;
+  }
+
+  .wildschoenau .brandRow {
     flex-direction: column;
     gap: 1px;
     line-height: 1.02;
   }
 
-  .heigl {
+  .heigl .brandRow {
     gap: 5px;
   }
 
