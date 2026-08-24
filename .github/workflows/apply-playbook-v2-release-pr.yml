@@ -47,5 +47,54 @@ jobs:
           sudo apt-get install -y --no-install-recommends libcairo2 libpango-1.0-0 libpangoft2-1.0-0 libffi-dev shared-mime-info fonts-dejavu-core
           python -m pip install --disable-pip-version-check mistune pyyaml beautifulsoup4 pillow weasyprint pypdf
 
+      - name: Update regression expectations for the Playbook V2 contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          route = Path("tests/playbook-route.test.ts")
+          source = route.read_text(encoding="utf-8")
+          source = source.replace(
+              'expect(await response.json()).toEqual({ ok: true, locale: "en" });',
+              'expect(await response.json()).toEqual({ ok: true, locale: "en", playbooks: ["en-agent"] });'
+          )
+          source = source.replace(
+              'expect(await response.json()).toEqual({ ok: true, locale: "es" });',
+              'expect(await response.json()).toEqual({ ok: true, locale: "es", playbooks: ["es-developer"] });'
+          )
+          route.write_text(source, encoding="utf-8")
+
+          spanish = Path("tests/spanish-localization.test.ts")
+          source = spanish.read_text(encoding="utf-8")
+          old = '''    expect(playbooks["es-developer"]).toMatchObject({
+              file: "/playbooks/novalure-playbook-promotores-es.pdf",
+              cover: "/playbooks/covers/promotores-es-cover.png",
+              pages: 12
+            });
+            expect(playbooks["es-agent"]).toMatchObject({
+              file: "/playbooks/novalure-playbook-agencias-inmobiliarias-es.pdf",
+              cover: "/playbooks/covers/agencias-es-cover.png",
+              pages: 12
+            });'''
+          new = '''    expect(playbooks["es-developer"]).toMatchObject({
+              file: "/playbooks/novalure-project-demand-es.pdf",
+              cover: "/playbooks/covers/novalure-project-demand-es.png",
+              pages: 10
+            });
+            expect(playbooks["es-agent"]).toMatchObject({
+              file: "/playbooks/novalure-owned-demand-es.pdf",
+              cover: "/playbooks/covers/novalure-owned-demand-es.png",
+              pages: 10
+            });
+            expect(playbooks["es-international"]).toMatchObject({
+              file: "/playbooks/novalure-international-buyers-es.pdf",
+              cover: "/playbooks/covers/novalure-international-buyers-es.png",
+              pages: 10
+            });'''
+          if old not in source:
+              raise SystemExit("Expected legacy Spanish Playbook assertion block was not found")
+          spanish.write_text(source.replace(old, new), encoding="utf-8")
+          PY
+
       - name: Apply, test and commit the complete release
         run: bash scripts/apply-playbook-v2-release-ci.sh
