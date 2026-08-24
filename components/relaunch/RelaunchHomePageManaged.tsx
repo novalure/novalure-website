@@ -29,6 +29,7 @@ function HeroPipeline({ locale }: { locale: Locale }) {
           <strong>{t.mockTitle}</strong>
           <span className="v3-demo-badge">{t.demoBadge}</span>
         </div>
+        <p className="v3-demo-note">{managed.demoNote}</p>
         <div className="v3-pipeline-grid">
           {cards.map((card, index) => (
             <article className={`v3-pipeline-card v3-card-${index + 1}`} key={card.name}>
@@ -41,7 +42,6 @@ function HeroPipeline({ locale }: { locale: Locale }) {
             </article>
           ))}
         </div>
-        <p className="v3-demo-note">{managed.demoNote}</p>
       </div>
       <ReferenceBrands locale={locale} kicker={t.chipKicker} />
     </div>
