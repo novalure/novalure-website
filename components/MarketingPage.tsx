@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getPath, getPlaybookFormPath, type Locale } from "@/lib/i18n";
-import { playbooks, type Cta, type HomeContent, type PageContent } from "@/content/pages";
+import { type Cta, type HomeContent, type PageContent } from "@/content/pages";
+import { playbookCatalog as playbooks } from "@/content/playbook-catalog";
 import { ContactInquiryForm } from "@/components/ContactInquiryForm";
-import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholders";
+import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholdersV2";
 import { TeamLeadImage } from "@/components/TeamLeadImage";
 import { RelaunchHomePage } from "@/components/relaunch/RelaunchHomePage";
 import { FaqAccordion } from "@/components/relaunch/RelaunchInteractive";
@@ -1065,11 +1066,21 @@ function PipelineAuditSection({ locale }: { locale: Locale }) {
   );
 }
 
-function PlaybookConversion({ locale, title, body }: { locale: Locale; title: string; body: string }) {
-  return <PlaybookHub locale={locale} title={title} body={body} eyebrow={localeCopy(locale, "Secondary funnel", "Secondary Funnel", "Recurso complementario")} />;
+function PlaybookConversion({
+  locale,
+  title,
+  body,
+  defaultRole = "developer"
+}: {
+  locale: Locale;
+  title: string;
+  body: string;
+  defaultRole?: "developer" | "agent";
+}) {
+  return <PlaybookHub locale={locale} title={title} body={body} defaultRole={defaultRole} eyebrow={localeCopy(locale, "Secondary funnel", "Secondary Funnel", "Recurso complementario")} />;
 }
 
-function PlaybookHub({ locale, title, body, eyebrow, id }: { locale: Locale; title: string; body: string; eyebrow?: string; id?: string }) {
+function PlaybookHub({ locale, title, body, eyebrow, id, defaultRole = "developer" }: { locale: Locale; title: string; body: string; eyebrow?: string; id?: string; defaultRole?: "developer" | "agent" }) {
   return (
     <section className="playbook-section" id={id}>
       <div className="section-heading">
@@ -1080,7 +1091,7 @@ function PlaybookHub({ locale, title, body, eyebrow, id }: { locale: Locale; tit
       <div className="playbook-hub-grid">
         {playbooks[locale].map((playbook) => (
           <article className="playbook-summary-card" key={playbook.key}>
-            <span className="pill">{playbook.key === "developer" ? localeCopy(locale, "Developers", "Bauträger", "Promotores") : localeCopy(locale, "Agents", "Makler", "Agencias inmobiliarias")}</span>
+            <span className="pill">{playbook.audience}</span>
             <h3>{playbook.title}</h3>
             <p>{playbook.subtitle}</p>
             <ul className="check-list">
@@ -1088,7 +1099,7 @@ function PlaybookHub({ locale, title, body, eyebrow, id }: { locale: Locale; tit
             </ul>
           </article>
         ))}
-        <HubSpotForm locale={locale} playbook="developer" selectable />
+        <HubSpotForm locale={locale} playbook={defaultRole} selectable />
       </div>
     </section>
   );
@@ -1283,6 +1294,7 @@ function AudiencePage({ content }: { content: PageContent }) {
       </section>
       <PlaybookConversion
         locale={content.locale}
+        defaultRole={content.key === "agents" ? "agent" : "developer"}
         title={localeCopy(content.locale, "Download the playbook, then request a check if the problem is concrete.", "Laden Sie das Playbook, dann fragen Sie bei konkretem Problem den Projekt-Check an.", "Descargue el Playbook y solicite un análisis cuando el problema sea concreto.")}
         body={localeCopy(content.locale, "The playbook prepares your team for a sharper review.", "Das Playbook bereitet Ihr Team auf einen schärferen Check vor.", "El Playbook prepara a su equipo para un análisis más preciso.")}
       />
@@ -1360,7 +1372,7 @@ function PlaybooksPage({ content }: { content: PageContent }) {
       <PlaybookHub
         id="playbook-download"
         locale={content.locale}
-        title={localeCopy(locale, "Two playbooks. One goal: better conversations from existing demand.", "Zwei Playbooks. Ein Ziel: bessere Gespräche aus vorhandener Nachfrage.", "Dos Playbooks. Un objetivo: mejores conversaciones a partir de la demanda existente.")}
+        title={localeCopy(locale, "Three playbooks. One goal: better conversations from the demand you create.", "Drei Playbooks. Ein Ziel: bessere Gespräche aus der Nachfrage, die Sie erzeugen.", "Tres Playbooks. Un objetivo: mejores conversaciones a partir de la demanda que genera.")}
         body={localeCopy(locale, "Download the relevant playbook and see where project presence, enquiry, follow-up and handover fall apart.", "Laden Sie das passende Playbook herunter und prüfen Sie, wo Projektauftritt, Anfrage, Nachfassen und Übergabe auseinanderfallen.", "Descargue el Playbook adecuado y detecte dónde se separan la presentación, la solicitud, el seguimiento y el traspaso.")}
       />
       <FaqSection locale={content.locale} items={content.faq || []} />

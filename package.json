@@ -10,9 +10,10 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "verify:managed-service": "node scripts/verify-managed-service-routes.mjs",
-    "playbooks": "node scripts/generate-playbooks.mjs",
-    "playbook:covers": "node scripts/generate-playbook-covers.mjs",
-    "playbook-previews": "node scripts/render-playbook-previews.mjs"
+    "playbooks": "npm run verify:playbooks",
+    "playbook:covers": "npm run verify:playbooks",
+    "playbook-previews": "npm run verify:playbooks",
+    "verify:playbooks": "node scripts/verify-playbook-assets.mjs"
   },
   "dependencies": {
     "@sanity/client": "^7.26.0",

@@ -114,14 +114,14 @@ describe("Spanish localization", () => {
 
   it("links only Spanish PDFs and covers from Spanish forms", () => {
     expect(playbooks["es-developer"]).toMatchObject({
-      file: "/playbooks/novalure-playbook-promotores-es.pdf",
-      cover: "/playbooks/covers/promotores-es-cover.png",
-      pages: 12
+      file: "/playbooks/novalure-project-demand-es.pdf",
+      cover: "/playbooks/covers/novalure-project-demand-es.png",
+      pages: 10
     });
     expect(playbooks["es-agent"]).toMatchObject({
-      file: "/playbooks/novalure-playbook-agencias-inmobiliarias-es.pdf",
-      cover: "/playbooks/covers/agencias-es-cover.png",
-      pages: 12
+      file: "/playbooks/novalure-owned-demand-es.pdf",
+      cover: "/playbooks/covers/novalure-owned-demand-es.png",
+      pages: 10
     });
   });
 

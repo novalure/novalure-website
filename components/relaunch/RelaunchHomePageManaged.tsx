@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ContactInquiryForm } from "@/components/ContactInquiryForm";
-import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholders";
+import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholdersV2";
 import { managedServiceCopy } from "@/content/managed-service-copy";
 import { relaunchCopy } from "@/content/relaunch-copy";
 import { getProcessAnchor, type Locale } from "@/lib/i18n";

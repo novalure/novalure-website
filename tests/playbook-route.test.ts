@@ -175,7 +175,7 @@ describe("playbook submission route", () => {
   it("sends the playbook and owner notification for a valid request", async () => {
     const response = await POST(request());
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ ok: true, locale: "en" });
+    expect(await response.json()).toEqual({ ok: true, locale: "en", playbooks: ["en-agent"] });
     expect(mocks.send).toHaveBeenCalledTimes(2);
     expect(mocks.register).not.toHaveBeenCalled();
   });
@@ -189,11 +189,11 @@ describe("playbook submission route", () => {
     })));
 
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ ok: true, locale: "es" });
+    expect(await response.json()).toEqual({ ok: true, locale: "es", playbooks: ["es-developer"] });
     const recipient = mocks.send.mock.calls[0][0] as { subject: string; html: string; text: string };
-    expect(recipient.subject).toBe("Aquí tiene su Playbook de NovaLure");
-    expect(recipient.html).toContain("Descargar el Playbook");
-    expect(recipient.html).toContain("/playbooks/novalure-playbook-promotores-es.pdf");
+    expect(recipient.subject).toBe("Su Playbook sobre demanda de promociones");
+    expect(recipient.html).toContain("Abrir Demanda de promociones");
+    expect(recipient.html).toContain("/playbooks/novalure-project-demand-es.pdf");
     expect(recipient.html).toContain("/es/privacidad");
     expect(recipient.text).toContain("Hola, Ada Lovelace:");
   });
