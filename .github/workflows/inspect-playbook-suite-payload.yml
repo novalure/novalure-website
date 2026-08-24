@@ -1,0 +1,39 @@
+name: Inspect staged playbook suite payload
+
+on:
+  push:
+    branches:
+      - codex/managed-service-clarity-20260824
+    paths:
+      - .github/workflows/inspect-playbook-suite-payload.yml
+      - tmp/playbook-suite-payload/**
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: codex/managed-service-clarity-20260824
+
+      - name: Reconstruct and inspect archive
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/playbook-suite-inspect/extracted
+          cat tmp/playbook-suite-payload/part-* > /tmp/playbook-suite-inspect/payload.b64
+          base64 --decode /tmp/playbook-suite-inspect/payload.b64 > /tmp/playbook-suite-inspect/payload.zip
+          unzip -t /tmp/playbook-suite-inspect/payload.zip
+          unzip -q /tmp/playbook-suite-inspect/payload.zip -d /tmp/playbook-suite-inspect/extracted
+          find /tmp/playbook-suite-inspect/extracted -type f -printf '%P\t%s bytes\n' | sort | tee /tmp/playbook-suite-inspect/file-list.txt
+          sha256sum /tmp/playbook-suite-inspect/payload.zip | tee /tmp/playbook-suite-inspect/archive.sha256
+
+      - name: Upload inspection artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: staged-playbook-suite-inspection
+          path: /tmp/playbook-suite-inspect
+          retention-days: 2
