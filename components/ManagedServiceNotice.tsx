@@ -20,10 +20,8 @@ export function ManagedServiceNotice({ locale }: { locale: Locale }) {
         <p className="eyebrow">{copy.noticeEyebrow}</p>
         <h2 id={`managed-service-${locale}`}>{copy.noticeTitle}</h2>
         <p>{copy.noticeBody}</p>
+        <p className="v3-process-note">{copy.noticeIntegration}</p>
       </div>
-      <article className="content-section">
-        <p>{copy.noticeIntegration}</p>
-      </article>
     </aside>
   );
 }
