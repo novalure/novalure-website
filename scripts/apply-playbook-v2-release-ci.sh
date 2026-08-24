@@ -32,7 +32,7 @@ const campaignMarketCopy: Record<Locale, { d: string; g: string }> = {
 };
 
 (["de", "en", "es"] as const).forEach((locale) => {
-  const steps = relaunchCopy[locale].steps as Array<{ n: string; t: string; d: string; g: string }>;
+  const steps = relaunchCopy[locale].steps as unknown as Array<{ n: string; t: string; d: string; g: string }>;
   const index = steps.findIndex((step) => step.n === "04");
   if (index >= 0) steps[index] = { ...steps[index], ...campaignMarketCopy[locale] };
 });
@@ -44,6 +44,19 @@ export { RelaunchHomePageManaged as RelaunchHomePage } from "@/components/relaun
 EOF
 
 node scripts/apply-playbook-selection-v2.mjs
+
+python - <<'PY'
+from pathlib import Path
+
+route = Path("app/api/playbook/route.ts")
+source = route.read_text(encoding="utf-8")
+old = "const unique = [...new Set(value)];"
+new = "const unique = Array.from(new Set(value));"
+if old not in source:
+    raise SystemExit("Expected Set spread in Playbook route was not found")
+route.write_text(source.replace(old, new, 1), encoding="utf-8")
+PY
+
 npm install --package-lock-only --ignore-scripts --no-audit --no-fund
 npm ci --no-audit --no-fund
 python scripts/render-playbook-v2.py .
