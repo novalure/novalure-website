@@ -19,6 +19,20 @@ function HeiglHouseIcon() {
   );
 }
 
+function VallisLogo() {
+  return (
+    <Image
+      className={styles.vallisLogo}
+      src="/images/vallis-aachen-residenzen-logo.png"
+      alt="Vallis Achen Residenzen"
+      width={344}
+      height={194}
+      sizes="(max-width: 479px) 112px, 124px"
+      priority
+    />
+  );
+}
+
 export function ReferenceBrands({ locale, kicker }: { locale: Locale; kicker: string }) {
   return (
     <div className={`v3-reference-chip ${styles.frame}`}>
@@ -36,17 +50,24 @@ export function ReferenceBrands({ locale, kicker }: { locale: Locale; kicker: st
           />
         </div>
 
-        <div className={`${styles.mark} ${styles.vallis}`} role="listitem" aria-label="Vallis Achen Residenzen">
-          <Image
-            className={styles.vallisLogo}
-            src="/images/vallis-aachen-residenzen-logo.png"
-            alt="Vallis Achen Residenzen"
-            width={344}
-            height={194}
-            sizes="(max-width: 479px) 112px, 124px"
-            priority
-          />
-        </div>
+        {locale === "es" ? (
+          <div className={styles.linkItem} role="listitem">
+            <a
+              className={`${styles.mark} ${styles.vallis} ${styles.linkedMark}`}
+              href="https://vallis-achen.at/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visitar la web de Vallis Achen Residenzen; se abre en una pestaña nueva"
+              title="Visitar Vallis Achen Residenzen"
+            >
+              <VallisLogo />
+            </a>
+          </div>
+        ) : (
+          <div className={`${styles.mark} ${styles.vallis}`} role="listitem" aria-label="Vallis Achen Residenzen">
+            <VallisLogo />
+          </div>
+        )}
 
         <div className={`${styles.mark} ${styles.wildschoenau}`} role="listitem" aria-label="Wildschönau Apartments">
           <strong>Wildschönau</strong>
