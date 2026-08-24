@@ -19,8 +19,7 @@ type ManagedServiceCopy = {
 export const managedServiceCopy: Record<Locale, ManagedServiceCopy> = {
   de: {
     navLabel: "Systembeispiel ansehen",
-    demoNote:
-      "Von NovaLure betriebene Beispielansicht – keine echten Kundendaten. Ihr Team erhält qualifizierte Übergaben, dokumentierte nächste Schritte und vereinbarte Auswertungen.",
+    demoNote: "Von NovaLure betrieben · Demo ohne echte Kundendaten.",
     systemPoint:
       "NovaLure führt den Prozess operativ im System. Ihr Team erhält qualifizierte Übergaben, klare nächste Schritte und vereinbarte Auswertungen – ohne das CRM selbst administrieren zu müssen.",
     caseSetup:
@@ -41,8 +40,7 @@ export const managedServiceCopy: Record<Locale, ManagedServiceCopy> = {
   },
   en: {
     navLabel: "View system example",
-    demoNote:
-      "Example view operated by NovaLure — no real client data. Your team receives qualified handovers, documented next steps and agreed reporting.",
+    demoNote: "Operated by NovaLure · Demo with no real client data.",
     systemPoint:
       "NovaLure operates the process in the system on your behalf. Your team receives qualified handovers, clear next steps and agreed reporting without having to administer the CRM.",
     caseSetup:
@@ -63,8 +61,7 @@ export const managedServiceCopy: Record<Locale, ManagedServiceCopy> = {
   },
   es: {
     navLabel: "Ver ejemplo del sistema",
-    demoNote:
-      "Vista de ejemplo operada por NovaLure; no contiene datos reales de clientes. Su equipo recibe traspasos cualificados, próximos pasos documentados e informes acordados.",
+    demoNote: "Operada por NovaLure · Demostración sin datos reales de clientes.",
     systemPoint:
       "NovaLure opera el proceso dentro del sistema por cuenta del cliente. Su equipo recibe traspasos cualificados, próximos pasos claros e informes acordados sin tener que administrar el CRM.",
     caseSetup:
