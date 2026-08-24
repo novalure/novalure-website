@@ -47,3 +47,6 @@ jobs:
 
       - name: Build production bundle
         run: npm run build
+
+      - name: Verify managed-service wording on rendered routes
+        run: npm run verify:managed-service
