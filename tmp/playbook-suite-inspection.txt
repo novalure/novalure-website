@@ -1,0 +1,18 @@
+Staged playbook suite payload inspection
+decode_status=0
+unzip_status=9
+parts=7
+base64_bytes=91756
+zip_bytes=68817
+
+
+Archive:  /tmp/playbook-suite-inspect/payload.zip
+  End-of-central-directory signature not found.  Either this file is not
+  a zipfile, or it constitutes one disk of a multi-part archive.  In the
+  latter case the central directory and zipfile comment will be found on
+  the last disk(s) of this archive.
+unzip:  cannot find zipfile directory in one of /tmp/playbook-suite-inspect/payload.zip or
+        /tmp/playbook-suite-inspect/payload.zip.zip, and cannot find /tmp/playbook-suite-inspect/payload.zip.ZIP, period.
+
+910dedb717b08dfa4b402068fdcb2a2f809d47c51ae6dc04eecd844966e68663  /tmp/playbook-suite-inspect/payload.zip
+
