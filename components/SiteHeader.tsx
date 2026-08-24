@@ -102,65 +102,67 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   }, [open]);
 
   return (
-    <header className={`site-header v3-site-header${open ? " menu-open" : ""}`}>
-      <Logo locale={locale} priority />
+    <>
+      <header className={`site-header v3-site-header${open ? " menu-open" : ""}`}>
+        <Logo locale={locale} priority />
 
-      <nav className="desktop-nav v3-desktop-nav" aria-label={t.navigation}>
-        {navItems.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
-      </nav>
+        <nav className="desktop-nav v3-desktop-nav" aria-label={t.navigation}>
+          {navItems.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
+        </nav>
 
-      <div className="header-actions desktop-actions v3-header-actions">
-        <div className="v3-language-switch" aria-label={locale === "de" ? "Sprache" : locale === "es" ? "Idioma" : "Language"}>
-          <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref("de")} hrefLang="de">DE</Link>
-          <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>
-          <Link className={locale === "es" ? "is-active" : ""} href={locale === "es" ? pathname : switchHref("es")} hrefLang="es">ES</Link>
-        </div>
-        <Link className="v3-header-login" href={systemHref} data-track="nav_system_example">{managed.navLabel}</Link>
-        <Link className="v3-button v3-button-primary v3-header-cta" href={anchor("kontakt")} data-track="nav_audit">{t.cta}</Link>
-      </div>
-
-      <div className="v3-mobile-sticky-bar">
-        <Link className="v3-mobile-sticky-cta" href={anchor("kontakt")}>{t.cta}</Link>
-      </div>
-
-      <button
-        className="menu-toggle v3-menu-toggle"
-        type="button"
-        ref={toggleRef}
-        aria-label={open ? t.close : t.menu}
-        aria-expanded={open}
-        aria-controls="mobile-menu"
-        onClick={() => setOpen((value) => !value)}
-      >
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-      </button>
-
-      <nav
-        className="mobile-menu v3-mobile-menu"
-        id="mobile-menu"
-        aria-label={t.navigation}
-        aria-hidden={!open}
-        ref={menuRef}
-      >
-        <div className="v3-mobile-menu-head">
-          <Logo locale={locale} />
-          <button ref={closeRef} type="button" aria-label={t.close} onClick={() => setOpen(false)}>×</button>
-        </div>
-        <div className="v3-mobile-menu-links">
-          {navItems.map(([label, href]) => <Link href={href} key={href} onClick={() => setOpen(false)}>{label}</Link>)}
-        </div>
-        <div className="v3-mobile-menu-actions">
-          <Link className="v3-button v3-button-primary" href={anchor("kontakt")} onClick={() => setOpen(false)}>{t.cta}</Link>
-          <Link className="v3-button v3-button-dark-outline" href={systemHref} data-track="mobile_system_example" onClick={() => setOpen(false)}>{managed.navLabel}</Link>
-          <div className="v3-language-switch is-dark">
+        <div className="header-actions desktop-actions v3-header-actions">
+          <div className="v3-language-switch" aria-label={locale === "de" ? "Sprache" : locale === "es" ? "Idioma" : "Language"}>
             <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref("de")} hrefLang="de">DE</Link>
             <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>
             <Link className={locale === "es" ? "is-active" : ""} href={locale === "es" ? pathname : switchHref("es")} hrefLang="es">ES</Link>
           </div>
+          <Link className="v3-header-login" href={systemHref} data-track="nav_system_example">{managed.navLabel}</Link>
+          <Link className="v3-button v3-button-primary v3-header-cta" href={anchor("kontakt")} data-track="nav_audit">{t.cta}</Link>
         </div>
-      </nav>
-    </header>
+
+        <button
+          className="menu-toggle v3-menu-toggle"
+          type="button"
+          ref={toggleRef}
+          aria-label={open ? t.close : t.menu}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </button>
+
+        <nav
+          className="mobile-menu v3-mobile-menu"
+          id="mobile-menu"
+          aria-label={t.navigation}
+          aria-hidden={!open}
+          ref={menuRef}
+        >
+          <div className="v3-mobile-menu-head">
+            <Logo locale={locale} />
+            <button ref={closeRef} type="button" aria-label={t.close} onClick={() => setOpen(false)}>×</button>
+          </div>
+          <div className="v3-mobile-menu-links">
+            {navItems.map(([label, href]) => <Link href={href} key={href} onClick={() => setOpen(false)}>{label}</Link>)}
+          </div>
+          <div className="v3-mobile-menu-actions">
+            <Link className="v3-button v3-button-primary" href={anchor("kontakt")} onClick={() => setOpen(false)}>{t.cta}</Link>
+            <Link className="v3-button v3-button-dark-outline" href={systemHref} data-track="mobile_system_example" onClick={() => setOpen(false)}>{managed.navLabel}</Link>
+            <div className="v3-language-switch is-dark">
+              <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref("de")} hrefLang="de">DE</Link>
+              <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>
+              <Link className={locale === "es" ? "is-active" : ""} href={locale === "es" ? pathname : switchHref("es")} hrefLang="es">ES</Link>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <div className="v3-mobile-sticky-bar">
+        <Link className="v3-mobile-sticky-cta" href={anchor("kontakt")}>{t.cta}</Link>
+      </div>
+    </>
   );
 }
