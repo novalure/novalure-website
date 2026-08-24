@@ -34,7 +34,7 @@ export const managedServiceCopy: Record<Locale, ManagedServiceCopy> = {
     footerNote:
       "NovaLure richtet den Lead-Prozess ein und führt ihn operativ. Ihr Team erhält qualifizierte Übergaben und vereinbarte Auswertungen.",
     faq: {
-      q: "Erhalten wir einen eigenen CRM-Zugang?",
+      q: "Wie erhalten wir die Ergebnisse aus dem System?",
       a:
         "Der öffentlich angebotene Standard ist ein operativ geführter Service. NovaLure richtet das System für das Mandat ein, betreibt es und übergibt Ihrem Team qualifizierte Anfragen, Statusinformationen, nächste Schritte und vereinbarte Auswertungen. Ein eigener Login oder die eigenständige Administration des NovaLure-CRM ist derzeit kein Standardbestandteil. Eine Anbindung an ein vorhandenes Kunden-CRM wird bei Bedarf individuell vereinbart."
     }
@@ -56,7 +56,7 @@ export const managedServiceCopy: Record<Locale, ManagedServiceCopy> = {
     footerNote:
       "NovaLure configures and operates the lead process. Your team receives qualified handovers and agreed reporting.",
     faq: {
-      q: "Do we receive our own CRM login?",
+      q: "How do we receive the information from the system?",
       a:
         "The standard public offer is an operated service. NovaLure configures and runs the system for the mandate, then gives your team qualified enquiries, status information, next steps and agreed reporting. A separate login or self-administration of the NovaLure CRM is not currently a standard component. Integration with an existing client CRM can be agreed individually where required."
     }
@@ -78,7 +78,7 @@ export const managedServiceCopy: Record<Locale, ManagedServiceCopy> = {
     footerNote:
       "NovaLure configura y opera el proceso de captación. Su equipo recibe traspasos cualificados e informes acordados.",
     faq: {
-      q: "¿Recibimos un acceso propio al CRM?",
+      q: "¿Cómo recibimos la información del sistema?",
       a:
         "La oferta estándar que se presenta públicamente es un servicio operado. NovaLure configura y gestiona el sistema para cada encargo y entrega al equipo solicitudes cualificadas, estados, próximos pasos e informes acordados. Un acceso independiente o la administración autónoma del CRM de NovaLure no forman parte actualmente del servicio estándar. Cuando sea necesario, la integración con un CRM ya existente del cliente se acuerda de forma individual."
     }
