@@ -24,13 +24,19 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install project dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Install Playwright for visual QA
+      - name: Install Selenium for visual QA
         run: |
-          npm install --no-save --package-lock=false playwright@1.55.0
-          npx playwright install --with-deps chromium
+          python -m pip install --disable-pip-version-check selenium==4.35.0
+          google-chrome --version
+          chromedriver --version
 
       - name: Build production bundle
         run: npm run build
@@ -50,75 +56,107 @@ jobs:
 
       - name: Capture desktop and mobile screenshots
         run: |
-          node --input-type=module <<'NODE'
-          import fs from "node:fs/promises";
-          import { chromium } from "playwright";
+          python - <<'PY'
+          import json
+          import pathlib
+          import time
+          from selenium import webdriver
+          from selenium.webdriver.common.by import By
+          from selenium.webdriver.chrome.options import Options
 
-          const origin = "http://127.0.0.1:4312";
-          const routes = [
-            ["de-home", "/de", "Systembeispiel ansehen"],
-            ["en-home", "/en", "View system example"],
-            ["es-home", "/es", "Ver ejemplo del sistema"],
-            ["de-developers", "/de/bautraeger", "NovaLure betreibt den Lead- und Vertriebsprozess für Ihr Mandat."],
-            ["en-developers", "/en/developers", "NovaLure operates the lead and sales process for each mandate."],
-            ["es-developers", "/es/promotores", "NovaLure opera el proceso de captación y gestión comercial para cada encargo."],
-            ["de-system", "/de/systembeispiel", "NovaLure betreibt den Lead- und Vertriebsprozess für Ihr Mandat."],
-            ["en-system", "/en/system-example", "NovaLure operates the lead and sales process for each mandate."],
-            ["es-system", "/es/ejemplo-del-sistema", "NovaLure opera el proceso de captación y gestión comercial para cada encargo."]
-          ];
-          const viewports = [
-            ["desktop", { width: 1440, height: 1000 }],
-            ["mobile", { width: 390, height: 844 }]
-          ];
-          const forbidden = ["CRM-Login", "CRM login", "Acceso al CRM", "https://novalure-crm.app"];
-          const results = [];
+          origin = "http://127.0.0.1:4312"
+          routes = [
+              ("de-home", "/de", "Systembeispiel ansehen"),
+              ("en-home", "/en", "View system example"),
+              ("es-home", "/es", "Ver ejemplo del sistema"),
+              ("de-developers", "/de/bautraeger", "NovaLure betreibt den Lead- und Vertriebsprozess für Ihr Mandat."),
+              ("en-developers", "/en/developers", "NovaLure operates the lead and sales process for each mandate."),
+              ("es-developers", "/es/promotores", "NovaLure opera el proceso de captación y gestión comercial para cada encargo."),
+              ("de-system", "/de/systembeispiel", "NovaLure betreibt den Lead- und Vertriebsprozess für Ihr Mandat."),
+              ("en-system", "/en/system-example", "NovaLure operates the lead and sales process for each mandate."),
+              ("es-system", "/es/ejemplo-del-sistema", "NovaLure opera el proceso de captación y gestión comercial para cada encargo."),
+          ]
+          viewports = [
+              ("desktop", 1440, 1000),
+              ("mobile", 390, 844),
+          ]
+          forbidden = ["CRM-Login", "CRM login", "Acceso al CRM", "https://novalure-crm.app"]
+          output = pathlib.Path("visual-qa")
+          output.mkdir(parents=True, exist_ok=True)
+          results = []
 
-          await fs.mkdir("visual-qa", { recursive: true });
-          const browser = await chromium.launch({ headless: true });
+          options = Options()
+          options.add_argument("--headless=new")
+          options.add_argument("--no-sandbox")
+          options.add_argument("--disable-dev-shm-usage")
+          options.add_argument("--disable-gpu")
+          options.add_argument("--hide-scrollbars")
+          options.add_argument("--force-device-scale-factor=1")
+          driver = webdriver.Chrome(options=options)
 
-          try {
-            for (const [name, path, expected] of routes) {
-              for (const [viewportName, viewport] of viewports) {
-                const page = await browser.newPage({ viewport });
-                await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" });
-                await page.addStyleTag({
-                  content: "*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}[data-reveal]{opacity:1!important;transform:none!important}"
-                });
-                await page.waitForTimeout(400);
+          try:
+              for name, route, expected in routes:
+                  for viewport_name, width, height in viewports:
+                      driver.set_window_size(width, height)
+                      driver.get(f"{origin}{route}")
+                      driver.execute_script(
+                          """
+                          const style = document.createElement('style');
+                          style.textContent = '*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}[data-reveal]{opacity:1!important;transform:none!important}';
+                          document.head.appendChild(style);
+                          """
+                      )
+                      time.sleep(0.5)
 
-                const bodyText = await page.locator("body").innerText();
-                if (!bodyText.includes(expected)) throw new Error(`${path} is missing expected text: ${expected}`);
-                for (const phrase of forbidden) {
-                  if (bodyText.includes(phrase)) throw new Error(`${path} still contains ${phrase}`);
-                }
+                      body_text = driver.find_element(By.TAG_NAME, "body").text
+                      if expected not in body_text:
+                          raise RuntimeError(f"{route} is missing expected text: {expected}")
+                      for phrase in forbidden:
+                          if phrase in body_text:
+                              raise RuntimeError(f"{route} still contains {phrase}")
 
-                const metrics = await page.evaluate(() => ({
-                  clientWidth: document.documentElement.clientWidth,
-                  scrollWidth: document.documentElement.scrollWidth,
-                  title: document.title,
-                  h1: document.querySelector("h1")?.textContent?.trim() || ""
-                }));
-                if (metrics.scrollWidth > metrics.clientWidth + 1) {
-                  throw new Error(`${path} has horizontal overflow at ${viewportName}: ${metrics.scrollWidth}px > ${metrics.clientWidth}px`);
-                }
+                      metrics = driver.execute_script(
+                          """
+                          return {
+                            clientWidth: document.documentElement.clientWidth,
+                            scrollWidth: document.documentElement.scrollWidth,
+                            title: document.title,
+                            h1: document.querySelector('h1')?.textContent?.trim() || ''
+                          };
+                          """
+                      )
+                      if metrics["scrollWidth"] > metrics["clientWidth"] + 1:
+                          raise RuntimeError(
+                              f"{route} has horizontal overflow at {viewport_name}: "
+                              f"{metrics['scrollWidth']}px > {metrics['clientWidth']}px"
+                          )
 
-                await page.screenshot({ path: `visual-qa/${name}-${viewportName}.png`, fullPage: true });
-                results.push({ name, path, viewport: viewportName, ...metrics });
+                      driver.execute_script("window.scrollTo(0, 0)")
+                      time.sleep(0.1)
+                      driver.save_screenshot(output / f"{name}-{viewport_name}-top.png")
 
-                if (viewportName === "mobile" && name.endsWith("home")) {
-                  await page.locator("button.menu-toggle").click();
-                  await page.waitForTimeout(150);
-                  await page.screenshot({ path: `visual-qa/${name}-mobile-menu.png`, fullPage: false });
-                }
-                await page.close();
-              }
-            }
-          } finally {
-            await browser.close();
-          }
+                      managed_selector = ".v3-system" if name.endswith("home") else '[aria-labelledby^="managed-service-"]'
+                      managed_elements = driver.find_elements(By.CSS_SELECTOR, managed_selector)
+                      if not managed_elements:
+                          raise RuntimeError(f"{route} has no managed-service visual target")
+                      managed_element = managed_elements[0]
+                      driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", managed_element)
+                      time.sleep(0.2)
+                      managed_element.screenshot(output / f"{name}-{viewport_name}-managed.png")
 
-          await fs.writeFile("visual-qa/results.json", JSON.stringify(results, null, 2));
-          NODE
+                      if viewport_name == "mobile" and name.endswith("home"):
+                          driver.execute_script("window.scrollTo(0, 0)")
+                          time.sleep(0.1)
+                          driver.find_element(By.CSS_SELECTOR, "button.menu-toggle").click()
+                          time.sleep(0.2)
+                          driver.save_screenshot(output / f"{name}-mobile-menu.png")
+
+                      results.append({"name": name, "path": route, "viewport": viewport_name, **metrics})
+          finally:
+              driver.quit()
+
+          (output / "results.json").write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
+          PY
 
       - name: Stop production server
         if: always()
