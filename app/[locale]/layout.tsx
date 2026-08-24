@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { CookieConsent } from "@/components/CookieConsent";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { ManagedServiceNotice } from "@/components/ManagedServiceNotice";
 import { TrackingPlaceholders } from "@/components/TrackingPlaceholders";
 import { isLocale, locales, type Locale } from "@/lib/i18n";
 
@@ -30,6 +31,7 @@ export default async function LocaleLayout({
       />
       <Header locale={locale} />
       {children}
+      <ManagedServiceNotice locale={locale} />
       <Footer locale={locale} />
       <CookieConsent locale={locale} />
       <TrackingPlaceholders />
