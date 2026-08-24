@@ -185,7 +185,7 @@ const developerSectionsEn = [
     bullets: [
       "Fit: active project, launch pressure, internal sales ownership and budget readiness.",
       "Fit: existing lead sources that produce volume but not enough usable context.",
-      "No fit: no concrete project, no sales function or no willingness to operate the system.",
+      "No fit: no concrete project, no sales ownership or no willingness to support structured follow-up and handover.",
       "No fit: expectation of fixed lead numbers or a full campaign blueprint from an introductory call."
     ],
     question: "Are you trying to diagnose a commercial bottleneck or only gather more marketing ideas?"
