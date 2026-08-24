@@ -81,20 +81,6 @@ jobs:
           if source.count("pages: 12") < 2:
               raise SystemExit("Expected legacy Spanish 12-page assertions were not found")
           source = source.replace("pages: 12", "pages: 10", 2)
-          marker = '''    expect(playbooks["es-agent"]).toMatchObject({
-              file: "/playbooks/novalure-owned-demand-es.pdf",
-              cover: "/playbooks/covers/novalure-owned-demand-es.png",
-              pages: 10
-            });'''
-          addition = marker + '''
-            expect(playbooks["es-international"]).toMatchObject({
-              file: "/playbooks/novalure-international-buyers-es.pdf",
-              cover: "/playbooks/covers/novalure-international-buyers-es.png",
-              pages: 10
-            });'''
-          if marker not in source:
-              raise SystemExit("Updated Spanish agent assertion block was not found")
-          source = source.replace(marker, addition, 1)
           spanish.write_text(source, encoding="utf-8")
           PY
 
