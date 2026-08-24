@@ -1,0 +1,51 @@
+name: Apply Playbook V2 release from PR
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/apply-playbook-v2-release-pr.yml
+      - scripts/apply-playbook-v2-release-ci.sh
+      - tmp/playbook-v2-release/**
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-playbook-v2-release-pr
+  cancel-in-progress: false
+
+jobs:
+  apply-release:
+    if: github.event.pull_request.head.ref == 'codex/managed-service-clarity-20260824'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Check out release branch
+        uses: actions/checkout@v4
+        with:
+          ref: codex/managed-service-clarity-20260824
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PDF renderer dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libcairo2 libpango-1.0-0 libpangoft2-1.0-0 libffi-dev shared-mime-info fonts-dejavu-core
+          python -m pip install --disable-pip-version-check mistune pyyaml beautifulsoup4 pillow weasyprint pypdf
+
+      - name: Apply, test and commit the complete release
+        run: bash scripts/apply-playbook-v2-release-ci.sh
