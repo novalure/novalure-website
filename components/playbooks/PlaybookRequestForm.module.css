@@ -1,0 +1,324 @@
+.card {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 32px);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: #0e1b33;
+  box-shadow: 0 24px 60px rgba(14, 27, 51, 0.2);
+}
+
+.compact {
+  padding: clamp(18px, 2.5vw, 26px);
+}
+
+.heading {
+  margin: 0 0 20px;
+  color: #fff;
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  line-height: 1.2;
+}
+
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+.roleFieldset {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.roleFieldset legend {
+  grid-column: 1 / -1;
+  margin-bottom: 3px;
+  color: rgba(248, 250, 252, 0.86);
+  font-size: 0.93rem;
+  font-weight: 700;
+}
+
+.roleCard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  min-width: 0;
+  padding: 14px;
+  color: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+  cursor: pointer;
+}
+
+.roleCardSelected {
+  color: #0e1b33;
+  border-color: #c7a55b;
+  background: #c7a55b;
+}
+
+.roleCard input,
+.addOn input,
+.consentRow input {
+  width: 17px;
+  min-width: 17px;
+  height: 17px;
+  margin: 2px 0 0;
+  accent-color: #c7a55b;
+}
+
+.roleCard strong {
+  display: block;
+  margin-bottom: 4px;
+  overflow-wrap: anywhere;
+}
+
+.roleCard small {
+  display: block;
+  color: inherit;
+  opacity: 0.78;
+  line-height: 1.45;
+}
+
+.addOn {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid rgba(199, 165, 91, 0.48);
+  border-radius: 12px;
+  background: rgba(199, 165, 91, 0.09);
+  cursor: pointer;
+}
+
+.addOn strong,
+.addOn small {
+  display: block;
+}
+
+.addOn small {
+  margin-top: 4px;
+  color: rgba(248, 250, 252, 0.7);
+  line-height: 1.45;
+}
+
+.selectionPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.8fr);
+  gap: 18px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.selectionText > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #d9bc77;
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.selectionText ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.selectionText li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #fff;
+  font-weight: 650;
+}
+
+.selectionText li::before {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #c7a55b;
+  content: "";
+}
+
+.covers {
+  position: relative;
+  display: flex;
+  min-height: 170px;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover {
+  width: 112px;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+}
+
+.cover + .cover {
+  margin-left: -34px;
+  transform: translateY(10px) rotate(3deg);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  color: rgba(248, 250, 252, 0.86);
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 12px;
+  color: #111318;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.field input[aria-invalid="true"] {
+  border-color: #ff9d9d;
+  box-shadow: 0 0 0 2px rgba(255, 157, 157, 0.18);
+}
+
+.error {
+  margin: 0;
+  color: #ffc2c2;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.consentStack {
+  display: grid;
+  gap: 12px;
+}
+
+.consentRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  color: rgba(248, 250, 252, 0.72);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.consentRow a {
+  color: #d9bc77;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.submit {
+  min-height: 50px;
+  padding: 12px 20px;
+  color: #0e1b33;
+  border: 1px solid #c7a55b;
+  border-radius: 9px;
+  background: #c7a55b;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.submit:hover:not(:disabled) {
+  background: #d9bc77;
+}
+
+.submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.trust {
+  margin: -4px 0 0;
+  color: rgba(248, 250, 252, 0.58);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.status {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.78);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.success {
+  display: grid;
+  gap: 12px;
+  padding: clamp(24px, 4vw, 42px);
+  text-align: center;
+}
+
+.successMark {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  margin: 0 auto;
+  color: #0e1b33;
+  border-radius: 50%;
+  background: #c7a55b;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.success h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.success p {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.72);
+}
+
+@media (max-width: 720px) {
+  .roleFieldset,
+  .fields,
+  .selectionPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .covers {
+    min-height: 145px;
+  }
+
+  .cover {
+    width: 96px;
+  }
+}

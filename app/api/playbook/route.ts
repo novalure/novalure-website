@@ -9,7 +9,16 @@ import {
   HubSpotSubmissionConflictError,
   releaseHubSpotSubmission
 } from "@/lib/hubspot-submission-state";
-import { playbooks, privacyPolicyVersion, type PlaybookKey } from "@/lib/playbooks-meta";
+import {
+  getSelectedPlaybookKeys,
+  isPlaybookKey,
+  playbooks,
+  privacyPolicyVersion,
+  type PlaybookKey,
+  type PlaybookLocale,
+  type PlaybookType,
+  type PrimaryPlaybookType
+} from "@/lib/playbooks-meta";
 import {
   checkPlaybookIpRateLimit,
   checkPlaybookRecipientRateLimit,
@@ -17,30 +26,49 @@ import {
   type PlaybookRateLimitResult
 } from "@/lib/playbook-rate-limit";
 
-type Locale = "en" | "de" | "es";
-type PlaybookType = "developer" | "agent";
-
 const ownerNotificationEmail = "hello@novalure.eu";
 
-const playbookCopy: Record<Locale, Record<PlaybookType, {
+type DeliveryCopy = {
   subject: string;
   headline: string;
   intro: string;
   cta: string;
-}> & { audit: string; doiSubject: string; doiHeadline: string; doiIntro: string; doiCta: string }> = {
+};
+
+type LocaleCopy = Record<PlaybookType, DeliveryCopy> & {
+  multipleSubject: string;
+  multipleHeadline: string;
+  multipleIntro: string;
+  audit: string;
+  doiSubject: string;
+  doiHeadline: string;
+  doiIntro: string;
+  doiCta: string;
+};
+
+const playbookCopy: Record<PlaybookLocale, LocaleCopy> = {
   en: {
     developer: {
-      subject: "Your Developer Project Playbook",
-      headline: "Your Developer Project Playbook is ready",
-      intro: "Here is the diagnostic guide. Read the handover and intent-filter sections first. That is where many project paths lose their commercial effect.",
-      cta: "Open the playbook"
+      subject: "Your Project Demand Playbook",
+      headline: "Your Project Demand Playbook is ready",
+      intro: "This diagnostic guide shows where buying context gets lost between project presence, campaign, qualification and sales.",
+      cta: "Open Project Demand"
     },
     agent: {
-      subject: "Your Real Estate Agent Lead Playbook",
-      headline: "Your Real Estate Agent Lead Playbook is ready",
-      intro: "Here is the diagnostic guide. Read the handover and intent-filter sections first. That is where many local lead paths lose their commercial effect.",
-      cta: "Open the playbook"
+      subject: "Your Owned Demand Playbook",
+      headline: "Your Owned Demand Playbook is ready",
+      intro: "This diagnostic guide shows how seller and buyer enquiries become prepared conversations rather than one more list to work through.",
+      cta: "Open Owned Demand"
     },
+    international: {
+      subject: "Your International Buyers Specialist Playbook",
+      headline: "Your International Buyers Specialist Playbook is ready",
+      intro: "This specialist guide shows what international buyers need beyond translation: trust, process clarity, finance context, language ownership and disciplined follow-up.",
+      cta: "Open International Buyers"
+    },
+    multipleSubject: "Your selected NovaLure playbooks",
+    multipleHeadline: "Your selected NovaLure playbooks are ready",
+    multipleIntro: "We have included the primary playbook for your role and the International Buyers specialist playbook you selected.",
     audit: "If you have a concrete project, market area or lead-quality problem, the next step is a Project Check:",
     doiSubject: "Confirm NovaLure email updates",
     doiHeadline: "Please confirm your email updates",
@@ -49,17 +77,26 @@ const playbookCopy: Record<Locale, Record<PlaybookType, {
   },
   de: {
     developer: {
-      subject: "Ihr Bauträger-Projekt-Leitfaden",
-      headline: "Ihr Bauträger-Projekt-Leitfaden ist bereit",
-      intro: "Hier ist der Diagnose-Leitfaden. Lesen Sie zuerst die Seiten zu Übergabe und Intent-Filter. Genau dort verlieren viele Projektwege ihre wirtschaftliche Wirkung.",
-      cta: "Leitfaden öffnen"
+      subject: "Ihr Playbook zur Projekt-Nachfrage",
+      headline: "Ihr Playbook zur Projekt-Nachfrage ist bereit",
+      intro: "Der Diagnose-Leitfaden zeigt, wo Kaufkontext zwischen Projektauftritt, Kampagne, Qualifizierung und Vertrieb verloren geht.",
+      cta: "Projekt-Nachfrage öffnen"
     },
     agent: {
-      subject: "Ihr Makler-Lead-Leitfaden",
-      headline: "Ihr Makler-Lead-Leitfaden ist bereit",
-      intro: "Hier ist der Diagnose-Leitfaden. Lesen Sie zuerst die Seiten zu Übergabe und Intent-Filter. Genau dort verlieren viele lokale Lead-Wege ihre wirtschaftliche Wirkung.",
-      cta: "Leitfaden öffnen"
+      subject: "Ihr Playbook zur eigenen Nachfrage",
+      headline: "Ihr Playbook zur eigenen Nachfrage ist bereit",
+      intro: "Der Diagnose-Leitfaden zeigt, wie Eigentümer- und Käuferanfragen zu vorbereiteten Gesprächen werden statt zu einer weiteren Liste zum Abtelefonieren.",
+      cta: "Eigene Nachfrage öffnen"
     },
+    international: {
+      subject: "Ihr Spezial-Playbook zu internationalen Käufern",
+      headline: "Ihr Spezial-Playbook zu internationalen Käufern ist bereit",
+      intro: "Der Spezial-Leitfaden zeigt, was internationale Käufer zusätzlich zur Übersetzung brauchen: Vertrauen, Prozessklarheit, Finanzierungskontext, Sprachzuständigkeit und diszipliniertes Follow-up.",
+      cta: "Internationale Käufer öffnen"
+    },
+    multipleSubject: "Ihre ausgewählten NovaLure Playbooks",
+    multipleHeadline: "Ihre ausgewählten NovaLure Playbooks sind bereit",
+    multipleIntro: "Enthalten sind das primäre Playbook für Ihren Bereich und das von Ihnen gewählte Spezial-Playbook zu internationalen Käufern.",
     audit: "Wenn Sie ein konkretes Projekt, Marktgebiet oder Leadproblem haben, ist ein Projekt-Check der nächste Schritt:",
     doiSubject: "NovaLure E-Mail-Updates bestätigen",
     doiHeadline: "Bitte bestätigen Sie Ihre E-Mail-Updates",
@@ -68,17 +105,26 @@ const playbookCopy: Record<Locale, Record<PlaybookType, {
   },
   es: {
     developer: {
-      subject: "Aquí tiene su Playbook de NovaLure",
-      headline: "Su Playbook para promotores está listo",
-      intro: "Gracias por solicitar el Playbook de NovaLure. En él encontrará una visión clara de los puntos en los que una solicitud inmobiliaria puede perder contexto, prioridad o un siguiente paso antes de llegar al equipo comercial.",
-      cta: "Descargar el Playbook"
+      subject: "Su Playbook sobre demanda de promociones",
+      headline: "Su Playbook sobre demanda de promociones está listo",
+      intro: "Esta guía de diagnóstico muestra dónde se pierde el contexto de compra entre la presentación, la campaña, la cualificación y el equipo comercial.",
+      cta: "Abrir Demanda de promociones"
     },
     agent: {
-      subject: "Aquí tiene su Playbook de NovaLure",
-      headline: "Su Playbook para agencias inmobiliarias está listo",
-      intro: "Gracias por solicitar el Playbook de NovaLure. En él encontrará una visión clara de los puntos en los que una solicitud inmobiliaria puede perder contexto, prioridad o un siguiente paso antes de llegar al equipo comercial.",
-      cta: "Descargar el Playbook"
+      subject: "Su Playbook sobre demanda propia",
+      headline: "Su Playbook sobre demanda propia está listo",
+      intro: "Esta guía de diagnóstico muestra cómo convertir solicitudes de propietarios y compradores en conversaciones preparadas, no en otra lista que repasar.",
+      cta: "Abrir Demanda propia"
     },
+    international: {
+      subject: "Su Playbook especializado sobre compradores internacionales",
+      headline: "Su Playbook sobre compradores internacionales está listo",
+      intro: "Esta guía especializada muestra qué necesitan los compradores internacionales además de una traducción: confianza, claridad del proceso, contexto financiero, responsabilidad lingüística y seguimiento disciplinado.",
+      cta: "Abrir Compradores internacionales"
+    },
+    multipleSubject: "Sus Playbooks seleccionados de NovaLure",
+    multipleHeadline: "Sus Playbooks seleccionados están listos",
+    multipleIntro: "Hemos incluido el Playbook principal correspondiente a su actividad y el Playbook especializado sobre compradores internacionales que ha seleccionado.",
     audit: "Si tiene una promoción, un mercado o un problema concreto de calidad, el siguiente paso es un análisis del proyecto:",
     doiSubject: "Confirme las novedades por correo de NovaLure",
     doiHeadline: "Confirme su suscripción a las novedades",
@@ -92,8 +138,7 @@ function isEmail(value: unknown): value is string {
 }
 
 function isPhone(value: string) {
-  if (!value) return true;
-  return /^[+\d\s()./-]{6,}$/.test(value);
+  return !value || /^[+\d\s()./-]{6,}$/.test(value);
 }
 
 function isSubmissionId(value: unknown): value is string {
@@ -108,10 +153,7 @@ function cleanUrl(value: string | undefined) {
 function rateLimitResponse(result: PlaybookRateLimitResult) {
   return NextResponse.json(
     { error: "Too many requests" },
-    {
-      status: 429,
-      headers: { "retry-after": String(result.retryAfterSeconds) }
-    }
+    { status: 429, headers: { "retry-after": String(result.retryAfterSeconds) } }
   );
 }
 
@@ -145,7 +187,6 @@ async function sendResendEmail(
   if (result.error || typeof result.data?.id !== "string" || !result.data.id.trim()) {
     throw new Error(`Resend email delivery was rejected${result.error?.name ? `: ${result.error.name}` : ""}`);
   }
-
   return result.data;
 }
 
@@ -157,17 +198,16 @@ function escapeHtml(value: string) {
     '"': "&quot;",
     "'": "&#039;"
   };
-
   return value.replace(/[&<>"']/g, (character) => replacements[character] ?? character);
 }
 
 function renderEmailButton(href: string, label: string, variant: "primary" | "secondary" = "primary") {
-  const background = variant === "primary" ? "#ffd43b" : "#111318";
-  const color = variant === "primary" ? "#211800" : "#ffffff";
-  const border = variant === "primary" ? "#ffd43b" : "#111318";
+  const background = variant === "primary" ? "#c7a55b" : "#0e1b33";
+  const color = variant === "primary" ? "#0e1b33" : "#ffffff";
+  const border = background;
 
   return `
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:24px 0;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:18px 0;">
       <tr>
         <td bgcolor="${background}" style="border:1px solid ${border};border-radius:8px;">
           <a href="${escapeHtml(href)}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:20px;font-weight:700;color:${color};text-decoration:none;border-radius:8px;">
@@ -179,23 +219,36 @@ function renderEmailButton(href: string, label: string, variant: "primary" | "se
   `;
 }
 
-function parsePlaybookKey(value: unknown, locale: Locale): PlaybookKey | null {
-  if (typeof value === "string" && value in playbooks && value.startsWith(`${locale}-`)) {
-    return value as PlaybookKey;
-  }
+function getPlaybookParts(key: PlaybookKey): { locale: PlaybookLocale; type: PlaybookType } {
+  const [locale, type] = key.split("-") as [PlaybookLocale, PlaybookType];
+  return { locale, type };
+}
 
-  if (value === "developer" || value === "agent") {
-    return `${locale}-${value}` as PlaybookKey;
+function parsePrimaryRole(value: unknown): PrimaryPlaybookType | null {
+  if (value === "developer" || value === "agent") return value;
+  if (typeof value === "string" && isPlaybookKey(value)) {
+    const { type } = getPlaybookParts(value);
+    return type === "developer" || type === "agent" ? type : null;
   }
-
   return null;
 }
 
-function getPlaybookParts(key: PlaybookKey): { locale: Locale; type: PlaybookType } {
-  return {
-    locale: key.startsWith("de-") ? "de" : key.startsWith("es-") ? "es" : "en",
-    type: key.endsWith("agent") ? "agent" : "developer"
-  };
+function parseRequestedPlaybooks(
+  value: unknown,
+  locale: PlaybookLocale,
+  role: PrimaryPlaybookType,
+  includeInternational: boolean
+): PlaybookKey[] | null {
+  const expected = getSelectedPlaybookKeys(locale, role, includeInternational);
+  if (value === undefined) return expected;
+  if (!Array.isArray(value) || value.length < 1 || value.length > 2) return null;
+
+  const unique = Array.from(new Set(value));
+  if (unique.length !== value.length || !unique.every(isPlaybookKey)) return null;
+  const keys = unique as PlaybookKey[];
+  if (keys.some((key) => !key.startsWith(`${locale}-`))) return null;
+  if (keys.length !== expected.length || expected.some((key) => !keys.includes(key))) return null;
+  return expected;
 }
 
 function getPlaybookUrl(key: PlaybookKey) {
@@ -212,15 +265,23 @@ function getPlaybookUrl(key: PlaybookKey) {
         : cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL_EN) || cleanUrl(process.env.DEVELOPER_PLAYBOOK_URL) || fallback;
   }
 
+  if (type === "agent") {
+    return locale === "de"
+      ? cleanUrl(process.env.AGENT_PLAYBOOK_URL_DE) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback
+      : locale === "es"
+        ? cleanUrl(process.env.AGENT_PLAYBOOK_URL_ES) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback
+        : cleanUrl(process.env.AGENT_PLAYBOOK_URL_EN) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback;
+  }
+
   return locale === "de"
-    ? cleanUrl(process.env.AGENT_PLAYBOOK_URL_DE) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback
+    ? cleanUrl(process.env.INTERNATIONAL_PLAYBOOK_URL_DE) || cleanUrl(process.env.INTERNATIONAL_PLAYBOOK_URL) || fallback
     : locale === "es"
-      ? cleanUrl(process.env.AGENT_PLAYBOOK_URL_ES) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback
-      : cleanUrl(process.env.AGENT_PLAYBOOK_URL_EN) || cleanUrl(process.env.AGENT_PLAYBOOK_URL) || fallback;
+      ? cleanUrl(process.env.INTERNATIONAL_PLAYBOOK_URL_ES) || cleanUrl(process.env.INTERNATIONAL_PLAYBOOK_URL) || fallback
+      : cleanUrl(process.env.INTERNATIONAL_PLAYBOOK_URL_EN) || cleanUrl(process.env.INTERNATIONAL_PLAYBOOK_URL) || fallback;
 }
 
-function getFormId(playbook: PlaybookType) {
-  return playbook === "developer"
+function getFormId(role: PrimaryPlaybookType) {
+  return role === "developer"
     ? process.env.HUBSPOT_DEVELOPER_FORM_GUID
       || process.env.NEXT_PUBLIC_HUBSPOT_DEVELOPER_FORM_ID
       || process.env.HUBSPOT_PLAYBOOK_FORM_GUID
@@ -237,7 +298,9 @@ function getClientIp(request: NextRequest) {
 
 function logConsent(input: {
   email: string;
-  playbookKey: PlaybookKey;
+  playbookKeys: PlaybookKey[];
+  primaryRole: PrimaryPlaybookType;
+  internationalBuyers: boolean;
   consentRequired: true;
   consentMarketing: boolean;
   consentTimestamp: string;
@@ -252,8 +315,8 @@ function logConsent(input: {
 }
 
 async function submitToHubSpot({
-  playbookKey,
-  playbook,
+  playbookKeys,
+  role,
   name,
   email,
   company,
@@ -264,8 +327,8 @@ async function submitToHubSpot({
   consentRequired,
   submissionId
 }: {
-  playbookKey: PlaybookKey;
-  playbook: PlaybookType;
+  playbookKeys: PlaybookKey[];
+  role: PrimaryPlaybookType;
   name: string;
   email: string;
   company: string;
@@ -277,20 +340,18 @@ async function submitToHubSpot({
   submissionId: string;
 }) {
   const portalId = process.env.HUBSPOT_PORTAL_ID || process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
-  const formId = getFormId(playbook);
+  const formId = getFormId(role);
 
   if (!portalId || !formId) {
-    return {
-      skipped: true,
-      portalConfigured: Boolean(portalId),
-      formConfigured: Boolean(formId)
-    };
+    return { skipped: true, portalConfigured: Boolean(portalId), formConfigured: Boolean(formId) };
   }
 
+  const requestedPlaybooks = playbookKeys.join(",");
+  const trackedUtmContent = [utm.utm_content, `playbooks:${requestedPlaybooks}`].filter(Boolean).join("|");
   const legalConsentOptions: Record<string, unknown> = {
     consent: {
       consentToProcess: consentRequired,
-      text: `Visitor requested the NovaLure playbook ${playbookKey} and consented to data processing for email delivery. Privacy policy version: ${privacyPolicyVersion}.`
+      text: `Visitor requested NovaLure playbooks ${requestedPlaybooks} and consented to data processing for email delivery. Privacy policy version: ${privacyPolicyVersion}.`
     }
   };
 
@@ -300,28 +361,21 @@ async function submitToHubSpot({
       { name: "firstname", value: name },
       { name: "company", value: company },
       { name: "phone", value: phone },
-      { name: "requested_playbook", value: playbook },
+      { name: "requested_playbook", value: role },
       { name: "segment", value: segment },
       { name: "utm_source", value: utm.utm_source || "" },
       { name: "utm_medium", value: utm.utm_medium || "" },
       { name: "utm_campaign", value: utm.utm_campaign || "" },
-      { name: "utm_content", value: utm.utm_content || "" },
+      { name: "utm_content", value: trackedUtmContent },
       { name: "utm_term", value: utm.utm_term || "" }
     ],
-    context: {
-      pageName: "NovaLure Playbook Request",
-      pageUri
-    },
+    context: { pageName: "NovaLure Playbook Request", pageUri },
     legalConsentOptions
   };
 
   const claim = await claimHubSpotSubmission(submissionId, hubSpotPayload);
-  if (claim === "replay") {
-    return { skipped: false, replayed: true };
-  }
-  if (claim === "processing") {
-    return { skipped: true, reason: "identical_submission_processing" };
-  }
+  if (claim === "replay") return { skipped: false, replayed: true };
+  if (claim === "processing") return { skipped: true, reason: "identical_submission_processing" };
 
   let response: Response;
   try {
@@ -345,41 +399,39 @@ async function submitToHubSpot({
     } catch (releaseError) {
       console.error("novalure_hubspot_submission_release_failed", JSON.stringify({ submissionId }), releaseError);
     }
-    const message = await response.text();
-    throw new Error(`HubSpot submission failed: ${message}`);
+    throw new Error(`HubSpot submission failed: ${await response.text()}`);
   }
 
-  // Complete only after HubSpot acknowledges the submission. A failed state
-  // write intentionally leaves the processing marker in place rather than
-  // immediately risking a duplicate provider submission.
   await completeHubSpotSubmission(submissionId, claim.claimId);
-
   return { skipped: false };
 }
 
 async function sendPlaybookEmail({
-  key,
+  keys,
   name,
   email,
   submissionId
 }: {
-  key: PlaybookKey;
+  keys: PlaybookKey[];
   name: string;
   email: string;
   submissionId: string;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
-  const playbookUrl = getPlaybookUrl(key);
+  if (!apiKey || !from) throw new Error("Resend configuration missing");
+
+  const { locale } = getPlaybookParts(keys[0]);
   const siteUrl = resolveDeploymentContext().publicOrigin;
-  const { locale, type } = getPlaybookParts(key);
-
-  if (!apiKey || !from) {
-    throw new Error("Resend configuration missing");
-  }
-
-  const resend = new Resend(apiKey);
-  const item = playbookCopy[locale][type];
+  const items = keys.map((key) => {
+    const { type } = getPlaybookParts(key);
+    return { key, copy: playbookCopy[locale][type], url: getPlaybookUrl(key), title: playbooks[key].title };
+  });
+  const primaryCopy = items[0].copy;
+  const multiple = items.length > 1;
+  const subject = multiple ? playbookCopy[locale].multipleSubject : primaryCopy.subject;
+  const headline = multiple ? playbookCopy[locale].multipleHeadline : primaryCopy.headline;
+  const intro = multiple ? playbookCopy[locale].multipleIntro : primaryCopy.intro;
   const auditUrl = `${siteUrl}${locale === "de" ? "/de/kontakt" : locale === "es" ? "/es/analisis-del-proyecto" : "/en/contact"}#book-audit`;
   const greeting = locale === "de" ? `Hallo ${name},` : locale === "es" ? `Hola, ${name}:` : `Hi ${name},`;
   const auditCta = locale === "de" ? "Projekt-Check anfragen" : locale === "es" ? "Solicitar un análisis del proyecto" : "Request Project Check";
@@ -391,20 +443,23 @@ async function sendPlaybookEmail({
   const privacyUrl = `${siteUrl}${locale === "de" ? "/de/rechtliches/datenschutz" : locale === "es" ? "/es/privacidad" : "/en/legal/privacy"}`;
   const legalUrl = `${siteUrl}${locale === "de" ? "/de/rechtliches/impressum" : locale === "es" ? "/es/aviso-legal" : "/en/legal/imprint"}`;
   const unsubscribeUrl = `mailto:hello@novalure.eu?subject=${encodeURIComponent(footer.unsubscribe)}`;
+  const buttons = items.map((item) => renderEmailButton(item.url, item.copy.cta)).join("");
+  const textLinks = items.map((item) => `${item.title}: ${item.url}`).join("\n");
 
+  const resend = new Resend(apiKey);
   await sendResendEmail(
     resend,
     {
       from,
       to: email,
-      subject: item.subject,
+      subject,
       html: `
         <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111318;max-width:620px;margin:0 auto;padding:32px">
-          <div style="display:none;max-height:0;overflow:hidden;opacity:0">${locale === "es" ? "Descargue su Playbook y detecte dónde se pierde contexto antes de que intervenga el equipo comercial." : escapeHtml(item.intro)}</div>
-          <h1 style="font-size:28px;line-height:1.1;margin:0 0 18px">${escapeHtml(item.headline)}</h1>
+          <div style="display:none;max-height:0;overflow:hidden;opacity:0">${escapeHtml(intro)}</div>
+          <h1 style="font-size:28px;line-height:1.1;margin:0 0 18px">${escapeHtml(headline)}</h1>
           <p>${escapeHtml(greeting)}</p>
-          <p>${escapeHtml(item.intro)}</p>
-          ${renderEmailButton(playbookUrl, item.cta)}
+          <p>${escapeHtml(intro)}</p>
+          ${buttons}
           <p style="margin-top:28px;">${escapeHtml(playbookCopy[locale].audit)}</p>
           ${renderEmailButton(auditUrl, auditCta, "secondary")}
           <p style="margin-top:30px">${escapeHtml(footer.signoff)}</p>
@@ -415,14 +470,15 @@ async function sendPlaybookEmail({
           </p>
         </div>
       `,
-      text: `${greeting}\n\n${item.intro}\n\n${item.cta}: ${playbookUrl}\n\n${playbookCopy[locale].audit}\n${auditUrl}\n\n${footer.signoff}\n${footer.privacy}: ${privacyUrl}\n${footer.legal}: ${legalUrl}\n${footer.unsubscribe}: ${unsubscribeUrl}`
+      text: `${greeting}\n\n${intro}\n\n${textLinks}\n\n${playbookCopy[locale].audit}\n${auditUrl}\n\n${footer.signoff}\n${footer.privacy}: ${privacyUrl}\n${footer.legal}: ${legalUrl}\n${footer.unsubscribe}: ${unsubscribeUrl}`
     },
     { idempotencyKey: getScopedIdempotencyKey("playbook", submissionId) }
   );
 }
 
 async function sendOwnerNotificationEmail({
-  key,
+  keys,
+  role,
   name,
   email,
   company,
@@ -434,7 +490,8 @@ async function sendOwnerNotificationEmail({
   userAgent,
   submissionId
 }: {
-  key: PlaybookKey;
+  keys: PlaybookKey[];
+  role: PrimaryPlaybookType;
   name: string;
   email: string;
   company: string;
@@ -448,22 +505,20 @@ async function sendOwnerNotificationEmail({
 }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
-  if (!apiKey || !from) {
-    throw new Error("Resend configuration missing");
-  }
+  if (!apiKey || !from) throw new Error("Resend configuration missing");
 
-  const { locale, type } = getPlaybookParts(key);
-  const playbookTitle = playbookCopy[locale][type].headline;
-  const playbookUrl = getPlaybookUrl(key);
-  const resend = new Resend(apiKey);
+  const selections = keys.map((key) => `${key} - ${playbooks[key].title}`).join(" | ");
+  const links = keys.map((key) => `${playbooks[key].title}: ${getPlaybookUrl(key)}`).join(" | ");
   const rows = [
     ["Name", name],
     ["E-Mail", email],
     ["Unternehmen", company],
     ["Telefon", phone || "-"],
-    ["Playbook", `${key} - ${playbookTitle}`],
+    ["Primärsegment", role],
+    ["Internationale Käufer", keys.some((key) => key.endsWith("-international")) ? "ja" : "nein"],
+    ["Playbooks", selections],
     ["Submission-ID", submissionId],
-    ["Downloadlink", playbookUrl],
+    ["Downloadlinks", links],
     ["Seite", pageUri],
     ["Marketing Opt-in", consentMarketing ? "ja, Double-Opt-in angefordert, noch nicht bestätigt" : "nein"],
     ["Consent-Zeitpunkt", consentTimestamp],
@@ -471,6 +526,7 @@ async function sendOwnerNotificationEmail({
     ["User-Agent", userAgent || "-"]
   ];
 
+  const resend = new Resend(apiKey);
   await sendResendEmail(
     resend,
     {
@@ -509,15 +565,12 @@ async function sendDoubleOptInEmail({
 }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
-  if (!apiKey || !from) {
-    throw new Error("Resend configuration missing");
-  }
+  if (!apiKey || !from) throw new Error("Resend configuration missing");
 
   const { locale } = getPlaybookParts(key);
   const siteUrl = resolveDeploymentContext().publicOrigin;
   const issuedAt = consentTimestamp;
   const expiresAt = new Date(Date.parse(issuedAt) + 24 * 60 * 60 * 1000).toISOString();
-  const tokenId = submissionId;
   const token = createDoubleOptInToken({
     email,
     locale,
@@ -525,9 +578,9 @@ async function sendDoubleOptInEmail({
     issuedAt,
     expiresAt,
     privacyPolicyVersion,
-    tokenId
+    tokenId: submissionId
   });
-  const registration = await registerDoubleOptInToken(tokenId, expiresAt);
+  const registration = await registerDoubleOptInToken(submissionId, expiresAt);
   if (registration === "processing" || registration === "used" || registration === "blocked") {
     return { status: "already_registered" as const };
   }
@@ -568,9 +621,7 @@ export async function POST(request: NextRequest) {
     return unavailableResponse();
   }
 
-  if (ipRateLimit.rateLimited) {
-    return rateLimitResponse(ipRateLimit);
-  }
+  if (ipRateLimit.rateLimited) return rateLimitResponse(ipRateLimit);
 
   let body: Record<string, unknown>;
   try {
@@ -584,35 +635,30 @@ export async function POST(request: NextRequest) {
   }
 
   const website = typeof body.website === "string" ? body.website.trim() : "";
-  if (website) {
-    return NextResponse.json({ ok: true });
-  }
+  if (website) return NextResponse.json({ ok: true });
 
   try {
-    const submittedLocale: Locale = body.locale === "de" || body.locale === "es" ? body.locale : "en";
-    const playbookKey = parsePlaybookKey(body.playbook, submittedLocale);
-    if (!playbookKey) {
-      return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
-    }
-    const { locale, type } = getPlaybookParts(playbookKey);
+    const locale: PlaybookLocale = body.locale === "de" || body.locale === "es" ? body.locale : "en";
+    const role = parsePrimaryRole(body.role ?? body.playbook);
+    if (!role) return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
+
+    const internationalBuyers = body.internationalBuyers === true;
+    const playbookKeys = parseRequestedPlaybooks(body.playbooks, locale, role, internationalBuyers);
+    if (!playbookKeys) return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
+
+    const primaryPlaybookKey = playbookKeys[0];
     const name = typeof body.name === "string" ? body.name.trim() : "";
     const company = typeof body.company === "string" ? body.company.trim() : "";
     const phone = typeof body.phone === "string" ? body.phone.trim() : "";
-    const segment = typeof body.segment === "string" ? body.segment.trim() : type === "developer" ? "developers" : "agents";
+    const segment = typeof body.segment === "string" ? body.segment.trim() : role === "developer" ? "developers" : "agents";
     const utm = typeof body.utm === "object" && body.utm
-      ? Object.fromEntries(
-          Object.entries(body.utm).filter((entry): entry is [string, string] => typeof entry[1] === "string")
-        )
+      ? Object.fromEntries(Object.entries(body.utm).filter((entry): entry is [string, string] => typeof entry[1] === "string"))
       : {};
     const consentRequired = body.consentRequired === true;
     const consentMarketing = body.consentMarketing === true;
-    const consentTimestampInput = typeof body.consentTimestamp === "string"
-      ? body.consentTimestamp
-      : "";
+    const consentTimestampInput = typeof body.consentTimestamp === "string" ? body.consentTimestamp : "";
     const consentTimestampMs = Date.parse(consentTimestampInput);
-    const consentTimestamp = Number.isFinite(consentTimestampMs)
-      ? new Date(consentTimestampMs).toISOString()
-      : "";
+    const consentTimestamp = Number.isFinite(consentTimestampMs) ? new Date(consentTimestampMs).toISOString() : "";
     const nowMs = Date.now();
     const submissionId = isSubmissionId(body.submissionId) ? body.submissionId : "";
 
@@ -651,16 +697,13 @@ export async function POST(request: NextRequest) {
       console.error("novalure_playbook_recipient_rate_limit_unavailable", error);
       return unavailableResponse();
     }
-
-    if (recipientRateLimit.rateLimited) {
-      return rateLimitResponse(recipientRateLimit);
-    }
+    if (recipientRateLimit.rateLimited) return rateLimitResponse(recipientRateLimit);
 
     let hubspotResult;
     try {
       hubspotResult = await submitToHubSpot({
-        playbookKey,
-        playbook: type,
+        playbookKeys,
+        role,
         name,
         email,
         company,
@@ -679,12 +722,11 @@ export async function POST(request: NextRequest) {
       hubspotResult = { skipped: false, failed: true };
     }
 
-    // Log the accepted request only after the submission-ID conflict gate. A
-    // rejected replay with changed data did not request DOI and must not leave
-    // a false consent audit event.
     logConsent({
       email,
-      playbookKey,
+      playbookKeys,
+      primaryRole: role,
+      internationalBuyers,
       consentRequired,
       consentMarketing,
       consentTimestamp,
@@ -696,10 +738,11 @@ export async function POST(request: NextRequest) {
       console.warn("novalure_hubspot_submission_skipped", JSON.stringify(hubspotResult));
     }
 
-    await sendPlaybookEmail({ key: playbookKey, name, email, submissionId });
+    await sendPlaybookEmail({ keys: playbookKeys, name, email, submissionId });
+
     if (consentMarketing) {
       const doubleOptIn = await sendDoubleOptInEmail({
-        key: playbookKey,
+        key: primaryPlaybookKey,
         email,
         submissionId,
         consentTimestamp
@@ -707,7 +750,7 @@ export async function POST(request: NextRequest) {
       console.info("novalure_double_opt_in_email_ready", JSON.stringify({
         email,
         locale,
-        playbook: playbookKey,
+        playbooks: playbookKeys,
         privacyPolicyVersion,
         status: doubleOptIn.status,
         recordedAt: new Date().toISOString(),
@@ -716,7 +759,8 @@ export async function POST(request: NextRequest) {
     }
 
     await sendOwnerNotificationEmail({
-      key: playbookKey,
+      keys: playbookKeys,
+      role,
       name,
       email,
       company,
@@ -731,7 +775,7 @@ export async function POST(request: NextRequest) {
       console.error("novalure_playbook_owner_notification_failed", error);
     });
 
-    return NextResponse.json({ ok: true, locale });
+    return NextResponse.json({ ok: true, locale, playbooks: playbookKeys });
   } catch (error) {
     console.error("novalure_playbook_request_failed", error);
     return unavailableResponse();

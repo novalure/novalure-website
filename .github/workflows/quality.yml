@@ -30,6 +30,9 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Verify all nine Playbook assets
+        run: npm run verify:playbooks
+
       - name: Run tests
         run: npm test
 
@@ -47,3 +50,6 @@ jobs:
 
       - name: Build production bundle
         run: npm run build
+
+      - name: Verify managed-service wording and Playbook delivery routes
+        run: npm run verify:managed-service

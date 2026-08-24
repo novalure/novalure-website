@@ -4,16 +4,6 @@ export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = "en";
 
-export const crmAppUrls: Record<Locale, string> = {
-  en: "https://novalure-crm.app",
-  de: "https://novalure-crm.app",
-  es: "https://novalure-crm.app"
-};
-
-export function getCrmAppUrl(locale: Locale) {
-  return crmAppUrls[locale];
-}
-
 export type PageKey =
   | "home"
   | "developers"
