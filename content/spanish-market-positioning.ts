@@ -39,7 +39,7 @@ Object.assign(relaunchCopy.es as unknown as Record<string, unknown>, {
   c1t: "Situación inicial del mandato DACH",
   c1: "Contactos sin filtrar, sin priorización y con una previsión comercial limitada.",
   c2t: "Sistema implantado",
-  c2: "Recorrido de captación con cualificación, seguimiento y traspaso comercial al CRM.",
+  c2: "Recorrido con cualificación, seguimiento y traspaso documentado al equipo comercial. La transferencia a un CRM ya existente del cliente se acuerda técnica y contractualmente para cada encargo.",
   c3t: "Resultado del mandato DACH",
   c3: "15–20 solicitudes cualificadas al mes, más de 110.000 EUR de volumen de comisiones y una cartera comercial más previsible.",
   mkKicker: "Para agencias inmobiliarias en España",
