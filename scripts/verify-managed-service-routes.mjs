@@ -1,5 +1,8 @@
 import { spawn } from "node:child_process";
+import { once } from "node:events";
+import path from "node:path";
 
+const root = process.cwd();
 const host = "127.0.0.1";
 const port = 4311;
 const origin = `http://${host}:${port}`;
@@ -51,10 +54,12 @@ const playbookFiles = [
   "novalure-playbook-agencias-inmobiliarias-es.pdf"
 ];
 
+const nextBin = path.join(root, "node_modules", "next", "dist", "bin", "next");
 const server = spawn(
-  process.platform === "win32" ? "npm.cmd" : "npm",
-  ["run", "start", "--", "--hostname", host, "--port", String(port)],
+  process.execPath,
+  [nextBin, "start", "--hostname", host, "--port", String(port)],
   {
+    cwd: root,
     env: {
       ...process.env,
       NEXT_TELEMETRY_DISABLED: "1",
@@ -127,6 +132,16 @@ async function verifyPlaybooks() {
   }
 }
 
+async function stopServer() {
+  if (server.exitCode !== null) return;
+  server.kill("SIGTERM");
+  await Promise.race([
+    once(server, "exit"),
+    new Promise((resolve) => setTimeout(resolve, 5_000))
+  ]);
+  if (server.exitCode === null) server.kill("SIGKILL");
+}
+
 try {
   await waitForServer();
   await verifyRootRedirect();
@@ -136,5 +151,5 @@ try {
   await verifyPlaybooks();
   console.log("Managed-service route verification passed for 33 pages and 6 playbook PDFs.");
 } finally {
-  if (server.exitCode === null) server.kill("SIGTERM");
+  await stopServer();
 }
