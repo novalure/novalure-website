@@ -148,7 +148,8 @@ jobs:
                       if viewport_name == "mobile" and name.endswith("home"):
                           driver.execute_script("window.scrollTo(0, 0)")
                           time.sleep(0.1)
-                          driver.find_element(By.CSS_SELECTOR, "button.menu-toggle").click()
+                          menu_button = driver.find_element(By.CSS_SELECTOR, "button.menu-toggle")
+                          driver.execute_script("arguments[0].click();", menu_button)
                           time.sleep(0.2)
                           driver.save_screenshot(str(output / f"{name}-mobile-menu.png"))
 
