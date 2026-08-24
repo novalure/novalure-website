@@ -112,6 +112,12 @@ rm -f .github/workflows/apply-playbook-v2-release.yml
 rm -f .github/workflows/apply-playbook-v2-release-pr.yml
 rm -f scripts/apply-playbook-v2-release-ci.sh
 
+# GitHub Actions' repository token cannot modify workflow files. Keep the
+# workflow directory unchanged in this application commit; the authorised
+# GitHub connector updates and removes those files separately after the tested
+# release commit has been pushed.
+git checkout HEAD -- .github/workflows
+
 git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git add -A
