@@ -149,44 +149,7 @@
   white-space: nowrap;
 }
 
-@media (min-width: 1100px) and (max-width: 1249.98px) {
-  :global(.v3-hero) {
-    min-height: auto;
-    grid-template-columns: 1fr;
-    padding: 44px clamp(16px, 4vw, 56px) 0;
-  }
-
-  :global(.v3-hero-copy) {
-    padding-bottom: 0;
-  }
-
-  :global(.v3-hero-visual) {
-    height: auto;
-    overflow: visible;
-    padding: 8px 0 40px;
-  }
-
-  :global(.v3-pipeline-window) {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: 100%;
-    transform: none;
-  }
-
-  .frame {
-    position: relative;
-    top: auto;
-    right: auto;
-    left: auto;
-    width: max-content;
-    max-width: 100%;
-    margin: 14px 0 0 auto;
-    transform: none;
-  }
-}
-
-@media (min-width: 1250px) {
+@media (min-width: 1100px) {
   .frame {
     top: 348px;
   }
