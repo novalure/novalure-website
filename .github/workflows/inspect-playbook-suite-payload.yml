@@ -7,6 +7,12 @@ on:
     paths:
       - .github/workflows/inspect-playbook-suite-payload.yml
       - tmp/playbook-suite-payload/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/inspect-playbook-suite-payload.yml
+      - tmp/playbook-suite-payload/**
 
 permissions:
   contents: read
@@ -15,10 +21,8 @@ jobs:
   inspect:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out branch
+      - name: Check out pull request head
         uses: actions/checkout@v4
-        with:
-          ref: codex/managed-service-clarity-20260824
 
       - name: Reconstruct and inspect archive
         run: |
