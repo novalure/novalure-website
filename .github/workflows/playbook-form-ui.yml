@@ -27,6 +27,9 @@ concurrency:
 jobs:
   browser-regression:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.58.2-noble
+      options: --ipc=host
     timeout-minutes: 25
     env:
       NEXT_TELEMETRY_DISABLED: "1"
@@ -49,10 +52,8 @@ jobs:
       - name: Install isolated browser tooling
         run: |
           mkdir -p playbook-ui-report
-          PLAYWRIGHT_VERSION="$(npm view playwright dist-tags.latest)"
-          echo "Resolved Playwright version: $PLAYWRIGHT_VERSION" | tee playbook-ui-report/tooling-version.txt
-          npm install --prefix "$RUNNER_TEMP/playbook-ui" --no-package-lock --ignore-scripts "playwright@$PLAYWRIGHT_VERSION"
-          node "$RUNNER_TEMP/playbook-ui/node_modules/playwright/cli.js" install --with-deps chromium firefox webkit
+          echo "Playwright 1.58.2 / mcr.microsoft.com/playwright:v1.58.2-noble" | tee playbook-ui-report/tooling-version.txt
+          npm install --prefix "$RUNNER_TEMP/playbook-ui" --no-package-lock --ignore-scripts playwright@1.58.2
       - name: Start local server and verify DE, EN and ES
         env:
           PLAYBOOK_QA_ROOT: ${{ runner.temp }}/playbook-ui
