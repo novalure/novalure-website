@@ -34,8 +34,10 @@ jobs:
           const viteVersion = lock.packages['node_modules/vite']?.version;
           if (!viteVersion) throw new Error('No locked root Vite version found');
           p.devDependencies.vite = viteVersion;
-          p.overrides.vite = '$vite';
-          p.overrides.vitest = '$vitest';
+          p.overrides.vite = p.devDependencies.vite;
+          p.overrides.vitest = p.devDependencies.vitest;
+          p.overrides.postcss = p.devDependencies.postcss;
+          p.overrides.sharp = p.dependencies.sharp;
           console.log('Retaining locked Vite across peer resolution:', viteVersion);
           for (const name of ['browser-playwright', 'browser-preview', 'browser-webdriverio', 'coverage-istanbul', 'coverage-v8', 'ui']) {
             p.overrides[`@vitest/${name}`] = '4.1.11';
