@@ -1,0 +1,75 @@
+name: Playbook form UI
+
+on:
+  push:
+    branches: [codex/playbook-form-readability-2026-09-17]
+    paths:
+      - components/playbooks/**
+      - scripts/verify-playbook-form-ui.mjs
+      - .github/workflows/playbook-form-ui.yml
+  pull_request:
+    paths:
+      - components/playbooks/**
+      - app/relaunch.css
+      - app/globals.css
+      - lib/playbook-selection-copy.ts
+      - scripts/verify-playbook-form-ui.mjs
+      - .github/workflows/playbook-form-ui.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: playbook-ui-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install application dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Run unit tests, lint and typecheck
+        run: |
+          npm test
+          npm run lint
+          npm run typecheck
+          npm run verify:playbooks
+      - name: Build isolated application (no production credentials)
+        run: npm run build
+      - name: Install isolated browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/playbook-ui" --no-package-lock --ignore-scripts playwright@1.63.0
+          node "$RUNNER_TEMP/playbook-ui/node_modules/playwright/cli.js" install --with-deps chromium firefox webkit
+      - name: Start local server and verify DE, EN and ES
+        env:
+          PLAYBOOK_QA_ROOT: ${{ runner.temp }}/playbook-ui
+          PLAYBOOK_UI_BASE_URL: http://127.0.0.1:3000
+        run: |
+          mkdir -p playbook-ui-report
+          npm run start -- --hostname 127.0.0.1 > playbook-ui-report/server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for i in $(seq 1 60); do
+            if curl --silent --fail http://127.0.0.1:3000/en > /dev/null; then break; fi
+            sleep 2
+          done
+          curl --silent --fail http://127.0.0.1:3000/en > /dev/null
+          node scripts/verify-playbook-form-ui.mjs
+      - name: Upload measured results and screenshots
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: playbook-ui-report
+          path: playbook-ui-report/
+          if-no-files-found: warn
+          retention-days: 14
