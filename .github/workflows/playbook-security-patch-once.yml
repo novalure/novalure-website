@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Initialize the exact locked dependency tree
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Apply reviewed patch versions without major upgrades
         run: |
           node --input-type=module <<'NODE'
@@ -34,7 +36,7 @@ jobs:
           p.overrides['js-yaml@^4.0.0'] = '4.3.2';
           fs.writeFileSync(file, JSON.stringify(p, null, 2) + '\n');
           NODE
-          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm install --ignore-scripts --no-audit --no-fund || { tail -n 100 "$(ls -t ~/.npm/_logs/*debug* | head -n 1)"; exit 1; }
       - name: Validate the regenerated lock and dependencies
         run: |
           npm ci --no-audit --no-fund
@@ -56,5 +58,6 @@ jobs:
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Patch Next.js, sharp, Vitest, YAML and ZIP dependencies for release'
           AUTH=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$AUTH"
           git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $AUTH" push origin HEAD:refs/heads/codex/playbook-form-readability-2026-09-17
           echo "Validated dependency patch commit: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
