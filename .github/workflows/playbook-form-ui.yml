@@ -56,6 +56,7 @@ jobs:
           npm install --prefix "$RUNNER_TEMP/playbook-ui" --no-package-lock --ignore-scripts playwright@1.58.2
       - name: Start local server and verify DE, EN and ES
         env:
+          HOME: /root
           PLAYBOOK_QA_ROOT: ${{ runner.temp }}/playbook-ui
           PLAYBOOK_UI_BASE_URL: http://127.0.0.1:3000
         run: |
