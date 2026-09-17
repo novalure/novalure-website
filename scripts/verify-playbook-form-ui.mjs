@@ -1,10 +1,9 @@
-/* global document, NodeFilter, getComputedStyle, innerWidth, localStorage */
-// Browser globals below are used only inside Playwright's browser callbacks.
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createRequire } from "node:module";
 
+// Browser APIs are accessed through globalThis only inside Playwright callbacks.
 // Install Playwright outside the application dependency tree; see the CI job.
 const requireQa = createRequire(path.resolve(process.env.PLAYBOOK_QA_ROOT || ".playbook-qa", "package.json"));
 const { chromium, firefox, webkit } = requireQa("playwright");
@@ -26,21 +25,21 @@ function inspectCard(root) {
   function background(element) {
     const ancestors = [];
     for (let node = element; node; node = node.parentElement) ancestors.unshift(node);
-    return ancestors.reduce((color, node) => blend(rgb(getComputedStyle(node).backgroundColor), color), [255, 255, 255]);
+    return ancestors.reduce((color, node) => blend(rgb(globalThis.getComputedStyle(node).backgroundColor), color), [255, 255, 255]);
   }
   const luminance = (color) => color.map((v) => v / 255).map((v) => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4).reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
   const contrast = (a, b) => (Math.max(luminance(a), luminance(b)) + 0.05) / (Math.min(luminance(a), luminance(b)) + 0.05);
   const texts = [];
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const walker = globalThis.document.createTreeWalker(root, globalThis.NodeFilter.SHOW_TEXT);
   for (let node = walker.nextNode(); node; node = walker.nextNode()) {
     const element = node.parentElement;
     if (!node.textContent.trim() || element.closest('[aria-hidden="true"]') || !element.getClientRects().length) continue;
-    const style = getComputedStyle(element);
+    const style = globalThis.getComputedStyle(element);
     const bg = background(element);
     texts.push({ text: node.textContent.trim(), ratio: contrast(blend(rgb(style.color), bg), bg), color: style.color, background: bg });
   }
   const fields = [...root.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]):not([name="website"])')].map((element) => {
-    const style = getComputedStyle(element);
+    const style = globalThis.getComputedStyle(element);
     return { name: element.name, borderRatio: contrast(rgb(style.borderTopColor), background(element)), height: element.getBoundingClientRect().height, fontSize: parseFloat(style.fontSize) };
   });
   const box = root.getBoundingClientRect();
@@ -49,7 +48,7 @@ function inspectCard(root) {
     const rect = element.getBoundingClientRect();
     return rect.width > 0 && (rect.left < box.left - 1 || rect.right > box.right + 1);
   }).map((element) => ({ tag: element.tagName, className: element.className }));
-  return { texts, fields, overflow, width: box.width, fitsViewport: box.left >= -1 && box.right <= innerWidth + 1 };
+  return { texts, fields, overflow, width: box.width, fitsViewport: box.left >= -1 && box.right <= globalThis.innerWidth + 1 };
 }
 
 async function assertReadable(card) {
@@ -70,7 +69,7 @@ async function assertReadable(card) {
 async function setup(browser, width) {
   const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion: "reduce", serviceWorkers: "block" });
   // Explicitly deny optional cookies; no external scripts or writes are allowed.
-  await context.addInitScript(() => localStorage.setItem("novalure-cookie-consent", JSON.stringify({ necessary: true, analytics: false, marketing: false, external: false, updatedAt: new Date().toISOString() })));
+  await context.addInitScript(() => globalThis.localStorage.setItem("novalure-cookie-consent", JSON.stringify({ necessary: true, analytics: false, marketing: false, external: false, updatedAt: new Date().toISOString() })));
   await context.route("**/*", async (route) => {
     const request = route.request();
     const url = new URL(request.url());
@@ -88,7 +87,7 @@ async function openForm(page, routePath) {
   assert(response?.ok(), `Page did not load: ${routePath}`);
   const card = page.locator("[data-playbook-request]").first();
   await card.waitFor({ state: "visible" });
-  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => globalThis.document.fonts.ready);
   return card;
 }
 
@@ -126,7 +125,7 @@ async function layoutCase(browser, browserName, locale, routePath, width) {
     assert.equal(await card.locator("img").count(), 1);
     const input = card.locator('input[name="name"]');
     await input.focus();
-    const focus = await input.evaluate((element) => ({ width: parseFloat(getComputedStyle(element).outlineWidth), style: getComputedStyle(element).outlineStyle }));
+    const focus = await input.evaluate((element) => ({ width: parseFloat(globalThis.getComputedStyle(element).outlineWidth), style: globalThis.getComputedStyle(element).outlineStyle }));
     assert(focus.width >= 2 && focus.style !== "none", "Input focus is not visible");
     results.push({ type: "layout", browser: browserName, locale, route: routePath, width, status: "passed", ...initial });
   } catch (error) {
@@ -153,7 +152,7 @@ async function stateCase(browser, browserName, locale) {
     await submit.click();
     assert.equal(payloads.length, 0, "Invalid forms must not submit");
     assert.equal(await card.locator('input[aria-invalid="true"]').count(), 4);
-    assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("name")), "name");
+    assert.equal(await page.evaluate(() => globalThis.document.activeElement?.getAttribute("name")), "name");
     await assertReadable(card);
     if (browserName === "chromium") await screenshot(card, `${locale}-validation-390`);
     await card.locator('[name="name"]').fill("UI Test");
@@ -167,13 +166,13 @@ async function stateCase(browser, browserName, locale) {
     await card.locator('[name="phone"]').fill("");
     await submit.click();
     assert.equal(payloads.length, 0, "Required consent must be checked");
-    assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("name")), "consentRequired");
+    assert.equal(await page.evaluate(() => globalThis.document.activeElement?.getAttribute("name")), "consentRequired");
     assert.equal(await card.locator('[name="consentMarketing"]').isChecked(), false);
     await card.locator('[name="consentRequired"]').check();
     await card.locator('[name="role"][value="agent"]').check();
     await card.locator('[name="internationalBuyers"]').check();
     await submit.click();
-    await page.waitForFunction(() => document.querySelector('[data-playbook-request][data-state="loading"]'));
+    await page.waitForFunction(() => globalThis.document.querySelector('[data-playbook-request][data-state="loading"]'));
     assert(await submit.isDisabled(), "Submit must be locked while loading");
     await assertReadable(card);
     assert.equal(payloads.length, 1);
@@ -192,7 +191,7 @@ async function stateCase(browser, browserName, locale) {
     responseStatus = 200;
     await card.locator('[name="consentMarketing"]').check();
     await submit.click();
-    await page.waitForFunction(() => document.querySelector('[data-playbook-request][data-state="loading"]'));
+    await page.waitForFunction(() => globalThis.document.querySelector('[data-playbook-request][data-state="loading"]'));
     assert.equal(payloads.length, 2);
     assert.equal(payloads[1].consentMarketing, true);
     releaseRequest();
