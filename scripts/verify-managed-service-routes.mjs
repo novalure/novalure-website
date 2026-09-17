@@ -29,21 +29,21 @@ const commercialRoutes = new Set([
 ]);
 const languageExpectations = {
   de: {
-    navigation: "Systembeispiel ansehen",
+    navigation: "Systembeispiel ansehen", login: "CRM-Login",
     home: "NovaLure führt den Prozess operativ im System.",
     notice: "NovaLure betreibt den Lead- und Vertriebsprozess für Ihr Mandat.",
     selection: "Welcher Bereich beschreibt Ihre aktuelle Situation?",
     international: "Wir sprechen gezielt internationale Käufer an."
   },
   en: {
-    navigation: "View system example",
+    navigation: "View system example", login: "CRM login",
     home: "NovaLure operates the process in the system on your behalf.",
     notice: "NovaLure operates the lead and sales process for each mandate.",
     selection: "Which area best describes your current situation?",
     international: "We actively target international buyers."
   },
   es: {
-    navigation: "Ver ejemplo del sistema",
+    navigation: "Ver ejemplo del sistema", login: "Acceso al CRM",
     home: "NovaLure opera el proceso dentro del sistema por cuenta del cliente.",
     notice: "NovaLure opera el proceso de captación y gestión comercial para cada encargo.",
     selection: "¿Qué opción describe mejor su situación actual?",
@@ -52,15 +52,9 @@ const languageExpectations = {
 };
 const forbidden = ["CRM-Login", "CRM login", "Acceso al CRM", "https://novalure-crm.app"];
 const playbookFiles = [
-  "novalure-project-demand-de.pdf",
-  "novalure-owned-demand-de.pdf",
-  "novalure-international-buyers-de.pdf",
-  "novalure-project-demand-en.pdf",
-  "novalure-owned-demand-en.pdf",
-  "novalure-international-buyers-en.pdf",
-  "novalure-project-demand-es.pdf",
-  "novalure-owned-demand-es.pdf",
-  "novalure-international-buyers-es.pdf"
+  "novalure-project-demand-de.pdf", "novalure-owned-demand-de.pdf", "novalure-international-buyers-de.pdf",
+  "novalure-project-demand-en.pdf", "novalure-owned-demand-en.pdf", "novalure-international-buyers-en.pdf",
+  "novalure-project-demand-es.pdf", "novalure-owned-demand-es.pdf", "novalure-international-buyers-es.pdf"
 ];
 
 const nextBin = path.join(root, "node_modules", "next", "dist", "bin", "next");
@@ -69,7 +63,6 @@ const server = spawn(process.execPath, [nextBin, "start", "--hostname", host, "-
   env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1", NEXT_PUBLIC_SITE_URL: origin },
   stdio: ["ignore", "pipe", "pipe"]
 });
-
 let serverOutput = "";
 server.stdout.on("data", (chunk) => { serverOutput += chunk.toString(); });
 server.stderr.on("data", (chunk) => { serverOutput += chunk.toString(); });
@@ -97,14 +90,24 @@ async function verifyRoute(locale, route) {
   const response = await fetch(`${origin}${route}`);
   assert(response.status === 200, `${route} returned ${response.status}`);
   const html = await response.text();
-
-  for (const phrase of forbidden) {
-    assert(!html.includes(phrase), `${route} still contains forbidden public wording: ${phrase}`);
-  }
-
   const expected = languageExpectations[locale];
+  // Navigation intentionally includes CRM access since production commit
+  // 8969a44. Verify the exact destinations instead of banning that feature.
+  const markup = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
+  for (const track of ["nav_crm_login", "mobile_crm_login", "footer_crm_login"]) {
+    const links = [...markup.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/gi)]
+      .map((match) => match[0]).filter((link) => link.includes(`data-track="${track}"`));
+    assert(links.length === 1, `${route} must contain exactly one ${track}`);
+    assert(links[0].includes('href="https://novalure-crm.app"'), `${route}: incorrect CRM destination`);
+    assert(links[0].includes(expected.login), `${route}: incorrect CRM label`);
+    assert(links[0].includes('rel="noreferrer"'), `${route}: missing external-link protection`);
+  }
+  const contentMarkup = markup.replace(/<header\b[^>]*>[\s\S]*?<\/header>/gi, "")
+    .replace(/<footer\b[^>]*>[\s\S]*?<\/footer>/gi, "");
+  for (const phrase of forbidden) {
+    assert(!contentMarkup.includes(phrase), `${route} contains CRM access outside the approved navigation: ${phrase}`);
+  }
   assert(html.includes(expected.navigation), `${route} is missing the localised system-example navigation label`);
-
   if (route === `/${locale}`) {
     assert(html.includes(expected.home), `${route} is missing the operated-service homepage explanation`);
     assert(html.includes(expected.selection), `${route} is missing the role-based playbook selector`);
@@ -121,8 +124,7 @@ async function verifyRoute(locale, route) {
 
 async function verifyRootRedirect() {
   const response = await fetch(`${origin}/`, {
-    redirect: "manual",
-    headers: { "accept-language": "en-GB,en;q=0.9" }
+    redirect: "manual", headers: { "accept-language": "en-GB,en;q=0.9" }
   });
   assert(response.status >= 300 && response.status < 400, `/ returned ${response.status} instead of a redirect`);
   const location = response.headers.get("location") || "";
