@@ -48,7 +48,10 @@ jobs:
         run: npm run build
       - name: Install isolated browser tooling
         run: |
-          npm install --prefix "$RUNNER_TEMP/playbook-ui" --no-package-lock --ignore-scripts playwright@1.63.0
+          mkdir -p playbook-ui-report
+          PLAYWRIGHT_VERSION="$(npm view playwright dist-tags.latest)"
+          echo "Resolved Playwright version: $PLAYWRIGHT_VERSION" | tee playbook-ui-report/tooling-version.txt
+          npm install --prefix "$RUNNER_TEMP/playbook-ui" --no-package-lock --ignore-scripts "playwright@$PLAYWRIGHT_VERSION"
           node "$RUNNER_TEMP/playbook-ui/node_modules/playwright/cli.js" install --with-deps chromium firefox webkit
       - name: Start local server and verify DE, EN and ES
         env:
