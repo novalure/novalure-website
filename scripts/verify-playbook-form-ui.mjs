@@ -1,3 +1,5 @@
+/* global document, NodeFilter, getComputedStyle, innerWidth, localStorage */
+// Browser globals below are used only inside Playwright's browser callbacks.
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
