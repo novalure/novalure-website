@@ -113,6 +113,21 @@ async function assertFocus(input) {
   return { width: focus.width, style: focus.style, color: focus.color };
 }
 
+async function waitForCovers(page, card) {
+  // Native lazy loading need not start until a newly selected cover is in view.
+  // Wait for a real successful load before decode(); a broken image still fails.
+  for (const image of await card.locator("img").all()) {
+    await image.scrollIntoViewIfNeeded();
+    const handle = await image.elementHandle();
+    try {
+      await page.waitForFunction((element) => element.complete && element.naturalWidth > 0, handle, { timeout: 15000 });
+      await image.evaluate((element) => element.decode());
+    } finally {
+      await handle?.dispose();
+    }
+  }
+}
+
 async function layoutCase(browser, browserName, locale, routePath, width) {
   const { context, page } = await setup(browser, width);
   try {
@@ -122,6 +137,7 @@ async function layoutCase(browser, browserName, locale, routePath, width) {
     await addOn.check();
     assert.equal(await card.locator("img").count(), 2, "Both selected covers must appear");
     await assertReadable(card);
+    await waitForCovers(page, card);
     const images = await card.locator("img").evaluateAll((items) => items.map((image) => {
       const rect = image.getBoundingClientRect();
       return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: rect.width };
@@ -130,7 +146,6 @@ async function layoutCase(browser, browserName, locale, routePath, width) {
     const overlapY = Math.min(images[0].bottom, images[1].bottom) - Math.max(images[0].top, images[1].top);
     assert(overlapX <= 0 || overlapY <= 0, "Playbook covers overlap");
     assert(images.every((image) => image.width >= 128), "Covers should be at least 128 CSS px wide");
-    await card.locator("img").evaluateAll((items) => Promise.all(items.map((image) => image.decode())));
     if (browserName === "chromium" && (routePath.endsWith("playbooks") || routePath === `/${locale}`) && [390, 1440].includes(width)) await screenshot(card, `${locale}-${routePath.endsWith("playbooks") ? "playbooks" : "home"}-${width}`);
     const agent = card.locator('input[name="role"][value="agent"]');
     if (await agent.isEnabled()) {
