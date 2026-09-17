@@ -4,7 +4,6 @@ import path from "node:path";
 import { createRequire } from "node:module";
 
 // Browser APIs are accessed through globalThis only inside Playwright callbacks.
-// Install Playwright outside the application dependency tree; see the CI job.
 const requireQa = createRequire(path.resolve(process.env.PLAYBOOK_QA_ROOT || ".playbook-qa", "package.json"));
 const { chromium, firefox, webkit } = requireQa("playwright");
 const base = process.env.PLAYBOOK_UI_BASE_URL || "http://127.0.0.1:3000";
@@ -18,7 +17,6 @@ const routes = {
   es: ["/es", "/es/playbooks", "/es/promotores", "/es/agencias-inmobiliarias"]
 };
 
-// Measure the browser's resolved colors, including ancestor backgrounds.
 function inspectCard(root) {
   const rgb = (value) => (value.match(/[\d.]+/g) || []).map(Number);
   const blend = (front, back) => front.slice(0, 3).map((v, i) => v * (front[3] ?? 1) + back[i] * (1 - (front[3] ?? 1)));
@@ -68,8 +66,7 @@ async function assertReadable(card) {
 
 async function setup(browser, width) {
   const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion: "reduce", serviceWorkers: "block" });
-  // Explicitly deny optional cookies; no external scripts or writes are allowed.
-  await context.addInitScript(() => globalThis.localStorage.setItem("novalure-cookie-consent", JSON.stringify({ necessary: true, analytics: false, marketing: false, external: false, updatedAt: new Date().toISOString() })));
+  await context.addInitScript(() => globalThis.localStorage.setItem("novalure-cookie-consent", JSON.stringify({ necessary: true, analytics: false, marketing: false, external: false, savedAt: new Date().toISOString() })));
   await context.route("**/*", async (route) => {
     const request = route.request();
     const url = new URL(request.url());
@@ -95,6 +92,27 @@ async function screenshot(card, name) {
   await card.screenshot({ path: path.join(out, `${name}.png`), animations: "disabled" });
 }
 
+async function assertFocus(input) {
+  // Let the browser render focus after React's selection update before measuring.
+  const focus = await input.evaluate(async (element) => {
+    await new Promise((resolve) => globalThis.requestAnimationFrame(() => globalThis.requestAnimationFrame(resolve)));
+    const style = globalThis.getComputedStyle(element);
+    const matchingRules = [];
+    function inspect(rules) {
+      for (const rule of rules) {
+        if (rule.selectorText && element.matches(rule.selectorText) && /outline|box-shadow/.test(rule.style?.cssText || "")) matchingRules.push(rule.cssText);
+        if (rule.cssRules) inspect(rule.cssRules);
+      }
+    }
+    for (const sheet of globalThis.document.styleSheets) {
+      try { inspect(sheet.cssRules); } catch { /* Cross-origin sheets cannot be read. */ }
+    }
+    return { active: globalThis.document.activeElement === element, activeName: globalThis.document.activeElement?.getAttribute("name"), width: parseFloat(style.outlineWidth), style: style.outlineStyle, color: style.outlineColor, matchingRules };
+  });
+  assert(focus.active && focus.width >= 2 && focus.style !== "none", `Input focus is not visible: ${JSON.stringify(focus)}`);
+  return { width: focus.width, style: focus.style, color: focus.color };
+}
+
 async function layoutCase(browser, browserName, locale, routePath, width) {
   const { context, page } = await setup(browser, width);
   try {
@@ -113,9 +131,7 @@ async function layoutCase(browser, browserName, locale, routePath, width) {
     assert(overlapX <= 0 || overlapY <= 0, "Playbook covers overlap");
     assert(images.every((image) => image.width >= 128), "Covers should be at least 128 CSS px wide");
     await card.locator("img").evaluateAll((items) => Promise.all(items.map((image) => image.decode())));
-    if (browserName === "chromium" && (routePath.endsWith("playbooks") || routePath === `/${locale}`) && [390, 1440].includes(width)) {
-      await screenshot(card, `${locale}-${routePath.endsWith("playbooks") ? "playbooks" : "home"}-${width}`);
-    }
+    if (browserName === "chromium" && (routePath.endsWith("playbooks") || routePath === `/${locale}`) && [390, 1440].includes(width)) await screenshot(card, `${locale}-${routePath.endsWith("playbooks") ? "playbooks" : "home"}-${width}`);
     const agent = card.locator('input[name="role"][value="agent"]');
     if (await agent.isEnabled()) {
       await agent.check();
@@ -123,11 +139,13 @@ async function layoutCase(browser, browserName, locale, routePath, width) {
     }
     await addOn.uncheck();
     assert.equal(await card.locator("img").count(), 1);
+    await addOn.focus();
+    await page.keyboard.press("Tab");
     const input = card.locator('input[name="name"]');
-    await input.focus();
-    const focus = await input.evaluate((element) => ({ width: parseFloat(globalThis.getComputedStyle(element).outlineWidth), style: globalThis.getComputedStyle(element).outlineStyle }));
-    assert(focus.width >= 2 && focus.style !== "none", "Input focus is not visible");
-    results.push({ type: "layout", browser: browserName, locale, route: routePath, width, status: "passed", ...initial });
+    const focus = await assertFocus(input);
+    await page.keyboard.press("Tab");
+    await assertFocus(card.locator('input[name="email"]'));
+    results.push({ type: "layout", browser: browserName, locale, route: routePath, width, status: "passed", ...initial, focus });
   } catch (error) {
     await page.screenshot({ path: path.join(out, `failure-${browserName}-${locale}-${routePath.replaceAll("/", "_")}-${width}.png`), fullPage: true }).catch(() => {});
     results.push({ type: "layout", browser: browserName, locale, route: routePath, width, status: "failed", error: String(error) });
@@ -226,9 +244,9 @@ try {
     }
   }
 } finally {
-  const report = { generatedAt: new Date().toISOString(), base, realEmailsSent: 0, passed: results.filter((r) => r.status === "passed").length, failed: results.filter((r) => r.status === "failed").length, results };
+  const report = { generatedAt: new Date().toISOString(), base, realEmailsSent: 0, expectedCases: 81, passed: results.filter((r) => r.status === "passed").length, failed: results.filter((r) => r.status === "failed").length, results };
   await fs.writeFile(path.join(out, "results.json"), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
-  if (process.env.GITHUB_STEP_SUMMARY) await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, `## Playbook form browser regression\n\nPassed: ${report.passed}. Failed: ${report.failed}. Real emails: 0 (requests intercepted).\n\nSee the playbook-ui-report artifact for measured colors and screenshots.\n`);
-  if (report.failed) process.exitCode = 1;
+  if (process.env.GITHUB_STEP_SUMMARY) await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, `## Playbook form browser regression\n\nPassed: ${report.passed}. Failed: ${report.failed}. Expected: 81. Real emails: 0 (requests intercepted).\n\nSee the playbook-ui-report artifact for measured colors and screenshots.\n`);
+  if (report.failed || results.length !== report.expectedCases) process.exitCode = 1;
 }
