@@ -31,12 +31,12 @@ jobs:
           p.dependencies.sharp = '0.35.4';
           p.devDependencies['eslint-config-next'] = '15.5.24';
           p.devDependencies.vitest = '4.1.11';
-          // Retain the already installed Vite version and align optional peers.
-          // npm 10 otherwise selects Vitest 5 browser peers and crashes in loadPeerSet.
           const viteVersion = lock.packages['node_modules/vite']?.version;
           if (!viteVersion) throw new Error('No locked root Vite version found');
           p.devDependencies.vite = viteVersion;
-          console.log('Retaining locked Vite:', viteVersion);
+          p.overrides.vite = '$vite';
+          p.overrides.vitest = '$vitest';
+          console.log('Retaining locked Vite across peer resolution:', viteVersion);
           for (const name of ['browser-playwright', 'browser-preview', 'browser-webdriverio', 'coverage-istanbul', 'coverage-v8', 'ui']) {
             p.overrides[`@vitest/${name}`] = '4.1.11';
           }
