@@ -6,8 +6,9 @@ NovaLure V2 presents the company as one connected real-estate sales, media and t
 
 ## Foundation
 
-- Deep Blue `#001A72`
-- Light Blue `#599AD7`
+- Midnight Blue `#10055E`
+- Royal Blue `#34478F`
+- Signal Blue `#4D6BD8`
 - Paper `#F8F8F8`
 - White `#FFFFFF`
 - Black `#000000`
@@ -20,7 +21,7 @@ The existing framework-hosted grotesk remains self-hosted through `next/font`. D
 
 ## Layout and content architecture
 
-The homepage sequence is: cinematic static hero, verified proof, selected work, six disciplines, Studios/Demand/Systems, interactive pipeline demonstration, Evelyn technology preview, GRASL reference, text-only founder statement, Playbook and Project Check. The static hero is deliberate: no new video is shipped without a documented usage basis.
+The homepage sequence is: cinematic static hero, verified proof, selected work, six disciplines, Studios/Demand/Systems, interactive pipeline demonstration, Evelyn technology preview, GRASL reference, text-only founder statement, Playbook and Project Check. Floating pill navigation, rounded conversion surfaces, horizontal portrait galleries and royal-blue technology worlds create the intended high-impact international brokerage character. The static hero is deliberate: no new video is shipped without a documented usage basis.
 
 Supporting routes cover Solutions, Work, System, Evelyn and Insights in all three language namespaces. Existing Developers, Agents, Playbooks, Project Check and legal routes remain available.
 
