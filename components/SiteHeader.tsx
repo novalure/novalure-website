@@ -4,21 +4,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/Logo";
-import { managedServiceCopy } from "@/content/managed-service-copy";
-import { getCrmAppUrl, getPath, getProcessAnchor, routeMap, type Locale } from "@/lib/i18n";
+import { getCrmAppUrl, getPath, routeMap, type Locale } from "@/lib/i18n";
 
 const headerCopy = {
   en: {
     menu: "Open menu", close: "Close menu", navigation: "Primary navigation",
-    nav: ["Developers", "Agents", "Process", "System", "Playbook"], cta: "Request a project check", login: "CRM login"
+    nav: ["Solutions", "Work", "System", "Evelyn", "Insights"], cta: "Project review", login: "CRM login"
   },
   de: {
     menu: "Menü öffnen", close: "Menü schließen", navigation: "Hauptnavigation",
-    nav: ["Bauträger", "Makler", "Prozess", "System", "Playbook"], cta: "Projekt-Check anfragen", login: "CRM-Login"
+    nav: ["Lösungen", "Work", "System", "Evelyn", "Insights"], cta: "Projekt-Check", login: "CRM-Login"
   },
   es: {
     menu: "Abrir menú", close: "Cerrar menú", navigation: "Navegación principal",
-    nav: ["Promotores", "Agencias", "Proceso", "Sistema", "Playbook"], cta: "Solicitar un análisis", login: "Acceso al CRM"
+    nav: ["Soluciones", "Work", "Sistema", "Evelyn", "Insights"], cta: "Análisis del proyecto", login: "Acceso al CRM"
   }
 } as const;
 
@@ -29,24 +28,21 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const t = headerCopy[locale];
-  const managed = managedServiceCopy[locale];
-  const homePath = getPath(locale, "home");
   const crmHref = getCrmAppUrl(locale);
+  const systemExampleHref = getPath(locale, "handover");
 
   const activeKey = Object.entries(routeMap).find(([, paths]) => paths[locale] === pathname)?.[0] as
     | keyof typeof routeMap
     | undefined;
   const switchHref = (targetLocale: Locale) => activeKey
     ? routeMap[activeKey][targetLocale]
-    : getPath(targetLocale, "home");
-  const systemHref = getPath(locale, "handover");
-  const anchor = (id: string) => `${homePath}#${id}`;
+    : pathname.replace(/^\/(en|de|es)(?=\/|$)/, `/${targetLocale}`);
   const navItems = [
-    [t.nav[0], anchor("bautraeger")],
-    [t.nav[1], anchor("makler")],
-    [t.nav[2], anchor(getProcessAnchor(locale))],
-    [t.nav[3], anchor("system")],
-    [t.nav[4], anchor("playbook")]
+    [t.nav[0], `/${locale}/solutions`],
+    [t.nav[1], `/${locale}/work`],
+    [t.nav[2], `/${locale}/system`],
+    [t.nav[3], `/${locale}/evelyn`],
+    [t.nav[4], `/${locale}/insights`]
   ] as const;
 
   useEffect(() => {
@@ -118,8 +114,8 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             <Link className={locale === "es" ? "is-active" : ""} href={locale === "es" ? pathname : switchHref("es")} hrefLang="es">ES</Link>
           </div>
           <a className="v3-header-login" href={crmHref} target="_blank" rel="noreferrer" data-track="nav_crm_login">{t.login}</a>
-          <Link className="v3-header-login" href={systemHref} data-track="nav_system_example">{managed.navLabel}</Link>
-          <Link className="v3-button v3-button-primary v3-header-cta" href={anchor("kontakt")} data-track="nav_audit">{t.cta}</Link>
+          <Link className="v3-header-login" href={systemExampleHref} data-track="nav_system_example">CRM Demo</Link>
+          <Link className="v3-button v3-button-primary v3-header-cta" href={`${getPath(locale, "contact")}#book-audit`} data-track="nav_audit">{t.cta} →</Link>
         </div>
 
         <button
@@ -151,9 +147,14 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             {navItems.map(([label, href]) => <Link href={href} key={href} onClick={() => setOpen(false)}>{label}</Link>)}
           </div>
           <div className="v3-mobile-menu-actions">
-            <Link className="v3-button v3-button-primary" href={anchor("kontakt")} onClick={() => setOpen(false)}>{t.cta}</Link>
+            <div className="nl-menu-columns">
+              <span>SOLUTIONS</span><Link href={getPath(locale,"developers")}>Developers</Link><Link href={getPath(locale,"agents")}>Sales teams</Link><Link href={`/${locale}/solutions`}>NovaLure Studios</Link><Link href={`/${locale}/solutions`}>Demand</Link><Link href={`/${locale}/system`}>Systems</Link>
+              <span>COMPANY</span><Link href={`/${locale}/work`}>Work</Link><Link href={`/${locale}/insights`}>Insights</Link><Link href={getPath(locale,"contact")}>Contact</Link>
+              <span>RESOURCES</span><Link href={getPath(locale,"playbooks")}>Playbooks</Link><Link href={getPath(locale,"handover")}>CRM Demo</Link><Link href={getPath(locale,"contact")}>Project Check</Link>
+            </div>
+            <Link className="v3-button v3-button-primary" href={`${getPath(locale, "contact")}#book-audit`} onClick={() => setOpen(false)}>{t.cta}</Link>
             <a className="v3-button v3-button-dark-outline" href={crmHref} target="_blank" rel="noreferrer" data-track="mobile_crm_login" onClick={() => setOpen(false)}>{t.login}</a>
-            <Link className="v3-button v3-button-dark-outline" href={systemHref} data-track="mobile_system_example" onClick={() => setOpen(false)}>{managed.navLabel}</Link>
+            <Link className="v3-button v3-button-dark-outline" href={systemExampleHref} data-track="mobile_system_example" onClick={() => setOpen(false)}>CRM Demo</Link>
             <div className="v3-language-switch is-dark">
               <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref("de")} hrefLang="de">DE</Link>
               <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>
@@ -164,7 +165,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
       </header>
 
       <div className="v3-mobile-sticky-bar">
-        <Link className="v3-mobile-sticky-cta" href={anchor("kontakt")}>{t.cta}</Link>
+        <Link className="v3-mobile-sticky-cta" href={`${getPath(locale, "contact")}#book-audit`}>{t.cta}</Link>
       </div>
     </>
   );
