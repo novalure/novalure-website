@@ -5,8 +5,7 @@ import { type Cta, type HomeContent, type PageContent } from "@/content/pages";
 import { playbookCatalog as playbooks } from "@/content/playbook-catalog";
 import { ContactInquiryForm } from "@/components/ContactInquiryForm";
 import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholdersV2";
-import { TeamLeadImage } from "@/components/TeamLeadImage";
-import { RelaunchHomePage } from "@/components/relaunch/RelaunchHomePage";
+import { V2HomePage } from "@/components/v2/V2HomePage";
 import { FaqAccordion } from "@/components/relaunch/RelaunchInteractive";
 
 function localeCopy<T>(locale: Locale, en: T, de: T, es: T): T {
@@ -83,7 +82,7 @@ function SubpageSignalCard({ content }: { content: PageContent }) {
 }
 
 function HomePage({ content }: { content: HomeContent }) {
-  return <RelaunchHomePage locale={content.locale} />;
+  return <V2HomePage locale={content.locale} />;
 }
 
 const landingCtaLabels = {
@@ -362,15 +361,7 @@ function DeveloperLandingPage({ locale }: { locale: Locale }) {
       <CaseProofSection locale={locale} />
 
       <section className="landing-section landing-team" id="team">
-        <div className="team-photo-frame">
-          <Image
-            src="/images/team-franz-romih.png"
-            alt="Franz Romih, NovaLure"
-            width={1448}
-            height={1086}
-            sizes="(min-width: 900px) 46vw, 92vw"
-          />
-        </div>
+        <div className="team-photo-frame founder-blueprint" aria-hidden="true"><span>FR / 01</span><strong>SALES<br/>→ CONTEXT<br/>→ HANDOVER</strong></div>
         <div className="team-copy">
           <LandingSectionHeading label={copy.team.label} headline={copy.team.headline} />
           <p className="landing-section-text">{copy.team.text}</p>
@@ -1250,7 +1241,7 @@ function TeamBlock({ content }: { content: HomeContent }) {
       </div>
       <div className="team-grid">
         <article className="founder-card">
-          <TeamLeadImage locale={content.locale} />
+          <div className="team-lead-media founder-blueprint" aria-hidden="true"><span>FR / 01</span><strong>PROJECT<br/>SALES<br/>SYSTEM</strong></div>
           <div className="team-lead-title-row">
             <h3>{content.team.founder}</h3>
           </div>

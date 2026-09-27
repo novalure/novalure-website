@@ -1,24 +1,11 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Schibsted_Grotesk, Source_Serif_4 } from "next/font/google";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 import "./relaunch.css";
+import "./v2.css";
 
 const siteUrl = getSiteUrl();
-const schibsted = Schibsted_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-schibsted",
-  display: "swap"
-});
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-source-serif",
-  display: "swap"
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: "NovaLure",
@@ -54,7 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const documentLanguage = requestedLanguage === "de-DE" || requestedLanguage === "es-ES" ? requestedLanguage : "en-GB";
 
   return (
-    <html className={`${schibsted.variable} ${sourceSerif.variable}`} lang={documentLanguage} suppressHydrationWarning>
+    <html lang={documentLanguage} suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );

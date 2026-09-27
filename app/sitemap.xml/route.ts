@@ -19,6 +19,11 @@ const routes = [
   "/en/system-example",
   "/de/systembeispiel",
   "/es/ejemplo-del-sistema"
+  ,"/en/solutions", "/de/solutions", "/es/solutions"
+  ,"/en/work", "/de/work", "/es/work"
+  ,"/en/system", "/de/system", "/es/system"
+  ,"/en/evelyn", "/de/evelyn", "/es/evelyn"
+  ,"/en/insights", "/de/insights", "/es/insights"
 ];
 
 function absolute(path: string) {

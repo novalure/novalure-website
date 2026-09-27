@@ -259,9 +259,7 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
 
       <section className="v3-section v3-team" id="team" data-reveal>
         <div className="v3-team-inner">
-          <div className="v3-team-image">
-            <Image src="/images/team-franz-romih.png" alt="Franz Romih, NovaLure" fill sizes="(min-width: 768px) 340px, 100vw" />
-          </div>
+          <div className="v3-team-image founder-blueprint" aria-hidden="true"><span>FR / 01</span><strong>SALES<br />→ CONTEXT<br />→ HANDOVER</strong></div>
           <div className="v3-team-copy">
             <SectionKicker>{t.teamKicker}</SectionKicker>
             <h2>{t.teamH}</h2>
