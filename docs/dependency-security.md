@@ -1,18 +1,23 @@
 # Dependency security
 
-Last reviewed: 2026-07-30
+Last reviewed: 2026-10-04
 
 ## Current status
 
-- `npm audit --omit=dev`: 0 vulnerabilities
-- `npm audit`: 16 high-severity findings, all confined to the ESLint development toolchain through legacy `minimatch`/`brace-expansion` ranges
-- Production build, TypeScript, ESLint, Sanity CLI, archive generation, and route smoke tests pass
+- `npm audit --omit=dev --audit-level=moderate`: 11 high-severity findings
+- `npm audit --audit-level=moderate`: 14 high-severity findings
+- The remaining findings are in the `braces` dependency family reached through
+  Sanity, Tailwind and lint/build tooling. npm reports no compatible patched
+  `braces` release; its suggested remediation requires breaking major upgrades.
+- The locked dependency tree has received all compatible `npm audit fix`
+  updates. Production build, TypeScript, ESLint, 198 tests, Playbook asset
+  verification, and managed-service route verification pass.
 
-The remaining development-only findings have no compatible upstream fix at the
-time of this review. ESLint 10 removes its own vulnerable range, but the current
-Next.js ESLint plugins do not yet support ESLint 10 and fail at runtime. Recheck
-these findings whenever `eslint-config-next` and its plugins add ESLint 10
-support.
+The remaining findings do not have a non-breaking upstream remediation at the
+time of this review. They must not be waived or hidden by lowering the audit
+threshold. Recheck them when compatible Sanity, Tailwind, Next.js and lint
+tooling upgrades are available, and exercise the full build/test suite for any
+major-version remediation.
 
 ## Upgrade baseline
 

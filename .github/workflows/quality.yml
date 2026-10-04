@@ -1,6 +1,9 @@
 name: Quality
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
   workflow_dispatch:
 
@@ -17,9 +20,22 @@ jobs:
     timeout-minutes: 20
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ env.EXPECTED_SHA }}
+
+      - name: Verify exact revision
+        shell: bash
+        run: |
+          actual_sha="$(git rev-parse HEAD)"
+          if [[ "$actual_sha" != "$EXPECTED_SHA" ]]; then
+            echo "Expected $EXPECTED_SHA but checked out $actual_sha" >&2
+            exit 1
+          fi
+          echo "Verified exact revision: $actual_sha"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -42,14 +58,22 @@ jobs:
       - name: Check TypeScript
         run: npm run typecheck
 
-      - name: Audit all dependencies
-        run: npm audit --audit-level=moderate
-
-      - name: Audit production dependencies
-        run: npm audit --omit=dev --audit-level=moderate
-
       - name: Build production bundle
         run: npm run build
 
       - name: Verify managed-service wording and Playbook delivery routes
         run: npm run verify:managed-service
+
+      - name: Audit all and production dependencies
+        shell: bash
+        run: |
+          set +e
+          npm audit --audit-level=moderate
+          all_audit_status=$?
+          npm audit --omit=dev --audit-level=moderate
+          production_audit_status=$?
+          set -e
+          if (( all_audit_status != 0 || production_audit_status != 0 )); then
+            echo "Dependency audit failed: all=$all_audit_status production=$production_audit_status" >&2
+            exit 1
+          fi
