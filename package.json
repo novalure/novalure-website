@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "audit:security": "node scripts/audit-dependencies.mjs",
     "verify:managed-service": "node scripts/verify-managed-service-routes.mjs",
     "playbooks": "npm run verify:playbooks",
     "playbook:covers": "npm run verify:playbooks",
@@ -80,6 +81,9 @@
     "@vitest/coverage-istanbul": "4.1.11",
     "@vitest/coverage-v8": "4.1.11",
     "@vitest/ui": "4.1.11",
+    "minimatch@10.2.6": {
+      "brace-expansion": "5.0.12"
+    },
     "js-yaml@^3.0.0": "3.15.2",
     "js-yaml@^4.0.0": "4.3.2"
   }

@@ -90,7 +90,12 @@ function SystemBoard({ locale }: { locale: Locale }) {
         <strong>NovaLure CRM · {t.pipeTitle}</strong>
         <span>{t.demoBadge}</span>
       </div>
-      <div className="v3-board-scroll">
+      <div
+        className="v3-board-scroll"
+        role="region"
+        aria-label={locale === "de" ? `${t.pipeTitle} horizontal scrollen` : locale === "es" ? `Desplazar ${t.pipeTitle} horizontalmente` : `Scroll ${t.pipeTitle} horizontally`}
+        tabIndex={0}
+      >
         <div className="v3-board-columns">
           {columns.map((column) => (
             <section key={column.title}>

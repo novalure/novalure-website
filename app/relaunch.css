@@ -6,10 +6,10 @@
   --v3-gold: #c7a55b;
   --v3-gold-hover: #b08c3d;
   --v3-gold-light: #d9bc77;
-  --v3-kicker: #8f6f2e;
+  --v3-kicker: #6d521c;
   --v3-copy: #4a5570;
-  --v3-muted: #6a7288;
-  --v3-soft: #727b90;
+  --v3-muted: #5d667a;
+  --v3-soft: #60697d;
   --v3-success: #2e7d4f;
   --v3-success-bg: #e7f3ec;
   --v3-line: rgba(14, 27, 51, 0.1);
@@ -255,7 +255,7 @@ body {
 
 .v3-language-switch a {
   padding: 6px 8px;
-  color: #7a8296;
+  color: #60697d;
   border-radius: 5px;
 }
 
@@ -544,7 +544,7 @@ body {
 
 .v3-proof > p {
   margin: 20px 0 0;
-  color: #697188;
+  color: #5f687c;
   font-size: 0.76rem;
   text-align: center;
 }
@@ -3127,6 +3127,7 @@ body {
   background: var(--v3-gold);
 }
 
+.relaunch-home :focus-visible,
 .relaunch-subpage :focus-visible,
 .v3-state-page :focus-visible {
   outline-color: var(--v3-navy);

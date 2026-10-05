@@ -23,7 +23,7 @@ jobs:
       EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: ${{ env.EXPECTED_SHA }}
 
@@ -38,7 +38,7 @@ jobs:
           echo "Verified exact revision: $actual_sha"
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
@@ -65,15 +65,13 @@ jobs:
         run: npm run verify:managed-service
 
       - name: Audit all and production dependencies
-        shell: bash
-        run: |
-          set +e
-          npm audit --audit-level=moderate
-          all_audit_status=$?
-          npm audit --omit=dev --audit-level=moderate
-          production_audit_status=$?
-          set -e
-          if (( all_audit_status != 0 || production_audit_status != 0 )); then
-            echo "Dependency audit failed: all=$all_audit_status production=$production_audit_status" >&2
-            exit 1
-          fi
+        run: npm run audit:security -- --output=dependency-audit-result.json
+
+      - name: Upload dependency audit evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: dependency-audit-${{ env.EXPECTED_SHA }}
+          path: dependency-audit-result.json
+          if-no-files-found: error
+          retention-days: 30

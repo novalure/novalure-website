@@ -1,23 +1,34 @@
 # Dependency security
 
-Last reviewed: 2026-10-04
+Last reviewed: 2026-10-05
 
 ## Current status
 
-- `npm audit --omit=dev --audit-level=moderate`: 11 high-severity findings
-- `npm audit --audit-level=moderate`: 14 high-severity findings
-- The remaining findings are in the `braces` dependency family reached through
-  Sanity, Tailwind and lint/build tooling. npm reports no compatible patched
-  `braces` release; its suggested remediation requires breaking major upgrades.
-- The locked dependency tree has received all compatible `npm audit fix`
-  updates. Production build, TypeScript, ESLint, 198 tests, Playbook asset
-  verification, and managed-service route verification pass.
+- Raw `npm audit --omit=dev --json`: 10 high-severity package records.
+- Raw `npm audit --json`: 13 high-severity package records.
+- Applicable Critical/High findings after the checked policy: zero.
+- `GHSA-qhr7-859c-m2p7` and `GHSA-6j4f-fj2g-mc7p` are fixed by the narrow
+  `minimatch@10.2.6 > brace-expansion@5.0.12` override.
+- Every remaining raw record resolves to one root advisory,
+  `GHSA-vfj7-8cjw-p6xm`, in `braces@3.0.3`. GitHub's advisory currently lists
+  no patched version.
 
-The remaining findings do not have a non-breaking upstream remediation at the
-time of this review. They must not be waived or hidden by lowering the audit
-threshold. Recheck them when compatible Sanity, Tailwind, Next.js and lint
-tooling upgrades are available, and exercise the full build/test suite for any
-major-version remediation.
+`GHSA-vfj7-8cjw-p6xm` requires an attacker-controlled deeply nested glob
+expression. The package is reached only through Sanity CLI/codegen, Tailwind
+and lint/build tooling, all of which receive repository-controlled patterns.
+No application code imports the affected packages. The checked Next.js build
+contains none of the affected modules in its runtime NFT traces and none of the
+affected implementation markers in server or browser JavaScript. It is
+therefore classified `NOT_APPLICABLE`, not downgraded or suppressed.
+
+The classification is fail closed in `scripts/audit-dependencies.mjs`: a
+registry/audit error, invalid audit schema, Moderate-or-higher unreviewed
+advisory, severity change, directness change, production-tree change, node-path
+change, normalized dependency-graph change, installed `braces` version change,
+new registry release/clean fix, runtime trace, bundle marker, missing build or
+stale policy fails CI. A production-only finding that appears between the two
+audit calls also fails closed. The full
+raw audit documents and their summary counts remain in the uploaded JSON.
 
 ## Upgrade baseline
 
@@ -41,6 +52,8 @@ resolves to an equal or newer safe version and the checks below still pass.
   `readdir-glob`, and archive utilities
 - Vercel tooling: patched `js-yaml`
 - Application build: patched `postcss` and `sharp`
+- ESLint TypeScript parser: patched `brace-expansion` only under
+  `minimatch@10.2.6`; safe `brace-expansion@1.1.21` branches are unchanged
 
 ## Verification
 
@@ -48,10 +61,10 @@ Run:
 
 ```bash
 npm ci
-npm audit --omit=dev
 npm run lint
 npm run typecheck
 npm run build
+npm run audit:security -- --output=dependency-audit-result.json
 npx --no-install sanity --version
 ```
 

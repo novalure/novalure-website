@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "1.0.0",
+  "reviewedAt": "2026-10-05",
+  "exceptions": [
+    {
+      "advisoryId": "GHSA-vfj7-8cjw-p6xm",
+      "package": "braces",
+      "installedVersion": "3.0.3",
+      "severity": "high",
+      "affectedRange": "<=3.0.3",
+      "classification": "NOT_APPLICABLE",
+      "firstPatchedVersion": null,
+      "reason": "The advisory requires an attacker-controlled deeply nested glob expression. Every dependency path is build, lint or Sanity CLI tooling with repository-controlled patterns, and the vulnerable modules are absent from Next.js production traces and bundles.",
+      "allowedAffectedPackages": [
+        "@next/eslint-plugin-next",
+        "@sanity/cli",
+        "@sanity/codegen",
+        "braces",
+        "chokidar",
+        "eslint-config-next",
+        "fast-glob",
+        "find-yarn-workspace-root2",
+        "globby",
+        "micromatch",
+        "preferred-pm",
+        "sanity",
+        "tailwindcss"
+      ],
+      "dependencyGraphSha256": "61511942a3014d5dbaef3339b0ff987e3769ba0652db5a907a0182d0a49b254b",
+      "dependencyPaths": [
+        "sanity > chokidar > braces",
+        "sanity > @sanity/cli > @sanity/codegen > globby > fast-glob > micromatch > braces",
+        "sanity > preferred-pm > find-yarn-workspace-root2 > micromatch > braces",
+        "tailwindcss > chokidar|fast-glob|micromatch > braces",
+        "eslint-config-next > @next/eslint-plugin-next > fast-glob > micromatch > braces"
+      ],
+      "exploitPrecondition": "An untrusted actor must supply a deeply nested brace expression to the affected parser.",
+      "currentCodeUsage": "No application code imports braces, micromatch, fast-glob, globby or chokidar. Sanity Studio is compiled from repository-controlled configuration; ESLint and Tailwind run only against repository-controlled inputs.",
+      "artifactProof": {
+        "requiredBuildDirectory": ".next",
+        "forbiddenTracePackages": [
+          "braces",
+          "chokidar",
+          "micromatch",
+          "fast-glob",
+          "globby",
+          "@sanity/cli",
+          "@sanity/codegen",
+          "find-yarn-workspace-root2",
+          "preferred-pm"
+        ],
+        "forbiddenBundleMarkers": [
+          "exceeds max characters",
+          "node.isClose"
+        ]
+      },
+      "fixStrategy": "Keep the fail-closed evidence check in CI and remove this exception as soon as an upstream patched braces release is available.",
+      "regressionRisk": "LOW; classification changes no runtime code and fails closed if the dependency graph, advisory root or production artifact changes."
+    }
+  ],
+  "expectedFindings": {
+    "@next/eslint-plugin-next": { "severity": "high", "direct": false, "productionTree": false, "nodes": ["node_modules/@next/eslint-plugin-next"] },
+    "@sanity/cli": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/@sanity/cli"] },
+    "@sanity/codegen": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/@sanity/codegen"] },
+    "braces": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/braces"] },
+    "chokidar": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/chokidar"] },
+    "eslint-config-next": { "severity": "high", "direct": true, "productionTree": false, "nodes": ["node_modules/eslint-config-next"] },
+    "fast-glob": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/fast-glob", "node_modules/tailwindcss/node_modules/fast-glob"] },
+    "find-yarn-workspace-root2": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/find-yarn-workspace-root2"] },
+    "globby": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/globby"] },
+    "micromatch": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/micromatch"] },
+    "preferred-pm": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/preferred-pm"] },
+    "sanity": { "severity": "high", "direct": true, "productionTree": true, "nodes": ["node_modules/sanity"] },
+    "tailwindcss": { "severity": "high", "direct": true, "productionTree": false, "nodes": ["node_modules/tailwindcss"] }
+  }
+}
