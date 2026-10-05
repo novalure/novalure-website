@@ -1,7 +1,7 @@
 import type { PageContent, PageSection } from "@/content/pages";
 import type { Locale } from "@/lib/i18n";
 
-export const eulaLastUpdated = "6 October 2026";
+export const eulaLastUpdated = "5 October 2026";
 
 export const eulaSections: PageSection[] = [
   {
