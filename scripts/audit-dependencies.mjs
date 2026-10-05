@@ -185,21 +185,11 @@ export function classifyAudit(audit, policy, productionPackages = new Set()) {
 }
 
 function verifyDependencyGraph(exception) {
-  const result = spawnSync(npmCommand, ["explain", exception.package, "--json"], {
-    cwd: root,
-    encoding: "utf8",
-    maxBuffer: 20 * 1024 * 1024
-  });
-  if (result.error) throw result.error;
-  if (result.status !== 0 || !result.stdout.trim()) {
-    throw new Error(`npm explain ${exception.package} failed: ${result.stderr.trim()}`);
-  }
-  const graph = JSON.stringify(JSON.parse(result.stdout)).replaceAll(root, "<ROOT>");
-  const sha256 = createHash("sha256").update(graph).digest("hex");
+  const sha256 = createHash("sha256").update(readFileSync(lockPath)).digest("hex");
   if (sha256 !== exception.dependencyGraphSha256) {
     throw new Error(`Reviewed dependency graph changed: expected ${exception.dependencyGraphSha256}, found ${sha256}`);
   }
-  return { package: exception.package, sha256 };
+  return { package: exception.package, source: relative(root, lockPath), sha256 };
 }
 
 function verifyPatchAvailability(exception, audit) {

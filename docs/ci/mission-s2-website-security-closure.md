@@ -30,7 +30,7 @@ every run after the production build. It fails if:
 - either npm audit call fails or returns an incomplete/unknown schema;
 - any Moderate/Critical/High resolves to an unreviewed advisory;
 - advisory severity/range, directness, production exposure, node paths, the
-  normalized dependency graph, affected package set or installed root version changes;
+  lockfile-bound dependency graph, affected package set or installed root version changes;
 - an actionable finding appears only in the production audit or npm publishes
   a newer root-package release requiring renewed review;
 - an affected module enters a Next.js server runtime trace; or

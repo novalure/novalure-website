@@ -26,7 +26,7 @@
         "sanity",
         "tailwindcss"
       ],
-      "dependencyGraphSha256": "61511942a3014d5dbaef3339b0ff987e3769ba0652db5a907a0182d0a49b254b",
+      "dependencyGraphSha256": "d479df9022f92a8441c7d8acfcd228d268eb17b9ac8958e3235445181fdd9722",
       "dependencyPaths": [
         "sanity > chokidar > braces",
         "sanity > @sanity/cli > @sanity/codegen > globby > fast-glob > micromatch > braces",
