@@ -65,7 +65,20 @@ jobs:
         run: npm run verify:managed-service
 
       - name: Audit all and production dependencies
-        run: npm run audit:security -- --output=dependency-audit-result.json
+        shell: bash
+        run: |
+          set +e
+          npm run audit:security -- --output=dependency-audit-result.json
+          audit_status=$?
+          set -e
+          if [[ -f dependency-audit-result.json ]]; then
+            jq '{status, rawCounts, applicable, productionOnlyFindings, gateErrors, dependencyGraphProof, patchAvailabilityProof, artifactProof}' dependency-audit-result.json
+            if [[ "$audit_status" -ne 0 ]]; then
+              compact_errors="$(jq -c '{status,applicable,productionOnlyFindings,gateErrors}' dependency-audit-result.json)"
+              echo "::error title=Dependency audit gate failed::$compact_errors"
+            fi
+          fi
+          exit "$audit_status"
 
       - name: Upload dependency audit evidence
         if: always()
