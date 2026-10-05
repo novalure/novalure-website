@@ -1512,6 +1512,13 @@ function LegalPage({ content }: { content: PageContent }) {
               <h2>{section.title}</h2>
               <p>{section.body}</p>
               {section.items && <ul className="check-list">{section.items.map((item) => <li key={item}>{item}</li>)}</ul>}
+              {section.links && (
+                <ul className="v3-legal-links">
+                  {section.links.map((link) => (
+                    <li key={link.href}><Link href={link.href}>{link.label}</Link></li>
+                  ))}
+                </ul>
+              )}
             </article>
           ))}
         </div>

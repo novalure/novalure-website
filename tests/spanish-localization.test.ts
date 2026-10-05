@@ -63,7 +63,9 @@ describe("Spanish localization", () => {
       }
     }
 
-    expect(JSON.stringify(pages.es)).not.toMatch(/\/(?:de|en)(?:\/|$)/);
+    const { eula: englishOnlyEula, ...localizedSpanishPages } = pages.es;
+    expect(englishOnlyEula.sections?.some((section) => section.links?.some((link) => link.href.startsWith("/en/")))).toBe(true);
+    expect(JSON.stringify(localizedSpanishPages)).not.toMatch(/\/(?:de|en)(?:\/|$)/);
   });
 
   it("keeps de/en alternate links while setting the Spanish canonical and hreflang", () => {

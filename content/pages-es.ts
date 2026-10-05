@@ -1,5 +1,6 @@
 import { relaunchCopy } from "@/content/relaunch-copy";
 import { cookieSectionsEs, imprintSectionsEs, privacySectionsEs } from "@/content/legal-es";
+import { createEulaPage } from "@/content/eula";
 import type { FaqItem, HomeContent, PageContent, Playbook } from "@/content/pages";
 import type { PageKey } from "@/lib/i18n";
 
@@ -343,5 +344,6 @@ export const pagesEs: Record<PageKey, PageContent | HomeContent> = {
   auditThanks: thankYouEs("auditThanks"),
   imprint: legalEs("imprint"),
   privacy: legalEs("privacy"),
-  cookies: legalEs("cookies")
+  cookies: legalEs("cookies"),
+  eula: createEulaPage("es")
 };

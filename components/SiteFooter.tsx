@@ -41,6 +41,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <Link href={getPath(locale, "imprint")}>{t.imprint}</Link>
           <Link href={getPath(locale, "privacy")}>{t.privacy}</Link>
           <Link href={getPath(locale, "cookies")}>{t.cookies}</Link>
+          <Link href={getPath("en", "eula")}>EULA</Link>
           <CookieSettingsButton>{t.ckSettingsLabel}</CookieSettingsButton>
         </nav>
 

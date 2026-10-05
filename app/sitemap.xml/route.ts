@@ -17,6 +17,7 @@ const routes = [
   "/de/kontakt",
   "/es/analisis-del-proyecto",
   "/en/system-example",
+  "/en/eula",
   "/de/systembeispiel",
   "/es/ejemplo-del-sistema"
 ];
