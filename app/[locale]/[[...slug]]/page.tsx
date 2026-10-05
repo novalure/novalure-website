@@ -31,7 +31,7 @@ export async function generateMetadata(props: { params: Promise<RouteParams> }):
     title: content.seoTitle,
     description,
     alternates: getAlternates(locale, key),
-    robots: ["imprint", "privacy", "cookies", "eula", "playbookThanks", "auditThanks"].includes(key)
+    robots: ["imprint", "privacy", "cookies", "playbookThanks", "auditThanks"].includes(key)
       ? { index: false, follow: true }
       : { index: true, follow: true },
     openGraph: {

@@ -1,6 +1,7 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import { generateMetadata } from "@/app/[locale]/[[...slug]]/page";
 import { MarketingPage } from "@/components/MarketingPage";
 import { eulaLastUpdated, eulaSections } from "@/content/eula";
 import { pages } from "@/content/pages";
@@ -15,6 +16,17 @@ describe("public EULA", () => {
       canonical: "/en/eula",
       languages: { "en-GB": "/en/eula", "x-default": "/en/eula" }
     });
+  });
+
+  it("is included in the public sitemap and is not assigned the private legal-page noindex rule", async () => {
+    const sitemapSource = await import("@/app/sitemap.xml/route");
+    const response = sitemapSource.GET();
+    expect(await response.text()).toContain("https://www.novalure.eu/en/eula");
+
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ locale: "en", slug: ["eula"] })
+    });
+    expect(metadata.robots).toEqual({ index: true, follow: true });
   });
 
   it("covers all required legal topics in 28 numbered sections", () => {
