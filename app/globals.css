@@ -2395,8 +2395,14 @@ code {
 .panel-label {
   display: block;
   margin-bottom: 12px;
-  color: var(--gold);
+  color: #735700;
   font-weight: 950;
+}
+
+.hubspot-meeting-consent .button-secondary {
+  color: var(--ink);
+  background: transparent;
+  border-color: var(--line);
 }
 
 .legal-section {
