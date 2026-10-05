@@ -14,7 +14,8 @@ const routes = {
   ],
   en: [
     "/en", "/en/developers", "/en/agents", "/en/playbooks", "/en/contact", "/en/system-example",
-    "/en/playbooks/thank-you", "/en/contact/thank-you", "/en/legal/imprint", "/en/legal/privacy", "/en/legal/cookies"
+    "/en/playbooks/thank-you", "/en/contact/thank-you", "/en/legal/imprint", "/en/legal/privacy", "/en/legal/cookies",
+    "/en/eula"
   ],
   es: [
     "/es", "/es/promotores", "/es/agencias-inmobiliarias", "/es/playbooks", "/es/analisis-del-proyecto",
@@ -156,7 +157,7 @@ try {
     for (const route of localeRoutes) await verifyRoute(locale, route);
   }
   await verifyPlaybooks();
-  console.log("Managed-service and playbook verification passed for 33 pages and 9 canonical playbook PDFs.");
+  console.log("Managed-service and playbook verification passed for 34 pages and 9 canonical playbook PDFs.");
 } finally {
   await stopServer();
 }

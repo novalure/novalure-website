@@ -1,6 +1,7 @@
 import { type Locale, type PageKey } from "@/lib/i18n";
 import { relaunchCopy } from "@/content/relaunch-copy";
 import { pagesEs, playbooksEs } from "@/content/pages-es";
+import { createEulaPage } from "@/content/eula";
 
 export type Cta =
   | {
@@ -34,6 +35,7 @@ export type PageSection = {
   title: string;
   body: string;
   items?: string[];
+  links?: { label: string; href: string }[];
 };
 
 export type PageContent = {
@@ -647,7 +649,8 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
     auditThanks: thankYou("de", "auditThanks"),
     imprint: legal("de", "imprint"),
     privacy: legal("de", "privacy"),
-    cookies: legal("de", "cookies")
+    cookies: legal("de", "cookies"),
+    eula: createEulaPage("de")
   },
   en: {
     home: homeContent.en,
@@ -769,7 +772,8 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
     auditThanks: thankYou("en", "auditThanks"),
     imprint: legal("en", "imprint"),
     privacy: legal("en", "privacy"),
-    cookies: legal("en", "cookies")
+    cookies: legal("en", "cookies"),
+    eula: createEulaPage("en")
   },
   es: pagesEs
 };

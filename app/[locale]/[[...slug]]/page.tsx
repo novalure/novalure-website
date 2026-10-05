@@ -1,6 +1,6 @@
 import "@/content/spanish-market-positioning";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { MarketingPage } from "@/components/MarketingPage";
 import { pages } from "@/content/pages";
 import { getAlternates, getLocalizedParams, getPageKey, isLocale, type Locale } from "@/lib/i18n";
@@ -31,7 +31,7 @@ export async function generateMetadata(props: { params: Promise<RouteParams> }):
     title: content.seoTitle,
     description,
     alternates: getAlternates(locale, key),
-    robots: ["imprint", "privacy", "cookies", "playbookThanks", "auditThanks"].includes(key)
+    robots: ["imprint", "privacy", "cookies", "eula", "playbookThanks", "auditThanks"].includes(key)
       ? { index: false, follow: true }
       : { index: true, follow: true },
     openGraph: {
@@ -57,6 +57,7 @@ export default async function LocalizedPage(props: { params: Promise<RouteParams
   const locale = params.locale as Locale;
   const key = getPageKey(locale, params.slug);
   if (!key) notFound();
+  if (key === "eula" && locale !== "en") permanentRedirect("/en/eula");
 
   const content = pages[locale][key];
 

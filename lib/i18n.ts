@@ -21,7 +21,8 @@ export type PageKey =
   | "auditThanks"
   | "imprint"
   | "privacy"
-  | "cookies";
+  | "cookies"
+  | "eula";
 
 export const routeMap: Record<PageKey, Record<Locale, string>> = {
   home: { en: "/en", de: "/de", es: "/es" },
@@ -34,7 +35,8 @@ export const routeMap: Record<PageKey, Record<Locale, string>> = {
   auditThanks: { en: "/en/contact/thank-you", de: "/de/kontakt/danke", es: "/es/analisis-del-proyecto/gracias" },
   imprint: { en: "/en/legal/imprint", de: "/de/rechtliches/impressum", es: "/es/aviso-legal" },
   privacy: { en: "/en/legal/privacy", de: "/de/rechtliches/datenschutz", es: "/es/privacidad" },
-  cookies: { en: "/en/legal/cookies", de: "/de/rechtliches/cookies", es: "/es/cookies" }
+  cookies: { en: "/en/legal/cookies", de: "/de/rechtliches/cookies", es: "/es/cookies" },
+  eula: { en: "/en/eula", de: "/de/eula", es: "/es/eula" }
 };
 
 export type NavigationItem =
@@ -50,7 +52,7 @@ export const navigationItems: NavigationItem[] = [
   { type: "route", key: "contact" }
 ];
 
-export const legalKeys: PageKey[] = ["imprint", "privacy", "cookies"];
+export const legalKeys: PageKey[] = ["imprint", "privacy", "cookies", "eula"];
 export const allPageKeys = Object.keys(routeMap) as PageKey[];
 
 const routeAliases: Partial<Record<Locale, Partial<Record<string, PageKey>>>> = {
@@ -105,6 +107,16 @@ export function getLocalizedParams() {
 }
 
 export function getAlternates(locale: Locale, key: PageKey) {
+  if (key === "eula") {
+    return {
+      canonical: routeMap.eula.en,
+      languages: {
+        "en-GB": routeMap.eula.en,
+        "x-default": routeMap.eula.en
+      }
+    };
+  }
+
   return {
     canonical: routeMap[key][locale],
     languages: {
@@ -128,7 +140,8 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     auditThanks: "Project Check requested",
     imprint: "Imprint",
     privacy: "Privacy",
-    cookies: "Cookies"
+    cookies: "Cookies",
+    eula: "EULA"
   },
   de: {
     home: "Start",
@@ -141,7 +154,8 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     auditThanks: "Projekt-Check angefragt",
     imprint: "Impressum",
     privacy: "Datenschutz",
-    cookies: "Cookies"
+    cookies: "Cookies",
+    eula: "EULA"
   },
   es: {
     home: "Inicio",
@@ -154,7 +168,8 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     auditThanks: "Análisis solicitado",
     imprint: "Aviso legal",
     privacy: "Privacidad",
-    cookies: "Cookies"
+    cookies: "Cookies",
+    eula: "EULA"
   }
 };
 

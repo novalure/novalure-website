@@ -2866,6 +2866,27 @@ body {
   overflow-wrap: anywhere;
 }
 
+.v3-legal-links {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.v3-legal-links a {
+  color: var(--v3-kicker);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.v3-legal-links a:hover,
+.v3-legal-links a:focus-visible {
+  color: var(--v3-navy);
+}
+
 .v3-confirmation-section {
   display: grid !important;
   width: min(900px, 100%);
