@@ -63,8 +63,15 @@ describe("Spanish localization", () => {
       }
     }
 
-    const { eula: englishOnlyEula, ...localizedSpanishPages } = pages.es;
+    const {
+      eula: englishOnlyEula,
+      vercelIntegrationEula: englishOnlyVercelIntegrationEula,
+      ...localizedSpanishPages
+    } = pages.es;
     expect(englishOnlyEula.sections?.some((section) => section.links?.some((link) => link.href.startsWith("/en/")))).toBe(true);
+    expect(englishOnlyVercelIntegrationEula.sections?.some((section) =>
+      section.links?.some((link) => link.href.startsWith("/en/"))
+    )).toBe(true);
     expect(JSON.stringify(localizedSpanishPages)).not.toMatch(/\/(?:de|en)(?:\/|$)/);
   });
 

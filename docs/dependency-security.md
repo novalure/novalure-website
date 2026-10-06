@@ -1,17 +1,27 @@
 # Dependency security
 
-Last reviewed: 2026-10-05
+Last reviewed: 2026-10-06
 
 ## Current status
 
-- Raw `npm audit --omit=dev --json`: 10 high-severity package records.
-- Raw `npm audit --json`: 13 high-severity package records.
+- Raw `npm audit --omit=dev --json`: 13 high- or moderate-severity package records after patchable findings were upgraded.
+- Raw `npm audit --json`: 18 high- or moderate-severity package records after patchable findings were upgraded.
 - Applicable Critical/High findings after the checked policy: zero.
 - `GHSA-qhr7-859c-m2p7` and `GHSA-6j4f-fj2g-mc7p` are fixed by the narrow
   `minimatch@10.2.6 > brace-expansion@5.0.12` override.
-- Every remaining raw record resolves to one root advisory,
-  `GHSA-vfj7-8cjw-p6xm`, in `braces@3.0.3`. GitHub's advisory currently lists
-  no patched version.
+- Every remaining raw record resolves to one of two reviewed root advisories:
+  `GHSA-vfj7-8cjw-p6xm` in `braces@3.0.3` or `GHSA-hp3w-g68c-fv3c` in
+  `sprintf-js@1.1.3`. The registry currently lists no patched version for either.
+
+The 6 October review patched `sharp`, `source-map-js` and
+`postcss-selector-parser`, and updated Next.js within the pinned maintenance
+line. The remaining moderate records resolve to `GHSA-hp3w-g68c-fv3c`.
+Exploitation requires an attacker-controlled format string with an unbounded
+precision specifier. The package is reached only through Sanity
+package-manager/YAML tooling over repository-controlled project files, is not
+imported by application code and is absent from the checked production runtime
+traces and bundles. It is therefore classified `NOT_APPLICABLE` with its own
+fail-closed review record.
 
 `GHSA-vfj7-8cjw-p6xm` requires an attacker-controlled deeply nested glob
 expression. The package is reached only through Sanity CLI/codegen, Tailwind
@@ -24,7 +34,7 @@ therefore classified `NOT_APPLICABLE`, not downgraded or suppressed.
 The classification is fail closed in `scripts/audit-dependencies.mjs`: a
 registry/audit error, invalid audit schema, Moderate-or-higher unreviewed
 advisory, severity change, directness change, production-tree change, node-path
-change, exact lockfile/dependency-graph change, installed `braces` version change,
+change, exact lockfile/dependency-graph change (hashed after canonicalising line endings to LF for identical Windows/Linux verification), installed reviewed root version change,
 new registry release/clean fix, runtime trace, bundle marker, missing build or
 stale policy fails CI. A production-only finding that appears between the two
 audit calls also fails closed. The full
@@ -51,7 +61,8 @@ resolves to an equal or newer safe version and the checks below still pass.
 - Sanity CLI: patched `adm-zip`, `ejs`, `uuid`, `rimraf`, `glob`,
   `readdir-glob`, and archive utilities
 - Vercel tooling: patched `js-yaml`
-- Application build: patched `postcss` and `sharp`
+- Application build: patched `postcss`, `postcss-selector-parser`, `source-map-js` and `sharp`
+- Sanity package-manager tooling: latest available `sprintf-js` is pinned while its no-patch advisory remains fail-closed and artifact-checked
 - ESLint TypeScript parser: patched `brace-expansion` only under
   `minimatch@10.2.6`; safe `brace-expansion@1.1.21` branches are unchanged
 

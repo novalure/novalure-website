@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "reviewedAt": "2026-10-05",
+  "reviewedAt": "2026-10-06",
   "exceptions": [
     {
       "advisoryId": "GHSA-vfj7-8cjw-p6xm",
@@ -26,7 +26,7 @@
         "sanity",
         "tailwindcss"
       ],
-      "dependencyGraphSha256": "d479df9022f92a8441c7d8acfcd228d268eb17b9ac8958e3235445181fdd9722",
+      "dependencyGraphSha256": "cb1f43b236c34e72db3d29cd6c6990ccd55f3754a916c9b2bca0f24a30702611",
       "dependencyPaths": [
         "sanity > chokidar > braces",
         "sanity > @sanity/cli > @sanity/codegen > globby > fast-glob > micromatch > braces",
@@ -56,9 +56,47 @@
       },
       "fixStrategy": "Keep the fail-closed evidence check in CI and remove this exception as soon as an upstream patched braces release is available.",
       "regressionRisk": "LOW; classification changes no runtime code and fails closed if the dependency graph, advisory root or production artifact changes."
+    },
+    {
+      "advisoryId": "GHSA-hp3w-g68c-fv3c",
+      "package": "sprintf-js",
+      "installedVersion": "1.1.3",
+      "severity": "moderate",
+      "affectedRange": "<=1.1.3",
+      "classification": "NOT_APPLICABLE",
+      "firstPatchedVersion": null,
+      "reason": "The advisory requires an attacker-controlled format string with an unbounded precision specifier. The package is reached only through repository-controlled Sanity package-manager and YAML-loading tooling, is not imported by application code, and is absent from Next.js production traces and bundles.",
+      "allowedAffectedPackages": [
+        "argparse",
+        "js-yaml",
+        "load-yaml-file",
+        "preferred-pm",
+        "sanity",
+        "sprintf-js",
+        "which-pm"
+      ],
+      "dependencyGraphSha256": "cb1f43b236c34e72db3d29cd6c6990ccd55f3754a916c9b2bca0f24a30702611",
+      "dependencyPaths": [
+        "sanity > preferred-pm > which-pm > load-yaml-file > js-yaml > argparse > sprintf-js"
+      ],
+      "exploitPrecondition": "An untrusted actor must control a sprintf-js format string containing an unbounded precision specifier.",
+      "currentCodeUsage": "No application code imports sprintf-js, argparse, load-yaml-file or which-pm. The dependency path is used by Sanity package-manager discovery against repository-controlled project files.",
+      "artifactProof": {
+        "requiredBuildDirectory": ".next",
+        "forbiddenTracePackages": [
+          "sprintf-js",
+          "argparse",
+          "load-yaml-file",
+          "which-pm"
+        ],
+        "forbiddenBundleMarkers": []
+      },
+      "fixStrategy": "Keep the fail-closed evidence check in CI and remove this exception as soon as an upstream patched sprintf-js release is available.",
+      "regressionRisk": "LOW; classification changes no runtime code and fails closed if the dependency graph, advisory root or production artifact changes."
     }
   ],
   "expectedFindings": {
+    "argparse": { "severity": "moderate", "direct": false, "productionTree": true, "nodes": ["node_modules/load-yaml-file/node_modules/argparse"] },
     "@next/eslint-plugin-next": { "severity": "high", "direct": false, "productionTree": false, "nodes": ["node_modules/@next/eslint-plugin-next"] },
     "@sanity/cli": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/@sanity/cli"] },
     "@sanity/codegen": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/@sanity/codegen"] },
@@ -68,9 +106,13 @@
     "fast-glob": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/fast-glob", "node_modules/tailwindcss/node_modules/fast-glob"] },
     "find-yarn-workspace-root2": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/find-yarn-workspace-root2"] },
     "globby": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/globby"] },
+    "js-yaml": { "severity": "moderate", "direct": false, "productionTree": true, "nodes": ["node_modules/load-yaml-file/node_modules/js-yaml"] },
+    "load-yaml-file": { "severity": "moderate", "direct": false, "productionTree": true, "nodes": ["node_modules/load-yaml-file"] },
     "micromatch": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/micromatch"] },
     "preferred-pm": { "severity": "high", "direct": false, "productionTree": true, "nodes": ["node_modules/preferred-pm"] },
     "sanity": { "severity": "high", "direct": true, "productionTree": true, "nodes": ["node_modules/sanity"] },
-    "tailwindcss": { "severity": "high", "direct": true, "productionTree": false, "nodes": ["node_modules/tailwindcss"] }
+    "sprintf-js": { "severity": "moderate", "direct": false, "productionTree": true, "nodes": ["node_modules/sprintf-js"] },
+    "tailwindcss": { "severity": "high", "direct": true, "productionTree": false, "nodes": ["node_modules/tailwindcss"] },
+    "which-pm": { "severity": "moderate", "direct": false, "productionTree": true, "nodes": ["node_modules/which-pm"] }
   }
 }

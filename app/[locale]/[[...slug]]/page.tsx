@@ -58,6 +58,7 @@ export default async function LocalizedPage(props: { params: Promise<RouteParams
   const key = getPageKey(locale, params.slug);
   if (!key) notFound();
   if (key === "eula" && locale !== "en") permanentRedirect("/en/eula");
+  if (key === "vercelIntegrationEula" && locale !== "en") permanentRedirect("/en/vercel-integration-eula");
 
   const content = pages[locale][key];
 

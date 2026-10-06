@@ -22,7 +22,8 @@ export type PageKey =
   | "imprint"
   | "privacy"
   | "cookies"
-  | "eula";
+  | "eula"
+  | "vercelIntegrationEula";
 
 export const routeMap: Record<PageKey, Record<Locale, string>> = {
   home: { en: "/en", de: "/de", es: "/es" },
@@ -36,7 +37,12 @@ export const routeMap: Record<PageKey, Record<Locale, string>> = {
   imprint: { en: "/en/legal/imprint", de: "/de/rechtliches/impressum", es: "/es/aviso-legal" },
   privacy: { en: "/en/legal/privacy", de: "/de/rechtliches/datenschutz", es: "/es/privacidad" },
   cookies: { en: "/en/legal/cookies", de: "/de/rechtliches/cookies", es: "/es/cookies" },
-  eula: { en: "/en/eula", de: "/de/eula", es: "/es/eula" }
+  eula: { en: "/en/eula", de: "/de/eula", es: "/es/eula" },
+  vercelIntegrationEula: {
+    en: "/en/vercel-integration-eula",
+    de: "/de/vercel-integration-eula",
+    es: "/es/vercel-integration-eula"
+  }
 };
 
 export type NavigationItem =
@@ -52,7 +58,7 @@ export const navigationItems: NavigationItem[] = [
   { type: "route", key: "contact" }
 ];
 
-export const legalKeys: PageKey[] = ["imprint", "privacy", "cookies", "eula"];
+export const legalKeys: PageKey[] = ["imprint", "privacy", "cookies", "eula", "vercelIntegrationEula"];
 export const allPageKeys = Object.keys(routeMap) as PageKey[];
 
 const routeAliases: Partial<Record<Locale, Partial<Record<string, PageKey>>>> = {
@@ -107,12 +113,13 @@ export function getLocalizedParams() {
 }
 
 export function getAlternates(locale: Locale, key: PageKey) {
-  if (key === "eula") {
+  if (key === "eula" || key === "vercelIntegrationEula") {
+    const canonical = routeMap[key].en;
     return {
-      canonical: routeMap.eula.en,
+      canonical,
       languages: {
-        "en-GB": routeMap.eula.en,
-        "x-default": routeMap.eula.en
+        "en-GB": canonical,
+        "x-default": canonical
       }
     };
   }
@@ -141,7 +148,8 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     imprint: "Imprint",
     privacy: "Privacy",
     cookies: "Cookies",
-    eula: "EULA"
+    eula: "EULA",
+    vercelIntegrationEula: "Vercel Integration EULA"
   },
   de: {
     home: "Start",
@@ -155,7 +163,8 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     imprint: "Impressum",
     privacy: "Datenschutz",
     cookies: "Cookies",
-    eula: "EULA"
+    eula: "EULA",
+    vercelIntegrationEula: "Vercel Integration EULA"
   },
   es: {
     home: "Inicio",
@@ -169,7 +178,8 @@ export const navLabels: Record<Locale, Record<PageKey, string>> = {
     imprint: "Aviso legal",
     privacy: "Privacidad",
     cookies: "Cookies",
-    eula: "EULA"
+    eula: "EULA",
+    vercelIntegrationEula: "Vercel Integration EULA"
   }
 };
 

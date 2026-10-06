@@ -1,6 +1,7 @@
 import { relaunchCopy } from "@/content/relaunch-copy";
 import { cookieSectionsEs, imprintSectionsEs, privacySectionsEs } from "@/content/legal-es";
 import { createEulaPage } from "@/content/eula";
+import { createVercelIntegrationEulaPage } from "@/content/vercel-integration-eula";
 import type { FaqItem, HomeContent, PageContent, Playbook } from "@/content/pages";
 import type { PageKey } from "@/lib/i18n";
 
@@ -345,5 +346,6 @@ export const pagesEs: Record<PageKey, PageContent | HomeContent> = {
   imprint: legalEs("imprint"),
   privacy: legalEs("privacy"),
   cookies: legalEs("cookies"),
-  eula: createEulaPage("es")
+  eula: createEulaPage("es"),
+  vercelIntegrationEula: createVercelIntegrationEulaPage("es")
 };

@@ -22,6 +22,7 @@ const allowedPaths = new Set([
   "/en/legal/privacy",
   "/en/legal/cookies",
   "/en/eula",
+  "/en/vercel-integration-eula",
   "/de",
   "/de/bautraeger",
   "/de/makler",
@@ -34,6 +35,7 @@ const allowedPaths = new Set([
   "/de/rechtliches/datenschutz",
   "/de/rechtliches/cookies",
   "/de/eula",
+  "/de/vercel-integration-eula",
   "/es",
   "/es/promotores",
   "/es/agencias-inmobiliarias",
@@ -45,7 +47,8 @@ const allowedPaths = new Set([
   "/es/aviso-legal",
   "/es/privacidad",
   "/es/cookies",
-  "/es/eula"
+  "/es/eula",
+  "/es/vercel-integration-eula"
 ]);
 
 const redirects: Record<string, string> = {

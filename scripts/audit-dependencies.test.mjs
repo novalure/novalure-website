@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { advisoryRoots, classifyAudit, productionOnlyFindings, validateAuditReport } from "./audit-dependencies.mjs";
+import {
+  advisoryRoots,
+  classifyAudit,
+  dependencyGraphSha256,
+  productionOnlyFindings,
+  validateAuditReport
+} from "./audit-dependencies.mjs";
 
 const policy = {
   exceptions: [{
@@ -39,6 +45,11 @@ const audit = {
 };
 
 describe("dependency audit classification", () => {
+  it("hashes dependency graphs consistently across line endings", () => {
+    expect(dependencyGraphSha256("{\r\n  \"lockfileVersion\": 3\r\n}\r\n"))
+      .toBe(dependencyGraphSha256("{\n  \"lockfileVersion\": 3\n}\n"));
+  });
+
   it("resolves a transitive finding to its root advisory", () => {
     expect(advisoryRoots(audit.vulnerabilities, "micromatch")).toEqual([
       expect.objectContaining({ advisoryId: "GHSA-VFJ7-8CJW-P6XM", package: "braces" })
@@ -49,6 +60,41 @@ describe("dependency audit classification", () => {
     const result = classifyAudit(audit, policy, new Set(["braces", "micromatch"]));
     expect(result.unresolved).toHaveLength(0);
     expect(result.classifications).toHaveLength(2);
+  });
+
+  it("accepts multiple independently reviewed root advisories", () => {
+    const expandedPolicy = structuredClone(policy);
+    expandedPolicy.exceptions.push({
+      advisoryId: "GHSA-hp3w-g68c-fv3c",
+      package: "sprintf-js",
+      severity: "moderate",
+      affectedRange: "<=1.1.3"
+    });
+    expandedPolicy.expectedFindings["sprintf-js"] = {
+      severity: "moderate",
+      direct: false,
+      productionTree: true,
+      nodes: ["node_modules/sprintf-js"]
+    };
+    const expandedAudit = structuredClone(audit);
+    expandedAudit.vulnerabilities["sprintf-js"] = {
+      severity: "moderate",
+      isDirect: false,
+      nodes: ["node_modules/sprintf-js"],
+      via: [{
+        source: 2,
+        name: "sprintf-js",
+        severity: "moderate",
+        title: "unbounded precision",
+        url: "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+        range: "<=1.1.3"
+      }]
+    };
+    expect(classifyAudit(
+      expandedAudit,
+      expandedPolicy,
+      new Set(["braces", "micromatch", "sprintf-js"])
+    ).unresolved).toHaveLength(0);
   });
 
   it("fails closed for an unreviewed advisory", () => {

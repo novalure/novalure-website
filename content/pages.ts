@@ -2,6 +2,7 @@ import { type Locale, type PageKey } from "@/lib/i18n";
 import { relaunchCopy } from "@/content/relaunch-copy";
 import { pagesEs, playbooksEs } from "@/content/pages-es";
 import { createEulaPage } from "@/content/eula";
+import { createVercelIntegrationEulaPage } from "@/content/vercel-integration-eula";
 
 export type Cta =
   | {
@@ -650,7 +651,8 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
     imprint: legal("de", "imprint"),
     privacy: legal("de", "privacy"),
     cookies: legal("de", "cookies"),
-    eula: createEulaPage("de")
+    eula: createEulaPage("de"),
+    vercelIntegrationEula: createVercelIntegrationEulaPage("de")
   },
   en: {
     home: homeContent.en,
@@ -773,7 +775,8 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
     imprint: legal("en", "imprint"),
     privacy: legal("en", "privacy"),
     cookies: legal("en", "cookies"),
-    eula: createEulaPage("en")
+    eula: createEulaPage("en"),
+    vercelIntegrationEula: createVercelIntegrationEulaPage("en")
   },
   es: pagesEs
 };

@@ -18,6 +18,7 @@ const routes = [
   "/es/analisis-del-proyecto",
   "/en/system-example",
   "/en/eula",
+  "/en/vercel-integration-eula",
   "/de/systembeispiel",
   "/es/ejemplo-del-sistema"
 ];
