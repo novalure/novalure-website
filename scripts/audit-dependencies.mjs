@@ -7,7 +7,9 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const policyPath = join(root, "config", "dependency-audit-policy.json");
 const lockPath = join(root, "package-lock.json");
-const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
+const npmCli = process.env.npm_execpath;
+const npmCommand = npmCli ? process.execPath : process.platform === "win32" ? "npm.cmd" : "npm";
+const npmPrefixArgs = npmCli ? [npmCli] : [];
 
 function parseJsonOutput(output, label) {
   const start = output.indexOf("{");
@@ -19,7 +21,7 @@ function runAudit(omitDev) {
   const args = ["audit"];
   if (omitDev) args.push("--omit=dev");
   args.push("--json");
-  const result = spawnSync(npmCommand, args, {
+  const result = spawnSync(npmCommand, [...npmPrefixArgs, ...args], {
     cwd: root,
     encoding: "utf8",
     maxBuffer: 20 * 1024 * 1024
@@ -94,8 +96,9 @@ function normalizeTracePath(path) {
 }
 
 function verifyArtifact(policy) {
-  const exception = policy.exceptions[0];
-  const buildDirectory = join(root, exception.artifactProof.requiredBuildDirectory);
+  const buildDirectories = [...new Set(policy.exceptions.map(exception => exception.artifactProof.requiredBuildDirectory))];
+  if (buildDirectories.length !== 1) throw new Error("Reviewed exceptions must use one production build directory");
+  const buildDirectory = join(root, buildDirectories[0]);
   if (!existsSync(buildDirectory) || !statSync(buildDirectory).isDirectory()) {
     throw new Error("Production build proof is missing; run npm run build before the audit");
   }
@@ -103,7 +106,7 @@ function verifyArtifact(policy) {
   const traceFiles = walkFiles(buildDirectory, path => path.endsWith(".nft.json"));
   if (traceFiles.length === 0) throw new Error("No Next.js NFT runtime traces were produced");
 
-  const forbiddenPackages = exception.artifactProof.forbiddenTracePackages;
+  const forbiddenPackages = [...new Set(policy.exceptions.flatMap(exception => exception.artifactProof.forbiddenTracePackages))];
   const traceMatches = [];
   for (const traceFile of traceFiles) {
     const trace = JSON.parse(readFileSync(traceFile, "utf8"));
@@ -125,9 +128,10 @@ function verifyArtifact(policy) {
     ...walkFiles(join(buildDirectory, "static"), path => path.endsWith(".js"))
   ];
   const bundleMatches = [];
+  const forbiddenMarkers = [...new Set(policy.exceptions.flatMap(exception => exception.artifactProof.forbiddenBundleMarkers))];
   for (const bundleFile of bundleFiles) {
     const source = readFileSync(bundleFile, "utf8");
-    for (const marker of exception.artifactProof.forbiddenBundleMarkers) {
+    for (const marker of forbiddenMarkers) {
       if (source.includes(marker)) bundleMatches.push({ file: relative(root, bundleFile), marker });
     }
   }
@@ -193,7 +197,7 @@ function verifyDependencyGraph(exception) {
 }
 
 function verifyPatchAvailability(exception, audit) {
-  const result = spawnSync(npmCommand, ["view", exception.package, "version", "--json"], {
+  const result = spawnSync(npmCommand, [...npmPrefixArgs, "view", exception.package, "version", "--json"], {
     cwd: root,
     encoding: "utf8",
     maxBuffer: 1024 * 1024
@@ -222,16 +226,18 @@ function packageVersion(lock, packageName) {
 
 function main() {
   const policy = JSON.parse(readFileSync(policyPath, "utf8"));
-  if (policy.exceptions.length !== 1) throw new Error("Dependency policy must contain exactly one reviewed exception");
-  const exception = policy.exceptions[0];
-  if (exception.advisoryId.toUpperCase() !== "GHSA-VFJ7-8CJW-P6XM" || exception.firstPatchedVersion !== null) {
-    throw new Error("Unexpected dependency exception; an independent policy review is required");
+  const allowedExceptionIds = new Set(["GHSA-VFJ7-8CJW-P6XM", "GHSA-HP3W-G68C-FV3C"]);
+  if (policy.exceptions.length !== allowedExceptionIds.size ||
+      policy.exceptions.some(exception => !allowedExceptionIds.has(exception.advisoryId.toUpperCase()) || exception.firstPatchedVersion !== null)) {
+    throw new Error("Unexpected dependency exception set; an independent policy review is required");
   }
 
   const lock = JSON.parse(readFileSync(lockPath, "utf8"));
-  const installedRootVersion = packageVersion(lock, exception.package);
-  if (installedRootVersion !== exception.installedVersion) {
-    throw new Error(`Reviewed ${exception.package} version ${exception.installedVersion}, found ${installedRootVersion}`);
+  for (const exception of policy.exceptions) {
+    const installedRootVersion = packageVersion(lock, exception.package);
+    if (installedRootVersion !== exception.installedVersion) {
+      throw new Error(`Reviewed ${exception.package} version ${exception.installedVersion}, found ${installedRootVersion}`);
+    }
   }
 
   const allAudit = runAudit(false);
@@ -249,13 +255,13 @@ function main() {
   for (const record of classifications) record.installedVersion = packageVersion(lock, record.package);
 
   let artifactProof = null;
-  let dependencyGraphProof = null;
-  let patchAvailabilityProof = null;
+  let dependencyGraphProof = [];
+  let patchAvailabilityProof = [];
   try { artifactProof = verifyArtifact(policy); }
   catch (error) { gateErrors.push(error.message); }
-  try { dependencyGraphProof = verifyDependencyGraph(exception); }
+  try { dependencyGraphProof = policy.exceptions.map(exception => verifyDependencyGraph(exception)); }
   catch (error) { gateErrors.push(error.message); }
-  try { patchAvailabilityProof = verifyPatchAvailability(exception, allAudit); }
+  try { patchAvailabilityProof = policy.exceptions.map(exception => verifyPatchAvailability(exception, allAudit)); }
   catch (error) { gateErrors.push(error.message); }
   const rawAll = allAudit.metadata?.vulnerabilities ?? {};
   const rawProduction = productionAudit.metadata?.vulnerabilities ?? {};

@@ -51,6 +51,41 @@ describe("dependency audit classification", () => {
     expect(result.classifications).toHaveLength(2);
   });
 
+  it("accepts multiple independently reviewed root advisories", () => {
+    const expandedPolicy = structuredClone(policy);
+    expandedPolicy.exceptions.push({
+      advisoryId: "GHSA-hp3w-g68c-fv3c",
+      package: "sprintf-js",
+      severity: "moderate",
+      affectedRange: "<=1.1.3"
+    });
+    expandedPolicy.expectedFindings["sprintf-js"] = {
+      severity: "moderate",
+      direct: false,
+      productionTree: true,
+      nodes: ["node_modules/sprintf-js"]
+    };
+    const expandedAudit = structuredClone(audit);
+    expandedAudit.vulnerabilities["sprintf-js"] = {
+      severity: "moderate",
+      isDirect: false,
+      nodes: ["node_modules/sprintf-js"],
+      via: [{
+        source: 2,
+        name: "sprintf-js",
+        severity: "moderate",
+        title: "unbounded precision",
+        url: "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+        range: "<=1.1.3"
+      }]
+    };
+    expect(classifyAudit(
+      expandedAudit,
+      expandedPolicy,
+      new Set(["braces", "micromatch", "sprintf-js"])
+    ).unresolved).toHaveLength(0);
+  });
+
   it("fails closed for an unreviewed advisory", () => {
     const changed = structuredClone(audit);
     changed.vulnerabilities.braces.via[0].url = "https://github.com/advisories/GHSA-xxxx-yyyy-zzzz";
