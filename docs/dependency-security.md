@@ -34,7 +34,7 @@ therefore classified `NOT_APPLICABLE`, not downgraded or suppressed.
 The classification is fail closed in `scripts/audit-dependencies.mjs`: a
 registry/audit error, invalid audit schema, Moderate-or-higher unreviewed
 advisory, severity change, directness change, production-tree change, node-path
-change, exact lockfile/dependency-graph change, installed reviewed root version change,
+change, exact lockfile/dependency-graph change (hashed after canonicalising line endings to LF for identical Windows/Linux verification), installed reviewed root version change,
 new registry release/clean fix, runtime trace, bundle marker, missing build or
 stale policy fails CI. A production-only finding that appears between the two
 audit calls also fails closed. The full

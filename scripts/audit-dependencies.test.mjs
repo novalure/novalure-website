@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { advisoryRoots, classifyAudit, productionOnlyFindings, validateAuditReport } from "./audit-dependencies.mjs";
+import {
+  advisoryRoots,
+  classifyAudit,
+  dependencyGraphSha256,
+  productionOnlyFindings,
+  validateAuditReport
+} from "./audit-dependencies.mjs";
 
 const policy = {
   exceptions: [{
@@ -39,6 +45,11 @@ const audit = {
 };
 
 describe("dependency audit classification", () => {
+  it("hashes dependency graphs consistently across line endings", () => {
+    expect(dependencyGraphSha256("{\r\n  \"lockfileVersion\": 3\r\n}\r\n"))
+      .toBe(dependencyGraphSha256("{\n  \"lockfileVersion\": 3\n}\n"));
+  });
+
   it("resolves a transitive finding to its root advisory", () => {
     expect(advisoryRoots(audit.vulnerabilities, "micromatch")).toEqual([
       expect.objectContaining({ advisoryId: "GHSA-VFJ7-8CJW-P6XM", package: "braces" })

@@ -95,6 +95,11 @@ function normalizeTracePath(path) {
   return path.split(sep).join("/");
 }
 
+export function dependencyGraphSha256(source) {
+  const canonical = Buffer.isBuffer(source) ? source.toString("utf8") : String(source);
+  return createHash("sha256").update(canonical.replace(/\r\n/g, "\n"), "utf8").digest("hex");
+}
+
 function verifyArtifact(policy) {
   const buildDirectories = [...new Set(policy.exceptions.map(exception => exception.artifactProof.requiredBuildDirectory))];
   if (buildDirectories.length !== 1) throw new Error("Reviewed exceptions must use one production build directory");
@@ -189,7 +194,7 @@ export function classifyAudit(audit, policy, productionPackages = new Set()) {
 }
 
 function verifyDependencyGraph(exception) {
-  const sha256 = createHash("sha256").update(readFileSync(lockPath)).digest("hex");
+  const sha256 = dependencyGraphSha256(readFileSync(lockPath));
   if (sha256 !== exception.dependencyGraphSha256) {
     throw new Error(`Reviewed dependency graph changed: expected ${exception.dependencyGraphSha256}, found ${sha256}`);
   }

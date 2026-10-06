@@ -26,7 +26,7 @@
         "sanity",
         "tailwindcss"
       ],
-      "dependencyGraphSha256": "32cf0dd0cfbb2d3c8e09734bbe121ec8f9263fb12fe686fc3e8e4ed1a59f7564",
+      "dependencyGraphSha256": "cb1f43b236c34e72db3d29cd6c6990ccd55f3754a916c9b2bca0f24a30702611",
       "dependencyPaths": [
         "sanity > chokidar > braces",
         "sanity > @sanity/cli > @sanity/codegen > globby > fast-glob > micromatch > braces",
@@ -75,7 +75,7 @@
         "sprintf-js",
         "which-pm"
       ],
-      "dependencyGraphSha256": "32cf0dd0cfbb2d3c8e09734bbe121ec8f9263fb12fe686fc3e8e4ed1a59f7564",
+      "dependencyGraphSha256": "cb1f43b236c34e72db3d29cd6c6990ccd55f3754a916c9b2bca0f24a30702611",
       "dependencyPaths": [
         "sanity > preferred-pm > which-pm > load-yaml-file > js-yaml > argparse > sprintf-js"
       ],
