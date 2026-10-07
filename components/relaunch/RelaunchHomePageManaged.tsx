@@ -262,23 +262,6 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="v3-section v3-team" id="team" data-reveal>
-        <div className="v3-team-inner">
-          <div className="v3-team-image">
-            <Image src="/images/team-franz-romih.png" alt="Franz Romih, NovaLure" fill sizes="(min-width: 768px) 340px, 100vw" />
-          </div>
-          <div className="v3-team-copy">
-            <SectionKicker>{t.teamKicker}</SectionKicker>
-            <h2>{t.teamH}</h2>
-            <p>{t.teamBody}</p>
-            <div className="v3-team-person">
-              <strong>Franz Romih</strong>
-            </div>
-            <div className="v3-tags">{[t.tagA, t.tagB, t.tagC].map((tag) => <span key={tag}>{tag}</span>)}</div>
-          </div>
-        </div>
-      </section>
-
       <section className="v3-section v3-playbook" id="playbook" data-reveal>
         <div className="v3-playbook-shell">
           <div className="v3-playbook-intro">
