@@ -108,6 +108,9 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
     developerBody: "Für Projekte, die vom ersten Auftritt bis zur Vertriebsübergabe aus einem Guss geführt werden sollen.",
     agentTitle: "Makler & Teams",
     agentBody: "Für Projektvertriebe, die Nachfrage strukturiert qualifizieren und vorbereitet übernehmen wollen.",
+    aboutKicker: "Über NovaLure",
+    aboutH: "Spezialisierte Arbeit. Ein gemeinsamer Projektweg.",
+    aboutBody: "NovaLure koordiniert Strategie, Kreation, Performance und Interessentenkommunikation rund um Ihr Mandat. Technologie bleibt dabei operativ im Hintergrund – entscheidend sind nachvollziehbare Arbeitsschritte, klare Zuständigkeiten und eine saubere Übergabe an Ihren Vertrieb.",
     explore: "Mehr erfahren",
     next: "Nächster Schritt"
   } : locale === "es" ? {
@@ -122,6 +125,9 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
     developerBody: "Para promociones que necesitan un recorrido coherente desde su presentación hasta el traspaso comercial.",
     agentTitle: "Agencias y equipos",
     agentBody: "Para equipos que quieren cualificar la demanda y recibir conversaciones preparadas.",
+    aboutKicker: "Sobre NovaLure",
+    aboutH: "Trabajo especializado. Un recorrido de proyecto compartido.",
+    aboutBody: "NovaLure coordina estrategia, creatividad, rendimiento y comunicación con interesados alrededor de su mandato. La tecnología permanece en segundo plano: importan los pasos verificables, las responsabilidades claras y un traspaso ordenado a su equipo comercial.",
     explore: "Más información",
     next: "Siguiente paso"
   } : {
@@ -136,6 +142,9 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
     developerBody: "For projects that need one coherent path from first impression to sales handover.",
     agentTitle: "Agents & teams",
     agentBody: "For project sales teams that want to qualify demand and take over prepared conversations.",
+    aboutKicker: "About NovaLure",
+    aboutH: "Specialist work. One shared project path.",
+    aboutBody: "NovaLure coordinates strategy, creative, performance and enquiry communication around your mandate. Technology stays operationally in the background; what matters are traceable steps, clear ownership and a clean handover to your sales team.",
     explore: "Explore",
     next: "Next step"
   };
@@ -268,29 +277,20 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
         </div>
       </section>
 
+      <section className="v3-section v4-about" id="about" data-reveal>
+        <div>
+          <SectionKicker>{editorial.aboutKicker}</SectionKicker>
+          <h2>{editorial.aboutH}</h2>
+        </div>
+        <p>{editorial.aboutBody}</p>
+      </section>
+
       <section className="v3-section v3-trust" data-reveal>
         <div className="v3-section-heading"><h2>{t.trH}</h2></div>
         <div className="v3-trust-grid">
           {trustItems.map(([title, body], index) => (
             <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{body}</p></article>
           ))}
-        </div>
-      </section>
-
-      <section className="v3-section v3-team" id="team" data-reveal>
-        <div className="v3-team-inner">
-          <div className="v3-team-image">
-            <Image src="/images/team-franz-romih.png" alt="Franz Romih, NovaLure" fill sizes="(min-width: 768px) 340px, 100vw" />
-          </div>
-          <div className="v3-team-copy">
-            <SectionKicker>{t.teamKicker}</SectionKicker>
-            <h2>{t.teamH}</h2>
-            <p>{t.teamBody}</p>
-            <div className="v3-team-person">
-              <strong>Franz Romih</strong>
-            </div>
-            <div className="v3-tags">{[t.tagA, t.tagB, t.tagC].map((tag) => <span key={tag}>{tag}</span>)}</div>
-          </div>
         </div>
       </section>
 

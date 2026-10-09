@@ -29,13 +29,14 @@ describe("managed-service website contract", () => {
     expect(managedServiceCopy.es.noticeIntegration).toContain("técnica y contractualmente");
   });
 
-  it("uses the public system example as the secondary navigation destination", () => {
+  it("keeps operational technology out of the public header", () => {
     const header = fs.readFileSync(path.join(root, "components", "SiteHeader.tsx"), "utf8");
     const footer = fs.readFileSync(path.join(root, "components", "SiteFooter.tsx"), "utf8");
 
-    expect(header).toContain('getPath(locale, "handover")');
-    expect(header).toContain('data-track="nav_system_example"');
-    expect(header).toContain('data-track="mobile_system_example"');
+    expect(header).not.toContain('data-track="nav_system_example"');
+    expect(header).not.toContain('data-track="mobile_system_example"');
+    expect(header).toContain('getPath(locale, "developers")');
+    expect(header).toContain('getPath(locale, "agents")');
     expect(footer).toContain('data-track="footer_system_example"');
   });
 });

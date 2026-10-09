@@ -4,21 +4,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/Logo";
-import { managedServiceCopy } from "@/content/managed-service-copy";
 import { getPath, getProcessAnchor, routeMap, type Locale } from "@/lib/i18n";
 
 const headerCopy = {
   en: {
     menu: "Open menu", close: "Close menu", navigation: "Primary navigation",
-    nav: ["Developers", "Agents", "Process", "System", "Playbook"], cta: "Request a project check"
+    nav: ["Developers", "Agents", "Services", "Our approach", "About NovaLure", "Contact"], cta: "Request a project check"
   },
   de: {
     menu: "Menü öffnen", close: "Menü schließen", navigation: "Hauptnavigation",
-    nav: ["Bauträger", "Makler", "Prozess", "System", "Playbook"], cta: "Projekt-Check anfragen"
+    nav: ["Bauträger", "Makler", "Leistungen", "Unser Ansatz", "Über NovaLure", "Kontakt"], cta: "Projekt-Check anfragen"
   },
   es: {
     menu: "Abrir menú", close: "Cerrar menú", navigation: "Navegación principal",
-    nav: ["Promotores", "Agencias", "Proceso", "Sistema", "Playbook"], cta: "Solicitar un análisis"
+    nav: ["Promotores", "Agencias", "Servicios", "Nuestro enfoque", "Sobre NovaLure", "Contacto"], cta: "Solicitar un análisis"
   }
 } as const;
 
@@ -30,7 +29,6 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const t = headerCopy[locale];
-  const managed = managedServiceCopy[locale];
   const homePath = getPath(locale, "home");
   const isHome = pathname === homePath || pathname === `${homePath}/`;
 
@@ -48,14 +46,14 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const switchHref = (targetLocale: Locale) => activeKey
     ? routeMap[activeKey][targetLocale]
     : getPath(targetLocale, "home");
-  const systemHref = getPath(locale, "handover");
   const anchor = (id: string) => `${homePath}#${id}`;
   const navItems = [
-    [t.nav[0], anchor("bautraeger")],
-    [t.nav[1], anchor("makler")],
+    [t.nav[0], getPath(locale, "developers")],
+    [t.nav[1], getPath(locale, "agents")],
     [t.nav[2], anchor(getProcessAnchor(locale))],
-    [t.nav[3], anchor("system")],
-    [t.nav[4], anchor("playbook")]
+    [t.nav[3], anchor("trust")],
+    [t.nav[4], anchor("about")],
+    [t.nav[5], anchor("kontakt")]
   ] as const;
 
   useEffect(() => {
@@ -126,7 +124,6 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>
             <Link className={locale === "es" ? "is-active" : ""} href={locale === "es" ? pathname : switchHref("es")} hrefLang="es">ES</Link>
           </div>
-          <Link className="v3-header-login" href={systemHref} data-track="nav_system_example">{managed.navLabel}</Link>
           <Link className="v3-button v3-button-primary v3-header-cta" href={anchor("kontakt")} data-track="nav_audit">{t.cta}</Link>
         </div>
 
@@ -160,7 +157,6 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           </div>
           <div className="v3-mobile-menu-actions">
             <Link className="v3-button v3-button-primary" href={anchor("kontakt")} onClick={() => setOpen(false)}>{t.cta}</Link>
-            <Link className="v3-button v3-button-dark-outline" href={systemHref} data-track="mobile_system_example" onClick={() => setOpen(false)}>{managed.navLabel}</Link>
             <div className="v3-language-switch is-dark">
               <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref("de")} hrefLang="de">DE</Link>
               <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>

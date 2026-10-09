@@ -28,7 +28,7 @@ function Hero({ content }: { content: PageContent }) {
   const homeLabel = localeCopy(content.locale, "Home", "Startseite", "Inicio");
 
   return (
-    <section className={`v3-subpage-hero is-${content.template}`}>
+    <section className={`v3-subpage-hero is-${content.template} is-${content.key}`}>
       <div className="v3-subpage-hero-inner">
         <div className="v3-subpage-hero-copy">
           <nav className="v3-breadcrumb" aria-label={localeCopy(content.locale, "Breadcrumb", "Brotkrümelnavigation", "Migas de pan")}>
@@ -1279,8 +1279,9 @@ function AudiencePage({ content }: { content: PageContent }) {
   const offering = realEstateServiceOffering[content.locale][audience];
 
   return (
-    <main className="relaunch-subpage relaunch-subpage-audience">
+    <main className={`relaunch-subpage relaunch-subpage-audience is-${content.key}`}>
       <Hero content={content} />
+      <AudienceServiceMap locale={content.locale} pageKey={content.key} />
       <AudienceProof locale={content.locale} pageKey={content.key} />
       <section className="service-offering" aria-labelledby={`${audience}-service-offering`}>
         <div className="section-heading narrow">
@@ -1334,6 +1335,55 @@ function AudiencePage({ content }: { content: PageContent }) {
       <FaqSection locale={content.locale} items={content.faq || []} />
       <FinalCta content={content} />
     </main>
+  );
+}
+
+function AudienceServiceMap({ locale, pageKey }: { locale: Locale; pageKey: PageContent["key"] }) {
+  const isDeveloper = pageKey === "developers";
+  const copy = localeCopy(locale,
+    isDeveloper
+      ? {
+          eyebrow: "Managed project marketing", title: "One mandate. Nine connected disciplines.",
+          note: "The exact scope, account access and reporting rhythm are agreed for each project. NovaLure manages services; it does not sell software licences.",
+          items: [["01", "Market intelligence", "Positioning and publicly available competitive signals."], ["02", "Project positioning", "A clear story, buyer logic and launch priorities."], ["03", "Project website", "A focused digital presentation for the project."], ["04", "Google Ads", "Search demand coordinated around the agreed campaign plan."], ["05", "Meta Ads", "Creative reach and audience engagement for the launch."], ["06", "Lead management", "Capture, qualification and structured follow-up."], ["07", "Customer communication", "Project information, enquiries and appointment coordination."], ["08", "Sales support", "Prepared handover, priorities and next steps."], ["09", "Reporting & optimisation", "Transparent performance review and continuous adjustment."]]
+        }
+      : {
+          eyebrow: "Managed market presence", title: "More regional relevance. Less administrative drag.",
+          note: "Scope is tailored to the market area and operating model. NovaLure supports your service process; no CRM or AI subscription is being sold here.",
+          items: [["01", "Regional intelligence", "Public market and competitor signals for sharper positioning."], ["02", "Seller acquisition", "A clearer path from local visibility to seller intent."], ["03", "Buyer acquisition", "Demand generation tied to search profile and readiness."], ["04", "Property marketing", "Presentation material and campaign destinations that set expectations."], ["05", "Google & Meta Ads", "Media activity coordinated around the agreed local strategy."], ["06", "Enquiry qualification", "Context before the first sales conversation."], ["07", "Follow-up", "Structured timing, ownership and next action."], ["08", "Appointment coordination", "A prepared route into the right conversation."], ["09", "Continuous optimisation", "Reporting and adjustments based on useful signals."]]
+        },
+    isDeveloper
+      ? {
+          eyebrow: "Geführte Projektvermarktung", title: "Ein Mandat. Neun verbundene Disziplinen.",
+          note: "Umfang, Kontozugriffe und Reporting-Rhythmus werden für jedes Projekt vereinbart. NovaLure führt Dienstleistungen – keine Softwarelizenzen.",
+          items: [["01", "Marktintelligenz", "Positionierung und öffentlich verfügbare Wettbewerbssignale."], ["02", "Projektpositionierung", "Eine klare Story, Käuferlogik und Launch-Prioritäten."], ["03", "Projektwebsite", "Eine fokussierte digitale Präsentation für das Projekt."], ["04", "Google Ads", "Suchnachfrage im abgestimmten Kampagnenplan."], ["05", "Meta Ads", "Kreative Reichweite und Zielgruppenansprache für den Launch."], ["06", "Interessentenmanagement", "Erfassung, Qualifizierung und strukturiertes Nachfassen."], ["07", "Kundenkommunikation", "Projektinfos, Anfragen und Terminabstimmung."], ["08", "Vertriebsunterstützung", "Vorbereitete Übergabe, Prioritäten und nächste Schritte."], ["09", "Reporting & Optimierung", "Transparente Auswertung und laufende Anpassung."]]
+        }
+      : {
+          eyebrow: "Geführte Marktpräsenz", title: "Mehr regionale Relevanz. Weniger administrativer Zug.",
+          note: "Der Umfang richtet sich nach Marktgebiet und Betriebsmodell. NovaLure unterstützt Ihren Serviceprozess; hier wird kein CRM- oder KI-Abo verkauft.",
+          items: [["01", "Regionale Intelligenz", "Öffentliche Markt- und Wettbewerbssignale für eine klarere Positionierung."], ["02", "Verkäufergewinnung", "Ein klarer Weg von lokaler Sichtbarkeit zu Verkaufsabsicht."], ["03", "Käufergewinnung", "Nachfrageaufbau mit Bezug zu Suchprofil und Reife."], ["04", "Objektvermarktung", "Präsentationsmaterial und Kampagnenziele, die Erwartungen setzen."], ["05", "Google & Meta Ads", "Medienarbeit im abgestimmten lokalen Strategie-Rahmen."], ["06", "Anfragenqualifizierung", "Kontext vor dem ersten Vertriebsgespräch."], ["07", "Nachfassen", "Strukturiertes Timing, Zuständigkeit und nächste Aktion."], ["08", "Terminabstimmung", "Ein vorbereiteter Weg in das richtige Gespräch."], ["09", "Laufende Optimierung", "Reporting und Anpassungen auf Basis relevanter Signale."]]
+        },
+    isDeveloper
+      ? {
+          eyebrow: "Marketing de promoción gestionado", title: "Un mandato. Nueve disciplinas conectadas.",
+          note: "El alcance, los accesos y el ritmo de informes se acuerdan para cada proyecto. NovaLure gestiona servicios; no vende licencias de software.",
+          items: [["01", "Inteligencia de mercado", "Posicionamiento y señales competitivas públicas."], ["02", "Posicionamiento", "Una historia clara, lógica de comprador y prioridades de lanzamiento."], ["03", "Web de proyecto", "Una presentación digital enfocada en la promoción."], ["04", "Google Ads", "Demanda de búsqueda coordinada dentro del plan acordado."], ["05", "Meta Ads", "Alcance creativo y activación de audiencias."], ["06", "Gestión de interesados", "Captación, cualificación y seguimiento estructurado."], ["07", "Comunicación", "Información, solicitudes y coordinación de citas."], ["08", "Apoyo comercial", "Traspaso preparado, prioridades y próximos pasos."], ["09", "Informes y optimización", "Revisión transparente y ajustes continuos."]]
+        }
+      : {
+          eyebrow: "Presencia local gestionada", title: "Más relevancia regional. Menos carga administrativa.",
+          note: "El alcance se adapta al mercado y al modelo operativo. NovaLure apoya su proceso de servicio; aquí no se vende ninguna suscripción de CRM o IA.",
+          items: [["01", "Inteligencia regional", "Señales públicas de mercado y competencia."], ["02", "Captación de vendedores", "De la visibilidad local a una intención más clara."], ["03", "Captación de compradores", "Demanda vinculada al perfil y al momento."], ["04", "Marketing inmobiliario", "Presentación y destinos de campaña que fijan expectativas."], ["05", "Google y Meta Ads", "Actividad de medios dentro de la estrategia local acordada."], ["06", "Cualificación", "Contexto antes de la primera conversación comercial."], ["07", "Seguimiento", "Tiempo, propiedad y próximo paso estructurados."], ["08", "Coordinación de citas", "Un camino preparado hacia la conversación adecuada."], ["09", "Optimización continua", "Informes y ajustes basados en señales útiles."]]
+        }
+  );
+
+  return (
+    <section className="v4-service-map" aria-label={copy.title}>
+      <div className="v4-service-map-intro"><p className="v3-kicker"><span aria-hidden="true" />{copy.eyebrow}</p><h2>{copy.title}</h2></div>
+      <div className="v4-service-map-grid">
+        {copy.items.map(([number, title, body]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{body}</p></article>)}
+      </div>
+      <p className="v4-service-map-note">{copy.note}</p>
+    </section>
   );
 }
 
