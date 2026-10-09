@@ -124,7 +124,7 @@ Do not activate a customer-acquisition funnel for the full managed-service promi
 ### Verification completed
 
 - Website TypeScript check: passed.
-- Website tests: 197 passed.
+- Website tests: 220 passed.
 - CRM TypeScript check: passed.
 
-The website production build needs one more run with the local system certificate configuration; the normal build initially failed while downloading remote fonts because the Node process could not verify the local certificate chain.
+The website production build passed with Node's system certificate trust enabled. The normal build initially failed while downloading remote fonts because the Node process could not verify the local certificate chain.

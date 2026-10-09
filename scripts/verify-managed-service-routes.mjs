@@ -30,28 +30,28 @@ const commercialRoutes = new Set([
 ]);
 const languageExpectations = {
   de: {
-    navigation: "Systembeispiel ansehen", login: "CRM-Login",
+    navigation: "Systembeispiel ansehen", staffLogin: "Mitarbeiter-Login",
     home: "NovaLure führt den Prozess operativ im System.",
     notice: "NovaLure betreibt den Lead- und Vertriebsprozess für Ihr Mandat.",
     selection: "Welcher Bereich beschreibt Ihre aktuelle Situation?",
     international: "Wir sprechen gezielt internationale Käufer an."
   },
   en: {
-    navigation: "View system example", login: "CRM login",
+    navigation: "View system example", staffLogin: "Staff Login",
     home: "NovaLure operates the process in the system on your behalf.",
     notice: "NovaLure operates the lead and sales process for each mandate.",
     selection: "Which area best describes your current situation?",
     international: "We actively target international buyers."
   },
   es: {
-    navigation: "Ver ejemplo del sistema", login: "Acceso al CRM",
+    navigation: "Ver ejemplo del sistema", staffLogin: "Acceso para el personal",
     home: "NovaLure opera el proceso dentro del sistema por cuenta del cliente.",
     notice: "NovaLure opera el proceso de captación y gestión comercial para cada encargo.",
     selection: "¿Qué opción describe mejor su situación actual?",
     international: "Nos dirigimos activamente a compradores internacionales."
   }
 };
-const forbidden = ["CRM-Login", "CRM login", "Acceso al CRM", "https://novalure-crm.app"];
+const forbidden = ["CRM-Login", "CRM login", "Acceso al CRM"];
 const playbookFiles = [
   "novalure-project-demand-de.pdf", "novalure-owned-demand-de.pdf", "novalure-international-buyers-de.pdf",
   "novalure-project-demand-en.pdf", "novalure-owned-demand-en.pdf", "novalure-international-buyers-en.pdf",
@@ -92,17 +92,17 @@ async function verifyRoute(locale, route) {
   assert(response.status === 200, `${route} returned ${response.status}`);
   const html = await response.text();
   const expected = languageExpectations[locale];
-  // Navigation intentionally includes CRM access since production commit
-  // 8969a44. Verify the exact destinations instead of banning that feature.
+  // Staff-only CRM access belongs in the footer. Keep it out of public navigation
+  // and marketing content, while preserving the secure external destination.
   const markup = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
-  for (const track of ["nav_crm_login", "mobile_crm_login", "footer_crm_login"]) {
-    const links = [...markup.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/gi)]
-      .map((match) => match[0]).filter((link) => link.includes(`data-track="${track}"`));
-    assert(links.length === 1, `${route} must contain exactly one ${track}`);
-    assert(links[0].includes('href="https://novalure-crm.app"'), `${route}: incorrect CRM destination`);
-    assert(links[0].includes(expected.login), `${route}: incorrect CRM label`);
-    assert(links[0].includes('rel="noreferrer"'), `${route}: missing external-link protection`);
-  }
+  const footerLinks = [...markup.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/gi)]
+    .map((match) => match[0]).filter((link) => link.includes('data-track="footer_staff_login"'));
+  assert(footerLinks.length === 1, `${route} must contain exactly one footer_staff_login`);
+  assert(footerLinks[0].includes('href="https://novalure-crm.app"'), `${route}: incorrect staff-login destination`);
+  assert(footerLinks[0].includes(expected.staffLogin), `${route}: incorrect staff-login label`);
+  assert(footerLinks[0].includes('rel="noreferrer"'), `${route}: missing external-link protection`);
+  assert(!markup.includes('data-track="nav_crm_login"'), `${route} must not expose CRM login in desktop navigation`);
+  assert(!markup.includes('data-track="mobile_crm_login"'), `${route} must not expose CRM login in mobile navigation`);
   const contentMarkup = markup.replace(/<header\b[^>]*>[\s\S]*?<\/header>/gi, "")
     .replace(/<footer\b[^>]*>[\s\S]*?<\/footer>/gi, "");
   for (const phrase of forbidden) {
