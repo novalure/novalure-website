@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { managedServiceCopy } from "@/content/managed-service-copy";
+import { realEstateServiceOffering } from "@/content/real-estate-service-offering";
 import { getCrmAppUrl, locales } from "@/lib/i18n";
 
 const root = process.cwd();
@@ -29,13 +30,30 @@ describe("managed-service website contract", () => {
     expect(managedServiceCopy.es.noticeIntegration).toContain("técnica y contractualmente");
   });
 
-  it("keeps the public system example as a separate navigation destination", () => {
+  it("does not promote an internal CRM or a public system preview", () => {
     const header = fs.readFileSync(path.join(root, "components", "SiteHeader.tsx"), "utf8");
     const footer = fs.readFileSync(path.join(root, "components", "SiteFooter.tsx"), "utf8");
 
-    expect(header).toContain('getPath(locale, "handover")');
-    expect(header).toContain('data-track="nav_system_example"');
-    expect(header).toContain('data-track="mobile_system_example"');
-    expect(footer).toContain('data-track="footer_system_example"');
+    expect(header).not.toContain('getPath(locale, "handover")');
+    expect(header).not.toContain('data-track="nav_system_example"');
+    expect(header).not.toContain('data-track="mobile_system_example"');
+    expect(footer).not.toContain('data-track="footer_system_example"');
+  });
+
+  it("states the complete managed service scope and client-owned ad-account policy", () => {
+    const developer = realEstateServiceOffering.de.developers;
+    const agent = realEstateServiceOffering.en.agents;
+    const developerTitles = developer.categories.map((category) => category.title).join(" ");
+    const agentTitles = agent.categories.map((category) => category.title).join(" ");
+
+    expect(developerTitles).toContain("Google Ads");
+    expect(developerTitles).toContain("Meta Ads");
+    expect(developerTitles).toContain("Lead- und Interessentenmanagement");
+    expect(developerTitles).toContain("Reporting und kontinuierliche Optimierung");
+    expect(developer.accountOwnership.points.join(" ")).toContain("direkt bezahlt");
+    expect(agentTitles).toContain("Seller acquisition");
+    expect(agentTitles).toContain("Buyer acquisition");
+    expect(agentTitles).toContain("Sales administration");
+    expect(agent.accountOwnership.points.join(" ")).toContain("paid directly");
   });
 });

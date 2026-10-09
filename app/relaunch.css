@@ -3161,6 +3161,95 @@ body {
   }
 }
 
+.relaunch-subpage .service-offering {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: clamp(64px, 9vw, 116px) 0;
+}
+
+.service-offering-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 38px;
+}
+
+.service-offering-card,
+.service-account-ownership {
+  border: 1px solid rgba(21, 33, 47, .12);
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 14px 36px rgba(21, 33, 47, .05);
+}
+
+.service-offering-card {
+  padding: 28px;
+}
+
+.service-offering-card h3,
+.service-account-ownership h3 {
+  margin: 0 0 10px;
+  color: #142235;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  line-height: 1.15;
+}
+
+.service-offering-card p,
+.service-account-ownership p,
+.service-readiness-note {
+  color: #526170;
+  line-height: 1.65;
+}
+
+.service-offering-card .check-list,
+.service-account-ownership .check-list {
+  margin: 20px 0 0;
+}
+
+.service-account-ownership {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  margin-top: 16px;
+  padding: 32px;
+  background: #142235;
+}
+
+.service-account-ownership h3,
+.service-account-ownership p,
+.service-account-ownership .eyebrow,
+.service-account-ownership .check-list li {
+  color: #fff;
+}
+
+.service-account-ownership .check-list li::before {
+  color: #d7b977;
+}
+
+.service-readiness-note {
+  max-width: 780px;
+  margin: 22px auto 0;
+  font-size: .94rem;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .relaunch-subpage .service-offering {
+    width: min(100% - 32px, 620px);
+  }
+
+  .service-offering-grid,
+  .service-account-ownership {
+    grid-template-columns: 1fr;
+  }
+
+  .service-offering-card,
+  .service-account-ownership {
+    padding: 24px;
+  }
+}
+
 /* Mobile playbook form containment */
 @media (max-width: 599.98px) {
   .playbook-request-card,

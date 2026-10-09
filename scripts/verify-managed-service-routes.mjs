@@ -8,44 +8,44 @@ const port = 4311;
 const origin = `http://${host}:${port}`;
 const routes = {
   de: [
-    "/de", "/de/bautraeger", "/de/makler", "/de/playbooks", "/de/kontakt", "/de/systembeispiel",
+    "/de", "/de/bautraeger", "/de/makler", "/de/playbooks", "/de/kontakt",
     "/de/playbooks/danke", "/de/kontakt/danke", "/de/rechtliches/impressum", "/de/rechtliches/datenschutz",
     "/de/rechtliches/cookies"
   ],
   en: [
-    "/en", "/en/developers", "/en/agents", "/en/playbooks", "/en/contact", "/en/system-example",
+    "/en", "/en/developers", "/en/agents", "/en/playbooks", "/en/contact",
     "/en/playbooks/thank-you", "/en/contact/thank-you", "/en/legal/imprint", "/en/legal/privacy", "/en/legal/cookies",
     "/en/eula", "/en/vercel-integration-eula"
   ],
   es: [
     "/es", "/es/promotores", "/es/agencias-inmobiliarias", "/es/playbooks", "/es/analisis-del-proyecto",
-    "/es/ejemplo-del-sistema", "/es/playbooks/gracias", "/es/analisis-del-proyecto/gracias", "/es/aviso-legal",
+    "/es/playbooks/gracias", "/es/analisis-del-proyecto/gracias", "/es/aviso-legal",
     "/es/privacidad", "/es/cookies"
   ]
 };
 const commercialRoutes = new Set([
-  "/de/bautraeger", "/de/makler", "/de/playbooks", "/de/kontakt", "/de/systembeispiel",
-  "/en/developers", "/en/agents", "/en/playbooks", "/en/contact", "/en/system-example",
-  "/es/promotores", "/es/agencias-inmobiliarias", "/es/playbooks", "/es/analisis-del-proyecto", "/es/ejemplo-del-sistema"
+  "/de/bautraeger", "/de/makler", "/de/playbooks", "/de/kontakt",
+  "/en/developers", "/en/agents", "/en/playbooks", "/en/contact",
+  "/es/promotores", "/es/agencias-inmobiliarias", "/es/playbooks", "/es/analisis-del-proyecto"
 ]);
 const languageExpectations = {
   de: {
-    navigation: "Systembeispiel ansehen", staffLogin: "Mitarbeiter-Login",
-    home: "NovaLure führt den Prozess operativ im System.",
+    staffLogin: "Mitarbeiter-Login",
+    home: "Digitale Immobilienvermarktung, die Marketing und Vertrieb verbindet.",
     notice: "NovaLure betreibt den Lead- und Vertriebsprozess für Ihr Mandat.",
     selection: "Welcher Bereich beschreibt Ihre aktuelle Situation?",
     international: "Wir sprechen gezielt internationale Käufer an."
   },
   en: {
-    navigation: "View system example", staffLogin: "Staff Login",
-    home: "NovaLure operates the process in the system on your behalf.",
+    staffLogin: "Staff Login",
+    home: "Digital real-estate marketing that connects marketing and sales.",
     notice: "NovaLure operates the lead and sales process for each mandate.",
     selection: "Which area best describes your current situation?",
     international: "We actively target international buyers."
   },
   es: {
-    navigation: "Ver ejemplo del sistema", staffLogin: "Acceso para el personal",
-    home: "NovaLure opera el proceso dentro del sistema por cuenta del cliente.",
+    staffLogin: "Acceso para el personal",
+    home: "Marketing inmobiliario digital que conecta marketing y ventas.",
     notice: "NovaLure opera el proceso de captación y gestión comercial para cada encargo.",
     selection: "¿Qué opción describe mejor su situación actual?",
     international: "Nos dirigimos activamente a compradores internacionales."
@@ -108,7 +108,8 @@ async function verifyRoute(locale, route) {
   for (const phrase of forbidden) {
     assert(!contentMarkup.includes(phrase), `${route} contains CRM access outside the approved navigation: ${phrase}`);
   }
-  assert(html.includes(expected.navigation), `${route} is missing the localised system-example navigation label`);
+  assert(!markup.includes("nav_system_example"), `${route} must not promote a public system example`);
+  assert(!markup.includes("footer_system_example"), `${route} must not promote a public system example`);
   if (route === `/${locale}`) {
     assert(html.includes(expected.home), `${route} is missing the operated-service homepage explanation`);
     assert(html.includes(expected.selection), `${route} is missing the role-based playbook selector`);
@@ -157,7 +158,7 @@ try {
     for (const route of localeRoutes) await verifyRoute(locale, route);
   }
   await verifyPlaybooks();
-  console.log("Managed-service and playbook verification passed for 35 pages and 9 canonical playbook PDFs.");
+  console.log("Managed-service and playbook verification passed for 32 pages and 9 canonical playbook PDFs.");
 } finally {
   await stopServer();
 }

@@ -4,8 +4,7 @@ import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholde
 import { managedServiceCopy } from "@/content/managed-service-copy";
 import { relaunchCopy } from "@/content/relaunch-copy";
 import { getProcessAnchor, type Locale } from "@/lib/i18n";
-import { FaqAccordion, ProcessSteps, ProjectCheckLink, ProofCounters, SectionReveals } from "@/components/relaunch/RelaunchInteractive";
-import { ReferenceBrands } from "@/components/relaunch/ReferenceBrands";
+import { FaqAccordion, ProcessSteps, ProjectCheckLink, SectionReveals } from "@/components/relaunch/RelaunchInteractive";
 
 function SectionKicker({ children, inverse = false }: { children: React.ReactNode; inverse?: boolean }) {
   return <p className={`v3-kicker${inverse ? " is-inverse" : ""}`}><span aria-hidden="true" />{children}</p>;
@@ -43,7 +42,6 @@ function HeroPipeline({ locale }: { locale: Locale }) {
           ))}
         </div>
       </div>
-      <ReferenceBrands locale={locale} kicker={t.chipKicker} />
     </div>
   );
 }
@@ -159,11 +157,6 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
         <HeroPipeline locale={locale} />
       </section>
 
-      <section className="v3-proof" data-reveal data-track-section="proof" aria-label={locale === "de" ? "Referenzwerte" : locale === "es" ? "Valores de referencia" : "Reference values"}>
-        <ProofCounters locale={locale} firstLabel={t.kpi1} secondLabel={t.kpi2} />
-        <p>{t.proofNote}</p>
-      </section>
-
       <section className="v3-section v3-developers" id="bautraeger" data-reveal>
         <div className="v3-section-heading">
           <SectionKicker>{t.bauKicker}</SectionKicker>
@@ -195,37 +188,6 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
         </div>
         <ProcessSteps steps={t.steps} getLabel={t.getLabel} />
         <p className="v3-process-note">{t.procNote}</p>
-      </section>
-
-      <section className="v3-section v3-system" id="system" data-reveal>
-        <div className="v3-system-copy">
-          <SectionKicker inverse>{t.sysKicker}</SectionKicker>
-          <h2>{t.sysH}</h2>
-          <ul>
-            {[t.sysB1, t.sysB2, managed.systemPoint].map((item) => <li key={item}>{item}</li>)}
-          </ul>
-        </div>
-        <SystemBoard locale={locale} />
-      </section>
-
-      <section className="v3-section v3-case" data-reveal>
-        <div className="v3-section-heading">
-          <SectionKicker>{t.caseKicker}</SectionKicker>
-          <h2>GRASL Immobilien, Schwaz</h2>
-        </div>
-        <div className="v3-case-grid">
-          {[[t.c1t, t.c1], [t.c2t, managed.caseSetup], [t.c3t, t.c3]].map(([title, body], index) => (
-            <article className={index === 2 ? "is-result" : ""} key={title}>
-              <h3>{title}</h3>
-              <p>{body}</p>
-            </article>
-          ))}
-        </div>
-        <figure className="v3-case-quote">
-          <Image src="/images/thomas-grasl-portrait.jpg" alt="SV Thomas Grasl" width={176} height={176} sizes="88px" />
-          <blockquote>{t.quote}</blockquote>
-          <figcaption><strong>SV Thomas Grasl</strong><span>GRASL Immobilien, Schwaz</span></figcaption>
-        </figure>
       </section>
 
       <section className="v3-section v3-agents" id="makler" data-reveal>

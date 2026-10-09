@@ -16,9 +16,11 @@ describe("relaunch reference copy", () => {
     expect(copy.faq).toHaveLength(6);
   });
 
-  it("retains the approved hero messages", () => {
-    expect(relaunchCopy.de.heroH1).toBe("Ihr Projekt verdient Käufer – nicht Kontaktlisten.");
-    expect(relaunchCopy.en.heroH1).toBe("Your project deserves buyers – not contact lists.");
+  it("keeps the integrated marketing position in German and English", () => {
+    expect(relaunchCopy.de.heroH1).toBe("Digitale Immobilienvermarktung, die Marketing und Vertrieb verbindet.");
+    expect(relaunchCopy.en.heroH1).toBe("Digital real-estate marketing that connects marketing and sales.");
+    expect(relaunchCopy.de.heroSub).toContain("Google- und Meta-Kampagnen");
+    expect(relaunchCopy.en.heroSub).toContain("Google and Meta campaigns");
   });
 
   it("keeps both pipeline demos strictly localized", () => {
