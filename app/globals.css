@@ -213,7 +213,7 @@ button:disabled {
 }
 
 .button-primary {
-  color: #08090d;
+  color: #fff;
   background: var(--gold);
   border-color: var(--gold-strong);
   box-shadow: 0 14px 32px rgba(24, 88, 246, 0.22);
@@ -1588,7 +1588,7 @@ h3 {
 .playbook-card .pill {
   display: inline-flex;
   margin-bottom: 18px;
-  color: #08090d;
+  color: #fff;
   background: var(--gold);
   border-color: var(--gold);
 }
@@ -1629,7 +1629,7 @@ h3 {
 .playbook-summary-card .pill {
   justify-self: start;
   display: inline-flex;
-  color: #08090d;
+  color: #fff;
   background: var(--gold);
   border-color: var(--gold);
   font-weight: 850;
@@ -1928,7 +1928,7 @@ code {
 }
 
 .playbook-selector label.is-selected {
-  color: #08090d;
+  color: #fff;
   background: var(--gold);
   border-color: var(--gold-strong);
 }
@@ -1991,7 +1991,7 @@ code {
   width: 48px;
   height: 48px;
   padding: 10px;
-  color: #08090d;
+  color: #fff;
   background: var(--gold);
   border-radius: 999px;
 }
@@ -2144,7 +2144,7 @@ code {
   width: 44px;
   height: 44px;
   place-items: center;
-  color: #08090d;
+  color: #fff;
   background: var(--gold);
   border: 1px solid var(--gold-strong);
   border-radius: 8px;
@@ -2662,7 +2662,7 @@ code {
   justify-self: start;
   display: inline-flex;
   padding: 6px 9px;
-  color: #08090d;
+  color: #fff;
   background: var(--gold);
   border: 1px solid var(--gold-strong);
   border-radius: 6px;
@@ -4536,7 +4536,7 @@ code {
   justify-content: center;
   width: fit-content;
   padding: 0 16px;
-  color: #08090d;
+  color: #fff;
   background: var(--gold);
   border: 1px solid var(--gold-strong);
   font-weight: 850;
