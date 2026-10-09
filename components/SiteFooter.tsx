@@ -10,7 +10,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   const managed = managedServiceCopy[locale];
   const homePath = getPath(locale, "home");
   const crmHref = getCrmAppUrl(locale);
-  const crmLabel = locale === "de" ? "CRM-Login" : locale === "es" ? "Acceso al CRM" : "CRM login";
+  const crmLabel = locale === "de" ? "Mitarbeiter-Login" : locale === "es" ? "Acceso para el personal" : "Staff Login";
   const anchor = (id: string) => `${homePath}#${id}`;
 
   return (
@@ -33,7 +33,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <Link href={getPath(locale, "playbooks")}>{t.navE}</Link>
           <Link href={getPath(locale, "contact")}>{t.cta}</Link>
           <Link href={getPath(locale, "handover")} data-track="footer_system_example">{managed.navLabel}</Link>
-          <a href={crmHref} target="_blank" rel="noreferrer" data-track="footer_crm_login">{crmLabel}</a>
+          <a href={crmHref} target="_blank" rel="noreferrer" data-track="footer_staff_login">{crmLabel}</a>
         </nav>
 
         <nav aria-label={t.footLegal}>
