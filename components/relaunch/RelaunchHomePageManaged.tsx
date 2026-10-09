@@ -110,7 +110,16 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
     agentBody: "Für Projektvertriebe, die Nachfrage strukturiert qualifizieren und vorbereitet übernehmen wollen.",
     aboutKicker: "Über NovaLure",
     aboutH: "Spezialisierte Arbeit. Ein gemeinsamer Projektweg.",
-    aboutBody: "NovaLure koordiniert Strategie, Kreation, Performance und Interessentenkommunikation rund um Ihr Mandat. Technologie bleibt dabei operativ im Hintergrund – entscheidend sind nachvollziehbare Arbeitsschritte, klare Zuständigkeiten und eine saubere Übergabe an Ihren Vertrieb.",
+    aboutBody: "NovaLure verbindet Strategie, Kreation, Performance und KI-gestützte Interessentenkommunikation rund um Ihr Mandat. Ihre Projektwebsite bleibt ansprechbar, Kampagnen und Wettbewerb bleiben im Blick und Ihr Vertrieb übernimmt vorbereitete Gespräche statt Rohkontakte.",
+    operationsKicker: "Operativ im Mandat",
+    operationsH: "Ihre Projektwebsite arbeitet weiter, wenn Ihr Vertrieb nicht am Telefon ist.",
+    operationsBody: "NovaLure verbindet KI-gestützte Erstantwort, persönliche Kommunikation und laufende Steuerung. So bleibt jeder Interessent im Prozess – und Sie behalten jede Woche den Überblick.",
+    operations: [
+      ["24/7 erreichbar", "Ein KI-gestützter Chat auf Ihrer Projektwebsite beantwortet erste Fragen rund um die Uhr. E-Mail und Telefon werden im vereinbarten Prozess mitgeführt."],
+      ["Wettbewerb im Blick", "Wir beobachten relevante Markt- und Wettbewerbssignale, damit Positionierung, Angebot und Kommunikation nicht am Markt vorbeilaufen."],
+      ["Anzeigen aktiv verbessern", "Google- und Meta-Kampagnen werden laufend geprüft und auf relevante Nachfrage, Qualität und nächste Schritte hin optimiert."],
+      ["Wöchentliche Klarheit", "Sie erhalten einen wöchentlichen Bericht zu Anfragen, Qualität, Maßnahmen und den nächsten Optimierungen für Ihr Projekt."]
+    ],
     explore: "Mehr erfahren",
     next: "Nächster Schritt"
   } : locale === "es" ? {
@@ -127,7 +136,16 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
     agentBody: "Para equipos que quieren cualificar la demanda y recibir conversaciones preparadas.",
     aboutKicker: "Sobre NovaLure",
     aboutH: "Trabajo especializado. Un recorrido de proyecto compartido.",
-    aboutBody: "NovaLure coordina estrategia, creatividad, rendimiento y comunicación con interesados alrededor de su mandato. La tecnología permanece en segundo plano: importan los pasos verificables, las responsabilidades claras y un traspaso ordenado a su equipo comercial.",
+    aboutBody: "NovaLure conecta estrategia, creatividad, rendimiento y comunicación con interesados asistida por IA para cada encargo. Su web de proyecto sigue siendo accesible, campañas y competencia se mantienen bajo control y su equipo comercial recibe conversaciones preparadas en lugar de contactos en bruto.",
+    operationsKicker: "Gestión operativa",
+    operationsH: "Su web de proyecto sigue trabajando cuando su equipo comercial no está al teléfono.",
+    operationsBody: "NovaLure conecta la primera respuesta asistida por IA, la comunicación personal y la optimización continua. Cada interesado permanece en el proceso y usted recibe una visión clara cada semana.",
+    operations: [
+      ["Disponible 24/7", "Un chat asistido por IA en la web del proyecto responde las primeras preguntas a cualquier hora. El correo y el teléfono se integran en el proceso acordado."],
+      ["Competencia bajo control", "Observamos señales relevantes de mercado y competencia para que el posicionamiento, la oferta y la comunicación sigan alineados."],
+      ["Anuncios en mejora continua", "Las campañas de Google y Meta se revisan y optimizan continuamente según demanda, calidad y siguientes pasos relevantes."],
+      ["Claridad semanal", "Recibe un informe semanal sobre solicitudes, calidad, medidas y las próximas optimizaciones del proyecto."]
+    ],
     explore: "Más información",
     next: "Siguiente paso"
   } : {
@@ -144,7 +162,16 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
     agentBody: "For project sales teams that want to qualify demand and take over prepared conversations.",
     aboutKicker: "About NovaLure",
     aboutH: "Specialist work. One shared project path.",
-    aboutBody: "NovaLure coordinates strategy, creative, performance and enquiry communication around your mandate. Technology stays operationally in the background; what matters are traceable steps, clear ownership and a clean handover to your sales team.",
+    aboutBody: "NovaLure connects strategy, creative, performance and AI-assisted enquiry communication around your mandate. Your project website stays responsive, campaigns and competition stay in view, and your sales team receives prepared conversations rather than raw contacts.",
+    operationsKicker: "Operated for your mandate",
+    operationsH: "Your project website keeps working when sales is not on the phone.",
+    operationsBody: "NovaLure connects AI-assisted first response, personal communication and continuous steering. Every prospect stays in the process and you retain a clear weekly view.",
+    operations: [
+      ["Reachable 24/7", "An AI-assisted chat on your project website answers initial questions around the clock. Email and phone are carried through the agreed process."],
+      ["Competition in view", "We monitor relevant market and competitor signals so positioning, offer and communication remain aligned with the market."],
+      ["Ads actively improved", "Google and Meta campaigns are checked and optimised continuously for relevant demand, quality and next steps."],
+      ["Weekly clarity", "You receive a weekly report on enquiries, quality, actions taken and the next optimisations for the project."]
+    ],
     explore: "Explore",
     next: "Next step"
   };
@@ -283,6 +310,19 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
           <h2>{editorial.aboutH}</h2>
         </div>
         <p>{editorial.aboutBody}</p>
+      </section>
+
+      <section className="v3-section v4-operations" data-reveal>
+        <div className="v3-section-heading">
+          <SectionKicker inverse>{editorial.operationsKicker}</SectionKicker>
+          <h2>{editorial.operationsH}</h2>
+          <p>{editorial.operationsBody}</p>
+        </div>
+        <div className="v4-operations-grid">
+          {editorial.operations.map(([title, body], index) => (
+            <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{body}</p></article>
+          ))}
+        </div>
       </section>
 
       <section className="v3-section v3-trust" data-reveal>

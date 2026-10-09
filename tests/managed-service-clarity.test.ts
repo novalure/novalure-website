@@ -39,4 +39,14 @@ describe("managed-service website contract", () => {
     expect(header).toContain('getPath(locale, "agents")');
     expect(footer).toContain('data-track="footer_system_example"');
   });
+
+  it("states the operated AI communication and reporting benefits publicly", () => {
+    const homepage = fs.readFileSync(path.join(root, "components", "relaunch", "RelaunchHomePageManaged.tsx"), "utf8");
+    const audiencePages = fs.readFileSync(path.join(root, "components", "MarketingPage.tsx"), "utf8");
+
+    expect(homepage).toContain("24/7 erreichbar");
+    expect(homepage).toContain("Wöchentliche Klarheit");
+    expect(audiencePages).toContain("KI-gestützte Kommunikation führt NovaLure als Teil des Services");
+    expect(audiencePages).toContain("Wöchentliches Reporting & Optimierung");
+  });
 });
