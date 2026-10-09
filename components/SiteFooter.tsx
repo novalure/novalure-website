@@ -32,7 +32,6 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <Link href={getPath(locale, "handover")}>{t.navD}</Link>
           <Link href={getPath(locale, "playbooks")}>{t.navE}</Link>
           <Link href={getPath(locale, "contact")}>{t.cta}</Link>
-          <Link href={getPath(locale, "handover")} data-track="footer_system_example">{managed.navLabel}</Link>
           <a href={crmHref} target="_blank" rel="noreferrer" data-track="footer_staff_login">{crmLabel}</a>
         </nav>
 

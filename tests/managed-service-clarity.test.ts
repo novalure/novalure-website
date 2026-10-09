@@ -29,7 +29,7 @@ describe("managed-service website contract", () => {
     expect(managedServiceCopy.es.noticeIntegration).toContain("técnica y contractualmente");
   });
 
-  it("keeps operational technology out of the public header", () => {
+  it("keeps operational technology out of public navigation", () => {
     const header = fs.readFileSync(path.join(root, "components", "SiteHeader.tsx"), "utf8");
     const footer = fs.readFileSync(path.join(root, "components", "SiteFooter.tsx"), "utf8");
 
@@ -37,7 +37,7 @@ describe("managed-service website contract", () => {
     expect(header).not.toContain('data-track="mobile_system_example"');
     expect(header).toContain('getPath(locale, "developers")');
     expect(header).toContain('getPath(locale, "agents")');
-    expect(footer).toContain('data-track="footer_system_example"');
+    expect(footer).not.toContain('data-track="footer_system_example"');
   });
 
   it("states the operated AI communication and reporting benefits publicly", () => {
