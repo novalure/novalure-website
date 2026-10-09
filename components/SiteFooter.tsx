@@ -29,8 +29,10 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <Link href={getPath(locale, "developers")}>{t.navA}</Link>
           <Link href={getPath(locale, "agents")}>{t.navB}</Link>
           <Link href={anchor(getProcessAnchor(locale))}>{t.navC}</Link>
+          <Link href={getPath(locale, "handover")}>{t.navD}</Link>
           <Link href={getPath(locale, "playbooks")}>{t.navE}</Link>
           <Link href={getPath(locale, "contact")}>{t.cta}</Link>
+          <Link href={getPath(locale, "handover")} data-track="footer_system_example">{managed.navLabel}</Link>
           <a href={crmHref} target="_blank" rel="noreferrer" data-track="footer_staff_login">{crmLabel}</a>
         </nav>
 
@@ -39,7 +41,6 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <Link href={getPath(locale, "imprint")}>{t.imprint}</Link>
           <Link href={getPath(locale, "privacy")}>{t.privacy}</Link>
           <Link href={getPath(locale, "cookies")}>{t.cookies}</Link>
-          <Link href={getPath("en", "eula")}>EULA</Link>
           <CookieSettingsButton>{t.ckSettingsLabel}</CookieSettingsButton>
         </nav>
 

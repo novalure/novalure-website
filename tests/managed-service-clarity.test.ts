@@ -6,13 +6,17 @@ import { managedServiceCopy } from "@/content/managed-service-copy";
 const root = process.cwd();
 
 describe("managed-service website contract", () => {
-  it("keeps the CRM login available as a secondary navigation action", () => {
+  it("keeps employee access out of customer navigation and in the footer only", () => {
     const header = fs.readFileSync(path.join(root, "components", "SiteHeader.tsx"), "utf8");
+    const footer = fs.readFileSync(path.join(root, "components", "SiteFooter.tsx"), "utf8");
 
-    expect(header).toContain("getCrmAppUrl(locale)");
-    expect(header).toContain('data-track="nav_crm_login"');
-    expect(header).toContain('data-track="mobile_crm_login"');
-    expect(header).toContain('className="v3-header-login"');
+    expect(header).not.toContain("getCrmAppUrl(locale)");
+    expect(header).not.toContain('data-track="nav_crm_login"');
+    expect(header).not.toContain('data-track="mobile_crm_login"');
+    expect(footer).toContain("getCrmAppUrl(locale)");
+    expect(footer).toContain('data-track="footer_staff_login"');
+    expect(footer).toContain('"Mitarbeiter-Login"');
+    expect(footer).toContain('"Staff Login"');
   });
 
   it("explains the operated-service model consistently in every locale", () => {
