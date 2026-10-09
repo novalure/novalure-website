@@ -23,6 +23,14 @@ describe("relaunch subpage design contract", () => {
     expect(html).not.toContain("funnel-hero-visual");
   });
 
+  it("keeps the Makler service map as the single rendered service overview", () => {
+    const html = renderToStaticMarkup(<MarketingPage content={pages.de.agents} />);
+
+    expect(html).toContain("Mehr regionale Relevanz. Weniger administrativer Zug.");
+    expect(html).not.toContain("service-offering");
+    expect(html.match(/<h3>Verkäufergewinnung<\/h3>/g)).toHaveLength(1);
+  });
+
   it.each([pages.de.imprint, pages.de.privacy, pages.de.cookies, pages.en.imprint, pages.en.privacy, pages.en.cookies])(
     "keeps every legal section available in the new table of contents for $locale/$key",
     (content) => {

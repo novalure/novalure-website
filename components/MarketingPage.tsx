@@ -8,7 +8,6 @@ import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholde
 import { TeamLeadImage } from "@/components/TeamLeadImage";
 import { RelaunchHomePage } from "@/components/relaunch/RelaunchHomePage";
 import { FaqAccordion } from "@/components/relaunch/RelaunchInteractive";
-import { realEstateServiceOffering } from "@/content/real-estate-service-offering";
 
 function localeCopy<T>(locale: Locale, en: T, de: T, es: T): T {
   return locale === "de" ? de : locale === "es" ? es : en;
@@ -1275,43 +1274,11 @@ function TeamBlock({ content }: { content: HomeContent }) {
 }
 
 function AudiencePage({ content }: { content: PageContent }) {
-  const audience = content.key === "developers" ? "developers" : "agents";
-  const offering = realEstateServiceOffering[content.locale][audience];
-
   return (
     <main className={`relaunch-subpage relaunch-subpage-audience is-${content.key}`}>
       <Hero content={content} />
       <AudienceServiceMap locale={content.locale} pageKey={content.key} />
       <AudienceProof locale={content.locale} pageKey={content.key} />
-      <section className="service-offering" aria-labelledby={`${audience}-service-offering`}>
-        <div className="section-heading narrow">
-          <p className="eyebrow">{offering.eyebrow}</p>
-          <h2 id={`${audience}-service-offering`}>{offering.title}</h2>
-          <p>{offering.introduction}</p>
-        </div>
-        <div className="service-offering-grid">
-          {offering.categories.map((category) => (
-            <article className="service-offering-card" key={category.title}>
-              <h3>{category.title}</h3>
-              <p>{category.body}</p>
-              <ul className="check-list">
-                {category.activities.map((activity) => <li key={activity}>{activity}</li>)}
-              </ul>
-            </article>
-          ))}
-        </div>
-        <aside className="service-account-ownership">
-          <div>
-            <p className="eyebrow">{content.locale === "de" ? "Kontoführung" : content.locale === "es" ? "Titularidad de cuentas" : "Account ownership"}</p>
-            <h3>{offering.accountOwnership.title}</h3>
-            <p>{offering.accountOwnership.body}</p>
-          </div>
-          <ul className="check-list">
-            {offering.accountOwnership.points.map((point) => <li key={point}>{point}</li>)}
-          </ul>
-        </aside>
-        <p className="service-readiness-note">{offering.readinessNote}</p>
-      </section>
       <section className="section-grid">
         {content.sections?.map((section, index) => (
           <article className="content-section" key={section.title}>
