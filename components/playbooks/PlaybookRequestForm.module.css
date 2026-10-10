@@ -157,23 +157,24 @@
 }
 
 .covers {
-  position: relative;
   display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
   min-height: 170px;
   align-items: center;
   justify-content: center;
 }
 
 .cover {
-  width: 112px;
+  width: 128px;
   height: auto;
   border-radius: 5px;
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
 }
 
 .cover + .cover {
-  margin-left: -34px;
-  transform: translateY(10px) rotate(3deg);
+  margin-left: 0;
+  transform: none;
 }
 
 .fields {
@@ -323,10 +324,6 @@
   }
 
   .covers {
-    min-height: 145px;
-  }
-
-  .cover {
-    width: 96px;
+    min-height: 0;
   }
 }
