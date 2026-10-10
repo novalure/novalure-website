@@ -225,19 +225,20 @@ export function PlaybookRequestForm({
           </div>
         </fieldset>
 
-        <label className={styles.addOn}>
+        <div className={styles.addOn}>
           <input
+            id={`${id}-international-buyers`}
             type="checkbox"
             name="internationalBuyers"
             checked={internationalBuyers}
             disabled={loading}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInternationalBuyers(event.target.checked)}
           />
-          <span>
+          <label htmlFor={`${id}-international-buyers`}>
             <strong>{copy.international.label}</strong>
             <small>{copy.international.help}</small>
-          </span>
-        </label>
+          </label>
+        </div>
 
         <div className={styles.selectionPanel} aria-live="polite" aria-atomic="true">
           <div className={styles.selectionText}>
