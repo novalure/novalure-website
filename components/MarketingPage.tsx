@@ -27,7 +27,7 @@ function Hero({ content }: { content: PageContent }) {
   const homeLabel = localeCopy(content.locale, "Home", "Startseite", "Inicio");
 
   return (
-    <section className={`v3-subpage-hero is-${content.template}`}>
+    <section className={`v3-subpage-hero is-${content.template} is-${content.key}`}>
       <div className="v3-subpage-hero-inner">
         <div className="v3-subpage-hero-copy">
           <nav className="v3-breadcrumb" aria-label={localeCopy(content.locale, "Breadcrumb", "Brotkrümelnavigation", "Migas de pan")}>
@@ -1275,8 +1275,9 @@ function TeamBlock({ content }: { content: HomeContent }) {
 
 function AudiencePage({ content }: { content: PageContent }) {
   return (
-    <main className="relaunch-subpage relaunch-subpage-audience">
+    <main className={`relaunch-subpage relaunch-subpage-audience is-${content.key}`}>
       <Hero content={content} />
+      <AudienceServiceMap locale={content.locale} pageKey={content.key} />
       <AudienceProof locale={content.locale} pageKey={content.key} />
       <section className="section-grid">
         {content.sections?.map((section, index) => (
@@ -1301,6 +1302,55 @@ function AudiencePage({ content }: { content: PageContent }) {
       <FaqSection locale={content.locale} items={content.faq || []} />
       <FinalCta content={content} />
     </main>
+  );
+}
+
+function AudienceServiceMap({ locale, pageKey }: { locale: Locale; pageKey: PageContent["key"] }) {
+  const isDeveloper = pageKey === "developers";
+  const copy = localeCopy(locale,
+    isDeveloper
+      ? {
+          eyebrow: "Managed project marketing", title: "One mandate. Nine connected disciplines.",
+          note: "The exact scope, account access and reporting rhythm are agreed for each project. AI-supported communication is operated by NovaLure as part of the service, not sold as a standalone subscription.",
+          items: [["01", "Market intelligence", "Ongoing market and competitor signals for sharper positioning."], ["02", "Project positioning", "A clear story, buyer logic and launch priorities."], ["03", "Project website", "A focused digital presentation with an AI-assisted website chat for first questions, 24/7."], ["04", "Google Ads", "Search demand checked and improved continuously around the agreed campaign plan."], ["05", "Meta Ads", "Creative reach and audience engagement continuously optimised for the launch."], ["06", "Lead management", "Capture, qualification and structured follow-up."], ["07", "Customer communication", "Chat, email and phone connected in one documented enquiry process."], ["08", "Sales support", "Prepared handover, priorities and next steps."], ["09", "Weekly reporting & optimisation", "A weekly view of enquiries, quality, actions and the next improvements."]]
+        }
+      : {
+          eyebrow: "Managed market presence", title: "More regional relevance. Less administrative drag.",
+          note: "Scope is tailored to the market area and operating model. AI-supported communication is operated by NovaLure as part of the service, not sold as a standalone subscription.",
+          items: [["01", "Regional intelligence", "Ongoing market and competitor signals for sharper positioning."], ["02", "Seller acquisition", "A clearer path from local visibility to seller intent."], ["03", "Buyer acquisition", "Demand generation tied to search profile and readiness."], ["04", "Property marketing", "Presentation material and campaign destinations that set expectations."], ["05", "Google & Meta Ads", "Media activity checked and improved continuously around the agreed local strategy."], ["06", "Enquiry qualification", "Context before the first sales conversation."], ["07", "Follow-up", "Structured timing, ownership and next action."], ["08", "Appointment coordination", "A prepared route into the right conversation."], ["09", "Weekly reporting & optimisation", "A weekly view of enquiries, quality, actions and the next improvements."]]
+        },
+    isDeveloper
+      ? {
+          eyebrow: "Geführte Projektvermarktung", title: "Ein Mandat. Neun verbundene Disziplinen.",
+          note: "Umfang, Kontozugriffe und Reporting-Rhythmus werden für jedes Projekt vereinbart. KI-gestützte Kommunikation führt NovaLure als Teil des Services – nicht als isoliertes Abo.",
+          items: [["01", "Marktintelligenz", "Laufende Markt- und Wettbewerbssignale für eine klarere Positionierung."], ["02", "Projektpositionierung", "Eine klare Story, Käuferlogik und Launch-Prioritäten."], ["03", "Projektwebsite", "Eine fokussierte digitale Präsentation mit KI-gestütztem Website-Chat für erste Fragen – 24/7."], ["04", "Google Ads", "Suchnachfrage im abgestimmten Kampagnenplan – laufend geprüft und verbessert."], ["05", "Meta Ads", "Kreative Reichweite und Zielgruppenansprache für den Launch – laufend optimiert."], ["06", "Interessentenmanagement", "Erfassung, Qualifizierung und strukturiertes Nachfassen."], ["07", "Kundenkommunikation", "Chat, E-Mail und Telefon verbunden in einem dokumentierten Anfrageprozess."], ["08", "Vertriebsunterstützung", "Vorbereitete Übergabe, Prioritäten und nächste Schritte."], ["09", "Wöchentliches Reporting & Optimierung", "Wöchentlicher Überblick zu Anfragen, Qualität, Maßnahmen und den nächsten Verbesserungen."]]
+        }
+      : {
+          eyebrow: "Geführte Marktpräsenz", title: "Mehr regionale Relevanz. Weniger administrativer Zug.",
+          note: "Der Umfang richtet sich nach Marktgebiet und Betriebsmodell. KI-gestützte Kommunikation führt NovaLure als Teil des Services – nicht als isoliertes Abo.",
+          items: [["01", "Regionale Intelligenz", "Laufende Markt- und Wettbewerbssignale für eine klarere Positionierung."], ["02", "Verkäufergewinnung", "Ein klarer Weg von lokaler Sichtbarkeit zu Verkaufsabsicht."], ["03", "Käufergewinnung", "Nachfrageaufbau mit Bezug zu Suchprofil und Reife."], ["04", "Objektvermarktung", "Präsentationsmaterial und Kampagnenziele, die Erwartungen setzen."], ["05", "Google & Meta Ads", "Medienarbeit im abgestimmten lokalen Strategie-Rahmen – laufend geprüft und verbessert."], ["06", "Anfragenqualifizierung", "Kontext vor dem ersten Vertriebsgespräch."], ["07", "Nachfassen", "Strukturiertes Timing, Zuständigkeit und nächste Aktion."], ["08", "Terminabstimmung", "Ein vorbereiteter Weg in das richtige Gespräch."], ["09", "Wöchentliches Reporting & Optimierung", "Wöchentlicher Überblick zu Anfragen, Qualität, Maßnahmen und den nächsten Verbesserungen."]]
+        },
+    isDeveloper
+      ? {
+          eyebrow: "Marketing de promoción gestionado", title: "Un mandato. Nueve disciplinas conectadas.",
+          note: "El alcance, los accesos y el ritmo de informes se acuerdan para cada proyecto. NovaLure opera la comunicación asistida por IA como parte del servicio, no como una suscripción independiente.",
+          items: [["01", "Inteligencia de mercado", "Señales continuas de mercado y competencia para un posicionamiento más preciso."], ["02", "Posicionamiento", "Una historia clara, lógica de comprador y prioridades de lanzamiento."], ["03", "Web de proyecto", "Una presentación digital enfocada con chat asistido por IA para primeras preguntas, 24/7."], ["04", "Google Ads", "Demanda de búsqueda revisada y mejorada continuamente dentro del plan acordado."], ["05", "Meta Ads", "Alcance creativo y activación de audiencias optimizados de forma continua."], ["06", "Gestión de interesados", "Captación, cualificación y seguimiento estructurado."], ["07", "Comunicación", "Chat, correo y teléfono conectados en un proceso documentado."], ["08", "Apoyo comercial", "Traspaso preparado, prioridades y próximos pasos."], ["09", "Informes semanales y optimización", "Una visión semanal de solicitudes, calidad, acciones y las próximas mejoras."]]
+        }
+      : {
+          eyebrow: "Presencia local gestionada", title: "Más relevancia regional. Menos carga administrativa.",
+          note: "El alcance se adapta al mercado y al modelo operativo. NovaLure opera la comunicación asistida por IA como parte del servicio, no como una suscripción independiente.",
+          items: [["01", "Inteligencia regional", "Señales continuas de mercado y competencia para un posicionamiento más preciso."], ["02", "Captación de vendedores", "De la visibilidad local a una intención más clara."], ["03", "Captación de compradores", "Demanda vinculada al perfil y al momento."], ["04", "Marketing inmobiliario", "Presentación y destinos de campaña que fijan expectativas."], ["05", "Google y Meta Ads", "Actividad de medios revisada y mejorada continuamente dentro de la estrategia local acordada."], ["06", "Cualificación", "Contexto antes de la primera conversación comercial."], ["07", "Seguimiento", "Tiempo, propiedad y próximo paso estructurados."], ["08", "Coordinación de citas", "Un camino preparado hacia la conversación adecuada."], ["09", "Informes semanales y optimización", "Una visión semanal de solicitudes, calidad, acciones y las próximas mejoras."]]
+        }
+  );
+
+  return (
+    <section className="v4-service-map" aria-label={copy.title}>
+      <div className="v4-service-map-intro"><p className="v3-kicker"><span aria-hidden="true" />{copy.eyebrow}</p><h2>{copy.title}</h2></div>
+      <div className="v4-service-map-grid">
+        {copy.items.map(([number, title, body]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{body}</p></article>)}
+      </div>
+      <p className="v4-service-map-note">{copy.note}</p>
+    </section>
   );
 }
 

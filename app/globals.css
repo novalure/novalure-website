@@ -10,9 +10,9 @@
   --surface: #ffffff;
   --line: #dde3ec;
   --muted: #667085;
-  --gold: #ffd43b;
-  --gold-strong: #e4b900;
-  --green: #42d39b;
+  --gold: #1858f6;
+  --gold-strong: #0f46ce;
+  --green: #1858f6;
   --shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
 }
 
@@ -213,14 +213,14 @@ button:disabled {
 }
 
 .button-primary {
-  color: #211800;
+  color: #fff;
   background: var(--gold);
   border-color: var(--gold-strong);
-  box-shadow: 0 14px 32px rgba(255, 212, 59, 0.22);
+  box-shadow: 0 14px 32px rgba(24, 88, 246, 0.22);
 }
 
 .button-primary:hover {
-  background: #ffe06b;
+  background: var(--gold-strong);
 }
 
 .button-secondary {
@@ -287,7 +287,7 @@ button:disabled {
   overflow: hidden;
   color: #ffffff;
   background:
-    radial-gradient(circle at 14% 0%, rgba(255, 212, 59, 0.2), transparent 28%),
+    radial-gradient(circle at 14% 0%, rgba(24, 88, 246, 0.2), transparent 28%),
     radial-gradient(circle at 86% 16%, rgba(66, 211, 155, 0.16), transparent 30%),
     linear-gradient(135deg, #07080b 0%, #111722 54%, #07080b 100%);
 }
@@ -302,7 +302,7 @@ button:disabled {
   inset: auto 0 0;
   height: 1px;
   content: "";
-  background: linear-gradient(90deg, transparent, rgba(255, 212, 59, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(24, 88, 246, 0.6), transparent);
 }
 
 .hero-copy {
@@ -546,14 +546,14 @@ h3 {
     linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
   background-size: 42px 42px;
   transform: rotateX(58deg) rotateZ(-8deg);
-  box-shadow: inset 0 0 80px rgba(255, 212, 59, 0.06), var(--shadow);
+  box-shadow: inset 0 0 80px rgba(24, 88, 246, 0.06), var(--shadow);
 }
 
 .pipeline-orbit {
   position: absolute;
   z-index: 2;
   inset: 110px 70px;
-  border: 1px solid rgba(255, 212, 59, 0.32);
+  border: 1px solid rgba(24, 88, 246, 0.32);
   border-radius: 999px;
   transform: rotateX(64deg) rotateZ(-16deg);
 }
@@ -591,7 +591,7 @@ h3 {
   offset-path: path("M 70 410 C 165 250, 280 370, 345 215 S 455 100, 520 165");
   background: var(--gold);
   border-radius: 50%;
-  box-shadow: 0 0 34px rgba(255, 212, 59, 0.9);
+  box-shadow: 0 0 34px rgba(24, 88, 246, 0.72);
 }
 
 .funnel-hero-visual {
@@ -1230,7 +1230,7 @@ h3 {
 .system-section {
   padding: clamp(70px, 9vw, 132px) clamp(20px, 6vw, 92px);
   background:
-    radial-gradient(circle at 82% 12%, rgba(255, 212, 59, 0.12), transparent 32%),
+    radial-gradient(circle at 82% 12%, rgba(24, 88, 246, 0.12), transparent 32%),
     linear-gradient(135deg, #07080b, #121822);
 }
 
@@ -1588,7 +1588,7 @@ h3 {
 .playbook-card .pill {
   display: inline-flex;
   margin-bottom: 18px;
-  color: #1b1400;
+  color: #fff;
   background: var(--gold);
   border-color: var(--gold);
 }
@@ -1629,7 +1629,7 @@ h3 {
 .playbook-summary-card .pill {
   justify-self: start;
   display: inline-flex;
-  color: #1b1400;
+  color: #fff;
   background: var(--gold);
   border-color: var(--gold);
   font-weight: 850;
@@ -1645,7 +1645,7 @@ h3 {
   padding: 20px;
   background: #0c1018;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: inset 0 0 40px rgba(255, 212, 59, 0.04);
+  box-shadow: inset 0 0 40px rgba(24, 88, 246, 0.04);
 }
 
 .hubspot-meta {
@@ -1869,7 +1869,7 @@ code {
   width: 15px;
   height: 15px;
   border: 2px solid rgba(33, 24, 0, 0.28);
-  border-top-color: #211800;
+  border-top-color: #08090d;
   border-radius: 999px;
   animation: spin 0.75s linear infinite;
 }
@@ -1928,7 +1928,7 @@ code {
 }
 
 .playbook-selector label.is-selected {
-  color: #211800;
+  color: #fff;
   background: var(--gold);
   border-color: var(--gold-strong);
 }
@@ -1961,8 +1961,8 @@ code {
   min-height: 220px;
   padding: 22px;
   color: #f8fafc;
-  background: linear-gradient(145deg, rgba(255, 212, 59, 0.14), rgba(255, 255, 255, 0.06));
-  border: 1px solid rgba(255, 212, 59, 0.28);
+  background: linear-gradient(145deg, rgba(24, 88, 246, 0.14), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(24, 88, 246, 0.28);
   border-radius: 22px;
 }
 
@@ -1991,7 +1991,7 @@ code {
   width: 48px;
   height: 48px;
   padding: 10px;
-  color: #211800;
+  color: #fff;
   background: var(--gold);
   border-radius: 999px;
 }
@@ -2144,7 +2144,7 @@ code {
   width: 44px;
   height: 44px;
   place-items: center;
-  color: #1b1400;
+  color: #fff;
   background: var(--gold);
   border: 1px solid var(--gold-strong);
   border-radius: 8px;
@@ -2352,7 +2352,7 @@ code {
 .contact-field textarea:focus {
   border-color: var(--gold-strong);
   outline: 0;
-  box-shadow: 0 0 0 4px rgba(255, 212, 59, 0.24);
+  box-shadow: 0 0 0 4px rgba(24, 88, 246, 0.24);
 }
 
 .contact-form-actions {
@@ -2395,7 +2395,7 @@ code {
 .panel-label {
   display: block;
   margin-bottom: 12px;
-  color: #735700;
+  color: #0f46ce;
   font-weight: 950;
 }
 
@@ -2466,7 +2466,7 @@ code {
   padding: clamp(54px, 8vw, 104px) clamp(20px, 6vw, 92px);
   color: #ffffff;
   background:
-    radial-gradient(circle at 85% 0%, rgba(255, 212, 59, 0.18), transparent 36%),
+    radial-gradient(circle at 85% 0%, rgba(24, 88, 246, 0.18), transparent 36%),
     linear-gradient(135deg, #111318, #07080b);
 }
 
@@ -2546,7 +2546,7 @@ code {
 .home-audit-section {
   color: #ffffff;
   background:
-    radial-gradient(circle at 12% 10%, rgba(255, 212, 59, 0.12), transparent 32%),
+    radial-gradient(circle at 12% 10%, rgba(24, 88, 246, 0.12), transparent 32%),
     linear-gradient(135deg, #07080b, #111722);
 }
 
@@ -2649,7 +2649,7 @@ code {
 .proof-card-feature {
   min-height: auto;
   background:
-    linear-gradient(180deg, rgba(255, 212, 59, 0.12), transparent 38%),
+    linear-gradient(180deg, rgba(24, 88, 246, 0.12), transparent 38%),
     #ffffff;
 }
 
@@ -2662,7 +2662,7 @@ code {
   justify-self: start;
   display: inline-flex;
   padding: 6px 9px;
-  color: #1b1400;
+  color: #fff;
   background: var(--gold);
   border: 1px solid var(--gold-strong);
   border-radius: 6px;
@@ -2740,7 +2740,7 @@ code {
 }
 
 .dot-amber {
-  background: #d79a00;
+  background: #0f46ce;
 }
 
 .dot-red {
@@ -3859,7 +3859,7 @@ code {
   overflow: hidden;
   padding: clamp(16px, 1.8vw, 22px);
   color: #151820;
-  background: #fbf6ec;
+  background: #f5f7fa;
   border: 1px solid rgba(151, 128, 86, 0.24);
   border-radius: 8px;
   box-shadow: 0 22px 56px rgba(17, 19, 24, 0.14);
@@ -3873,7 +3873,7 @@ code {
   left: 0;
   z-index: 4;
   height: 82px;
-  background: linear-gradient(180deg, rgba(251, 246, 236, 0), #fbf6ec 86%);
+  background: linear-gradient(180deg, rgba(245, 247, 250, 0), #f5f7fa 86%);
   pointer-events: none;
 }
 
@@ -3887,7 +3887,7 @@ code {
 }
 
 .expose-sheet-header span {
-  color: #9b7a44;
+  color: #1858f6;
   font-size: 0.58rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -3918,7 +3918,7 @@ code {
   z-index: 2;
   min-width: 0;
   overflow: hidden;
-  background: #e9dfcf;
+  background: #e8efff;
   border-radius: 7px;
 }
 
@@ -4012,7 +4012,7 @@ code {
   top: 0.46em;
   width: 6px;
   height: 6px;
-  background: #b9975b;
+  background: #1858f6;
   border-radius: 99px;
 }
 
@@ -4390,7 +4390,7 @@ code {
   min-height: 180px;
   padding: 28px;
   background:
-    linear-gradient(135deg, rgba(255, 212, 59, 0.18), rgba(66, 211, 155, 0.1)),
+    linear-gradient(135deg, rgba(24, 88, 246, 0.18), rgba(24, 88, 246, 0.1)),
     #ffffff;
 }
 
@@ -4536,7 +4536,7 @@ code {
   justify-content: center;
   width: fit-content;
   padding: 0 16px;
-  color: #211800;
+  color: #fff;
   background: var(--gold);
   border: 1px solid var(--gold-strong);
   font-weight: 850;

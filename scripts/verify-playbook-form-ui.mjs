@@ -135,6 +135,7 @@ async function layoutCase(browser, browserName, locale, routePath, width) {
     const initial = await assertReadable(card);
     const addOn = card.locator('input[name="internationalBuyers"]');
     await addOn.check();
+    assert.equal(await addOn.isChecked(), true, "The add-on selection must be retained after a native check");
     assert.equal(await card.locator("img").count(), 2, "Both selected covers must appear");
     await assertReadable(card);
     await waitForCovers(page, card);
@@ -152,6 +153,13 @@ async function layoutCase(browser, browserName, locale, routePath, width) {
       await agent.check();
       await assertReadable(card);
     }
+    await addOn.focus();
+    await page.keyboard.press("Space");
+    assert.equal(await addOn.isChecked(), false, "Space must deselect the add-on through the native checkbox");
+    assert.equal(await card.locator("img").count(), 1, "Deselecting the add-on must remove its cover");
+    await page.keyboard.press("Space");
+    assert.equal(await addOn.isChecked(), true, "Space must select the add-on through the native checkbox");
+    assert.equal(await card.locator("img").count(), 2, "Selecting the add-on must restore its cover");
     await addOn.uncheck();
     assert.equal(await card.locator("img").count(), 1);
     await addOn.focus();

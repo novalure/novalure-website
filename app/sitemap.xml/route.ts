@@ -16,11 +16,8 @@ const routes = [
   "/en/contact",
   "/de/kontakt",
   "/es/analisis-del-proyecto",
-  "/en/system-example",
   "/en/eula",
-  "/en/vercel-integration-eula",
-  "/de/systembeispiel",
-  "/es/ejemplo-del-sistema"
+  "/en/vercel-integration-eula"
 ];
 
 function absolute(path: string) {

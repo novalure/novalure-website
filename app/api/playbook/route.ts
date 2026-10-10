@@ -202,8 +202,8 @@ function escapeHtml(value: string) {
 }
 
 function renderEmailButton(href: string, label: string, variant: "primary" | "secondary" = "primary") {
-  const background = variant === "primary" ? "#c7a55b" : "#0e1b33";
-  const color = variant === "primary" ? "#0e1b33" : "#ffffff";
+  const background = variant === "primary" ? "#1858f6" : "#08090d";
+  const color = "#ffffff";
   const border = background;
 
   return `

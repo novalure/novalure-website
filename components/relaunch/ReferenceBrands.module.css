@@ -43,13 +43,13 @@
 
 .linkedMark:hover {
   transform: translateY(-1px);
-  border-color: rgba(217, 188, 119, 0.68);
+  border-color: rgba(24, 88, 246, 0.68);
   background: rgba(255, 255, 255, 0.09);
   box-shadow: 0 5px 14px rgba(0, 0, 0, 0.16);
 }
 
 .linkedMark:focus-visible {
-  outline: 2px solid #d9bc77;
+  outline: 2px solid #1858f6;
   outline-offset: 2px;
 }
 
@@ -119,7 +119,7 @@
 }
 
 .wildschoenau .brandRow span {
-  color: #d9bc77;
+  color: #9db8ff;
   font-size: 0.62rem;
   font-weight: 750;
 }
@@ -137,7 +137,7 @@
   width: 23px;
   height: 23px;
   flex: 0 0 23px;
-  color: #d9bc77;
+  color: #9db8ff;
 }
 
 .heigl strong {

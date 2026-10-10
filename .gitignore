@@ -13,9 +13,12 @@ vercel
 .pip-cache
 .codex-temp
 .codex-python-packages
+__pycache__/
+*.pyc
 public/playbooks/previews
 public/playbooks/*-check.html
 next-browser-check.log
+next-relaunch-preview*.log
 next-funnel-dev*.log
 next-smoke*.log
 onepage-funnel-preview.html

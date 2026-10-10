@@ -92,8 +92,8 @@ function renderEmailButton(href: string, label: string) {
   return `
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:28px 0;">
       <tr>
-        <td bgcolor="#ffd43b" style="border:1px solid #ffd43b;border-radius:8px;">
-          <a href="${escapeHtml(href)}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:20px;font-weight:700;color:#211800;text-decoration:none;border-radius:8px;">
+        <td bgcolor="#1858f6" style="border:1px solid #1858f6;border-radius:8px;">
+          <a href="${escapeHtml(href)}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:20px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:8px;">
             ${escapeHtml(label)}
           </a>
         </td>
