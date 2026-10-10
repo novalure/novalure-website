@@ -232,7 +232,7 @@ export function PlaybookRequestForm({
             name="internationalBuyers"
             checked={internationalBuyers}
             disabled={loading}
-            onClick={() => setInternationalBuyers((current) => !current)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInternationalBuyers(event.currentTarget.checked)}
           />
           <label htmlFor={`${id}-international-buyers`}>
             <strong>{copy.international.label}</strong>
