@@ -4,6 +4,36 @@ import { relaunchCopy } from "@/content/relaunch-copy";
 import type { Locale } from "@/lib/i18n";
 import { ReferenceBrands } from "./ReferenceBrands";
 
+export function FullCycleFeature({ locale }: { locale: Locale }) {
+  const t = architecturalCopy[locale];
+
+  return (
+    <section className="v3-section ai-full-cycle" id="approach" data-reveal>
+      <div className="ai-full-cycle-heading">
+        <p className="v3-kicker"><span aria-hidden="true" />{t.manifestoKicker}</p>
+        <h2>{t.manifestoStart}<br /><em>{t.manifestoEmphasis}</em>{t.manifestoEnd}</h2>
+        <p>{t.manifestoIntro}</p>
+      </div>
+      <div className="ai-full-cycle-grid">
+        <figure className="ai-full-cycle-media">
+          <Image
+            src="/images/visual-interior-01.jpg"
+            alt={t.sampleVisual}
+            fill
+            sizes="(min-width: 1000px) 58vw, 100vw"
+          />
+          <figcaption>{t.sampleVisual}</figcaption>
+        </figure>
+        <div className="ai-full-cycle-notes">
+          <article><small>{t.manifestoApproachLabel}</small><p>{t.manifestoApproach}</p></article>
+          <article><small>{t.manifestoDeliveryLabel}</small><p>{t.manifestoDelivery}</p></article>
+        </div>
+      </div>
+      <p className="ai-full-cycle-role">{t.heroRole}</p>
+    </section>
+  );
+}
+
 export function ProjectShowcase({ locale }: { locale: Locale }) {
   const t = architecturalCopy[locale];
   const original = relaunchCopy[locale];

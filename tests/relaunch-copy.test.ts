@@ -17,8 +17,8 @@ describe("relaunch reference copy", () => {
   });
 
   it("retains the approved hero messages", () => {
-    expect(relaunchCopy.de.heroH1).toBe("Ihr Projekt verdient Käufer – nicht Kontaktlisten.");
-    expect(relaunchCopy.en.heroH1).toBe("Your project deserves buyers – not contact lists.");
+    expect(relaunchCopy.de.heroH1).toBe("Von der Projektvision zur qualifizierten Übergabe.");
+    expect(relaunchCopy.en.heroH1).toBe("From project vision to qualified handover.");
   });
 
   it("keeps both pipeline demos strictly localized", () => {

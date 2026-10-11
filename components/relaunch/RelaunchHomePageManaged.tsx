@@ -6,25 +6,17 @@ import { relaunchCopy } from "@/content/relaunch-copy";
 import { getProcessAnchor, type Locale } from "@/lib/i18n";
 import { FaqAccordion, ProcessSteps, ProjectCheckLink, ProofCounters, SectionReveals } from "@/components/relaunch/RelaunchInteractive";
 import { architecturalCopy } from "@/content/architectural-copy";
-import { FounderSection, ProjectShowcase } from "@/components/relaunch/ArchitecturalSections";
+import { FounderSection, FullCycleFeature, ProjectShowcase } from "@/components/relaunch/ArchitecturalSections";
 
 function SectionKicker({ children, inverse = false }: { children: React.ReactNode; inverse?: boolean }) {
   return <p className={`v3-kicker${inverse ? " is-inverse" : ""}`}><span aria-hidden="true" />{children}</p>;
 }
 
-function HeroPipeline({ locale }: { locale: Locale }) {
-  const t = relaunchCopy[locale];
-  const managed = managedServiceCopy[locale];
+function HeroServicePath({ locale }: { locale: Locale }) {
   const architectural = architecturalCopy[locale];
-  const cards = [
-    { name: t.unitPenthouseA3, score: 87, status: t.stViewing, source: t.srcCampaign, next: t.next1, tone: "high" },
-    { name: t.unitGardenB1, score: 74, status: t.stQualified, source: t.srcBrochure, next: t.next2, tone: "medium" },
-    { name: t.unitDuplexC2, score: 69, status: t.stFollowup, source: t.srcLanding, next: t.next3, tone: "medium" },
-    { name: t.unitApartmentD4, score: 91, status: t.stHandover, source: t.srcReferral, next: t.next4, tone: "high" }
-  ] as const;
 
   return (
-    <div className="v3-hero-visual" aria-label={t.mockTitle}>
+    <div className="v3-hero-visual">
       <Image
         className="ai-hero-image"
         src="/images/ai-render-15594499.jpg"
@@ -34,26 +26,11 @@ function HeroPipeline({ locale }: { locale: Locale }) {
         sizes="100vw"
       />
       <span className="ai-hero-image-label">{architectural.sampleVisual}</span>
-      <div className="v3-pipeline-window liquid-glass">
-        <div className="v3-window-bar">
-          <span className="v3-window-dots" aria-hidden="true"><i /><i /><i /></span>
-          <strong>{t.mockTitle}</strong>
-          <span className="v3-demo-badge">{t.demoBadge}</span>
-        </div>
-        <p className="v3-demo-note">{managed.demoNote}</p>
-        <div className="v3-pipeline-grid">
-          {cards.map((card, index) => (
-            <article className={`v3-pipeline-card v3-card-${index + 1}`} key={card.name}>
-              <div>
-                <strong>{card.name}</strong>
-                <span className={`v3-score is-${card.tone}`}>{t.scoreLabel} {card.score}</span>
-              </div>
-              <p>{card.status} · {card.source}</p>
-              <small>→ {card.next}</small>
-            </article>
-          ))}
-        </div>
-      </div>
+      <aside className="ai-hero-path liquid-glass" aria-label={architectural.pathLabel}>
+        <span>{architectural.pathLabel}</span>
+        <strong>{architectural.pathTitle}</strong>
+        <ol>{architectural.pathSteps.map((step, index) => <li key={step}><small>0{index + 1}</small>{step}</li>)}</ol>
+      </aside>
     </div>
   );
 }
@@ -167,13 +144,15 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
           </div>
           <p className="v3-trust-line">{t.trust}</p>
         </div>
-        <HeroPipeline locale={locale} />
+        <HeroServicePath locale={locale} />
       </section>
 
       <section className="v3-proof" data-reveal data-track-section="proof" aria-label={locale === "de" ? "Referenzwerte" : locale === "es" ? "Valores de referencia" : "Reference values"}>
         <ProofCounters locale={locale} firstLabel={t.kpi1} secondLabel={t.kpi2} />
         <p>{t.proofNote}</p>
       </section>
+
+      <FullCycleFeature locale={locale} />
 
       <section className="v3-section v3-developers" id="bautraeger" data-reveal>
         <div className="v3-section-heading">
