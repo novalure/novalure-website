@@ -125,12 +125,12 @@ describe("Spanish localization", () => {
     expect(playbooks["es-developer"]).toMatchObject({
       file: "/playbooks/novalure-project-demand-es.pdf",
       cover: "/playbooks/covers/novalure-project-demand-es.png",
-      pages: 10
+      pages: 13
     });
     expect(playbooks["es-agent"]).toMatchObject({
       file: "/playbooks/novalure-owned-demand-es.pdf",
       cover: "/playbooks/covers/novalure-owned-demand-es.png",
-      pages: 10
+      pages: 15
     });
   });
 

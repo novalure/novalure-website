@@ -9,7 +9,16 @@ const compat = new FlatCompat({ baseDirectory: dirname });
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals"),
   {
-    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"]
+    ignores: [
+      ".next/**",
+      ".next-novalure/**",
+      ".codex-temp/**",
+      ".codex-python-packages/**",
+      ".pip-cache/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts"
+    ]
   }
 ];
 

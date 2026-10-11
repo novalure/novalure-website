@@ -14,7 +14,8 @@
     "playbooks": "npm run verify:playbooks",
     "playbook:covers": "npm run verify:playbooks",
     "playbook-previews": "npm run verify:playbooks",
-    "verify:playbooks": "node scripts/verify-playbook-assets.mjs"
+    "verify:playbooks": "node scripts/verify-playbook-assets.mjs",
+    "generate:favicons": "node scripts/generate-favicons.mjs"
   },
   "dependencies": {
     "@sanity/client": "^7.26.0",
@@ -23,6 +24,7 @@
     "@vercel/firewall": "^1.2.2",
     "@vercel/functions": "^3.7.6",
     "framer-motion": "^11.11.17",
+    "lucide-react": "^0.468.0",
     "next": "15.5.27",
     "next-sanity": "^11.6.13",
     "react": "^19.2.8",
@@ -43,8 +45,8 @@
     "postcss": "^8.5.25",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3",
-    "vitest": "4.1.11",
-    "vite": "7.3.6"
+    "vite": "7.3.6",
+    "vitest": "4.1.11"
   },
   "overrides": {
     "@sanity/runtime-cli": {

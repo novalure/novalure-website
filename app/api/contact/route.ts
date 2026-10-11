@@ -92,8 +92,8 @@ function renderEmailButton(href: string, label: string) {
   return `
     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:28px 0;">
       <tr>
-        <td bgcolor="#ffd43b" style="border:1px solid #ffd43b;border-radius:8px;">
-          <a href="${escapeHtml(href)}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:20px;font-weight:700;color:#211800;text-decoration:none;border-radius:8px;">
+        <td bgcolor="#1858f6" style="border:1px solid #1858f6;border-radius:8px;">
+          <a href="${escapeHtml(href)}" target="_blank" style="display:inline-block;padding:14px 22px;font-family:Arial,sans-serif;font-size:15px;line-height:20px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:8px;">
             ${escapeHtml(label)}
           </a>
         </td>
@@ -129,7 +129,8 @@ export async function POST(request: NextRequest) {
     const language: Locale = body.language === "de" || body.language === "es" ? body.language : "en";
     const firstName = clean(body.firstName);
     const lastName = clean(body.lastName);
-    const isDirectInquiry = Boolean(firstName || lastName || body.inquiry);
+    const isDraftInquiry = clean(body.source) === "asme_draft_project_check";
+    const isDirectInquiry = !isDraftInquiry && Boolean(firstName || lastName || body.inquiry);
     const name = clean(body.name) || `${firstName} ${lastName}`.trim();
     const email = clean(body.email);
     const company = clean(body.company);
@@ -147,8 +148,23 @@ export async function POST(request: NextRequest) {
     const decisionStatus = clean(body.decisionStatus);
     const whyNow = clean(body.whyNow);
     const phone = clean(body.phone);
+    const projectUrl = clean(body.projectUrl);
     const pageUri = clean(body.pageUri);
     const utm = typeof body.utm === "object" && body.utm ? body.utm as Record<string, unknown> : {};
+
+    if (isDraftInquiry && clean(body.website)) {
+      return NextResponse.json({ ok: true });
+    }
+
+    const draftInvalid = isDraftInquiry && (
+      !name || name.length > 120 ||
+      !isValidEmail(email) || email.length > 254 ||
+      !company || company.length > 160 ||
+      !["developer", "agent", "other"].includes(role) ||
+      !leadProblem || leadProblem.length > 2000 ||
+      phone.length > 60 || projectUrl.length > 500 ||
+      (projectUrl !== "" && !/^https?:\/\//i.test(projectUrl))
+    );
 
     const directInvalid = isDirectInquiry && (
       !firstName ||
@@ -159,7 +175,7 @@ export async function POST(request: NextRequest) {
       !leadProblem ||
       !isValidEmail(email)
     );
-    const auditInvalid = !isDirectInquiry && (
+    const auditInvalid = !isDraftInquiry && !isDirectInquiry && (
       !name ||
       !company ||
       !role ||
@@ -177,7 +193,7 @@ export async function POST(request: NextRequest) {
       !isValidEmail(email)
     );
 
-    if (directInvalid || auditInvalid) {
+    if (draftInvalid || directInvalid || auditInvalid) {
       return NextResponse.json({ error: "Invalid form submission" }, { status: 400 });
     }
 
@@ -189,8 +205,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Email configuration missing" }, { status: 500 });
     }
 
-    const rows: Record<string, string | string[]> = isDirectInquiry
+    const rows: Record<string, string | string[]> = isDraftInquiry
       ? {
+          Name: name,
+          Email: email,
+          Company: company,
+          Role: role,
+          Project: leadProblem,
+          Phone: phone || "Not provided",
+          "Project link": projectUrl || "Not provided",
+          Language: language.toUpperCase(),
+          Source: "asme_draft_project_check",
+          "Page URI": pageUri,
+          "UTM source": clean(utm.utm_source),
+          "UTM medium": clean(utm.utm_medium),
+          "UTM campaign": clean(utm.utm_campaign),
+          Timestamp: new Date().toISOString()
+        }
+      : isDirectInquiry
+        ? {
           Name: name,
           Email: email,
           Phone: phone,
@@ -229,16 +262,19 @@ export async function POST(request: NextRequest) {
         };
 
     const resend = new Resend(apiKey);
-    const softFit =
+    const softFit = !isDraftInquiry && (
       budgetReadiness.toLowerCase().includes("nein") ||
       budgetReadiness.toLowerCase().includes("no,") ||
       decisionStatus.toLowerCase().includes("recherchiere") ||
-      decisionStatus.toLowerCase().includes("only researching");
+      decisionStatus.toLowerCase().includes("only researching")
+    );
 
     const internalEmail = await resend.emails.send({
       from: sender,
       to: "hello@novalure.eu",
-      subject: isDirectInquiry
+      subject: isDraftInquiry
+        ? `New NovaLure ASME Project Check request (${language.toUpperCase()})`
+        : isDirectInquiry
         ? `New NovaLure direct enquiry (${language.toUpperCase()})`
         : `${softFit ? "[Soft fit] " : ""}New NovaLure Project Check request (${language.toUpperCase()})`,
       replyTo: email,
@@ -256,7 +292,13 @@ export async function POST(request: NextRequest) {
 
     const reply = autoReplyCopy[language];
     const replySubject = isDirectInquiry ? reply.directSubject : reply.auditSubject;
-    const replyBody = isDirectInquiry ? reply.directBody(name) : reply.auditBody(name);
+    const replyBody = isDraftInquiry
+      ? language === "de"
+        ? `Hallo ${name},\n\nvielen Dank für Ihre Projekt-Check-Anfrage. Wir haben Ihre Angaben erhalten, prüfen Ihr Anliegen und melden uns bei Ihnen.`
+        : language === "es"
+          ? `Hola, ${name}:\n\nGracias por solicitar un análisis del proyecto. Hemos recibido sus datos, revisaremos su consulta y nos pondremos en contacto con usted.`
+          : `Hi ${name},\n\nthank you for requesting a Project Check. We have received your details, will review your enquiry and get back to you.`
+      : isDirectInquiry ? reply.directBody(name) : reply.auditBody(name);
     const replyButton = isDirectInquiry ? reply.directButton : reply.auditButton;
     const thankYouPath = language === "de"
       ? "/de/kontakt/danke"
@@ -269,11 +311,11 @@ export async function POST(request: NextRequest) {
       from: sender,
       to: email,
       subject: replySubject,
-      text: `${replyBody}\n\n${thankYouUrl}`,
+      text: isDraftInquiry ? replyBody : `${replyBody}\n\n${thankYouUrl}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827; max-width: 620px; margin: 0 auto; padding: 28px;">
           <p>${textToHtml(replyBody)}</p>
-          ${renderEmailButton(thankYouUrl, replyButton)}
+          ${isDraftInquiry ? "" : renderEmailButton(thankYouUrl, replyButton)}
         </div>
       `
     });

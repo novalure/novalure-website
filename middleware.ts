@@ -52,22 +52,22 @@ const allowedPaths = new Set([
 ]);
 
 const redirects: Record<string, string> = {
-  "/en/audit": "/en/contact#audit-form",
-  "/de/audit": "/de/kontakt#audit-form",
-  "/de/pipeline-audit": "/de/kontakt#audit-form",
+  "/en/audit": "/en/contact#formular",
+  "/de/audit": "/de/kontakt#formular",
+  "/de/pipeline-audit": "/de/kontakt#formular",
   "/en/playbook": "/en/playbooks",
   "/de/playbook": "/de/playbooks",
   "/en/imprint": "/en/legal/imprint",
   "/en/privacy": "/en/legal/privacy",
   "/en/cookies": "/en/legal/cookies",
-  "/en/terms": "/en/contact#audit-form",
+  "/en/terms": "/en/contact#formular",
   "/en/real-estate-crm-handover": "/en/system-example",
   "/de/impressum": "/de/rechtliches/impressum",
   "/de/datenschutz": "/de/rechtliches/datenschutz",
   "/de/cookies": "/de/rechtliches/cookies",
   "/de/immobilien-crm-handover": "/de/systembeispiel",
   "/es/playbook": "/es/playbooks",
-  "/es/contacto": "/es/analisis-del-proyecto#audit-form",
+  "/es/contacto": "/es/analisis-del-proyecto#formular",
   "/es/sistema": "/es/ejemplo-del-sistema",
   "/es/proceso": "/es#proceso"
 };

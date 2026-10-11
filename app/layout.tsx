@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Schibsted_Grotesk, Source_Serif_4 } from "next/font/google";
+import { Instrument_Serif, Schibsted_Grotesk, Source_Serif_4 } from "next/font/google";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 import "./relaunch.css";
@@ -16,6 +16,13 @@ const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-source-serif",
+  display: "swap"
+});
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-novalure-instrument",
   display: "swap"
 });
 
@@ -54,7 +61,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const documentLanguage = requestedLanguage === "de-DE" || requestedLanguage === "es-ES" ? requestedLanguage : "en-GB";
 
   return (
-    <html className={`${schibsted.variable} ${sourceSerif.variable}`} lang={documentLanguage} suppressHydrationWarning>
+    <html className={`${schibsted.variable} ${sourceSerif.variable} ${instrumentSerif.variable}`} lang={documentLanguage} suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );

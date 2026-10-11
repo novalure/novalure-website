@@ -334,17 +334,17 @@ updatePage("agents", {
 });
 
 updatePage("playbooks", {
-  eyebrow: "Playbooks para el mercado español",
-  title: "Detecte dónde pierde contexto su recorrido comercial en España.",
-  seoTitle: "Playbooks para promotores y agencias en España | NovaLure",
+  eyebrow: "Guías prácticas gratuitas",
+  title: "Tres playbooks con plantillas para equipos inmobiliarios.",
+  seoTitle: "Playbooks inmobiliarios gratuitos con plantillas | NovaLure",
   description:
-    "Guías en español para promotores y agencias inmobiliarias: solicitudes cualificadas, seguimiento y traspaso comercial con una metodología internacional.",
+    "Tres guías en español para promotores y agencias: protocolo de traspaso, fichas de primer contacto y matriz de mercado con ejemplos completos.",
   metaDescription:
-    "Playbooks en español para promotores y agencias: cualificación, seguimiento y traspaso comercial aplicados al mercado inmobiliario español.",
+    "Playbooks gratuitos con herramientas rellenables para promotores y agencias inmobiliarias. Incluye ejemplos y un paso práctico de siete días.",
   heroBullets: [
-    "Ediciones para promotores y agencias en España",
-    "Diagnóstico de solicitudes y traspaso comercial",
-    "Perspectiva local con experiencia internacional"
+    "Ediciones para promotores y agencias inmobiliarias",
+    "Hojas de trabajo y ejemplos completos",
+    "Una herramienta especializada para un mercado objetivo definido"
   ],
   faq: marketFaq
 });

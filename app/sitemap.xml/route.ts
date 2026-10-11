@@ -10,17 +10,17 @@ const routes = [
   "/en/agents",
   "/de/makler",
   "/es/agencias-inmobiliarias",
+  "/en/system-example",
+  "/de/systembeispiel",
+  "/es/ejemplo-del-sistema",
   "/en/playbooks",
   "/de/playbooks",
   "/es/playbooks",
   "/en/contact",
   "/de/kontakt",
   "/es/analisis-del-proyecto",
-  "/en/system-example",
   "/en/eula",
-  "/en/vercel-integration-eula",
-  "/de/systembeispiel",
-  "/es/ejemplo-del-sistema"
+  "/en/vercel-integration-eula"
 ];
 
 function absolute(path: string) {

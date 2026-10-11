@@ -40,9 +40,12 @@ describe("playbook selection and delivery", () => {
   it("maps all nine metadata entries to real current files", () => {
     expect(Object.keys(playbooks)).toHaveLength(9);
     for (const [key, meta] of Object.entries(playbooks) as [PlaybookKey, (typeof playbooks)[PlaybookKey]][]) {
-      expect(meta.pages).toBe(10);
+      expect(meta.pages).toBe(meta.type === "agent" ? 15 : 13);
       expect(fs.existsSync(path.join(root, "public", meta.file))).toBe(true);
       expect(fs.existsSync(path.join(root, "public", meta.cover))).toBe(true);
+      const stem = path.basename(meta.file, ".pdf");
+      expect(fs.existsSync(path.join(root, "public/playbooks/previews", `${stem}-worksheet.png`))).toBe(true);
+      expect(fs.existsSync(path.join(root, "public/playbooks/previews", `${stem}-sample.png`))).toBe(true);
       expect(key).toBe(`${meta.locale}-${meta.type}`);
     }
   });

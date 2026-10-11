@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "reviewedAt": "2026-10-06",
+  "reviewedAt": "2026-10-11",
   "exceptions": [
     {
       "advisoryId": "GHSA-vfj7-8cjw-p6xm",
@@ -26,7 +26,7 @@
         "sanity",
         "tailwindcss"
       ],
-      "dependencyGraphSha256": "cb1f43b236c34e72db3d29cd6c6990ccd55f3754a916c9b2bca0f24a30702611",
+      "dependencyGraphSha256": "756e8d07ab88304fbaca9835b5a5efb9b933fa7741b8002b25237820c1486e28",
       "dependencyPaths": [
         "sanity > chokidar > braces",
         "sanity > @sanity/cli > @sanity/codegen > globby > fast-glob > micromatch > braces",
@@ -75,7 +75,7 @@
         "sprintf-js",
         "which-pm"
       ],
-      "dependencyGraphSha256": "cb1f43b236c34e72db3d29cd6c6990ccd55f3754a916c9b2bca0f24a30702611",
+      "dependencyGraphSha256": "756e8d07ab88304fbaca9835b5a5efb9b933fa7741b8002b25237820c1486e28",
       "dependencyPaths": [
         "sanity > preferred-pm > which-pm > load-yaml-file > js-yaml > argparse > sprintf-js"
       ],

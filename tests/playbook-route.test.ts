@@ -110,6 +110,36 @@ afterEach(() => {
 });
 
 describe("playbook submission route", () => {
+  it("delivers an individual field guide with email as the only required contact field", async () => {
+    const response = await POST(request({
+      mode: "field-guide",
+      locale: "es",
+      playbookKey: "es-international",
+      email: "Reader@Example.com",
+      consentMarketing: false,
+      consentTimestamp: new Date().toISOString(),
+      submissionId: "11111111-1111-4111-8111-111111111111",
+      privacyPolicyVersion
+    }));
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ ok: true, downloadUrl: "/playbooks/novalure-international-buyers-es.pdf" });
+    expect(mocks.send).toHaveBeenCalledTimes(1);
+    expect(mocks.hubspotClaim).not.toHaveBeenCalled();
+    expect(mocks.register).not.toHaveBeenCalled();
+    const mail = mocks.send.mock.calls[0][0] as { text: string };
+    expect(mail.text).toContain("/playbooks/novalure-international-buyers-es.pdf");
+  });
+
+  it("rejects a field-guide key from a different language", async () => {
+    const response = await POST(request({
+      mode: "field-guide", locale: "de", playbookKey: "en-agent", email: "reader@example.com",
+      consentTimestamp: new Date().toISOString(),
+      submissionId: "11111111-1111-4111-8111-111111111111", privacyPolicyVersion
+    }));
+    expect(response.status).toBe(400);
+    expect(mocks.send).not.toHaveBeenCalled();
+  });
+
   it("checks the IP limit before attempting to parse the body", async () => {
     mocks.ipLimit.mockResolvedValue({ rateLimited: true, retryAfterSeconds: 600 });
     const malformed = new NextRequest("https://www.novalure.eu/api/playbook", {
