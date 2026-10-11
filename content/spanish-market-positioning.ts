@@ -25,7 +25,7 @@ const spanishProcessSteps = relaunchCopy.es.steps.map((step, index) =>
 Object.assign(relaunchCopy.es as unknown as Record<string, unknown>, {
   kicker: "Sistemas internacionales de comercialización inmobiliaria para promotores y agencias en España",
   heroSub:
-    "NovaLure aplica en España una metodología comercial desarrollada a partir de proyectos en Irlanda, DACH y mercados internacionales: posicionamiento, visualización, dossier comercial, campaña, seguimiento y traspaso comercial al equipo de ventas.",
+    "NovaLure aplica en España una metodología desarrollada a partir de proyectos en Irlanda, DACH y mercados internacionales. Gestionamos posicionamiento, visualización, dossier, web del proyecto, campañas, cualificación y seguimiento; entregamos conversaciones preparadas y la venta permanece en manos de su equipo.",
   trust: "Con raíces en Irlanda · Activos en Irlanda, DACH e internacionalmente · Ahora en España",
   chipKicker: "Referencias · Mandatos en el mercado DACH",
   proofNote: "Resultados de referencia de nuestros mandatos en el mercado DACH — GRASL Immobilien",

@@ -32,6 +32,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const managed = managedServiceCopy[locale];
   const homePath = getPath(locale, "home");
   const crmHref = getCrmAppUrl(locale);
+  const systemHref = getPath(locale, "handover");
 
   const activeKey = Object.entries(routeMap).find(([, paths]) => paths[locale] === pathname)?.[0] as
     | keyof typeof routeMap
@@ -39,14 +40,13 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const switchHref = (targetLocale: Locale) => activeKey
     ? routeMap[activeKey][targetLocale]
     : getPath(targetLocale, "home");
-  const systemHref = getPath(locale, "handover");
   const anchor = (id: string) => `${homePath}#${id}`;
   const navItems = [
-    [t.nav[0], anchor("bautraeger")],
-    [t.nav[1], anchor("makler")],
+    [t.nav[0], getPath(locale, "developers")],
+    [t.nav[1], getPath(locale, "agents")],
     [t.nav[2], anchor(getProcessAnchor(locale))],
-    [t.nav[3], anchor("system")],
-    [t.nav[4], anchor("playbook")]
+    [t.nav[3], getPath(locale, "handover")],
+    [t.nav[4], getPath(locale, "playbooks")]
   ] as const;
 
   useEffect(() => {
@@ -119,7 +119,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           </div>
           <a className="v3-header-login" href={crmHref} target="_blank" rel="noreferrer" data-track="nav_crm_login">{t.login}</a>
           <Link className="v3-header-login" href={systemHref} data-track="nav_system_example">{managed.navLabel}</Link>
-          <Link className="v3-button v3-button-primary v3-header-cta" href={anchor("kontakt")} data-track="nav_audit">{t.cta}</Link>
+          <Link className="v3-button v3-button-primary v3-header-cta" href={getPath(locale, "contact")} data-track="nav_audit">{t.cta}</Link>
         </div>
 
         <button
@@ -151,7 +151,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             {navItems.map(([label, href]) => <Link href={href} key={href} onClick={() => setOpen(false)}>{label}</Link>)}
           </div>
           <div className="v3-mobile-menu-actions">
-            <Link className="v3-button v3-button-primary" href={anchor("kontakt")} onClick={() => setOpen(false)}>{t.cta}</Link>
+            <Link className="v3-button v3-button-primary" href={getPath(locale, "contact")} onClick={() => setOpen(false)}>{t.cta}</Link>
             <a className="v3-button v3-button-dark-outline" href={crmHref} target="_blank" rel="noreferrer" data-track="mobile_crm_login" onClick={() => setOpen(false)}>{t.login}</a>
             <Link className="v3-button v3-button-dark-outline" href={systemHref} data-track="mobile_system_example" onClick={() => setOpen(false)}>{managed.navLabel}</Link>
             <div className="v3-language-switch is-dark">
@@ -164,7 +164,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
       </header>
 
       <div className="v3-mobile-sticky-bar">
-        <Link className="v3-mobile-sticky-cta" href={anchor("kontakt")}>{t.cta}</Link>
+        <Link className="v3-mobile-sticky-cta" href={getPath(locale, "contact")}>{t.cta}</Link>
       </div>
     </>
   );
