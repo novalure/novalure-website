@@ -8,6 +8,8 @@ import type { PageContent } from "@/content/pages";
 import { siteHome, sitePath, sitePlaybookPath } from "./SiteRoutes";
 import chrome from "./DraftLegal.module.css";
 import styles from "./DraftEditorialPage.module.css";
+import StaffLoginLink from "./StaffLoginLink";
+import ManagedServiceBrief from "./ManagedServiceBrief";
 
 const ui = {
   de: { back: "Zur Startseite", contents: "Inhalte", next: "Nächster Schritt", check: "Projekt-Check anfragen", guide: "Passendes Playbook ansehen", questions: "Häufige Fragen", legal: "Rechtliches", contact: "Kontakt", imprint: "Impressum", privacy: "Datenschutz", cookies: "Cookies", example: "Illustratives Beispiel – keine echten Kundendaten." },
@@ -63,10 +65,11 @@ export default function DraftEditorialPage({ content, preview = true }: { conten
 
     <section className={styles.finalCta}><div className={styles.wrap}><span className={styles.eyebrow}>{t.next}</span><h2>{isSystem ? content.description : content.title}</h2><div><Link className={styles.lightButton} href={content.key === "auditThanks" ? homeHref : content.key === "playbookThanks" ? sitePlaybookPath(locale, preview) : contactHref}>{content.key === "auditThanks" ? t.back : content.key === "playbookThanks" ? t.guide : t.check}<ArrowRight size={18} /></Link>{(isAudience || isThankYou) && <Link className={styles.textLight} href={isAudience ? guideHref : contactHref}>{isAudience ? t.guide : t.check}<ArrowUpRight size={16} /></Link>}</div></div></section>
 
+    {(isAudience || isSystem) && <ManagedServiceBrief locale={locale} />}
     <footer className={chrome.footer}><div className={chrome.footerInner}><div className={chrome.footerTop}>
       <div><Link className={chrome.footerBrand} href={homeHref}>novalure<span>.</span></Link><p>NovaLure CLG · Dublin 2, Ireland</p></div>
       <nav aria-label={t.legal}><p>{t.legal}</p><Link href={sitePath(locale, "imprint", preview)}>{t.imprint}</Link><Link href={sitePath(locale, "privacy", preview)}>{t.privacy}</Link><Link href={sitePath(locale, "cookies", preview)}>{t.cookies}</Link></nav>
       <div className={chrome.footerContact}><p>{t.contact}</p><a href="mailto:hello@novalure.eu">hello@novalure.eu</a><Link href={homeHref}><ArrowLeft size={14} />{t.back}</Link></div>
-    </div><Link className={chrome.footerWordmark} href={homeHref}>novalure<span>.</span></Link><div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div>{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={sitePath(lang, content.key, preview)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div></div></footer>
+    </div><Link className={chrome.footerWordmark} href={homeHref}>novalure<span>.</span></Link><div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div><StaffLoginLink locale={locale} />{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={sitePath(lang, content.key, preview)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div></div></footer>
   </main>;
 }

@@ -9,6 +9,8 @@ import { playbooks, privacyPolicyVersion, type PlaybookType } from "@/lib/playbo
 import chrome from "./DraftLegal.module.css";
 import styles from "./DraftPlaybooks.module.css";
 import { siteHome, sitePath, sitePlaybookPath } from "./SiteRoutes";
+import StaffLoginLink from "./StaffLoginLink";
+import ManagedServiceBrief from "./ManagedServiceBrief";
 
 const types: PlaybookType[] = ["developer", "agent", "international"];
 const stems: Record<PlaybookType, string> = {
@@ -296,6 +298,7 @@ export default function DraftPlaybooks({ locale, previewMode = true }: { locale:
 
     <section className={styles.faq} aria-labelledby="playbooks-faq-title"><div className={styles.wrap}><span className={styles.eyebrowDark}>FAQ</span><h2 id="playbooks-faq-title">{t.faqTitle}</h2><div className={styles.faqGrid}>{t.faq.map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div></div></section>
 
+    <ManagedServiceBrief locale={locale} />
     <footer className={chrome.footer}>
       <div className={chrome.footerInner}>
         <div className={chrome.footerTop}>
@@ -304,7 +307,7 @@ export default function DraftPlaybooks({ locale, previewMode = true }: { locale:
           <div className={chrome.footerContact}><p>{t.footerContact}</p><a href="mailto:hello@novalure.eu">hello@novalure.eu</a><Link href={contactHref}><ArrowLeft size={14} />{t.next}</Link></div>
         </div>
         <Link className={chrome.footerWordmark} href={homeHref}>novalure<span>.</span></Link>
-        <div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div>{(["de", "en", "es"] as const).map(lang => <Link key={lang} href={playbookHref(lang, selected)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div>
+        <div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div><StaffLoginLink locale={locale} />{(["de", "en", "es"] as const).map(lang => <Link key={lang} href={playbookHref(lang, selected)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div>
       </div>
     </footer>
   </main>;

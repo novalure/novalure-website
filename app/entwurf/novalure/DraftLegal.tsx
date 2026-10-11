@@ -8,6 +8,7 @@ import { getPath, type Locale } from "@/lib/i18n";
 import type { DraftLegalKey } from "./LegalContent";
 import styles from "./DraftLegal.module.css";
 import { siteHome, sitePath } from "./SiteRoutes";
+import StaffLoginLink from "./StaffLoginLink";
 
 const copy = {
   de: { overview: "Übersicht", contents: "Inhalt", sections: "Abschnitte", menu: "Rechtliche Seiten", back: "Zurück zum Entwurf", contact: "Kontakt", legal: "Rechtliches", current: "Aktuelle Website", company: "Unternehmensangaben" },
@@ -118,7 +119,7 @@ export default function DraftLegal({ content, keyName, preview = true }: { conte
             <div className={styles.footerContact}><p>{t.contact}</p><a href="mailto:hello@novalure.eu">hello@novalure.eu</a>{preview && <a href={`https://www.novalure.eu${getPath(locale, keyName)}`} target="_blank" rel="noopener noreferrer">{t.current}<ArrowUpRight size={14} /></a>}</div>
           </div>
           <Link className={styles.footerWordmark} href={homeHref}>novalure<span>.</span></Link>
-          <div className={styles.footerBottom}><span>© 2026 NovaLure CLG</span><div>{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={legalHref(lang, keyName)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div>
+          <div className={styles.footerBottom}><span>© 2026 NovaLure CLG</span><div><StaffLoginLink locale={locale} />{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={legalHref(lang, keyName)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div>
         </div>
       </footer>
     </main>

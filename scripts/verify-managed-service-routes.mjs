@@ -31,24 +31,30 @@ const commercialRoutes = new Set([
 const languageExpectations = {
   de: {
     staffLogin: "Mitarbeiter-Login",
-    home: "Digitale Immobilienvermarktung, die Marketing und Vertrieb verbindet.",
+    home: "Aus Interesse werden",
     notice: "NovaLure betreibt den Lead- und Vertriebsprozess für Ihr Mandat.",
-    selection: "Welcher Bereich beschreibt Ihre aktuelle Situation?",
-    international: "Wir sprechen gezielt internationale Käufer an."
+    homeSelection: "Drei Playbooks ansehen",
+    playbookSelection: "Wo möchten Sie zuerst ansetzen?",
+    homeInternational: "Internationale Käufer",
+    playbookInternational: "Spezialausgabe"
   },
   en: {
     staffLogin: "Staff Login",
-    home: "Digital real-estate marketing that connects marketing and sales.",
+    home: "Turn interest into",
     notice: "NovaLure operates the lead and sales process for each mandate.",
-    selection: "Which area best describes your current situation?",
-    international: "We actively target international buyers."
+    homeSelection: "Explore three playbooks",
+    playbookSelection: "Where would you start?",
+    homeInternational: "International Buyers",
+    playbookInternational: "Specialist edition"
   },
   es: {
     staffLogin: "Acceso para el personal",
-    home: "Marketing inmobiliario digital que conecta marketing y ventas.",
+    home: "Del interés a las",
     notice: "NovaLure opera el proceso de captación y gestión comercial para cada encargo.",
-    selection: "¿Qué opción describe mejor su situación actual?",
-    international: "Nos dirigimos activamente a compradores internacionales."
+    homeSelection: "Ver los tres playbooks",
+    playbookSelection: "¿Por dónde quiere empezar?",
+    homeInternational: "Compradores internacionales",
+    playbookInternational: "Edición especializada"
   }
 };
 const forbidden = ["CRM-Login", "CRM login", "Acceso al CRM"];
@@ -112,15 +118,15 @@ async function verifyRoute(locale, route) {
   assert(!markup.includes("footer_system_example"), `${route} must not promote a public system example`);
   if (route === `/${locale}`) {
     assert(html.includes(expected.home), `${route} is missing the operated-service homepage explanation`);
-    assert(html.includes(expected.selection), `${route} is missing the role-based playbook selector`);
-    assert(html.includes(expected.international), `${route} is missing the international-buyer add-on`);
+    assert(html.includes(expected.homeSelection), `${route} is missing the playbook pathway`);
+    assert(html.includes(expected.homeInternational), `${route} is missing the international-buyer edition`);
   }
   if (commercialRoutes.has(route)) {
     assert(html.includes(expected.notice), `${route} is missing the operated-service clarification`);
   }
   if (route === `/${locale}/playbooks`) {
-    assert(html.includes(expected.selection), `${route} is missing the role-based playbook selector`);
-    assert(html.includes(expected.international), `${route} is missing the international-buyer add-on`);
+    assert(html.includes(expected.playbookSelection), `${route} is missing the playbook selector`);
+    assert(html.includes(expected.playbookInternational), `${route} is missing the international-buyer edition`);
   }
 }
 

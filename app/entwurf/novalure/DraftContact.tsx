@@ -5,6 +5,8 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
 import type { Locale } from "@/lib/i18n";
 import { siteHome, sitePath } from "./SiteRoutes";
+import StaffLoginLink from "./StaffLoginLink";
+import ManagedServiceBrief from "./ManagedServiceBrief";
 import chrome from "./DraftLegal.module.css";
 import styles from "./DraftContact.module.css";
 
@@ -178,6 +180,7 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
         </div>
       </section>
 
+      <ManagedServiceBrief locale={locale} />
       <footer className={chrome.footer}>
         <div className={chrome.footerInner}>
           <div className={chrome.footerTop}>
@@ -186,7 +189,7 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
             <div className={chrome.footerContact}><p>{t.contact}</p><a href="mailto:hello@novalure.eu">hello@novalure.eu</a><a href="#formular">{t.formTitle}<ArrowUpRight size={14} /></a></div>
           </div>
           <Link className={chrome.footerWordmark} href={homeHref}>novalure<span>.</span></Link>
-          <div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div>{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={contactHref(lang)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div>
+          <div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div><StaffLoginLink locale={locale} />{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={contactHref(lang)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div>
         </div>
       </footer>
     </main>

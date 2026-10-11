@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import { homeCopy } from "./DraftHomeCopy";
 import { siteHome, sitePath, sitePlaybookPath } from "./SiteRoutes";
+import StaffLoginLink from "./StaffLoginLink";
 import styles from "./DraftHome.module.css";
 
 const innovationHeroVideo = "/videos/novalure-asme-hero.mp4";
@@ -286,6 +287,7 @@ export default function DraftHome({ locale = "de", preview = true }: { locale?: 
               <Link href={sitePath(locale, "privacy", preview)}>{t.privacy}</Link>
               <Link href={sitePath(locale, "cookies", preview)}>{t.cookies}</Link>
               <Link href={sitePath("en", "eula", preview)}>EULA</Link>
+              <StaffLoginLink locale={locale} />
               {(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={siteHome(lang, preview)} hrefLang={lang} aria-current={lang === locale ? "page" : undefined}>{lang.toUpperCase()}</Link>)}
               {preview && <a href="https://novalure.eu/de">{t.currentSite}</a>}
             </nav>
