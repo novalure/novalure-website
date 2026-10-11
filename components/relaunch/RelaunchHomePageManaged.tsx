@@ -5,7 +5,8 @@ import { managedServiceCopy } from "@/content/managed-service-copy";
 import { relaunchCopy } from "@/content/relaunch-copy";
 import { getProcessAnchor, type Locale } from "@/lib/i18n";
 import { FaqAccordion, ProcessSteps, ProjectCheckLink, ProofCounters, SectionReveals } from "@/components/relaunch/RelaunchInteractive";
-import { ReferenceBrands } from "@/components/relaunch/ReferenceBrands";
+import { architecturalCopy } from "@/content/architectural-copy";
+import { FounderSection, ProjectShowcase } from "@/components/relaunch/ArchitecturalSections";
 
 function SectionKicker({ children, inverse = false }: { children: React.ReactNode; inverse?: boolean }) {
   return <p className={`v3-kicker${inverse ? " is-inverse" : ""}`}><span aria-hidden="true" />{children}</p>;
@@ -14,6 +15,7 @@ function SectionKicker({ children, inverse = false }: { children: React.ReactNod
 function HeroPipeline({ locale }: { locale: Locale }) {
   const t = relaunchCopy[locale];
   const managed = managedServiceCopy[locale];
+  const architectural = architecturalCopy[locale];
   const cards = [
     { name: t.unitPenthouseA3, score: 87, status: t.stViewing, source: t.srcCampaign, next: t.next1, tone: "high" },
     { name: t.unitGardenB1, score: 74, status: t.stQualified, source: t.srcBrochure, next: t.next2, tone: "medium" },
@@ -23,7 +25,16 @@ function HeroPipeline({ locale }: { locale: Locale }) {
 
   return (
     <div className="v3-hero-visual" aria-label={t.mockTitle}>
-      <div className="v3-pipeline-window">
+      <Image
+        className="ai-hero-image"
+        src="/images/ai-render-15594499.jpg"
+        alt={architectural.sampleVisual}
+        fill
+        priority
+        sizes="100vw"
+      />
+      <span className="ai-hero-image-label">{architectural.sampleVisual}</span>
+      <div className="v3-pipeline-window liquid-glass">
         <div className="v3-window-bar">
           <span className="v3-window-dots" aria-hidden="true"><i /><i /><i /></span>
           <strong>{t.mockTitle}</strong>
@@ -43,7 +54,6 @@ function HeroPipeline({ locale }: { locale: Locale }) {
           ))}
         </div>
       </div>
-      <ReferenceBrands locale={locale} kicker={t.chipKicker} />
     </div>
   );
 }
@@ -127,6 +137,7 @@ function SystemBoard({ locale }: { locale: Locale }) {
 export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
   const t = relaunchCopy[locale];
   const managed = managedServiceCopy[locale];
+  const architectural = architecturalCopy[locale];
   const trustItems = [
     [t.tr1b, t.tr1],
     [t.tr2b, t.tr2],
@@ -144,14 +155,14 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
       <section className="v3-hero" id="top">
         <div className="v3-hero-copy">
           <SectionKicker>{t.kicker}</SectionKicker>
-          <h1>{t.heroH1}</h1>
+          <h1 aria-label={t.heroH1}>{architectural.heroStart} <em>{architectural.heroEmphasis}</em> {architectural.heroEnd}</h1>
           <p>{t.heroSub}</p>
           <div className="v3-actions">
             <ProjectCheckLink className="v3-button v3-button-primary" track="v3_hero_project_check">
               {t.cta}
             </ProjectCheckLink>
-            <a className="v3-button v3-button-secondary" href="#playbook" data-track="v3_hero_playbook">
-              {t.ctaPlaybook}
+            <a className="v3-button v3-button-secondary" href="#system" data-track="v3_hero_system">
+              {architectural.heroSecondary}
             </a>
           </div>
           <p className="v3-trust-line">{t.trust}</p>
@@ -167,7 +178,8 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
       <section className="v3-section v3-developers" id="bautraeger" data-reveal>
         <div className="v3-section-heading">
           <SectionKicker>{t.bauKicker}</SectionKicker>
-          <h2>{t.bauH}</h2>
+          <h2>{architectural.editorialTitle}</h2>
+          <p>{t.bauH}</p>
         </div>
         <div className="v3-problem-grid">
           {t.pairs.map((pair) => (
@@ -196,6 +208,8 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
         <ProcessSteps steps={t.steps} getLabel={t.getLabel} />
         <p className="v3-process-note">{t.procNote}</p>
       </section>
+
+      <ProjectShowcase locale={locale} />
 
       <section className="v3-section v3-system" id="system" data-reveal>
         <div className="v3-system-copy">
@@ -261,6 +275,8 @@ export function RelaunchHomePageManaged({ locale }: { locale: Locale }) {
           ))}
         </div>
       </section>
+
+      <FounderSection locale={locale} />
 
       <section className="v3-section v3-playbook" id="playbook" data-reveal>
         <div className="v3-playbook-shell">

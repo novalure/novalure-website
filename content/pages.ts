@@ -146,16 +146,16 @@ export const playbooks: Record<Locale, Playbook[]> = {
 const hardFaq: Record<Locale, FaqItem[]> = {
   de: [
     {
-      question: "Warum sollte ich NovaLure vertrauen, wenn es noch keine öffentlichen Referenzen gibt?",
-      answer: "Weil wir keine Referenzen erfinden. Stattdessen zeigen wir Beispiel-Handover, Projekt-Check-Auszüge und echte Arbeitslogik. Entscheiden Sie anhand der Systemlogik, nicht anhand erfundener Logos."
+      question: "Wie kann ich die Arbeit von NovaLure beurteilen?",
+      answer: "Anhand der veröffentlichten Referenzen, klar gekennzeichneter Beispielmaterialien und der nachvollziehbaren Arbeitslogik. Ergebnisse nennen wir nur mit dem jeweiligen Kontext."
     },
     {
       question: "Haben Sie schon Kunden?",
-      answer: "Wir nennen Kunden nur, wenn eine saubere Freigabe vorliegt. Ohne Freigabe zeigen wir keine Logos, keine Namen und keine indirekten Hinweise. Deshalb arbeitet NovaLure mit Beispiel-Artefakten und Demo-Systemen statt Fake-Proof."
+      answer: "Veröffentlichte Referenzen sind auf dieser Website sichtbar. Weitere Kunden nennen wir nur mit entsprechender Freigabe; Beispielmaterial und Demo-Systeme bleiben klar gekennzeichnet."
     },
     {
-      question: "Warum nennen Sie keine Kundenlogos?",
-      answer: "Weil Logos nur mit sauberer Freigabe verwendet werden. Keine Logo-Wand ist besser als eine unklare Logo-Wand."
+      question: "Warum zeigen Sie nur ausgewählte Referenzen?",
+      answer: "Wir zeigen nur Referenzen, die bereits öffentlich sind. Bei weiteren Mandaten respektieren wir Vertraulichkeit und verwenden keine ungeklärten Logos oder Ergebnisse."
     },
     {
       question: "Ist NovaLure eine Marketingagentur?",
@@ -224,16 +224,16 @@ const hardFaq: Record<Locale, FaqItem[]> = {
   ],
   en: [
     {
-      question: "Why should I trust NovaLure without public references?",
-      answer: "Because we do not invent references. Instead, we show example handovers, Project Check excerpts and real working logic. Judge the system logic, not a fabricated logo wall."
+      question: "How can I assess NovaLure's work?",
+      answer: "Review the published references, clearly labelled sample materials and visible working logic. We only present results with their context."
     },
     {
       question: "Do you already have clients?",
-      answer: "We only name clients when clear permission exists. Without permission, we show no logos, names or indirect hints. NovaLure uses example artefacts and demo systems instead of fabricated proof."
+      answer: "Published references are visible on this website. We name other clients only with appropriate permission; sample materials and demo systems remain clearly labelled."
     },
     {
-      question: "Why are there no client logos?",
-      answer: "Because logos require explicit permission. No logo wall is better than an unclear logo wall."
+      question: "Why do you show only selected references?",
+      answer: "We show references that are already public. For other mandates, we respect confidentiality and do not use unapproved logos or results."
     },
     {
       question: "Is NovaLure a marketing agency?",

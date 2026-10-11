@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Schibsted_Grotesk, Source_Serif_4 } from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 import "./relaunch.css";
+import "./architectural.css";
 
 const siteUrl = getSiteUrl();
-const schibsted = Schibsted_Grotesk({
+const manrope = Manrope({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-schibsted",
+  variable: "--font-manrope",
   display: "swap"
 });
-const sourceSerif = Source_Serif_4({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-source-serif",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
   display: "swap"
 });
 
@@ -54,7 +56,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const documentLanguage = requestedLanguage === "de-DE" || requestedLanguage === "es-ES" ? requestedLanguage : "en-GB";
 
   return (
-    <html className={`${schibsted.variable} ${sourceSerif.variable}`} lang={documentLanguage} suppressHydrationWarning>
+    <html className={`${manrope.variable} ${instrumentSerif.variable}`} lang={documentLanguage} suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );
