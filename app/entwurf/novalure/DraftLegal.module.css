@@ -86,7 +86,7 @@
 }
 @media (max-width: 640px) {
   .header { padding: 14px; }.nav { min-height: 60px; padding: 7px 10px 7px 15px; gap: 8px; }
-  .brand { font-size: 25px; }.headerLinks { display: none; }.localeSwitch { margin-left: auto; }.localeSwitch a { width: 29px; height: 27px; }
+  .brand { font-size: 25px; }.headerLinks { display: none; }.localeSwitch { margin-left: auto; gap: 2px; padding: 3px; }.localeSwitch a { width: 40px; height: 40px; font-size: 11px; line-height: 1; }
   .hero { min-height: 620px; }.heroInner, .documentInner, .footerInner { width: min(100% - 38px, 1440px); }.serviceNoteInner { width: min(100% - 38px, 1060px); }
   .heroInner { padding: 150px 0 28px; }.hero h1 { font-size: clamp(64px, 14vw, 105px); margin: 28px 0 22px; }.heroActions { margin: 30px 0 65px; }
   .heroMeta { font-size: 9px; flex-wrap: wrap; }.heroMeta span:nth-child(2) { display: none; }
