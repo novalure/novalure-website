@@ -31,6 +31,11 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const t = headerCopy[locale];
   const homePath = getPath(locale, "home");
   const isHome = pathname === homePath || pathname === `${homePath}/`;
+  const isPlaybooks = pathname === getPath(locale, "playbooks");
+  const actionHref = isPlaybooks ? "#playbook-download" : `${homePath}#kontakt`;
+  const actionLabel = isPlaybooks
+    ? locale === "de" ? "Playbook anfordern" : locale === "es" ? "Solicitar playbook" : "Request playbook"
+    : t.cta;
 
   useEffect(() => {
     if (!isHome) return;
@@ -124,7 +129,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>
             <Link className={locale === "es" ? "is-active" : ""} href={locale === "es" ? pathname : switchHref("es")} hrefLang="es">ES</Link>
           </div>
-          <Link className="v3-button v3-button-primary v3-header-cta" href={anchor("kontakt")} data-track="nav_audit">{t.cta}</Link>
+          <Link className="v3-button v3-button-primary v3-header-cta" href={actionHref} data-track={isPlaybooks ? "nav_playbook" : "nav_audit"}>{actionLabel}</Link>
         </div>
 
         <button
@@ -156,7 +161,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             {navItems.map(([label, href]) => <Link href={href} key={href} onClick={() => setOpen(false)}>{label}</Link>)}
           </div>
           <div className="v3-mobile-menu-actions">
-            <Link className="v3-button v3-button-primary" href={anchor("kontakt")} onClick={() => setOpen(false)}>{t.cta}</Link>
+            <Link className="v3-button v3-button-primary" href={actionHref} onClick={() => setOpen(false)}>{actionLabel}</Link>
             <div className="v3-language-switch is-dark">
               <Link className={locale === "de" ? "is-active" : ""} href={locale === "de" ? pathname : switchHref("de")} hrefLang="de">DE</Link>
               <Link className={locale === "en" ? "is-active" : ""} href={locale === "en" ? pathname : switchHref("en")} hrefLang="en">EN</Link>
@@ -166,9 +171,9 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         </nav>
       </header>
 
-      <div className="v3-mobile-sticky-bar">
+      {!isPlaybooks && <div className="v3-mobile-sticky-bar">
         <Link className="v3-mobile-sticky-cta" href={anchor("kontakt")}>{t.cta}</Link>
-      </div>
+      </div>}
     </>
   );
 }

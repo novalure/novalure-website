@@ -1,11 +1,16 @@
 import "@/content/spanish-market-positioning";
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
-import { MarketingPage } from "@/components/MarketingPage";
 import { pages } from "@/content/pages";
 import { getAlternates, getLocalizedParams, getPageKey, isLocale, type Locale } from "@/lib/i18n";
 import { getSiteUrl } from "@/lib/site-url";
 import { pageSchemas } from "@/lib/structured-data";
+import DraftHome from "@/app/entwurf/novalure/DraftHome";
+import DraftContact from "@/app/entwurf/novalure/DraftContact";
+import DraftPlaybooks from "@/app/entwurf/novalure/DraftPlaybooks";
+import DraftLegal from "@/app/entwurf/novalure/DraftLegal";
+import DraftEditorialPage from "@/app/entwurf/novalure/DraftEditorialPage";
+import { draftLegalKeys, getDraftLegalContent, type DraftLegalKey } from "@/app/entwurf/novalure/LegalContent";
 
 const siteUrl = getSiteUrl();
 
@@ -59,13 +64,16 @@ export default async function LocalizedPage(props: { params: Promise<RouteParams
   if (!key) notFound();
   if (key === "eula" && locale !== "en") permanentRedirect("/en/eula");
   if (key === "vercelIntegrationEula" && locale !== "en") permanentRedirect("/en/vercel-integration-eula");
-  if (key === "handover") permanentRedirect(getAlternates(locale, "contact").canonical);
-
   const content = pages[locale][key];
+  const page = key === "home" ? <DraftHome locale={locale} preview={false} />
+    : key === "contact" ? <DraftContact locale={locale} preview={false} />
+      : key === "playbooks" ? <DraftPlaybooks locale={locale} previewMode={false} />
+        : draftLegalKeys.includes(key as DraftLegalKey) ? <DraftLegal content={getDraftLegalContent(locale, key as DraftLegalKey)} keyName={key as DraftLegalKey} preview={false} />
+          : <DraftEditorialPage content={content} preview={false} />;
 
   return (
     <>
-      <MarketingPage content={content} />
+      {page}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchemas(content)) }}

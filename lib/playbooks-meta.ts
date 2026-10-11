@@ -22,7 +22,7 @@ export const playbooks: Record<PlaybookKey, PlaybookMeta> = {
   "de-developer": {
     locale: "de",
     type: "developer",
-    pages: 10,
+    pages: 13,
     readingMinutes: 9,
     title: "Projekt-Nachfrage",
     cover: "/playbooks/covers/novalure-project-demand-de.png",
@@ -31,7 +31,7 @@ export const playbooks: Record<PlaybookKey, PlaybookMeta> = {
   "de-agent": {
     locale: "de",
     type: "agent",
-    pages: 10,
+    pages: 15,
     readingMinutes: 9,
     title: "Eigene Nachfrage",
     cover: "/playbooks/covers/novalure-owned-demand-de.png",
@@ -40,7 +40,7 @@ export const playbooks: Record<PlaybookKey, PlaybookMeta> = {
   "de-international": {
     locale: "de",
     type: "international",
-    pages: 10,
+    pages: 13,
     readingMinutes: 9,
     title: "Internationale Käufer",
     cover: "/playbooks/covers/novalure-international-buyers-de.png",
@@ -49,7 +49,7 @@ export const playbooks: Record<PlaybookKey, PlaybookMeta> = {
   "en-developer": {
     locale: "en",
     type: "developer",
-    pages: 10,
+    pages: 13,
     readingMinutes: 9,
     title: "Project Demand",
     cover: "/playbooks/covers/novalure-project-demand-en.png",
@@ -58,7 +58,7 @@ export const playbooks: Record<PlaybookKey, PlaybookMeta> = {
   "en-agent": {
     locale: "en",
     type: "agent",
-    pages: 10,
+    pages: 15,
     readingMinutes: 9,
     title: "Owned Demand",
     cover: "/playbooks/covers/novalure-owned-demand-en.png",
@@ -67,7 +67,7 @@ export const playbooks: Record<PlaybookKey, PlaybookMeta> = {
   "en-international": {
     locale: "en",
     type: "international",
-    pages: 10,
+    pages: 13,
     readingMinutes: 9,
     title: "International Buyers",
     cover: "/playbooks/covers/novalure-international-buyers-en.png",
@@ -76,7 +76,7 @@ export const playbooks: Record<PlaybookKey, PlaybookMeta> = {
   "es-developer": {
     locale: "es",
     type: "developer",
-    pages: 10,
+    pages: 13,
     readingMinutes: 9,
     title: "Demanda de promociones",
     cover: "/playbooks/covers/novalure-project-demand-es.png",
@@ -85,7 +85,7 @@ export const playbooks: Record<PlaybookKey, PlaybookMeta> = {
   "es-agent": {
     locale: "es",
     type: "agent",
-    pages: 10,
+    pages: 15,
     readingMinutes: 9,
     title: "Demanda propia",
     cover: "/playbooks/covers/novalure-owned-demand-es.png",
@@ -94,7 +94,7 @@ export const playbooks: Record<PlaybookKey, PlaybookMeta> = {
   "es-international": {
     locale: "es",
     type: "international",
-    pages: 10,
+    pages: 13,
     readingMinutes: 9,
     title: "Compradores internacionales",
     cover: "/playbooks/covers/novalure-international-buyers-es.png",

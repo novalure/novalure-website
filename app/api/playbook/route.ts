@@ -51,19 +51,19 @@ const playbookCopy: Record<PlaybookLocale, LocaleCopy> = {
     developer: {
       subject: "Your Project Demand Playbook",
       headline: "Your Project Demand Playbook is ready",
-      intro: "This diagnostic guide shows where buying context gets lost between project presence, campaign, qualification and sales.",
+      intro: "Your 13-page field guide includes a fillable handoff record, a completed example and a seven-day team exercise.",
       cta: "Open Project Demand"
     },
     agent: {
       subject: "Your Owned Demand Playbook",
       headline: "Your Owned Demand Playbook is ready",
-      intro: "This diagnostic guide shows how seller and buyer enquiries become prepared conversations rather than one more list to work through.",
+      intro: "Your 15-page field guide includes separate seller and buyer first-contact cards, completed examples and a seven-day exercise.",
       cta: "Open Owned Demand"
     },
     international: {
       subject: "Your International Buyers Specialist Playbook",
       headline: "Your International Buyers Specialist Playbook is ready",
-      intro: "This specialist guide shows what international buyers need beyond translation: trust, process clarity, finance context, language ownership and disciplined follow-up.",
+      intro: "Your 13-page specialist guide includes a fillable target-market matrix and a completed illustrative example.",
       cta: "Open International Buyers"
     },
     multipleSubject: "Your selected NovaLure playbooks",
@@ -79,19 +79,19 @@ const playbookCopy: Record<PlaybookLocale, LocaleCopy> = {
     developer: {
       subject: "Ihr Playbook zur Projekt-Nachfrage",
       headline: "Ihr Playbook zur Projekt-Nachfrage ist bereit",
-      intro: "Der Diagnose-Leitfaden zeigt, wo Kaufkontext zwischen Projektauftritt, Kampagne, Qualifizierung und Vertrieb verloren geht.",
+      intro: "Ihr 13-seitiger Field Guide enthält ein ausfüllbares Übergabeprotokoll, ein vollständiges Muster und eine 7-Tage-Übung.",
       cta: "Projekt-Nachfrage öffnen"
     },
     agent: {
       subject: "Ihr Playbook zur eigenen Nachfrage",
       headline: "Ihr Playbook zur eigenen Nachfrage ist bereit",
-      intro: "Der Diagnose-Leitfaden zeigt, wie Eigentümer- und Käuferanfragen zu vorbereiteten Gesprächen werden statt zu einer weiteren Liste zum Abtelefonieren.",
+      intro: "Ihr 15-seitiger Field Guide enthält getrennte Erstkontaktkarten für Eigentümer und Käufer, ausgefüllte Muster und eine 7-Tage-Übung.",
       cta: "Eigene Nachfrage öffnen"
     },
     international: {
       subject: "Ihr Spezial-Playbook zu internationalen Käufern",
       headline: "Ihr Spezial-Playbook zu internationalen Käufern ist bereit",
-      intro: "Der Spezial-Leitfaden zeigt, was internationale Käufer zusätzlich zur Übersetzung brauchen: Vertrauen, Prozessklarheit, Finanzierungskontext, Sprachzuständigkeit und diszipliniertes Follow-up.",
+      intro: "Ihr 13-seitiger Spezial-Guide enthält eine ausfüllbare Zielmarkt-Matrix und ein vollständig ausgefülltes illustratives Beispiel.",
       cta: "Internationale Käufer öffnen"
     },
     multipleSubject: "Ihre ausgewählten NovaLure Playbooks",
@@ -107,19 +107,19 @@ const playbookCopy: Record<PlaybookLocale, LocaleCopy> = {
     developer: {
       subject: "Su Playbook sobre demanda de promociones",
       headline: "Su Playbook sobre demanda de promociones está listo",
-      intro: "Esta guía de diagnóstico muestra dónde se pierde el contexto de compra entre la presentación, la campaña, la cualificación y el equipo comercial.",
+      intro: "Su guía de 13 páginas incluye un protocolo de traspaso rellenable, un ejemplo completo y un ejercicio de siete días.",
       cta: "Abrir Demanda de promociones"
     },
     agent: {
       subject: "Su Playbook sobre demanda propia",
       headline: "Su Playbook sobre demanda propia está listo",
-      intro: "Esta guía de diagnóstico muestra cómo convertir solicitudes de propietarios y compradores en conversaciones preparadas, no en otra lista que repasar.",
+      intro: "Su guía de 15 páginas incluye fichas distintas para propietarios y compradores, ejemplos completos y un ejercicio de siete días.",
       cta: "Abrir Demanda propia"
     },
     international: {
       subject: "Su Playbook especializado sobre compradores internacionales",
       headline: "Su Playbook sobre compradores internacionales está listo",
-      intro: "Esta guía especializada muestra qué necesitan los compradores internacionales además de una traducción: confianza, claridad del proceso, contexto financiero, responsabilidad lingüística y seguimiento disciplinado.",
+      intro: "Su guía especializada de 13 páginas incluye una matriz de mercado rellenable y un ejemplo ilustrativo completo.",
       cta: "Abrir Compradores internacionales"
     },
     multipleSubject: "Sus Playbooks seleccionados de NovaLure",
@@ -410,12 +410,14 @@ async function sendPlaybookEmail({
   keys,
   name,
   email,
-  submissionId
+  submissionId,
+  useLocalFiles = false
 }: {
   keys: PlaybookKey[];
   name: string;
   email: string;
   submissionId: string;
+  useLocalFiles?: boolean;
 }) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
@@ -425,7 +427,7 @@ async function sendPlaybookEmail({
   const siteUrl = resolveDeploymentContext().publicOrigin;
   const items = keys.map((key) => {
     const { type } = getPlaybookParts(key);
-    return { key, copy: playbookCopy[locale][type], url: getPlaybookUrl(key), title: playbooks[key].title };
+    return { key, copy: playbookCopy[locale][type], url: useLocalFiles ? `${siteUrl}${playbooks[key].file}` : getPlaybookUrl(key), title: playbooks[key].title };
   });
   const primaryCopy = items[0].copy;
   const multiple = items.length > 1;
@@ -433,7 +435,7 @@ async function sendPlaybookEmail({
   const headline = multiple ? playbookCopy[locale].multipleHeadline : primaryCopy.headline;
   const intro = multiple ? playbookCopy[locale].multipleIntro : primaryCopy.intro;
   const auditUrl = `${siteUrl}${locale === "de" ? "/de/kontakt" : locale === "es" ? "/es/analisis-del-proyecto" : "/en/contact"}#book-audit`;
-  const greeting = locale === "de" ? `Hallo ${name},` : locale === "es" ? `Hola, ${name}:` : `Hi ${name},`;
+  const greeting = locale === "de" ? (name ? `Hallo ${name},` : "Guten Tag,") : locale === "es" ? (name ? `Hola, ${name}:` : "Hola:") : (name ? `Hi ${name},` : "Hello,");
   const auditCta = locale === "de" ? "Projekt-Check anfragen" : locale === "es" ? "Solicitar un análisis del proyecto" : "Request Project Check";
   const footer = locale === "de"
     ? { privacy: "Datenschutz", legal: "Impressum", unsubscribe: "Abmelden", signoff: "Viele Grüße, das NovaLure-Team" }
@@ -639,6 +641,38 @@ export async function POST(request: NextRequest) {
 
   try {
     const locale: PlaybookLocale = body.locale === "de" || body.locale === "es" ? body.locale : "en";
+    if (body.mode === "field-guide") {
+      const key = body.playbookKey;
+      const submittedAt = typeof body.consentTimestamp === "string" ? body.consentTimestamp : "";
+      const submittedMs = Date.parse(submittedAt);
+      const submissionId = isSubmissionId(body.submissionId) ? body.submissionId : "";
+      if (!isPlaybookKey(key) || !key.startsWith(`${locale}-`) || !isEmail(body.email)
+        || !submissionId || !Number.isFinite(submittedMs)
+        || submittedAt !== new Date(submittedMs).toISOString()
+        || submittedMs > Date.now() + 5 * 60 * 1000
+        || submittedMs < Date.now() - 24 * 60 * 60 * 1000
+        || body.privacyPolicyVersion !== privacyPolicyVersion) {
+        return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
+      }
+      const email = normalizeRecipientEmail(body.email);
+      const consentMarketing = body.consentMarketing === true;
+      try { assertRuntimeConfiguration(consentMarketing); }
+      catch (error) {
+        console.error("novalure_playbook_configuration_failed", error);
+        return unavailableResponse();
+      }
+      let recipientRateLimit: PlaybookRateLimitResult;
+      try { recipientRateLimit = await checkPlaybookRecipientRateLimit(email, { requestId: submissionId }); }
+      catch (error) {
+        console.error("novalure_playbook_recipient_rate_limit_unavailable", error);
+        return unavailableResponse();
+      }
+      if (recipientRateLimit.rateLimited) return rateLimitResponse(recipientRateLimit);
+      await sendPlaybookEmail({ keys: [key], name: "", email, submissionId, useLocalFiles: true });
+      if (consentMarketing) await sendDoubleOptInEmail({ key, email, submissionId, consentTimestamp: submittedAt });
+      console.info("novalure_field_guide_delivery", JSON.stringify({ locale, key, submissionId, marketingOptInRequested: consentMarketing }));
+      return NextResponse.json({ ok: true, downloadUrl: playbooks[key].file });
+    }
     const role = parsePrimaryRole(body.role ?? body.playbook);
     if (!role) return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
 

@@ -1,0 +1,54 @@
+.page { color: #11192b; background: #f8f8f6; }
+.wrap { width: min(100% - 48px, 1200px); margin: auto; }
+.eyebrow { margin: 0 0 18px; color: #1656e9; font-size: 11px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+.hero { padding: 145px 0 105px; background: #101a2b; color: white; }
+.hero h1 { max-width: 900px; margin: 0; font-size: clamp(52px, 7vw, 106px); line-height: .99; letter-spacing: -.055em; }
+.hero p:not(.eyebrow) { max-width: 690px; margin: 30px 0; color: #d4deee; font-size: clamp(16px, 1.7vw, 20px); line-height: 1.6; }
+.primaryButton { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 13px 23px; border: 0; border-radius: 5px; background: #1656e9; color: #fff; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.primaryButton:hover { background: #0c43bd; }
+.options { padding: 95px 0; }
+.cardGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.bookCard { background: white; border: 1px solid #e4e8ef; border-radius: 9px; overflow: hidden; }
+.cover { display: grid; place-items: center; padding: 28px 40px; background: #e9edf4; }
+.cover img { width: min(100%, 245px); height: auto; box-shadow: 0 13px 28px #101a2b2a; }
+.bookCopy { padding: 26px; }
+.bookCopy > span { color: #1656e9; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.bookCopy h2 { margin: 16px 0 9px; font-size: 31px; line-height: 1.08; }
+.bookCopy h3 { margin: 23px 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+.bookCopy p { margin: 0; color: #4e596a; line-height: 1.55; font-size: 14px; }
+.bookCopy .promise { color: #11192b; font-size: 16px; }
+.bookCopy a { display: inline-block; margin-top: 26px; color: #1656e9; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.inside { padding: 85px 0; background: #e9eef9; }
+.inside .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+.inside h2, .previews h2, .faq h2, .formIntro h2 { margin: 0; font-size: clamp(36px, 4.5vw, 62px); line-height: 1.06; letter-spacing: -.04em; }
+.inside ol { margin: 0; padding: 0; list-style: none; }
+.inside li { padding: 19px 0; border-bottom: 1px solid #b9c8e4; font-size: 17px; }
+.inside li span { display: inline-block; width: 50px; color: #1656e9; font-size: 12px; font-weight: 700; }
+.previews { padding: 95px 0; }
+.previewGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
+.previewBook { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.previewBook h3 { grid-column: 1 / -1; font-size: 21px; }
+.previewBook a { color: #1656e9; font-size: 12px; font-weight: 700; text-decoration: none; }
+.previewBook a img { display: block; width: 100%; height: auto; margin-bottom: 9px; border: 1px solid #d8dfe8; box-shadow: 0 8px 17px #101a2b13; }
+.faq { padding: 80px 0; background: #fff; }
+.faq .wrap { display: grid; grid-template-columns: .7fr 1fr; gap: 70px; }
+.faq details { border-bottom: 1px solid #dbe1e9; padding: 20px 0; }
+.faq summary { cursor: pointer; font-size: 17px; font-weight: 700; }
+.faq details p { max-width: 630px; color: #4e596a; line-height: 1.6; }
+.formSection { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; padding: 100px max(24px, calc((100vw - 1200px)/2)); background: #101a2b; color: white; }
+.formIntro > span { color: #9bbaff; font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+.formIntro h2 { margin-top: 20px; }
+.formIntro p { max-width: 490px; color: #cbd5e5; line-height: 1.6; }
+.formIntro a { color: #9bbaff; }
+.form { display: grid; gap: 19px; padding: 32px; background: white; border-radius: 8px; color: #11192b; }
+.form label { display: grid; gap: 8px; font-size: 13px; font-weight: 700; }
+.form input:not([type=checkbox]), .form select { width: 100%; min-height: 49px; padding: 10px 12px; border: 1px solid #aeb9ca; border-radius: 4px; background: white; color: #11192b; font: inherit; }
+.form .marketing { display: flex; align-items: flex-start; gap: 11px; color: #4e596a; font-weight: 400; line-height: 1.45; }
+.marketing input { flex: 0 0 auto; margin-top: 2px; width: 18px; height: 18px; }
+.form button { width: 100%; }
+.honeypot { position: absolute; left: -9999px; }
+.success { align-self: start; padding: 32px; border-radius: 8px; background: white; color: #11192b; }
+.success p { margin: 0 0 22px; font-size: 17px; line-height: 1.5; }
+.error { color: #b62d37; }
+@media (max-width: 900px) { .cardGrid { grid-template-columns: 1fr; } .bookCard { display: grid; grid-template-columns: 40% 60%; } .cover { padding: 24px; } .previewGrid { grid-template-columns: 1fr; } .previewBook { max-width: 640px; } }
+@media (max-width: 650px) { .wrap { width: min(100% - 32px, 1200px); } .hero { padding: 100px 0 75px; } .options,.previews,.faq { padding: 65px 0; } .bookCard { display: block; } .cover img { width: min(75%, 240px); } .inside .wrap, .faq .wrap, .formSection { grid-template-columns: 1fr; gap: 32px; } .formSection { padding: 70px 16px; } .form { padding: 23px; } }

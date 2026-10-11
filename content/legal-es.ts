@@ -207,7 +207,7 @@ export const privacySectionsEs: PageSection[] = [
     title: "7. Formularios, Playbooks y análisis del proyecto",
     body: "Cuando envía un formulario tratamos los datos facilitados para revisar la solicitud, entregar el Playbook, preparar un análisis o realizar el seguimiento profesional.",
     items: [
-      "Para Playbooks tratamos nombre, correo, empresa, teléfono, Playbook, idioma, URL, UTM, consentimiento obligatorio, consentimiento opcional de marketing, marca temporal y versión de la Política de privacidad.",
+      "En la nueva página de Playbooks tratamos correo electrónico, edición elegida, idioma, elección opcional de marketing, fecha y versión de la Política de privacidad. Otros formularios existentes pueden recoger nombre, empresa, teléfono, URL y UTM cuando se faciliten.",
       "Para análisis y contacto tratamos datos sobre empresa, web, función, proyecto o mercado, problema, CRM, volumen, cuello de botella, activos, calendario, presupuesto, decisión y mensaje.",
       "Cuando la lógica utiliza una base de datos, los datos de solicitud, consentimiento y sistema pueden almacenarse en Neon PostgreSQL con servidor en Frankfurt, Alemania.",
       "Para proteger los formularios podemos utilizar campos ocultos u otros controles antispam.",

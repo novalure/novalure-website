@@ -15,7 +15,9 @@ vercel
 .codex-python-packages
 __pycache__/
 *.pyc
-public/playbooks/previews
+public/playbooks/previews/*
+!public/playbooks/previews/novalure-*-worksheet.png
+!public/playbooks/previews/novalure-*-sample.png
 public/playbooks/*-check.html
 next-browser-check.log
 next-relaunch-preview*.log

@@ -9,7 +9,6 @@ import { pages } from "@/content/pages";
 describe("relaunch subpage design contract", () => {
   it.each([
     ["audience", pages.de.developers, "relaunch-subpage-audience"],
-    ["playbooks", pages.en.playbooks, "relaunch-subpage-playbooks"],
     ["contact", pages.de.contact, "relaunch-subpage-contact"],
     ["handover", pages.en.handover, "relaunch-subpage-handover"],
     ["thank-you", pages.de.playbookThanks, "relaunch-subpage-thank-you"],
@@ -21,6 +20,14 @@ describe("relaunch subpage design contract", () => {
     expect(html).toContain("v3-subpage-hero");
     expect(html).toContain(content.title);
     expect(html).not.toContain("funnel-hero-visual");
+  });
+
+  it("renders the editorial playbook page with the three real guides and one request form", () => {
+    const html = renderToStaticMarkup(<MarketingPage content={pages.en.playbooks} />);
+    for (const title of ["Project Demand", "Owned Demand", "International Buyers"]) expect(html).toContain(title);
+    expect(html.match(/href="\/playbooks\/previews\//g)).toHaveLength(6);
+    expect(html).toContain('id="playbook-download"');
+    expect(html.match(/type="email"/g)).toHaveLength(1);
   });
 
   it("keeps the Makler service map as the single rendered service overview", () => {

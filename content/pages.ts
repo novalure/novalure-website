@@ -605,10 +605,10 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "de",
       template: "playbooks",
       eyebrow: "Playbook",
-      title: "Das Playbook zeigt, wo aus Interesse noch kein qualifiziertes Gespräch wird.",
-      seoTitle: "Immobilien Lead-Playbook | NovaLure",
+      title: "Drei kostenlose Playbooks mit nutzbaren Arbeitsvorlagen.",
+      seoTitle: "Kostenlose Immobilien-Playbooks mit Vorlagen | NovaLure",
       description:
-        "Erkennen Sie, wo Immobilien-Leads vor dem Vertrieb Kontext verlieren, welche Übergabe-Lücken Zeit kosten und ob ein Projekt-Check der richtige nächste Schritt ist.",
+        "Projekt-Nachfrage, Eigene Nachfrage und Internationale Käufer: drei kostenlose Field Guides mit ausfüllbaren Vorlagen, Mustern und 7-Tage-Schritten.",
       primaryCta: { label: labels.de.playbook, target: "playbooks", anchor: "playbook-download" },
       secondaryCta: { label: labels.de.audit, target: "contact", anchor: "book-audit" },
       heroBullets: [
@@ -733,10 +733,10 @@ export const pages: Record<Locale, Record<PageKey, PageContent | HomeContent>> =
       locale: "en",
       template: "playbooks",
       eyebrow: "Playbook",
-      title: "The playbook shows where interest still fails to become a qualified conversation.",
-      seoTitle: "Real Estate Lead System Playbook | NovaLure",
+      title: "Three free playbooks with practical real estate worksheets.",
+      seoTitle: "Free real estate playbooks and worksheets | NovaLure",
       description:
-        "See where real estate leads lose context before sales, which handover gaps cost time and whether a Project Check is the right next step.",
+        "Project Demand, Owned Demand and International Buyers: three free field guides with fillable worksheets, completed examples and seven-day actions.",
       primaryCta: { label: labels.en.playbook, target: "playbooks", anchor: "playbook-download" },
       secondaryCta: { label: labels.en.audit, target: "contact", anchor: "book-audit" },
       heroBullets: ["Spot the gaps without exposing the whole machine", "Mini scorecard for project and lead readiness", "Clear path to a 30-minute check"],
@@ -1194,7 +1194,7 @@ function privacySections(locale: Locale): PageSection[] {
         title: "7. Formulare, Playbooks und Projekt-Check",
         body: "Wenn Sie ein Formular absenden, verarbeiten wir die angegebenen Daten, um Ihre Anfrage zu prüfen, das gewünschte Playbook bereitzustellen, eine Projekt-Check-Anfrage vorzubereiten oder mit Ihnen geschäftlich Kontakt aufzunehmen.",
         items: [
-          "Bei Playbook-Anfragen verarbeiten wir Name, E-Mail, Unternehmen, Telefonnummer, ausgewähltes Playbook, Sprache, Seiten-URL, UTM-Parameter, erforderliche Verarbeitungseinwilligung, optionale Marketing-Einwilligung, Consent-Zeitstempel und die jeweils gültige Datenschutzversion.",
+          "Bei Anfragen über die neue Playbook-Seite verarbeiten wir E-Mail-Adresse, ausgewähltes Playbook, Sprache, optionalen Marketingwunsch, Zeitstempel und die geltende Datenschutzversion. Andere bestehende Formulare können zusätzlich Name, Unternehmen, Telefon, Seiten-URL und UTM-Parameter erfassen, soweit dort angegeben.",
           "Bei Projekt-Check- und Kontaktanfragen verarbeiten wir die Formularangaben zu Unternehmen, Website, Rolle, Projekt oder Marktgebiet, Leadproblem, CRM, Leadvolumen, Sales-Engpass, Assets, Timing, Budgetbereitschaft, Entscheidungsstatus und Nachricht.",
           "Soweit die Website- oder Formularlogik eine Datenbank nutzt, können entsprechende Anfragen, Einwilligungs- und Systemdaten in einer Neon PostgreSQL-Datenbank am Serverstandort Frankfurt verarbeitet werden.",
           "Für Formularschutz kann ein verstecktes Feld oder eine vergleichbare Spam-Prüfung genutzt werden.",
@@ -1374,7 +1374,7 @@ function privacySections(locale: Locale): PageSection[] {
       title: "7. Forms, playbooks and Project Check",
       body: "When you submit a form, we process the data you provide to review your request, deliver the requested playbook, prepare a Project Check or contact you for business follow-up.",
       items: [
-        "For playbook requests, we process name, email, company, phone number, selected playbook, language, page URL, UTM parameters, required processing consent, optional marketing consent, consent timestamp and the applicable privacy-policy version.",
+        "For requests on the new playbook page, we process email address, selected playbook, language, optional marketing choice, timestamp and the applicable privacy-policy version. Other existing forms may also collect name, company, phone, page URL and UTM parameters where provided.",
         "For Project Check and contact requests, we process form details about company, website, role, project or market area, lead problem, CRM, lead volume, sales bottleneck, assets, timing, budget readiness, decision status and message content.",
         "Where website or form logic uses a database, relevant enquiry, consent and system data may be processed in a Neon PostgreSQL database with server location in Frankfurt, Germany.",
         "For form protection, we may use a hidden field or comparable spam check.",

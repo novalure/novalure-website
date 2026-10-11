@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getPath, getPlaybookFormPath, type Locale } from "@/lib/i18n";
 import { type Cta, type HomeContent, type PageContent } from "@/content/pages";
 import { playbookCatalog as playbooks } from "@/content/playbook-catalog";
+import { EditorialPlaybooksPage } from "@/components/playbooks/EditorialPlaybooksPage";
 import { ContactInquiryForm } from "@/components/ContactInquiryForm";
 import { HubSpotForm, HubSpotMeetingEmbed } from "@/components/HubSpotPlaceholdersV2";
 import { TeamLeadImage } from "@/components/TeamLeadImage";
@@ -15,7 +16,7 @@ function localeCopy<T>(locale: Locale, en: T, de: T, es: T): T {
 
 export function MarketingPage({ content }: { content: PageContent | HomeContent }) {
   if (content.template === "home") return <HomePage content={content as HomeContent} />;
-  if (content.template === "playbooks") return <PlaybooksPage content={content} />;
+  if (content.template === "playbooks") return <EditorialPlaybooksPage locale={content.locale} />;
   if (content.template === "contact") return <ContactPage content={content} />;
   if (content.template === "legal") return <LegalPage content={content} />;
   if (content.template === "thank-you") return <ThankYouPage content={content} />;

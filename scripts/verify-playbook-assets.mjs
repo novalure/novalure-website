@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
+const source = path.join(root, "content", "playbooks-v3.json");
+const content = JSON.parse(fs.readFileSync(source, "utf8"));
 const stems = [
   "novalure-project-demand-de",
   "novalure-owned-demand-de",
@@ -17,9 +19,10 @@ const stems = [
 for (const stem of stems) {
   const pdf = path.join(root, "public", "playbooks", `${stem}.pdf`);
   const cover = path.join(root, "public", "playbooks", "covers", `${stem}.png`);
-  const source = path.join(root, "content", "playbooks", `${stem}.md`);
+  const worksheet = path.join(root, "public", "playbooks", "previews", `${stem}-worksheet.png`);
+  const sample = path.join(root, "public", "playbooks", "previews", `${stem}-sample.png`);
 
-  for (const file of [pdf, cover, source]) {
+  for (const file of [pdf, cover, worksheet, sample]) {
     if (!fs.existsSync(file)) throw new Error(`Missing playbook asset: ${path.relative(root, file)}`);
   }
 
@@ -33,10 +36,12 @@ for (const stem of stems) {
     throw new Error(`Invalid PNG cover: ${path.relative(root, cover)}`);
   }
 
-  const markdown = fs.readFileSync(source, "utf8");
-  for (const numbering of ["1 von 3", "2 von 3", "3 von 3", "1 of 3", "2 of 3", "3 of 3", "1 de 3", "2 de 3", "3 de 3"]) {
-    if (markdown.includes(numbering)) throw new Error(`${path.relative(root, source)} still contains ${numbering}`);
+  const locale = stem.slice(-2);
+  const kind = stem.includes("project-demand") ? "project" : stem.includes("owned-demand") ? "owned" : "international";
+  const topic = content[locale]?.[kind];
+  if (!topic?.title || !topic?.scoreQuestions || topic.scoreQuestions.length !== 5) {
+    throw new Error(`Incomplete source for ${stem}`);
   }
 }
 
-console.log("All 9 playbook PDFs, covers and source files passed verification.");
+console.log("All 9 field-guide PDFs, covers, source entries and 18 previews passed asset verification.");
