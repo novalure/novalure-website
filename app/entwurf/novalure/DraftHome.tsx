@@ -66,29 +66,78 @@ export default function DraftHome({ locale = "de", preview = true }: { locale?: 
       return;
     }
 
+    let heroVisible = true;
+    let lastTime = video.currentTime;
+    let stalledChecks = 0;
+    let resumeTimer: ReturnType<typeof setTimeout> | undefined;
+
     const startVideo = () => {
-      if (document.hidden) return;
+      if (document.hidden || !heroVisible) return;
       video.muted = true;
-      if (!video.paused) {
-        if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) setVideoPlaying(true);
-        return;
-      }
+      video.loop = true;
+      if (!video.paused && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) setVideoPlaying(true);
       void video.play().catch(() => {
-        // A later canplay, pageshow or visibilitychange event retries playback.
+        // A later visibility, scroll or media event retries muted playback.
       });
     };
-    const onPlaying = () => setVideoPlaying(true);
+    const queueResume = () => {
+      clearTimeout(resumeTimer);
+      if (!document.hidden && heroVisible) resumeTimer = setTimeout(startVideo, 250);
+    };
+    const recoverVideo = () => {
+      if (document.hidden || !heroVisible) return;
+      if (video.error || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
+        video.load();
+      } else {
+        video.currentTime = 0;
+      }
+      startVideo();
+    };
+    const onPlaying = () => {
+      stalledChecks = 0;
+      lastTime = video.currentTime;
+      setVideoPlaying(true);
+    };
+    const onVisibilityChange = () => {
+      if (!document.hidden) startVideo();
+    };
+    const visibilityObserver = typeof IntersectionObserver !== "undefined" ? new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      if (heroVisible) startVideo();
+    }, { threshold: 0.01 }) : null;
+    visibilityObserver?.observe(video.parentElement ?? video);
+    const watchdog = window.setInterval(() => {
+      if (document.hidden || !heroVisible) {
+        stalledChecks = 0;
+        lastTime = video.currentTime;
+        return;
+      }
+      const progressed = Math.abs(video.currentTime - lastTime) > 0.1;
+      stalledChecks = progressed ? 0 : stalledChecks + 1;
+      lastTime = video.currentTime;
+      if (stalledChecks >= 2) {
+        stalledChecks = 0;
+        recoverVideo();
+      }
+    }, 2000);
     video.addEventListener("canplay", startVideo);
     video.addEventListener("playing", onPlaying);
+    video.addEventListener("pause", queueResume);
+    video.addEventListener("ended", recoverVideo);
     window.addEventListener("pageshow", startVideo);
-    document.addEventListener("visibilitychange", startVideo);
+    document.addEventListener("visibilitychange", onVisibilityChange);
     startVideo();
 
     return () => {
+      clearTimeout(resumeTimer);
+      window.clearInterval(watchdog);
+      visibilityObserver?.disconnect();
       video.removeEventListener("canplay", startVideo);
       video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("pause", queueResume);
+      video.removeEventListener("ended", recoverVideo);
       window.removeEventListener("pageshow", startVideo);
-      document.removeEventListener("visibilitychange", startVideo);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, []);
 
