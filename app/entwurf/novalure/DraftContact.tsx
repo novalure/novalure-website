@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { NovalureWordmark } from "@/components/NovalureWordmark";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
 import type { Locale } from "@/lib/i18n";
@@ -120,7 +121,7 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
     <main className={chrome.page}>
       <header className={chrome.header}>
         <nav className={`${chrome.nav} ${scrolled ? chrome.navScrolled : ""}`} aria-label={t.contact}>
-          <Link className={chrome.brand} href={homeHref} aria-label={`NovaLure – ${t.back}`}>novalure<span>.</span></Link>
+          <Link className={chrome.brand} href={homeHref} aria-label={`NovaLure – ${t.back}`}><NovalureWordmark /></Link>
           <div className={chrome.headerLinks}><Link href={homeHref}>{preview ? t.overview : t.back}</Link><a href="#formular">{t.contact}</a></div>
           <div className={chrome.localeSwitch} aria-label={t.language}>
             {(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={contactHref(lang)} hrefLang={lang} aria-current={locale === lang ? "page" : undefined}>{lang.toUpperCase()}</Link>)}
@@ -184,11 +185,11 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
       <footer className={chrome.footer}>
         <div className={chrome.footerInner}>
           <div className={chrome.footerTop}>
-            <div><Link className={chrome.footerBrand} href={homeHref}>novalure<span>.</span></Link><p>NovaLure CLG · Dublin 2, Ireland</p></div>
+            <div><Link className={chrome.footerBrand} href={homeHref}><NovalureWordmark /></Link><p>NovaLure CLG · Dublin 2, Ireland</p></div>
             <nav aria-label={t.legal}><p>{t.legal}</p><Link href={legalHref("imprint")}>{t.imprint}</Link><Link href={legalHref("privacy")}>{t.privacyLabel}</Link><Link href={legalHref("cookies")}>{t.cookies}</Link></nav>
             <div className={chrome.footerContact}><p>{t.contact}</p><a href="mailto:hello@novalure.eu">hello@novalure.eu</a><a href="#formular">{t.formTitle}<ArrowUpRight size={14} /></a></div>
           </div>
-          <Link className={chrome.footerWordmark} href={homeHref}>novalure<span>.</span></Link>
+          <Link className={chrome.footerWordmark} href={homeHref}><NovalureWordmark /></Link>
           <div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div><StaffLoginLink locale={locale} />{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={contactHref(lang)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div>
         </div>
       </footer>

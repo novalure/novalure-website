@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { NovalureWordmark } from "@/components/NovalureWordmark";
 import type { Locale } from "@/lib/i18n";
 import { homeCopy } from "./DraftHomeCopy";
 import { siteHome, sitePath, sitePlaybookPath } from "./SiteRoutes";
@@ -147,7 +148,7 @@ export default function DraftHome({ locale = "de", preview = true }: { locale?: 
     <main className={styles.draft}>
       <header className={styles.header}>
         <nav className={`${styles.nav} ${headerScrolled ? styles.navScrolled : ""}`} aria-label={t.navigation}>
-          <a className={`${styles.brandWordmark} ${styles.wordmark}`} href="#start" onClick={closeMenu} aria-label={t.toTop}>novalure<span>.</span></a>
+          <a className={`${styles.brandWordmark} ${styles.wordmark}`} href="#start" onClick={closeMenu} aria-label={t.toTop}><NovalureWordmark /></a>
           <div className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ""}`}>
             <a href="#ansatz" onClick={closeMenu}>{t.approach}</a>
             <a href="#leistungen" onClick={closeMenu}>{t.services}</a>
@@ -298,7 +299,7 @@ export default function DraftHome({ locale = "de", preview = true }: { locale?: 
         <div className={styles.container}>
           <div className={styles.footerGrid}>
             <div className={styles.footerIntro}>
-              <a className={`${styles.brandWordmark} ${styles.footerBrand}`} href="#start" aria-label={t.toTop}>novalure<span>.</span></a>
+              <a className={`${styles.brandWordmark} ${styles.footerBrand}`} href="#start" aria-label={t.toTop}><NovalureWordmark /></a>
               <p>{t.footerIntro}</p>
             </div>
             <nav className={styles.footerColumn} aria-label={t.discover}>
@@ -324,7 +325,7 @@ export default function DraftHome({ locale = "de", preview = true }: { locale?: 
             </div>
           </div>
 
-          <a className={`${styles.brandWordmark} ${styles.footerWordmark}`} href="#start" aria-label={t.toTop}>novalure<span>.</span></a>
+          <a className={`${styles.brandWordmark} ${styles.footerWordmark}`} href="#start" aria-label={t.toTop}><NovalureWordmark /></a>
 
           <div className={styles.footerBottom}>
             <div>

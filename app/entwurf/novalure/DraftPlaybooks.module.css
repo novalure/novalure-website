@@ -70,8 +70,7 @@
 .coverFront, .coverBack { position: absolute; inset: 0; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 4px 5px 14px rgba(0,0,0,.3); }
 .coverFront img { object-fit: fill; }
 .coverBack { display: flex; flex-direction: column; justify-content: space-between; padding: 24px; color: #10203c; background: #e7edf7; transform: rotateY(180deg); }
-.coverBack > span { font-size: 23px; font-weight: 750; letter-spacing: -.08em; }
-.coverBack > span span { color: #4f80ff; }
+.coverBack > span { font-size: 23px; }
 .coverBack small { font-size: 12px; font-weight: 700; }
 .bookLegend { display: flex; gap: 25px; color: #a9bce0; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
 .previewLink { display: inline-flex; align-items: center; gap: 8px; margin-top: 25px; padding-bottom: 5px; border-bottom: 1px solid currentColor; color: #fff; font-size: 12px; font-weight: 700; }
