@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { NovalureWordmark } from "@/components/NovalureWordmark";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Check, Download } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { Locale } from "@/lib/i18n";
@@ -200,7 +201,7 @@ export default function DraftPlaybooks({ locale, previewMode = true }: { locale:
   return <main className={chrome.page}>
     <header className={chrome.header}>
       <nav className={`${chrome.nav} ${scrolled ? chrome.navScrolled : ""}`} aria-label={t.eyebrow}>
-        <Link className={chrome.brand} href={homeHref} aria-label={`NovaLure – ${overviewLabel}`}>novalure<span>.</span></Link>
+        <Link className={chrome.brand} href={homeHref} aria-label={`NovaLure – ${overviewLabel}`}><NovalureWordmark /></Link>
         <div className={chrome.headerLinks}><Link href={homeHref}>{overviewLabel}</Link><a href="#auswahl">{t.selectNav}</a><a href="#anfrage">{t.formNav}</a></div>
         <div className={chrome.localeSwitch} aria-label={t.language}>
           {(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={playbookHref(lang, selected)} hrefLang={lang} aria-current={locale === lang ? "page" : undefined}>{lang.toUpperCase()}</Link>)}
@@ -262,7 +263,7 @@ export default function DraftPlaybooks({ locale, previewMode = true }: { locale:
               </div>
               <div className={styles.coverLeaf}>
                 <div className={styles.coverFront}><Image src={cover(locale, selected)} alt="" fill sizes="(max-width: 700px) 42vw, 19vw" /></div>
-                <div className={styles.coverBack}><span>novalure<span>.</span></span><small>{selectedMeta.title}</small></div>
+                <div className={styles.coverBack}><NovalureWordmark /><small>{selectedMeta.title}</small></div>
               </div>
             </div>
           </div>
@@ -302,11 +303,11 @@ export default function DraftPlaybooks({ locale, previewMode = true }: { locale:
     <footer className={chrome.footer}>
       <div className={chrome.footerInner}>
         <div className={chrome.footerTop}>
-          <div><Link className={chrome.footerBrand} href={homeHref}>novalure<span>.</span></Link><p>NovaLure CLG · Dublin 2, Ireland</p></div>
+          <div><Link className={chrome.footerBrand} href={homeHref}><NovalureWordmark /></Link><p>NovaLure CLG · Dublin 2, Ireland</p></div>
           <nav aria-label={t.footerLegal}><p>{t.footerLegal}</p><Link href={legalHref("imprint")}>{t.imprint}</Link><Link href={legalHref("privacy")}>{t.privacyLabel}</Link><Link href={legalHref("cookies")}>{t.cookies}</Link></nav>
           <div className={chrome.footerContact}><p>{t.footerContact}</p><a href="mailto:hello@novalure.eu">hello@novalure.eu</a><Link href={contactHref}><ArrowLeft size={14} />{t.next}</Link></div>
         </div>
-        <Link className={chrome.footerWordmark} href={homeHref}>novalure<span>.</span></Link>
+        <Link className={chrome.footerWordmark} href={homeHref}><NovalureWordmark /></Link>
         <div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div><StaffLoginLink locale={locale} />{(["de", "en", "es"] as const).map(lang => <Link key={lang} href={playbookHref(lang, selected)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div>
       </div>
     </footer>

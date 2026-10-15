@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { NovalureWordmark } from "@/components/NovalureWordmark";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { PageContent } from "@/content/pages";
@@ -43,7 +44,7 @@ export default function DraftEditorialPage({ content, preview = true }: { conten
 
   return <main className={chrome.page}>
     <header className={chrome.header}><nav className={`${chrome.nav} ${scrolled ? chrome.navScrolled : ""}`} aria-label={t.contents}>
-      <Link className={chrome.brand} href={homeHref}>novalure<span>.</span></Link>
+      <Link className={chrome.brand} href={homeHref}><NovalureWordmark /></Link>
       <div className={chrome.headerLinks}><Link href={homeHref}>{t.back}</Link><a href="#inhalt">{t.contents}</a></div>
       <div className={chrome.localeSwitch} aria-label="Language">{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={sitePath(lang, content.key, preview)} hrefLang={lang} aria-current={lang === locale ? "page" : undefined}>{lang.toUpperCase()}</Link>)}</div>
     </nav></header>
@@ -67,9 +68,9 @@ export default function DraftEditorialPage({ content, preview = true }: { conten
 
     {(isAudience || isSystem) && <ManagedServiceBrief locale={locale} />}
     <footer className={chrome.footer}><div className={chrome.footerInner}><div className={chrome.footerTop}>
-      <div><Link className={chrome.footerBrand} href={homeHref}>novalure<span>.</span></Link><p>NovaLure CLG · Dublin 2, Ireland</p></div>
+      <div><Link className={chrome.footerBrand} href={homeHref}><NovalureWordmark /></Link><p>NovaLure CLG · Dublin 2, Ireland</p></div>
       <nav aria-label={t.legal}><p>{t.legal}</p><Link href={sitePath(locale, "imprint", preview)}>{t.imprint}</Link><Link href={sitePath(locale, "privacy", preview)}>{t.privacy}</Link><Link href={sitePath(locale, "cookies", preview)}>{t.cookies}</Link></nav>
       <div className={chrome.footerContact}><p>{t.contact}</p><a href="mailto:hello@novalure.eu">hello@novalure.eu</a><Link href={homeHref}><ArrowLeft size={14} />{t.back}</Link></div>
-    </div><Link className={chrome.footerWordmark} href={homeHref}>novalure<span>.</span></Link><div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div><StaffLoginLink locale={locale} />{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={sitePath(lang, content.key, preview)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div></div></footer>
+    </div><Link className={chrome.footerWordmark} href={homeHref}><NovalureWordmark /></Link><div className={chrome.footerBottom}><span>© 2026 NovaLure CLG</span><div><StaffLoginLink locale={locale} />{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={sitePath(lang, content.key, preview)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div></div></footer>
   </main>;
 }

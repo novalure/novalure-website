@@ -17,7 +17,7 @@ export function organizationSchema(locale: Locale) {
         : locale === "es"
           ? "Sistemas internacionales de comercialización inmobiliaria para promotores y agencias en España, con experiencia en Irlanda, DACH y mercados internacionales."
           : "Projektvermarktung, Nachfassen und vorbereitete Übergabe für den Immobilienvertrieb.",
-    logo: `${siteUrl}/novalure-logo.png`,
+    logo: `${siteUrl}/novalure-wordmark.png`,
     ...(locale === "es"
       ? {
           areaServed: ["ES", "IE", "AT", "DE", "CH", "LI", "GB", "EU"],

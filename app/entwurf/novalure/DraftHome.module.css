@@ -32,8 +32,7 @@
 .nav { position: relative; width: min(100%, 1030px); min-height: 66px; margin: auto; padding: 7px 9px 7px 21px; display: flex; align-items: center; gap: 30px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; background: rgba(12,22,42,.24); box-shadow: inset 0 1px 1px rgba(255,255,255,.15), 0 10px 35px rgba(4,12,28,.10); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); pointer-events: auto; transition: background .3s ease, box-shadow .3s ease; }
 .nav::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.04) 45%,rgba(255,255,255,.20)); -webkit-mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
 .navScrolled { background: rgba(12,22,42,.84); box-shadow: inset 0 1px 1px rgba(255,255,255,.12), 0 10px 35px rgba(4,12,28,.18); }
-.brandWordmark { color: #fff; font-family: var(--font-schibsted), Arial, sans-serif; font-weight: 700; line-height: .85; letter-spacing: -.095em; white-space: nowrap; }
-.brandWordmark span { color: #5e8cff; }
+.brandWordmark { color: #fff; white-space: nowrap; }
 .wordmark { display: inline-flex; align-items: center; flex: none; min-height: 48px; font-size: 29px; }
 .navLinks { margin: auto; display: flex; gap: clamp(16px,2.4vw,32px); align-items: center; }
 .navLinks a { color: rgba(255,255,255,.84); font-size: 13px; font-weight: 500; transition: color .2s; }

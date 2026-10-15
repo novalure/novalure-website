@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { NovalureWordmark } from "@/components/NovalureWordmark";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { PageContent } from "@/content/pages";
@@ -50,7 +51,7 @@ export default function DraftLegal({ content, keyName, preview = true }: { conte
     <main className={styles.page} id="top">
       <header className={styles.header}>
         <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ""}`} aria-label={t.menu}>
-          <Link className={styles.brand} href={homeHref} aria-label={`NovaLure – ${backLabel}`}>novalure<span>.</span></Link>
+          <Link className={styles.brand} href={homeHref} aria-label={`NovaLure – ${backLabel}`}><NovalureWordmark /></Link>
           <div className={styles.headerLinks}>
             <Link href={homeHref}>{overviewLabel}</Link>
             <a href="#inhalt">{t.contents}</a>
@@ -111,14 +112,14 @@ export default function DraftLegal({ content, keyName, preview = true }: { conte
       <footer className={styles.footer}>
         <div className={styles.footerInner}>
           <div className={styles.footerTop}>
-            <div><Link className={styles.footerBrand} href={homeHref}>novalure<span>.</span></Link><p>NovaLure CLG · Dublin 2, Ireland</p></div>
+            <div><Link className={styles.footerBrand} href={homeHref}><NovalureWordmark /></Link><p>NovaLure CLG · Dublin 2, Ireland</p></div>
             <nav aria-label={t.legal}>
               <p>{t.legal}</p>
               {legalNav.map((key) => <Link key={key} href={legalHref(locale, key)}>{legalLabels[locale][key]}</Link>)}
             </nav>
             <div className={styles.footerContact}><p>{t.contact}</p><a href="mailto:hello@novalure.eu">hello@novalure.eu</a>{preview && <a href={`https://www.novalure.eu${getPath(locale, keyName)}`} target="_blank" rel="noopener noreferrer">{t.current}<ArrowUpRight size={14} /></a>}</div>
           </div>
-          <Link className={styles.footerWordmark} href={homeHref}>novalure<span>.</span></Link>
+          <Link className={styles.footerWordmark} href={homeHref}><NovalureWordmark /></Link>
           <div className={styles.footerBottom}><span>© 2026 NovaLure CLG</span><div><StaffLoginLink locale={locale} />{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={legalHref(lang, keyName)} hrefLang={lang}>{lang.toUpperCase()}</Link>)}</div></div>
         </div>
       </footer>
