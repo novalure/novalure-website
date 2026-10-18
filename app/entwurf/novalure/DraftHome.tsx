@@ -271,7 +271,19 @@ export default function DraftHome({ locale = "de", preview = true }: { locale?: 
           <Reveal className={styles.sectionHead}><Eyebrow index="06">{t.referencesLabel}</Eyebrow><div className={styles.sectionHeadRow}><h2>{t.referencesTitle}</h2><p>{t.referencesIntro}</p></div></Reveal>
           <div className={styles.referenceGrid}>
             <Reveal className={styles.referenceMain}>
-              <div className={styles.referencePhoto}><Image src="/images/visual-exterior-01.jpg" alt={t.referenceAlt} fill sizes="(max-width: 900px) 100vw, 60vw" /></div>
+              <div className={styles.referencePhoto}>
+                <video
+                  aria-label={t.referenceAlt}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  poster="/images/project-material-poster.jpg"
+                >
+                  <source src="/videos/novalure-project-material.mp4" type="video/mp4" />
+                </video>
+              </div>
               <div className={styles.referenceCaption}><div><span>{t.referenceCaption}</span><h3>{t.referenceTitle}</h3></div><ArrowUpRight size={24} /></div>
             </Reveal>
             <Reveal className={styles.referenceSide}>
