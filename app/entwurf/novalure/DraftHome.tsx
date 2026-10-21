@@ -13,6 +13,7 @@ import styles from "./DraftHome.module.css";
 
 const innovationHeroVideo = "/videos/novalure-asme-hero.mp4";
 const innovationHeroPoster = "/images/novalure-asme-hero-poster.jpg";
+const studioHref = "https://novalurestudio.ie/";
 
 function Eyebrow({ index, children, light = false }: { index: string; children: React.ReactNode; light?: boolean }) {
   return <div className={`${styles.eyebrow} ${light ? styles.eyebrowLight : ""}`}><span>{index}</span><span className={styles.eyebrowLine} /><span>{children}</span></div>;
@@ -152,6 +153,7 @@ export default function DraftHome({ locale = "de", preview = true }: { locale?: 
           <div className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ""}`}>
             <a href="#ansatz" onClick={closeMenu}>{t.approach}</a>
             <a href="#leistungen" onClick={closeMenu}>{t.services}</a>
+            <a href={studioHref} target="_blank" rel="noopener" onClick={closeMenu} aria-label={`NovaLure Studio (${t.opensNewTab})`}>Studio <ArrowUpRight size={13} aria-hidden="true" /></a>
             <a href={`#${processAnchor}`} onClick={closeMenu}>{t.process}</a>
             <a href="#referenzen" onClick={closeMenu}>{t.references}</a>
             <div className={styles.localeSwitchMobile} aria-label="Language">{(["de", "en", "es"] as const).map((lang) => <Link key={lang} href={siteHome(lang, preview)} hrefLang={lang} aria-current={lang === locale ? "page" : undefined}>{lang.toUpperCase()}</Link>)}</div>
@@ -199,7 +201,10 @@ export default function DraftHome({ locale = "de", preview = true }: { locale?: 
           <div className={styles.featureGrid}>
             <Reveal className={`${styles.featureCard} ${styles.featureVisual}`}>
               <div className={styles.featureImage}><Image src="/images/ai-render-15594499.jpg" alt={t.visualAlt} fill sizes="(max-width: 900px) 100vw, 58vw" /></div>
-              <div className={styles.featureOverlay}><span>01 / {t.visualLabel}</span><h3>{t.visualTitle}</h3><p>{t.visualBody}</p></div>
+              <div className={styles.featureOverlay}>
+                <span>01 / {t.visualLabel}</span><h3>{t.visualTitle}</h3><p>{t.visualBody}</p>
+                <a className={styles.featureStudioLink} href={studioHref} target="_blank" rel="noopener" aria-label={`${t.studioLink} (${t.opensNewTab})`}>{t.studioLink} <ArrowUpRight size={17} aria-hidden="true" /></a>
+              </div>
             </Reveal>
             <Reveal className={`${styles.featureCard} ${styles.featureCream}`}>
               <span className={styles.cardIndex}>02 / {t.demandLabel}</span>
@@ -318,6 +323,7 @@ export default function DraftHome({ locale = "de", preview = true }: { locale?: 
               <h3>{t.discover}</h3>
               <a href="#ansatz">{t.ourApproach}</a>
               <a href="#leistungen">{t.services}</a>
+              <a href={studioHref} target="_blank" rel="noopener" aria-label={`NovaLure Studio (${t.opensNewTab})`}>NovaLure Studio <ArrowUpRight size={14} aria-hidden="true" /></a>
               <a href={`#${processAnchor}`}>{t.process}</a>
               <a href="#system">{t.theSystem}</a>
               <Link href={playbooksHref}>Playbooks</Link>

@@ -35,7 +35,7 @@
 .brandWordmark { color: #fff; white-space: nowrap; }
 .wordmark { display: inline-flex; align-items: center; flex: none; min-height: 48px; font-size: 29px; }
 .navLinks { margin: auto; display: flex; gap: clamp(16px,2.4vw,32px); align-items: center; }
-.navLinks a { color: rgba(255,255,255,.84); font-size: 13px; font-weight: 500; transition: color .2s; }
+.navLinks a { display: inline-flex; align-items: center; gap: 4px; color: rgba(255,255,255,.84); font-size: 13px; font-weight: 500; transition: color .2s; }
 .navLinks a:hover { color: #fff; }
 .navCta { display: inline-flex; align-items: center; gap: 15px; padding: 11px 17px; border-radius: 999px; color: #fff; font-weight: 600; font-size: 13px; white-space: nowrap; transition: transform .25s, background .25s; }
 .navCtaShort { display: none; }
@@ -90,6 +90,8 @@
 .featureOverlay > span, .cardIndex { display: block; text-transform: uppercase; font-size: 11px; letter-spacing: .14em; font-weight: 700; }
 .featureOverlay h3 { max-width: 590px; margin: 13px 0 12px; font-size: clamp(40px,4vw,66px); line-height: 1.03; }
 .featureOverlay p { max-width: 390px; color: rgba(255,255,255,.88); font-size: 15px; line-height: 1.5; }
+.featureStudioLink { display: inline-flex; align-items: center; gap: 9px; margin-top: 21px; padding-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,.72); color: #fff; font-size: 13px; font-weight: 700; line-height: 1.4; transition: gap .2s ease, border-color .2s ease; }
+.featureStudioLink:hover { gap: 14px; border-color: #fff; }
 .featureCream, .featureBlue { display: flex; flex-direction: column; justify-content: space-between; padding: 30px; }
 .featureCream { background: #e9e7e1; }
 .featureBlue { background: #144ed6; color: #fff; }
@@ -163,6 +165,7 @@
 .footerColumn { display: flex; flex-direction: column; align-items: flex-start; gap: 15px; }
 .footerColumn h3 { margin: 4px 0 15px; color: #91a3c3; font-family: var(--font-schibsted), Arial, sans-serif; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
 .footerColumn a, .footerColumn p { color: #c8d2e3; font-size: 13px; line-height: 1.55; transition: color .2s; }
+.footerColumn a { display: inline-flex; align-items: center; gap: 5px; }
 .footerColumn a:hover { color: #fff; }.footerColumn p { max-width: 250px; }
 .footerColumn .footerAccentLink { display: inline-flex; align-items: center; gap: 5px; color: #92b4ff; text-decoration: underline; text-underline-offset: 3px; }
 .footerWordmark { display: block; overflow: hidden; width: 100%; padding: 36px 0 28px; border-top: 1px solid #35415a; border-bottom: 1px solid #35415a; font-size: clamp(72px, 15vw, 220px); text-align: center; }
