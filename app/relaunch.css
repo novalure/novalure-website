@@ -1892,11 +1892,12 @@ body {
     background: transparent;
   }
 
-  .v3-menu-toggle > span {
+  /* Override the legacy white hamburger lines on light mobile headers. */
+  .menu-toggle.v3-menu-toggle > span:not(.sr-only) {
     width: 22px;
-    height: 2px;
+    height: 3px;
     border-radius: 2px;
-    background: currentColor;
+    background: #08090d;
   }
 
   .v3-mobile-menu {
