@@ -51,11 +51,11 @@ const hardFaqEs: FaqItem[] = [
   },
   {
     question: "¿Por qué no hay precios públicos?",
-    answer: "Porque el alcance, los activos existentes, el tipo de promoción, la situación comercial y el trabajo continuo varían de forma relevante. La capacidad presupuestaria se aclara antes del análisis para evitar pérdidas de tiempo."
+    answer: "Porque el alcance, los materiales existentes, el tipo de promoción, el volumen de consultas y el trabajo continuo varían considerablemente. Hablaremos del presupuesto disponible durante la conversación."
   },
   {
     question: "¿Cuánto cuesta aproximadamente un sistema de este tipo?",
-    answer: "NovaLure no publica una tarifa cerrada. Antes del análisis se comprueba si existe presupuesto para implantación, operación y, cuando proceda, inversión en medios. Sin capacidad presupuestaria, el análisis no resulta útil."
+    answer: "NovaLure no publica una tarifa cerrada. El trabajo depende de cada proyecto. Durante la conversación aclararemos el presupuesto disponible para la implantación, el acompañamiento continuo y, si procede, la inversión en medios."
   },
   {
     question: "¿Qué ocurre si la calidad de las solicitudes es baja?",

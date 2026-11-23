@@ -62,7 +62,7 @@
 .sectionLinks a { display: inline-flex; align-items: center; gap: 6px; padding-bottom: 3px; color: var(--blue); border-bottom: 1px solid currentColor; font-size: 13px; font-weight: 700; }
 .serviceNote { background: #e9eef9; color: #101a30; padding: clamp(48px, 6vw, 88px) 0; }
 .serviceNoteInner { width: min(100% - 96px, 1060px); margin: auto; }
-.serviceNoteInner span { color: #4a73d3; font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+.serviceNoteInner span { color: #355db8; font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
 .serviceNoteInner h2 { max-width: 900px; margin: 18px 0; font-family: var(--font-novalure-instrument), Georgia, serif; font-size: clamp(32px, 4vw, 58px); font-weight: 400; line-height: 1.08; letter-spacing: -.045em; }
 .serviceNoteInner p { max-width: 850px; margin: 0; color: #43516b; font-size: 16px; line-height: 1.7; }
 .footer { color: #f6f8ff; background: #101a30; }

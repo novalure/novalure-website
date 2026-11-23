@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { NovalureWordmark } from "@/components/NovalureWordmark";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "lucide-react";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import type { Locale } from "@/lib/i18n";
 import { siteHome, sitePath } from "./SiteRoutes";
 import StaffLoginLink from "./StaffLoginLink";
@@ -68,6 +68,45 @@ const copy = {
   }
 } as const;
 
+const wizardCopy = {
+  de: {
+    progress: "Schritt", of: "von", next: "Weiter", back: "Zurück", optional: "Optional",
+    steps: ["Vorhaben", "Ziel", "Zeitrahmen", "Kontakt"],
+    serviceTitle: "Wobei dürfen wir Sie unterstützen?", serviceHint: "Wählen Sie den Bereich, der Ihrem Vorhaben am nächsten kommt.",
+    services: ["Projektauftritt und Visualisierung", "Nachfrage und Kampagnen", "Qualifizierung und Vertriebsübergabe", "Den gesamten Projektweg prüfen", "Noch nicht sicher"],
+    goalTitle: "Was möchten Sie erreichen?", goalHint: "Wählen Sie Ihr wichtigstes Ziel und erzählen Sie uns kurz von Ihrem Projekt oder Marktgebiet.",
+    goals: ["Ein Projekt überzeugend präsentieren", "Passende Interessenten erreichen", "Anfragen besser qualifizieren und übergeben", "Den nächsten sinnvollen Schritt finden"],
+    timingTitle: "Wann soll es losgehen?", timingHint: "Optional: Eine grobe Einschätzung genügt. Sie können auch einen Projektlink ergänzen.",
+    timings: ["So bald wie möglich", "In den nächsten drei Monaten", "Später oder noch offen"],
+    contactTitle: "Wie erreichen wir Sie?", contactHint: "Damit wir Ihre Anfrage persönlich beantworten können.",
+    projectLabel: "Projekt oder Marktgebiet und aktuelle Herausforderung", serviceLabel: "Unterstützung", goalLabel: "Ziel", timingLabel: "Zeitrahmen", summary: "Ihre Angaben", notSpecified: "Nicht angegeben", emptyProject: "Bitte beschreiben Sie kurz Ihr Projekt oder Marktgebiet.", emptyField: "Bitte füllen Sie dieses Feld aus.", invalidUrl: "Bitte geben Sie einen Link mit http:// oder https:// ein."
+  },
+  en: {
+    progress: "Step", of: "of", next: "Continue", back: "Back", optional: "Optional",
+    steps: ["Your project", "Goal", "Timing", "Contact"],
+    serviceTitle: "How can we help?", serviceHint: "Choose the area closest to what you need.",
+    services: ["Project presence and visualisation", "Demand and campaigns", "Qualification and sales handover", "Review the whole project journey", "Not sure yet"],
+    goalTitle: "What would you like to achieve?", goalHint: "Choose your main goal and briefly tell us about your project or market.",
+    goals: ["Present a project convincingly", "Reach the right prospective buyers", "Qualify and hand over enquiries better", "Find the right next step"],
+    timingTitle: "When would you like to start?", timingHint: "Optional: a rough estimate is fine. You can also add a project link.",
+    timings: ["As soon as possible", "Within the next three months", "Later or undecided"],
+    contactTitle: "How can we reach you?", contactHint: "So we can respond to your enquiry personally.",
+    projectLabel: "Project or market and current challenge", serviceLabel: "Support", goalLabel: "Goal", timingLabel: "Timing", summary: "Your details", notSpecified: "Not specified", emptyProject: "Please briefly describe your project or market.", emptyField: "Please fill in this field.", invalidUrl: "Please enter a link starting with http:// or https://."
+  },
+  es: {
+    progress: "Paso", of: "de", next: "Continuar", back: "Volver", optional: "Opcional",
+    steps: ["Proyecto", "Objetivo", "Plazo", "Contacto"],
+    serviceTitle: "¿En qué podemos ayudarle?", serviceHint: "Elija el área que más se acerque a lo que necesita.",
+    services: ["Presentación y visualización del proyecto", "Demanda y campañas", "Cualificación y traspaso comercial", "Revisar todo el recorrido del proyecto", "Aún no lo sé"],
+    goalTitle: "¿Qué quiere conseguir?", goalHint: "Elija su objetivo principal y cuéntenos brevemente sobre su proyecto o mercado.",
+    goals: ["Presentar un proyecto de forma convincente", "Llegar a compradores interesados", "Cualificar y traspasar mejor las consultas", "Encontrar el siguiente paso adecuado"],
+    timingTitle: "¿Cuándo le gustaría empezar?", timingHint: "Opcional: basta con una estimación aproximada. También puede añadir un enlace al proyecto.",
+    timings: ["Lo antes posible", "En los próximos tres meses", "Más adelante o por decidir"],
+    contactTitle: "¿Cómo podemos contactar con usted?", contactHint: "Así podremos responder a su consulta personalmente.",
+    projectLabel: "Proyecto o mercado y reto actual", serviceLabel: "Apoyo", goalLabel: "Objetivo", timingLabel: "Plazo", summary: "Sus datos", notSpecified: "Sin indicar", emptyProject: "Describa brevemente su proyecto o mercado.", emptyField: "Complete este campo.", invalidUrl: "Introduzca un enlace que empiece por http:// o https://."
+  }
+} as const;
+
 type Values = { name: string; email: string; company: string; role: string; inquiry: string; phone: string; projectUrl: string; website: string };
 const emptyValues: Values = { name: "", email: "", company: "", role: "", inquiry: "", phone: "", projectUrl: "", website: "" };
 const meetingUrls: Record<Locale, string> = {
@@ -78,12 +117,34 @@ const meetingUrls: Record<Locale, string> = {
 
 export default function DraftContact({ locale, preview = true }: { locale: Locale; preview?: boolean }) {
   const t = copy[locale];
+  const w = wizardCopy[locale];
   const homeHref = siteHome(locale, preview);
   const contactHref = (lang: Locale) => sitePath(lang, "contact", preview);
   const legalHref = (key: "imprint" | "privacy" | "cookies") => sitePath(locale, key, preview);
   const [scrolled, setScrolled] = useState(false);
   const [values, setValues] = useState<Values>(emptyValues);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [step, setStep] = useState(0);
+  const [service, setService] = useState("");
+  const [goal, setGoal] = useState("");
+  const [timing, setTiming] = useState("");
+  const stepHeading = useRef<HTMLHeadingElement>(null);
+  const successHeading = useRef<HTMLHeadingElement>(null);
+  const hasNavigated = useRef(false);
+
+  useEffect(() => {
+    if (hasNavigated.current) stepHeading.current?.focus();
+  }, [step]);
+
+  useEffect(() => {
+    if (status === "success") successHeading.current?.focus();
+  }, [status]);
+
+  function moveTo(nextStep: number) {
+    hasNavigated.current = true;
+    setStatus("idle");
+    setStep(nextStep);
+  }
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 30);
@@ -95,6 +156,32 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (status === "sending") return;
+    if (step === 1 && !values.inquiry.trim()) {
+      const field = event.currentTarget.querySelector<HTMLTextAreaElement>('textarea[name="inquiry"]');
+      field?.setCustomValidity(w.emptyProject);
+      field?.reportValidity();
+      return;
+    }
+    if (step === 2 && values.projectUrl.trim() && !/^https?:\/\//i.test(values.projectUrl.trim())) {
+      const field = event.currentTarget.querySelector<HTMLInputElement>('input[name="projectUrl"]');
+      field?.setCustomValidity(w.invalidUrl);
+      field?.reportValidity();
+      return;
+    }
+    if (step === 3) {
+      for (const name of ["name", "company"] as const) {
+        if (!values[name].trim()) {
+          const field = event.currentTarget.querySelector<HTMLInputElement>(`input[name="${name}"]`);
+          field?.setCustomValidity(w.emptyField);
+          field?.reportValidity();
+          return;
+        }
+      }
+    }
+    if (step < 3) {
+      moveTo(step + 1);
+      return;
+    }
     setStatus("sending");
     try {
       const response = await fetch("/api/contact", {
@@ -102,6 +189,7 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           ...values,
+          inquiry: `${w.serviceLabel}: ${service}\n${w.goalLabel}: ${goal}${timing ? `\n${w.timingLabel}: ${timing}` : ""}\n\n${w.projectLabel}: ${values.inquiry}`,
           language: locale,
           source: "asme_draft_project_check",
           pageUri: window.location.href,
@@ -140,31 +228,44 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
             <Link className={styles.back} href={homeHref}><ArrowLeft size={16} />{t.back}</Link>
           </div>
 
-          <div className={styles.formCard} id="formular">
+          <div className={styles.formCard} id="formular"><span id="book-audit" className={styles.anchor} aria-hidden="true" />
             {status === "success" ? (
               <div className={styles.success} role="status">
-                <span className={styles.successIcon}><Check size={25} /></span>
-                <h2>{t.successTitle}</h2>
+                <div className={styles.celebration} aria-hidden="true"><span className={styles.successIcon}><Check size={25} /></span>{Array.from({ length: 12 }, (_, i) => <i key={i} style={{ "--piece": i } as CSSProperties} />)}</div>
+                <h2 ref={successHeading} tabIndex={-1}>{t.successTitle}</h2>
                 <p>{t.successBody}</p>
                 <a className={styles.submit} href={meetingUrls[locale]} target="_blank" rel="noopener noreferrer">{t.schedule}<ArrowUpRight size={18} /></a>
               </div>
             ) : (
               <>
-                <div className={styles.formHead}><p>NovaLure / 30 MIN</p><h2>{t.formTitle}</h2><span>{t.formIntro}</span></div>
+                <div className={styles.formHead}><p>NovaLure / 30 MIN</p><h2>{t.formTitle}</h2></div>
+                <div className={styles.progress} aria-label={`${w.progress} ${step + 1} ${w.of} 4`}>
+                  <div className={styles.progressText}><span>{w.progress} {step + 1} {w.of} 4</span><span>{w.steps[step]}</span></div>
+                  <div className={styles.progressTrack} aria-hidden="true"><span style={{ width: `${(step + 1) * 25}%` }} /></div>
+                </div>
                 <form className={styles.form} onSubmit={submit} data-track-form="asme_project_check">
-                  <label className={styles.field}><span>{t.name} <small>{t.required}</small></span><input name="name" value={values.name} onChange={(event) => setValues({ ...values, name: event.target.value })} autoComplete="name" required maxLength={120} /></label>
-                  <label className={styles.field}><span>{t.email} <small>{t.required}</small></span><input name="email" type="email" value={values.email} onChange={(event) => setValues({ ...values, email: event.target.value })} autoComplete="email" required maxLength={254} /></label>
-                  <label className={styles.field}><span>{t.company} <small>{t.required}</small></span><input name="company" value={values.company} onChange={(event) => setValues({ ...values, company: event.target.value })} autoComplete="organization" required maxLength={160} /></label>
-                  <fieldset className={styles.role}><legend>{t.role} <small>{t.required}</small></legend><div>{(["developer", "agent", "other"] as const).map((role) => <label key={role}><input type="radio" name="role" value={role} checked={values.role === role} onChange={(event) => setValues({ ...values, role: event.target.value })} required /><span>{t[role]}</span></label>)}</div></fieldset>
-                  <label className={styles.field}><span>{t.inquiry} <small>{t.required}</small></span><textarea name="inquiry" value={values.inquiry} onChange={(event) => setValues({ ...values, inquiry: event.target.value })} placeholder={t.inquiryHint} rows={3} required maxLength={2000} /></label>
-                  <div className={styles.optionalRow}>
-                    <label className={styles.field}><span>{t.phone}</span><input name="phone" type="tel" value={values.phone} onChange={(event) => setValues({ ...values, phone: event.target.value })} autoComplete="tel" maxLength={60} /></label>
-                    <label className={styles.field}><span>{t.projectUrl}</span><input name="projectUrl" type="url" value={values.projectUrl} onChange={(event) => setValues({ ...values, projectUrl: event.target.value })} placeholder="https://" maxLength={500} /></label>
+                  <div className={styles.step} key={step}>
+                    <h3 ref={stepHeading} tabIndex={-1} className={styles.stepTitle}>{[w.serviceTitle, w.goalTitle, w.timingTitle, w.contactTitle][step]}</h3>
+                    <p className={styles.stepHint}>{[w.serviceHint, w.goalHint, w.timingHint, w.contactHint][step]}</p>
+                    {step === 0 && <fieldset className={styles.choices}><legend className={styles.srOnly}>{w.serviceTitle}</legend>{w.services.map((item) => <label key={item}><input type="radio" name="service" value={item} checked={service === item} onChange={() => setService(item)} required /><span>{item}<i aria-hidden="true" /></span></label>)}</fieldset>}
+                    {step === 1 && <><fieldset className={styles.choices}><legend className={styles.srOnly}>{w.goalTitle}</legend>{w.goals.map((item) => <label key={item}><input type="radio" name="goal" value={item} checked={goal === item} onChange={() => setGoal(item)} required /><span>{item}<i aria-hidden="true" /></span></label>)}</fieldset><label className={styles.field}><span>{w.projectLabel} <small>{t.required}</small></span><textarea name="inquiry" value={values.inquiry} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, inquiry: event.target.value }); }} placeholder={t.inquiryHint} rows={3} required maxLength={1500} /></label></>}
+                    {step === 2 && <><fieldset className={styles.choices}><legend className={styles.srOnly}>{w.timingTitle}</legend>{w.timings.map((item) => <label key={item}><input type="radio" name="timing" value={item} checked={timing === item} onChange={() => setTiming(item)} /><span>{item}<i aria-hidden="true" /></span></label>)}</fieldset><label className={styles.field}><span>{t.projectUrl}</span><input name="projectUrl" type="url" value={values.projectUrl} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, projectUrl: event.target.value }); }} placeholder="https://" maxLength={500} /></label></>}
+                    {step === 3 && <>
+                      <details className={styles.summary} open><summary>{w.summary}</summary><dl><div><dt>{w.serviceLabel}</dt><dd>{service}</dd></div><div><dt>{w.goalLabel}</dt><dd>{goal}</dd></div><div><dt>{w.projectLabel}</dt><dd>{values.inquiry}</dd></div><div><dt>{w.timingLabel}</dt><dd>{timing || w.notSpecified}</dd></div>{values.projectUrl && <div><dt>{t.projectUrl}</dt><dd>{values.projectUrl}</dd></div>}</dl></details>
+                      <label className={styles.field}><span>{t.name} <small>{t.required}</small></span><input name="name" value={values.name} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, name: event.target.value }); }} autoComplete="name" required maxLength={120} /></label>
+                      <label className={styles.field}><span>{t.email} <small>{t.required}</small></span><input name="email" type="email" value={values.email} onChange={(event) => setValues({ ...values, email: event.target.value })} autoComplete="email" required maxLength={254} /></label>
+                      <label className={styles.field}><span>{t.company} <small>{t.required}</small></span><input name="company" value={values.company} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, company: event.target.value }); }} autoComplete="organization" required maxLength={160} /></label>
+                      <fieldset className={styles.role}><legend>{t.role} <small>{t.required}</small></legend><div>{(["developer", "agent", "other"] as const).map((role) => <label key={role}><input type="radio" name="role" value={role} checked={values.role === role} onChange={(event) => setValues({ ...values, role: event.target.value })} required /><span>{t[role]}</span></label>)}</div></fieldset>
+                      <label className={styles.field}><span>{t.phone}</span><input name="phone" type="tel" value={values.phone} onChange={(event) => setValues({ ...values, phone: event.target.value })} autoComplete="tel" maxLength={60} /></label>
+                    </>}
                   </div>
                   <label className={styles.honeypot} aria-hidden="true">Website<input name="website" tabIndex={-1} autoComplete="off" value={values.website} onChange={(event) => setValues({ ...values, website: event.target.value })} /></label>
-                  <button className={styles.submit} type="submit" disabled={status === "sending"}>{status === "sending" ? t.sending : t.send}<ArrowRight size={18} /></button>
+                  <div className={styles.actions}>
+                    {step > 0 && <button className={styles.previous} type="button" disabled={status === "sending"} onClick={() => moveTo(step - 1)}><ArrowLeft size={17} />{w.back}</button>}
+                    <button className={styles.submit} type="submit" disabled={status === "sending"}>{status === "sending" ? t.sending : step === 3 ? t.send : w.next}<ArrowRight size={18} /></button>
+                  </div>
                   {status === "error" && <p className={styles.error} role="alert">{t.error}</p>}
-                  <p className={styles.privacy}>{t.privacy} <Link href={legalHref("privacy")}>{t.privacyLink}</Link>.</p>
+                  {step === 3 && <p className={styles.privacy}>{t.privacy} <Link href={legalHref("privacy")}>{t.privacyLink}</Link>.</p>}
                 </form>
               </>
             )}

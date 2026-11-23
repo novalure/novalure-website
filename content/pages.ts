@@ -167,11 +167,11 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Warum gibt es keine öffentlichen Preise?",
-      answer: "Weil Scope, vorhandene Assets, Projektart, Lead-Situation und laufender Aufwand stark variieren. Budgetfähigkeit wird aber vor dem Projekt-Check abgefragt, damit niemand Zeit verliert."
+      answer: "Weil Umfang, vorhandene Materialien, Projektart, Anfrageaufkommen und laufender Aufwand stark variieren. Den Budgetrahmen klären wir im weiteren Gespräch gemeinsam."
     },
     {
       question: "Was kostet so ein System ungefähr?",
-      answer: "NovaLure veröffentlicht keine harte Preisliste. Vor dem Projekt-Check wird geprüft, ob grundsätzlich Budget für Setup, operative Betreuung und gegebenenfalls Media vorhanden ist. Ohne Budgetfähigkeit ist ein Check nicht sinnvoll."
+      answer: "NovaLure veröffentlicht keine feste Preisliste. Der Aufwand hängt vom Vorhaben ab. Im weiteren Gespräch klären wir, welcher Budgetrahmen für Aufbau, laufende Betreuung und gegebenenfalls Medienbudget zur Verfügung steht."
     },
     {
       question: "Was passiert, wenn keine guten Leads kommen?",
@@ -245,11 +245,11 @@ const hardFaq: Record<Locale, FaqItem[]> = {
     },
     {
       question: "Why are there no public prices?",
-      answer: "Scope, existing assets, project type, lead situation and ongoing effort vary materially. Budget readiness is checked before the Project Check so no one wastes time."
+      answer: "Scope, existing materials, project type, enquiry volume and ongoing effort vary considerably. We discuss the available budget together as the conversation continues."
     },
     {
       question: "What does a system like this cost?",
-      answer: "NovaLure does not publish a hard price list. Before the Project Check we check whether budget for setup, operating support and possible media exists. Without budget readiness, a check is not useful."
+      answer: "NovaLure does not publish a fixed price list. The work depends on your project. As the conversation continues, we discuss the budget available for setup, ongoing support and any media spend."
     },
     {
       question: "What happens if lead quality is poor?",
