@@ -3,6 +3,26 @@ import { Resend } from "resend";
 
 type Locale = "en" | "de" | "es";
 
+const serviceLabels = {
+  project_presentation: { de: "Projektauftritt und Visualisierung", en: "Project presence and visualisation", es: "Presentación y visualización del proyecto" },
+  campaigns: { de: "Nachfrage und Kampagnen", en: "Demand and campaigns", es: "Demanda y campañas" },
+  qualification_handover: { de: "Qualifizierung und Vertriebsübergabe", en: "Qualification and sales handover", es: "Cualificación y traspaso comercial" },
+  full_journey: { de: "Den gesamten Projektweg prüfen", en: "Review the whole project journey", es: "Revisar todo el recorrido del proyecto" },
+  other: { de: "Sonstiges", en: "Other", es: "Otro" },
+  unsure: { de: "Noch nicht sicher", en: "Not sure yet", es: "Aún no lo sé" }
+} as const;
+const timingLabels = {
+  asap: { de: "So bald wie möglich", en: "As soon as possible", es: "Lo antes posible" },
+  within_3_months: { de: "In den nächsten drei Monaten", en: "Within the next three months", es: "En los próximos tres meses" },
+  later_or_undecided: { de: "Später oder noch offen", en: "Later or undecided", es: "Más adelante o por decidir" }
+} as const;
+const roleLabels = {
+  developer: { de: "Bauträger / Projektentwickler", en: "Developer / project owner", es: "Promotor / desarrollador" },
+  agent: { de: "Makler / Vertriebsteam", en: "Agent / sales team", es: "Agencia / equipo comercial" },
+  other: { de: "Sonstiges", en: "Other", es: "Otro" }
+} as const;
+const missingLabels = { de: "Nicht angegeben", en: "Not provided", es: "Sin indicar" } as const;
+
 const autoReplyCopy = {
   en: {
     auditSubject: "Your NovaLure Project Check request",
@@ -72,6 +92,15 @@ function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+function isHttpUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return (url.protocol === "http:" || url.protocol === "https:") && Boolean(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
 function escapeHtml(value: string) {
   const replacements: Record<string, string> = {
     "&": "&amp;",
@@ -130,6 +159,7 @@ export async function POST(request: NextRequest) {
     const firstName = clean(body.firstName);
     const lastName = clean(body.lastName);
     const isDraftInquiry = clean(body.source) === "asme_draft_project_check";
+    const isGuidedInquiry = isDraftInquiry && Object.hasOwn(body, "services");
     const isDirectInquiry = !isDraftInquiry && Boolean(firstName || lastName || body.inquiry);
     const name = clean(body.name) || `${firstName} ${lastName}`.trim();
     const email = clean(body.email);
@@ -138,7 +168,7 @@ export async function POST(request: NextRequest) {
     const website = clean(body.website);
     const targetGroup = clean(body.targetGroup || body.interest);
     const projectMarket = clean(body.projectMarket);
-    const leadProblem = clean(body.leadProblem || body.inquiry);
+    const leadProblem = clean(isGuidedInquiry ? body.inquiry : body.leadProblem || body.inquiry);
     const crm = clean(body.crm);
     const leadVolume = clean(body.leadVolume);
     const salesBottleneck = clean(body.salesBottleneck);
@@ -151,12 +181,31 @@ export async function POST(request: NextRequest) {
     const projectUrl = clean(body.projectUrl);
     const pageUri = clean(body.pageUri);
     const utm = typeof body.utm === "object" && body.utm ? body.utm as Record<string, unknown> : {};
+    const services: unknown = body.services;
+    const otherService = clean(body.otherService);
+    const submissionId = clean(body.submissionId);
 
     if (isDraftInquiry && clean(body.website)) {
       return NextResponse.json({ ok: true });
     }
 
-    const draftInvalid = isDraftInquiry && (
+    const validServices = Array.isArray(services) && services.length > 0 && services.length <= Object.keys(serviceLabels).length &&
+      services.every((service: unknown) => typeof service === "string" && Object.hasOwn(serviceLabels, service)) &&
+      new Set(services).size === services.length && !(services.includes("unsure") && services.length > 1);
+    const guidedInvalid = isGuidedInquiry && (
+      !validServices || !name || name.length > 120 || !isValidEmail(email) || email.length > 254 ||
+      company.length > 160 || (role !== "" && !Object.hasOwn(roleLabels, role)) ||
+      leadProblem.length > 1500 || otherService.length > 500 ||
+      Boolean(otherService && (!Array.isArray(services) || !services.includes("other"))) ||
+      phone.length > 60 || projectUrl.length > 500 || (projectUrl !== "" && !isHttpUrl(projectUrl)) ||
+      (startTiming !== "" && !Object.hasOwn(timingLabels, startTiming)) ||
+      (submissionId !== "" && !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(submissionId)) ||
+      ["name", "email", "company", "role", "inquiry", "otherService", "phone", "projectUrl", "startTiming", "submissionId"].some(
+        (field) => body[field] != null && typeof body[field] !== "string"
+      )
+    );
+
+    const draftInvalid = isDraftInquiry && !isGuidedInquiry && (
       !name || name.length > 120 ||
       !isValidEmail(email) || email.length > 254 ||
       !company || company.length > 160 ||
@@ -193,7 +242,7 @@ export async function POST(request: NextRequest) {
       !isValidEmail(email)
     );
 
-    if (draftInvalid || directInvalid || auditInvalid) {
+    if (guidedInvalid || draftInvalid || directInvalid || auditInvalid) {
       return NextResponse.json({ error: "Invalid form submission" }, { status: 400 });
     }
 
@@ -205,7 +254,28 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Email configuration missing" }, { status: 500 });
     }
 
-    const rows: Record<string, string | string[]> = isDraftInquiry
+    const missing = missingLabels[language];
+    const rows: Record<string, string | string[]> = isGuidedInquiry
+      ? {
+          Name: name,
+          Email: email,
+          Services: (services as Array<keyof typeof serviceLabels>).map((service) => serviceLabels[service][language]),
+          "Other service": otherService || missing,
+          Project: leadProblem || missing,
+          Company: company || missing,
+          Role: role ? roleLabels[role as keyof typeof roleLabels][language] : missing,
+          Phone: phone || missing,
+          "Project link": projectUrl || missing,
+          "Start timing": startTiming ? timingLabels[startTiming as keyof typeof timingLabels][language] : missing,
+          Language: language.toUpperCase(),
+          Source: "asme_draft_project_check",
+          "Page URI": pageUri.slice(0, 2048),
+          "UTM source": clean(utm.utm_source).slice(0, 500),
+          "UTM medium": clean(utm.utm_medium).slice(0, 500),
+          "UTM campaign": clean(utm.utm_campaign).slice(0, 500),
+          ...(submissionId ? { "Submission ID": submissionId } : { Timestamp: new Date().toISOString() })
+        }
+      : isDraftInquiry
       ? {
           Name: name,
           Email: email,
@@ -286,7 +356,7 @@ export async function POST(request: NextRequest) {
           ${formatRowsHtml(rows)}
         </div>
       `
-    });
+    }, isGuidedInquiry && submissionId ? { idempotencyKey: `contact/${submissionId}` } : undefined);
 
     if (internalEmail.error) throw new Error(internalEmail.error.message);
 
@@ -307,21 +377,26 @@ export async function POST(request: NextRequest) {
         : "/en/contact/thank-you";
     const thankYouUrl = isDirectInquiry ? getSiteUrl() : `${getSiteUrl()}${thankYouPath}`;
 
-    const customerEmail = await resend.emails.send({
-      from: sender,
-      to: email,
-      subject: replySubject,
-      text: isDraftInquiry ? replyBody : `${replyBody}\n\n${thankYouUrl}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827; max-width: 620px; margin: 0 auto; padding: 28px;">
-          <p>${textToHtml(replyBody)}</p>
-          ${isDraftInquiry ? "" : renderEmailButton(thankYouUrl, replyButton)}
-        </div>
-      `
-    });
+    try {
+      const customerEmail = await resend.emails.send({
+        from: sender,
+        to: email,
+        subject: replySubject,
+        text: isDraftInquiry ? replyBody : `${replyBody}\n\n${thankYouUrl}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; line-height: 1.7; color: #111827; max-width: 620px; margin: 0 auto; padding: 28px;">
+            <p>${textToHtml(replyBody)}</p>
+            ${isDraftInquiry ? "" : renderEmailButton(thankYouUrl, replyButton)}
+          </div>
+        `
+      }, isGuidedInquiry && submissionId ? { idempotencyKey: `contact-reply/${submissionId}` } : undefined);
 
-    if (customerEmail.error) {
-      console.error("Contact form auto-reply failed:", customerEmail.error);
+      if (customerEmail.error) {
+        console.error("Contact form auto-reply failed:", customerEmail.error);
+      }
+    } catch (error) {
+      // The enquiry was already delivered; an acknowledgement failure must not invite a duplicate submission.
+      console.error("Contact form auto-reply failed:", error);
     }
 
     return NextResponse.json({ ok: true, softFit: isDirectInquiry ? false : softFit });

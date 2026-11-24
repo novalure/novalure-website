@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { createPortal } from "react-dom";
 import { NovalureWordmark } from "@/components/NovalureWordmark";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
@@ -24,7 +25,7 @@ const copy = {
     successTitle: "Ihre Anfrage ist angekommen.", successBody: "Vielen Dank. Wir prüfen Ihr Anliegen und melden uns bei Ihnen. Wenn Sie bereits einen passenden Termin wählen möchten, können Sie das hier tun.", schedule: "Optional: Termin wählen",
     error: "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie an hello@novalure.eu.",
     nextEyebrow: "So geht es weiter", nextTitle: "Klarheit vor dem ersten Vorschlag.", nextSteps: [
-      ["01", "Anfrage", "Sie beschreiben Ihr Projekt und die wichtigste offene Frage."],
+      ["01", "Anfrage", "Sie wählen die passenden Bereiche und können Ihr Projekt kurz beschreiben."],
       ["02", "Einordnung", "Wir prüfen, ob ein Projekt-Check für Ihr Vorhaben der richtige Schritt ist."],
       ["03", "Gespräch", "Gemeinsam klären wir Engpass, Möglichkeiten und einen sinnvollen nächsten Schritt."]
     ],
@@ -42,7 +43,7 @@ const copy = {
     successTitle: "Your enquiry has arrived.", successBody: "Thank you. We will review your enquiry and get back to you. If you would like to choose a suitable time already, you can do so here.", schedule: "Optional: choose a time",
     error: "We could not send your enquiry. Please try again or email hello@novalure.eu.",
     nextEyebrow: "What happens next", nextTitle: "Clarity before a proposal.", nextSteps: [
-      ["01", "Enquiry", "Tell us about your project and your most important open question."],
+      ["01", "Enquiry", "Choose the areas you need and optionally tell us about your project."],
       ["02", "Review", "We check whether a Project Check is the right next step for you."],
       ["03", "Conversation", "Together we clarify the bottleneck, opportunities and a sensible next step."]
     ],
@@ -60,7 +61,7 @@ const copy = {
     successTitle: "Hemos recibido su consulta.", successBody: "Gracias. Revisaremos su solicitud y nos pondremos en contacto con usted. Si ya desea elegir una hora adecuada, puede hacerlo aquí.", schedule: "Opcional: elegir una hora",
     error: "No se ha podido enviar su consulta. Inténtelo de nuevo o escriba a hello@novalure.eu.",
     nextEyebrow: "Cómo seguimos", nextTitle: "Claridad antes de una propuesta.", nextSteps: [
-      ["01", "Consulta", "Describa su proyecto y la pregunta más importante."],
+      ["01", "Consulta", "Elija las áreas que necesita y, si lo desea, describa su proyecto."],
       ["02", "Valoración", "Comprobamos si el análisis del proyecto es el siguiente paso adecuado."],
       ["03", "Conversación", "Aclaramos juntos el obstáculo, las posibilidades y el siguiente paso."]
     ],
@@ -68,47 +69,48 @@ const copy = {
   }
 } as const;
 
+const serviceKeys = ["project_presentation", "campaigns", "qualification_handover", "full_journey", "other", "unsure"] as const;
+type Service = typeof serviceKeys[number];
+const timingKeys = ["asap", "within_3_months", "later_or_undecided"] as const;
+
 const wizardCopy = {
   de: {
     progress: "Schritt", of: "von", next: "Weiter", back: "Zurück", optional: "Optional",
-    steps: ["Vorhaben", "Ziel", "Zeitrahmen", "Kontakt"],
-    serviceTitle: "Wobei dürfen wir Sie unterstützen?", serviceHint: "Wählen Sie den Bereich, der Ihrem Vorhaben am nächsten kommt.",
-    services: ["Projektauftritt und Visualisierung", "Nachfrage und Kampagnen", "Qualifizierung und Vertriebsübergabe", "Den gesamten Projektweg prüfen", "Noch nicht sicher"],
-    goalTitle: "Was möchten Sie erreichen?", goalHint: "Wählen Sie Ihr wichtigstes Ziel und erzählen Sie uns kurz von Ihrem Projekt oder Marktgebiet.",
-    goals: ["Ein Projekt überzeugend präsentieren", "Passende Interessenten erreichen", "Anfragen besser qualifizieren und übergeben", "Den nächsten sinnvollen Schritt finden"],
-    timingTitle: "Wann soll es losgehen?", timingHint: "Optional: Eine grobe Einschätzung genügt. Sie können auch einen Projektlink ergänzen.",
-    timings: ["So bald wie möglich", "In den nächsten drei Monaten", "Später oder noch offen"],
-    contactTitle: "Wie erreichen wir Sie?", contactHint: "Damit wir Ihre Anfrage persönlich beantworten können.",
-    projectLabel: "Projekt oder Marktgebiet und aktuelle Herausforderung", serviceLabel: "Unterstützung", goalLabel: "Ziel", timingLabel: "Zeitrahmen", summary: "Ihre Angaben", notSpecified: "Nicht angegeben", emptyProject: "Bitte beschreiben Sie kurz Ihr Projekt oder Marktgebiet.", emptyField: "Bitte füllen Sie dieses Feld aus.", invalidUrl: "Bitte geben Sie einen Link mit http:// oder https:// ein."
+    steps: ["Ihr Vorhaben", "Kontakt"], duration: "NovaLure / 30 Minuten Gespräch",
+    serviceTitle: "Wobei dürfen wir Sie unterstützen?", serviceHint: "Wählen Sie mindestens einen Bereich. Mehrere Antworten sind möglich.",
+    services: ["Projektauftritt und Visualisierung", "Nachfrage und Kampagnen", "Anfragen qualifizieren und an den Vertrieb übergeben", "Den gesamten Projektweg prüfen", "Etwas anderes", "Noch nicht sicher"],
+    otherLabel: "Was benötigen Sie?", otherHint: "Erzählen Sie uns kurz davon.",
+    projectLabel: "Was sollten wir über Ihr Projekt wissen?", projectHint: "Zum Beispiel Projekt, Marktgebiet oder aktuelle Herausforderung.",
+    contactTitle: "Wie erreichen wir Sie?", contactHint: "Name und E-Mail genügen. Alles Weitere ist freiwillig.",
+    timings: ["So bald wie möglich", "In den nächsten drei Monaten", "Später oder noch offen"], timingLabel: "Gewünschter Start", choose: "Bitte auswählen",
+    moreDetails: "Weitere Angaben (optional)", roleNone: "Keine Angabe", summary: "Ihre Auswahl", edit: "Auswahl bearbeiten", emptyServices: "Bitte wählen Sie mindestens eine Möglichkeit.", emptyField: "Bitte geben Sie Ihren Namen ein.", invalidEmail: "Bitte geben Sie eine gültige E-Mail-Adresse ein.", invalidUrl: "Bitte geben Sie einen Link mit http:// oder https:// ein."
   },
   en: {
     progress: "Step", of: "of", next: "Continue", back: "Back", optional: "Optional",
-    steps: ["Your project", "Goal", "Timing", "Contact"],
-    serviceTitle: "How can we help?", serviceHint: "Choose the area closest to what you need.",
-    services: ["Project presence and visualisation", "Demand and campaigns", "Qualification and sales handover", "Review the whole project journey", "Not sure yet"],
-    goalTitle: "What would you like to achieve?", goalHint: "Choose your main goal and briefly tell us about your project or market.",
-    goals: ["Present a project convincingly", "Reach the right prospective buyers", "Qualify and hand over enquiries better", "Find the right next step"],
-    timingTitle: "When would you like to start?", timingHint: "Optional: a rough estimate is fine. You can also add a project link.",
-    timings: ["As soon as possible", "Within the next three months", "Later or undecided"],
-    contactTitle: "How can we reach you?", contactHint: "So we can respond to your enquiry personally.",
-    projectLabel: "Project or market and current challenge", serviceLabel: "Support", goalLabel: "Goal", timingLabel: "Timing", summary: "Your details", notSpecified: "Not specified", emptyProject: "Please briefly describe your project or market.", emptyField: "Please fill in this field.", invalidUrl: "Please enter a link starting with http:// or https://."
+    steps: ["Your project", "Contact"], duration: "NovaLure / 30-minute conversation",
+    serviceTitle: "How can we help?", serviceHint: "Choose at least one area. You can select more than one.",
+    services: ["Project presentation and visualisation", "Demand and campaigns", "Qualifying enquiries and handing them to sales", "Review the whole project journey", "Something else", "Not sure yet"],
+    otherLabel: "What do you need?", otherHint: "Tell us a little more.",
+    projectLabel: "What should we know about your project?", projectHint: "For example, your project, market or current challenge.",
+    contactTitle: "How can we reach you?", contactHint: "Your name and email are enough. Everything else is optional.",
+    timings: ["As soon as possible", "Within the next three months", "Later or undecided"], timingLabel: "Preferred start", choose: "Please select",
+    moreDetails: "Additional details (optional)", roleNone: "Prefer not to say", summary: "Your selection", edit: "Edit selection", emptyServices: "Please select at least one option.", emptyField: "Please enter your name.", invalidEmail: "Please enter a valid email address.", invalidUrl: "Please enter a link starting with http:// or https://."
   },
   es: {
     progress: "Paso", of: "de", next: "Continuar", back: "Volver", optional: "Opcional",
-    steps: ["Proyecto", "Objetivo", "Plazo", "Contacto"],
-    serviceTitle: "¿En qué podemos ayudarle?", serviceHint: "Elija el área que más se acerque a lo que necesita.",
-    services: ["Presentación y visualización del proyecto", "Demanda y campañas", "Cualificación y traspaso comercial", "Revisar todo el recorrido del proyecto", "Aún no lo sé"],
-    goalTitle: "¿Qué quiere conseguir?", goalHint: "Elija su objetivo principal y cuéntenos brevemente sobre su proyecto o mercado.",
-    goals: ["Presentar un proyecto de forma convincente", "Llegar a compradores interesados", "Cualificar y traspasar mejor las consultas", "Encontrar el siguiente paso adecuado"],
-    timingTitle: "¿Cuándo le gustaría empezar?", timingHint: "Opcional: basta con una estimación aproximada. También puede añadir un enlace al proyecto.",
-    timings: ["Lo antes posible", "En los próximos tres meses", "Más adelante o por decidir"],
-    contactTitle: "¿Cómo podemos contactar con usted?", contactHint: "Así podremos responder a su consulta personalmente.",
-    projectLabel: "Proyecto o mercado y reto actual", serviceLabel: "Apoyo", goalLabel: "Objetivo", timingLabel: "Plazo", summary: "Sus datos", notSpecified: "Sin indicar", emptyProject: "Describa brevemente su proyecto o mercado.", emptyField: "Complete este campo.", invalidUrl: "Introduzca un enlace que empiece por http:// o https://."
+    steps: ["Su proyecto", "Contacto"], duration: "NovaLure / conversación de 30 minutos",
+    serviceTitle: "¿En qué podemos ayudarle?", serviceHint: "Seleccione al menos un área. Puede elegir varias.",
+    services: ["Presentación y visualización del proyecto", "Demanda y campañas", "Revisar consultas y prepararlas para ventas", "Revisar todo el recorrido del proyecto", "Otra cosa", "Aún no lo sé"],
+    otherLabel: "¿Qué necesita?", otherHint: "Cuéntenos brevemente.",
+    projectLabel: "¿Qué deberíamos saber sobre su proyecto?", projectHint: "Por ejemplo, el proyecto, el mercado o su reto actual.",
+    contactTitle: "¿Cómo podemos contactar con usted?", contactHint: "Bastan su nombre y correo electrónico. Todo lo demás es opcional.",
+    timings: ["Lo antes posible", "En los próximos tres meses", "Más adelante o por decidir"], timingLabel: "Inicio previsto", choose: "Seleccione una opción",
+    moreDetails: "Datos adicionales (opcional)", roleNone: "Sin indicar", summary: "Su selección", edit: "Editar selección", emptyServices: "Seleccione al menos una opción.", emptyField: "Introduzca su nombre.", invalidEmail: "Introduzca una dirección de correo válida.", invalidUrl: "Introduzca un enlace que empiece por http:// o https://."
   }
 } as const;
 
-type Values = { name: string; email: string; company: string; role: string; inquiry: string; phone: string; projectUrl: string; website: string };
-const emptyValues: Values = { name: "", email: "", company: "", role: "", inquiry: "", phone: "", projectUrl: "", website: "" };
+type Values = { name: string; email: string; company: string; role: string; inquiry: string; phone: string; projectUrl: string; website: string; otherService: string; startTiming: string };
+const emptyValues: Values = { name: "", email: "", company: "", role: "", inquiry: "", phone: "", projectUrl: "", website: "", otherService: "", startTiming: "" };
 const meetingUrls: Record<Locale, string> = {
   de: "https://meetings-eu1.hubspot.com/franz-romih?locale=de-de",
   en: "https://meetings-eu1.hubspot.com/franz-romih/private-growth-audit-en?locale=en-us",
@@ -125,11 +127,12 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
   const [values, setValues] = useState<Values>(emptyValues);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [step, setStep] = useState(0);
-  const [service, setService] = useState("");
-  const [goal, setGoal] = useState("");
-  const [timing, setTiming] = useState("");
+  const [services, setServices] = useState<Service[]>([]);
+  const [servicesError, setServicesError] = useState(false);
   const stepHeading = useRef<HTMLHeadingElement>(null);
+  const optionalDetails = useRef<HTMLDetailsElement>(null);
   const successHeading = useRef<HTMLHeadingElement>(null);
+  const submission = useRef<{ id: string; pageUri: string; utm: Record<string, string> } | null>(null);
   const hasNavigated = useRef(false);
 
   useEffect(() => {
@@ -139,6 +142,14 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
   useEffect(() => {
     if (status === "success") successHeading.current?.focus();
   }, [status]);
+
+  function toggleService(key: Service) {
+    setServicesError(false);
+    setServices((current) => {
+      if (current.includes(key)) return current.filter((item) => item !== key);
+      return key === "unsure" ? [key] : [...current.filter((item) => item !== "unsure"), key];
+    });
+  }
 
   function moveTo(nextStep: number) {
     hasNavigated.current = true;
@@ -156,47 +167,54 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (status === "sending") return;
-    if (step === 1 && !values.inquiry.trim()) {
-      const field = event.currentTarget.querySelector<HTMLTextAreaElement>('textarea[name="inquiry"]');
-      field?.setCustomValidity(w.emptyProject);
+    if (step === 0) {
+      if (!services.length) {
+        setServicesError(true);
+        event.currentTarget.querySelector<HTMLInputElement>('input[name="services"]')?.focus();
+        return;
+      }
+      moveTo(1);
+      return;
+    }
+    const fields = event.currentTarget;
+    if (!values.name.trim()) {
+      const field = fields.querySelector<HTMLInputElement>('input[name="name"]');
+      field?.setCustomValidity(w.emptyField);
       field?.reportValidity();
       return;
     }
-    if (step === 2 && values.projectUrl.trim() && !/^https?:\/\//i.test(values.projectUrl.trim())) {
-      const field = event.currentTarget.querySelector<HTMLInputElement>('input[name="projectUrl"]');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
+      const field = fields.querySelector<HTMLInputElement>('input[name="email"]');
+      field?.setCustomValidity(w.invalidEmail);
+      field?.reportValidity();
+      return;
+    }
+    if (values.projectUrl.trim() && !/^https?:\/\//i.test(values.projectUrl.trim())) {
+      const field = fields.querySelector<HTMLInputElement>('input[name="projectUrl"]');
+      if (optionalDetails.current) optionalDetails.current.open = true;
       field?.setCustomValidity(w.invalidUrl);
       field?.reportValidity();
       return;
     }
-    if (step === 3) {
-      for (const name of ["name", "company"] as const) {
-        if (!values[name].trim()) {
-          const field = event.currentTarget.querySelector<HTMLInputElement>(`input[name="${name}"]`);
-          field?.setCustomValidity(w.emptyField);
-          field?.reportValidity();
-          return;
-        }
-      }
-    }
-    if (step < 3) {
-      moveTo(step + 1);
-      return;
-    }
     setStatus("sending");
+    if (!submission.current) submission.current = { id: crypto.randomUUID(), pageUri: window.location.href, utm: Object.fromEntries(new URLSearchParams(window.location.search)) };
+    const attempt = submission.current;
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           ...values,
-          inquiry: `${w.serviceLabel}: ${service}\n${w.goalLabel}: ${goal}${timing ? `\n${w.timingLabel}: ${timing}` : ""}\n\n${w.projectLabel}: ${values.inquiry}`,
+          services,
+          otherService: services.includes("other") ? values.otherService : "",
           language: locale,
           source: "asme_draft_project_check",
-          pageUri: window.location.href,
-          utm: Object.fromEntries(new URLSearchParams(window.location.search))
+          submissionId: attempt.id,
+          pageUri: attempt.pageUri,
+          utm: attempt.utm
         })
       });
-      if (!response.ok) throw new Error("Request failed");
+      if (!response.ok || !(await response.json()).ok) throw new Error("Request failed");
       window.dispatchEvent(new CustomEvent("novalure:funnel-event", { detail: { name: "contact_inquiry_submit", source: "asme_draft_project_check" } }));
       setValues(emptyValues);
       setStatus("success");
@@ -231,41 +249,55 @@ export default function DraftContact({ locale, preview = true }: { locale: Local
           <div className={styles.formCard} id="formular"><span id="book-audit" className={styles.anchor} aria-hidden="true" />
             {status === "success" ? (
               <div className={styles.success} role="status">
-                <div className={styles.celebration} aria-hidden="true"><span className={styles.successIcon}><Check size={25} /></span>{Array.from({ length: 12 }, (_, i) => <i key={i} style={{ "--piece": i } as CSSProperties} />)}</div>
+                {createPortal(<div className={styles.confetti} aria-hidden="true">{Array.from({ length: 96 }, (_, i) => <i key={i} style={{ left: `${(i * 37 + 3) % 100}%`, "--delay": `${(i % 8) * 90}ms`, "--drift": `${((i * 53) % 180) - 90}px`, "--spin": `${(i % 2 ? 1 : -1) * (360 + (i % 5) * 90)}deg` } as CSSProperties} />)}</div>, document.body)}
+                <div className={styles.celebration} aria-hidden="true"><span className={styles.successIcon}><Check size={25} /></span></div>
                 <h2 ref={successHeading} tabIndex={-1}>{t.successTitle}</h2>
                 <p>{t.successBody}</p>
                 <a className={styles.submit} href={meetingUrls[locale]} target="_blank" rel="noopener noreferrer">{t.schedule}<ArrowUpRight size={18} /></a>
               </div>
             ) : (
               <>
-                <div className={styles.formHead}><p>NovaLure / 30 MIN</p><h2>{t.formTitle}</h2></div>
-                <div className={styles.progress} aria-label={`${w.progress} ${step + 1} ${w.of} 4`}>
-                  <div className={styles.progressText}><span>{w.progress} {step + 1} {w.of} 4</span><span>{w.steps[step]}</span></div>
-                  <div className={styles.progressTrack} aria-hidden="true"><span style={{ width: `${(step + 1) * 25}%` }} /></div>
+                <div className={styles.formHead}><p>{w.duration}</p><h2>{t.formTitle}</h2></div>
+                <div className={styles.progress} aria-label={`${w.progress} ${step + 1} ${w.of} 2`}>
+                  <div className={styles.progressText}><span>{w.progress} {step + 1} {w.of} 2</span><span>{w.steps[step]}</span></div>
+                  <div className={styles.progressTrack} aria-hidden="true"><span style={{ width: `${(step + 1) * 50}%` }} /></div>
                 </div>
-                <form className={styles.form} onSubmit={submit} data-track-form="asme_project_check">
-                  <div className={styles.step} key={step}>
-                    <h3 ref={stepHeading} tabIndex={-1} className={styles.stepTitle}>{[w.serviceTitle, w.goalTitle, w.timingTitle, w.contactTitle][step]}</h3>
-                    <p className={styles.stepHint}>{[w.serviceHint, w.goalHint, w.timingHint, w.contactHint][step]}</p>
-                    {step === 0 && <fieldset className={styles.choices}><legend className={styles.srOnly}>{w.serviceTitle}</legend>{w.services.map((item) => <label key={item}><input type="radio" name="service" value={item} checked={service === item} onChange={() => setService(item)} required /><span>{item}<i aria-hidden="true" /></span></label>)}</fieldset>}
-                    {step === 1 && <><fieldset className={styles.choices}><legend className={styles.srOnly}>{w.goalTitle}</legend>{w.goals.map((item) => <label key={item}><input type="radio" name="goal" value={item} checked={goal === item} onChange={() => setGoal(item)} required /><span>{item}<i aria-hidden="true" /></span></label>)}</fieldset><label className={styles.field}><span>{w.projectLabel} <small>{t.required}</small></span><textarea name="inquiry" value={values.inquiry} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, inquiry: event.target.value }); }} placeholder={t.inquiryHint} rows={3} required maxLength={1500} /></label></>}
-                    {step === 2 && <><fieldset className={styles.choices}><legend className={styles.srOnly}>{w.timingTitle}</legend>{w.timings.map((item) => <label key={item}><input type="radio" name="timing" value={item} checked={timing === item} onChange={() => setTiming(item)} /><span>{item}<i aria-hidden="true" /></span></label>)}</fieldset><label className={styles.field}><span>{t.projectUrl}</span><input name="projectUrl" type="url" value={values.projectUrl} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, projectUrl: event.target.value }); }} placeholder="https://" maxLength={500} /></label></>}
-                    {step === 3 && <>
-                      <details className={styles.summary} open><summary>{w.summary}</summary><dl><div><dt>{w.serviceLabel}</dt><dd>{service}</dd></div><div><dt>{w.goalLabel}</dt><dd>{goal}</dd></div><div><dt>{w.projectLabel}</dt><dd>{values.inquiry}</dd></div><div><dt>{w.timingLabel}</dt><dd>{timing || w.notSpecified}</dd></div>{values.projectUrl && <div><dt>{t.projectUrl}</dt><dd>{values.projectUrl}</dd></div>}</dl></details>
-                      <label className={styles.field}><span>{t.name} <small>{t.required}</small></span><input name="name" value={values.name} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, name: event.target.value }); }} autoComplete="name" required maxLength={120} /></label>
-                      <label className={styles.field}><span>{t.email} <small>{t.required}</small></span><input name="email" type="email" value={values.email} onChange={(event) => setValues({ ...values, email: event.target.value })} autoComplete="email" required maxLength={254} /></label>
-                      <label className={styles.field}><span>{t.company} <small>{t.required}</small></span><input name="company" value={values.company} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, company: event.target.value }); }} autoComplete="organization" required maxLength={160} /></label>
-                      <fieldset className={styles.role}><legend>{t.role} <small>{t.required}</small></legend><div>{(["developer", "agent", "other"] as const).map((role) => <label key={role}><input type="radio" name="role" value={role} checked={values.role === role} onChange={(event) => setValues({ ...values, role: event.target.value })} required /><span>{t[role]}</span></label>)}</div></fieldset>
-                      <label className={styles.field}><span>{t.phone}</span><input name="phone" type="tel" value={values.phone} onChange={(event) => setValues({ ...values, phone: event.target.value })} autoComplete="tel" maxLength={60} /></label>
+                <form className={styles.form} onSubmit={submit} onChangeCapture={() => { submission.current = null; }} data-track-form="asme_project_check">
+                  <fieldset className={styles.step} key={step} disabled={status === "sending"}>
+                    <h3 ref={stepHeading} tabIndex={-1} className={styles.stepTitle}>{step === 0 ? w.serviceTitle : w.contactTitle}</h3>
+                    <p className={styles.stepHint}>{step === 0 ? w.serviceHint : w.contactHint}</p>
+                    {step === 0 && <>
+                      <fieldset className={styles.choices} aria-describedby={servicesError ? "service-error" : undefined} aria-invalid={servicesError || undefined}>
+                        <legend className={styles.srOnly}>{w.serviceTitle}</legend>
+                        {serviceKeys.map((key, index) => <label key={key}><input type="checkbox" name="services" value={key} checked={services.includes(key)} onChange={() => toggleService(key)} /><span>{w.services[index]}<i aria-hidden="true" /></span></label>)}
+                      </fieldset>
+                      {servicesError && <p id="service-error" className={styles.error} role="alert">{w.emptyServices}</p>}
+                      {services.includes("other") && <label className={styles.field}><span>{w.otherLabel} <small>{w.optional}</small></span><input name="otherService" value={values.otherService} onChange={(event) => setValues({ ...values, otherService: event.target.value })} placeholder={w.otherHint} maxLength={300} /></label>}
+                      <label className={styles.field}><span>{w.projectLabel} <small>{w.optional}</small></span><textarea name="inquiry" value={values.inquiry} onChange={(event) => setValues({ ...values, inquiry: event.target.value })} placeholder={w.projectHint} rows={3} maxLength={1500} /></label>
                     </>}
-                  </div>
+                    {step === 1 && <>
+                      <div className={styles.summary}><span>{w.summary}: {services.map((key) => w.services[serviceKeys.indexOf(key)]).join(", ")}</span><button type="button" onClick={() => moveTo(0)}>{w.edit}</button></div>
+                      <label className={styles.field}><span>{t.name} <small>{t.required}</small></span><input name="name" value={values.name} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, name: event.target.value }); }} autoComplete="name" required maxLength={120} /></label>
+                      <label className={styles.field}><span>{t.email} <small>{t.required}</small></span><input name="email" type="email" value={values.email} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, email: event.target.value }); }} autoComplete="email" required maxLength={254} /></label>
+                      <details ref={optionalDetails} className={styles.optionalDetails} onInvalidCapture={(event) => { event.currentTarget.open = true; }}>
+                        <summary>{w.moreDetails}</summary>
+                        <div className={styles.optionalFields}>
+                      <label className={styles.field}><span>{t.company} <small>{w.optional}</small></span><input name="company" value={values.company} onChange={(event) => setValues({ ...values, company: event.target.value })} autoComplete="organization" maxLength={160} /></label>
+                      <fieldset className={styles.role}><legend>{t.role} <small>{w.optional}</small></legend><div>{(["developer", "agent", "other", ""] as const).map((role) => <label key={role || "none"}><input type="radio" name="role" value={role} checked={values.role === role} onChange={(event) => setValues({ ...values, role: event.target.value })} /><span>{role ? t[role] : w.roleNone}</span></label>)}</div></fieldset>
+                      <label className={styles.field}><span>{t.phone}</span><input name="phone" type="tel" value={values.phone} onChange={(event) => setValues({ ...values, phone: event.target.value })} autoComplete="tel" maxLength={60} /></label>
+                      <label className={styles.field}><span>{t.projectUrl}</span><input name="projectUrl" type="url" value={values.projectUrl} onChange={(event) => { event.target.setCustomValidity(""); setValues({ ...values, projectUrl: event.target.value }); }} placeholder="https://" maxLength={500} /></label>
+                      <label className={styles.field}><span>{w.timingLabel} <small>{w.optional}</small></span><select name="startTiming" value={values.startTiming} onChange={(event) => setValues({ ...values, startTiming: event.target.value })}><option value="">{w.choose}</option>{timingKeys.map((key, index) => <option value={key} key={key}>{w.timings[index]}</option>)}</select></label>
+                        </div>
+                      </details>
+                    </>}
+                  </fieldset>
                   <label className={styles.honeypot} aria-hidden="true">Website<input name="website" tabIndex={-1} autoComplete="off" value={values.website} onChange={(event) => setValues({ ...values, website: event.target.value })} /></label>
                   <div className={styles.actions}>
                     {step > 0 && <button className={styles.previous} type="button" disabled={status === "sending"} onClick={() => moveTo(step - 1)}><ArrowLeft size={17} />{w.back}</button>}
-                    <button className={styles.submit} type="submit" disabled={status === "sending"}>{status === "sending" ? t.sending : step === 3 ? t.send : w.next}<ArrowRight size={18} /></button>
+                    <button className={styles.submit} type="submit" disabled={status === "sending"}>{status === "sending" ? t.sending : step === 1 ? t.send : w.next}<ArrowRight size={18} /></button>
                   </div>
                   {status === "error" && <p className={styles.error} role="alert">{t.error}</p>}
-                  {step === 3 && <p className={styles.privacy}>{t.privacy} <Link href={legalHref("privacy")}>{t.privacyLink}</Link>.</p>}
+                  {step === 1 && <p className={styles.privacy}>{t.privacy} <Link href={legalHref("privacy")}>{t.privacyLink}</Link>.</p>}
                 </form>
               </>
             )}
