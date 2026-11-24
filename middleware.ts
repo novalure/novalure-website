@@ -140,6 +140,15 @@ function goneDocument(locale: "de" | "en" | "es") {
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname.replace(/\/$/, "") || "/";
 
+  if (pathname.startsWith("/vorschau/")) {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-novalure-document-language", "de-DE");
+    const response = NextResponse.next({ request: { headers: requestHeaders } });
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    response.headers.set("Referrer-Policy", "no-referrer");
+    return response;
+  }
+
   if (redirects[pathname]) {
     const url = request.nextUrl.clone();
     const [targetPath, hash] = redirects[pathname].split("#");
@@ -187,5 +196,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/en/:path*", "/de/:path*", "/es/:path*"]
+  matcher: ["/", "/en/:path*", "/de/:path*", "/es/:path*", "/vorschau/:path*"]
 };
